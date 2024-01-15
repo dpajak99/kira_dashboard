@@ -1,0 +1,23 @@
+import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record_entity.dart';
+import 'package:kira_dashboard/infra/repository/identity_registrar_repository.dart';
+import 'package:kira_dashboard/models/identity_records.dart';
+
+class IdentityRegistrarService {
+  final IdentityRegistrarRepository identityRegistrarRepository = IdentityRegistrarRepository();
+
+  Future<IdentityRecords> getAllByAddress(String address) async {
+    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getAllByAddress(address);
+    Map<String, IdentityRecordEntity> identityRecordsMap = <String, IdentityRecordEntity>{};
+    for (IdentityRecordEntity identityRecord in identityRecords) {
+      identityRecordsMap[identityRecord.key] = identityRecord;
+    }
+
+    return IdentityRecords(
+      username: identityRecordsMap['username'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('username')!) : null,
+      avatar: identityRecordsMap['avatar'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('avatar')!) : null,
+      description: identityRecordsMap['description'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('description')!) : null,
+      social: identityRecordsMap['social'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('social')!) : null,
+      other: identityRecordsMap.values.map((IdentityRecordEntity e) => IdentityRecord.fromEntity(e)).toList(),
+    );
+  }
+}

@@ -1,0 +1,96 @@
+import 'package:flutter/cupertino.dart';
+import 'package:kira_dashboard/models/coin.dart';
+import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/widgets/custom_card.dart';
+import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/token_icon.dart';
+
+class BalancesPage extends StatelessWidget {
+  final PortfolioPageState state;
+
+  const BalancesPage({
+    super.key,
+    required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCard(
+      title: 'Tokens',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomTable<Coin>(
+            items: state.balance,
+            columns: <ColumnConfig<Coin>>[
+              ColumnConfig(
+                title: 'Token',
+                cellBuilder: (BuildContext context, Coin item) {
+                  return Row(
+                    children: <Widget>[
+                      TokenIcon(size: 24, iconUrl: item.icon),
+                      const SizedBox(width: 12),
+                      Expanded(child: Text(item.name, style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)))),
+                    ],
+                  );
+                },
+              ),
+              ColumnConfig(
+                title: 'Type',
+                cellBuilder: (BuildContext context, Coin item) {
+                  return _TokenTypeChip(item.type);
+                },
+              ),
+              ColumnConfig(
+                title: 'Balance',
+                textAlign: TextAlign.right,
+                cellBuilder: (BuildContext context, Coin item) {
+                  return Text(
+                    item.toNetworkDenominationString(),
+                    style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                    textAlign: TextAlign.right,
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TokenTypeChip extends StatelessWidget {
+  final CoinType type;
+
+  const _TokenTypeChip(this.type);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: switch (type) {
+            CoinType.token => const Color(0xff263042),
+            CoinType.native => const Color(0x292f8af5),
+            CoinType.derivative => const Color(0x292f8af5),
+          },
+        ),
+        child: Text(
+          '${type.name[0].toUpperCase()}${type.name.substring(1)}',
+          style: TextStyle(
+            fontSize: 12,
+            color: switch (type) {
+              CoinType.token => const Color(0xff6c86ad),
+              CoinType.native => const Color(0xff2f8af5),
+              CoinType.derivative => const Color(0xff2f8af5),
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
