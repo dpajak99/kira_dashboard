@@ -28,6 +28,7 @@ class TokensService {
 
       return DerivativeCoin(
         derivativePrefix: derivativePrefix,
+        decimals: tokenAlias?.decimals ?? 0,
         amount: simpleCoin.amount,
         denom: derivativeSuffix,
         symbol: tokenAlias?.symbol ?? derivativeSuffix.toUpperCase(),
@@ -41,6 +42,7 @@ class TokensService {
 
       return Coin(
         type: simpleCoin.denom == 'ukex' ? CoinType.native : CoinType.token,
+        decimals: tokenAlias?.decimals ?? 0,
         amount: simpleCoin.amount,
         denom: simpleCoin.denom,
         symbol: tokenAlias?.symbol ?? simpleCoin.denom.toUpperCase(),

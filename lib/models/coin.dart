@@ -9,6 +9,19 @@ class SimpleCoin {
     required this.amount,
     required this.denom,
   });
+
+  factory SimpleCoin.fromString(String value) {
+    RegExp regExpPattern = RegExp(r'(\d+)([a-zA-Z0-9/]+)');
+    RegExpMatch regExpMatch = regExpPattern.firstMatch(value)!;
+
+    String amount = regExpMatch.group(1)!;
+    String denom = regExpMatch.group(2)!;
+
+    return SimpleCoin(
+      amount: amount,
+      denom: denom,
+    );
+  }
 }
 
 enum CoinType {

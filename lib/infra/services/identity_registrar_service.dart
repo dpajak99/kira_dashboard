@@ -20,4 +20,15 @@ class IdentityRegistrarService {
       other: identityRecordsMap.values.map((IdentityRecordEntity e) => IdentityRecord.fromEntity(e)).toList(),
     );
   }
+
+  Future<List<IdentityRecord>> getByIds(List<String> ids) async {
+    return Future.wait(ids.map((String id) async {
+      return await getById(id);
+    }));
+  }
+
+  Future<IdentityRecord> getById(String id) async {
+    IdentityRecordEntity identityRecordEntity = await identityRegistrarRepository.getById(id);
+    return IdentityRecord.fromEntity(identityRecordEntity);
+  }
 }

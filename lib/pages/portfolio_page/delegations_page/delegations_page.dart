@@ -22,6 +22,73 @@ class DelegationsPage extends StatelessWidget {
     return Column(
       children: [
         CustomCard(
+          title: 'Undelegations',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomTable<Undelegation>(
+                items: state.undelegations,
+                columns: <ColumnConfig<Undelegation>>[
+                  ColumnConfig(
+                    title: 'Validator',
+                    cellBuilder: (BuildContext context, Undelegation item) {
+                      return Row(
+                        children: <Widget>[
+                          IdentityAvatar(size: 32, address: item.validatorInfo.address),
+                          const SizedBox(width: 12),
+                          Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)))),
+                        ],
+                      );
+                    },
+                  ),
+                  ColumnConfig(
+                    title: 'Amount',
+                    cellBuilder: (BuildContext context, Undelegation item) {
+                      return Text(
+                        item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                      );
+                    },
+                  ),
+                  ColumnConfig(
+                    title: 'Expiry',
+                    textAlign: TextAlign.right,
+                    cellBuilder: (BuildContext context, Undelegation item) {
+                      return Text(
+                        DateFormat('d MMM y, HH:mm').format(item.expiry),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: item.expiry.difference(DateTime.now()).inSeconds > 0 ? const Color(0xfff12e1f) : const Color(0xff35b15f),
+                        ),
+                        textAlign: TextAlign.right,
+                      );
+                    },
+                  ),
+                  ColumnConfig(
+                    title: 'Actions',
+                    textAlign: TextAlign.right,
+                    cellBuilder: (BuildContext context, Undelegation item) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.info_outline, size: 20, color: Color(0xff2f8af5)),
+                            visualDensity: VisualDensity.compact,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 32),
+        CustomCard(
           title: 'Delegations',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,72 +129,6 @@ class DelegationsPage extends StatelessWidget {
                     title: 'Actions',
                     textAlign: TextAlign.right,
                     cellBuilder: (BuildContext context, Delegation item) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.info_outline, size: 20, color: Color(0xff2f8af5)),
-                            visualDensity: VisualDensity.compact,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 32),
-        CustomCard(
-          title: 'Undelegations',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTable<Undelegation>(
-                items: state.undelegations,
-                columns: <ColumnConfig<Undelegation>>[
-                  ColumnConfig(
-                    title: 'Validator',
-                    cellBuilder: (BuildContext context, Undelegation item) {
-                      return Row(
-                        children: <Widget>[
-                          IdentityAvatar(size: 32, address: item.validatorInfo.address),
-                          const SizedBox(width: 12),
-                          Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)))),
-                        ],
-                      );
-                    },
-                  ),
-                  ColumnConfig(
-                    title: 'Amount',
-                    cellBuilder: (BuildContext context, Undelegation item) {
-                      return Text(
-                        item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      );
-                    },
-                  ),
-                  ColumnConfig(
-                    title: 'Expiry',
-                    textAlign: TextAlign.right,
-                    cellBuilder: (BuildContext context, Undelegation item) {
-                      return Text(
-                        DateFormat('d MMM y, HH:mm').format(item.expiry),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: item.expiry.difference(DateTime.now()).inSeconds > 0 ? const Color(0xfff12e1f) : const Color(0xff35b15f),
-                        ),
-                        textAlign: TextAlign.right,
-                      );
-                    },
-                  ),
-                  ColumnConfig(
-                    title: 'Actions',
-                    textAlign: TextAlign.right,
-                    cellBuilder: (BuildContext context, Undelegation item) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
