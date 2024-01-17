@@ -20,6 +20,10 @@ class AppRouter extends $AppRouter {
             page: ValidatorsRoute.page,
             path: 'validators',
           ),
+          AutoRoute(
+            page: BlocksRoute.page,
+            path: 'blocks',
+          ),
         ],
       ),
     ];

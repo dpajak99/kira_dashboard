@@ -23,7 +23,7 @@ class CustomCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (title != null) ...<Widget>[
-            Text(title!, style: const TextStyle(fontSize: 24)),
+            Text(title!, style: const TextStyle(fontSize: 24, color: Color(0xfffbfbfb))),
             const SizedBox(height: 24),
           ],
           SizedBox(width: double.infinity, child: child),
