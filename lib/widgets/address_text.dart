@@ -1,5 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kira_dashboard/pages/portfolio_page/portfolio_page.dart';
+import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
 class CopyableAddressText extends StatelessWidget {
@@ -26,7 +29,7 @@ class CopyableAddressText extends StatelessWidget {
 }
 
 class OpenableAddressText extends StatelessWidget {
-  final String address;
+  final String? address;
   final TextStyle style;
 
   const OpenableAddressText({
@@ -37,18 +40,26 @@ class OpenableAddressText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseStateListener(childBuilder: (Set<MaterialState> states) {
-      return _AddressText(
-        address: address,
-        style: style.copyWith(
-          color: states.contains(MaterialState.hovered) ? const Color(0xff4888f0) : style.color,
-        ),
-        icon: Icons.open_in_new,
-      );
-    });
+    return MouseStateListener(
+      onTap: () => _openAddress(context),
+      childBuilder: (Set<MaterialState> states) {
+        if(address == null) {
+          return Text('---', style: style);
+        }
+        return _AddressText(
+          address: address!,
+          style: style.copyWith(
+            color: states.contains(MaterialState.hovered) ? const Color(0xff4888f0) : style.color,
+          ),
+          icon: Icons.open_in_new,
+        );
+      },
+    );
   }
 
-  void _openAddress(BuildContext context) {}
+  void _openAddress(BuildContext context) {
+    AutoRouter.of(context).push(PortfolioRoute(address: address!));
+  }
 }
 
 class _AddressText extends StatelessWidget {

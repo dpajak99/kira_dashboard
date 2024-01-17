@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/coin_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
@@ -28,6 +29,7 @@ class TransactionsPage extends StatelessWidget {
             columns: <ColumnConfig<Transaction>>[
               ColumnConfig(
                 title: 'Hash',
+                width: 100,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return Text(
                     item.hash,
@@ -61,10 +63,8 @@ class TransactionsPage extends StatelessWidget {
               ColumnConfig(
                 title: 'From',
                 cellBuilder: (BuildContext context, Transaction item) {
-                  return Text(
-                    item.from ?? '---',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  return OpenableAddressText(
+                    address: item.from,
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xff2f8af5),
@@ -74,7 +74,7 @@ class TransactionsPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: ' ',
-                width: 90,
+                width: 70,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return _DirectionChip(item.direction);
                 },
@@ -82,10 +82,8 @@ class TransactionsPage extends StatelessWidget {
               ColumnConfig(
                 title: 'To',
                 cellBuilder: (BuildContext context, Transaction item) {
-                  return Text(
-                    item.to ?? '---',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  return OpenableAddressText(
+                    address: item.to,
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xff2f8af5),
@@ -95,7 +93,7 @@ class TransactionsPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: 'Value',
-                width: 200,
+                width: 180,
                 textAlign: TextAlign.right,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return Row(

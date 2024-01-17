@@ -24,6 +24,10 @@ class AppRouter extends $AppRouter {
             page: BlocksRoute.page,
             path: 'blocks',
           ),
+          AutoRoute(
+            page: ProposalsRoute.page,
+            path: 'proposals',
+          ),
         ],
       ),
     ];

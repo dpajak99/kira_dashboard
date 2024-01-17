@@ -13,8 +13,9 @@ class SliverPagePadding extends StatelessWidget {
     return SliverPadding(
       padding: EdgeInsets.symmetric(
         horizontal: switch (MediaQuery.of(context).size.width) {
-          > 1200 => 200,
-          > 800 => 100,
+          > 1600 => 200,
+          > 1200 => 50,
+          > 800 => 25,
           (_) => 16,
         },
       ),

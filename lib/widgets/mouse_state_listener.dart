@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class MouseStateListener extends StatefulWidget {
   final Widget Function(Set<MaterialState> states) childBuilder;
+  final VoidCallback? onTap;
 
   const MouseStateListener({
     required this.childBuilder,
+    this.onTap,
     super.key,
   });
 
@@ -18,7 +20,7 @@ class _MouseStateListener extends State<MouseStateListener> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: widget.onTap ?? () {},
       onHover: (bool hovered) {
         if (hovered) {
           _addState(MaterialState.hovered);
