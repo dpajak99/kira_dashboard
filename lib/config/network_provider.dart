@@ -1,0 +1,42 @@
+import 'package:dio/browser.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+
+class NetworkProvider {
+  final CacheOptions options = CacheOptions(
+    store: HiveCacheStore(null),
+
+    policy: CachePolicy.forceCache,
+    // Default.
+    // policy: CachePolicy.request,
+    // Returns a cached response on error but for statuses 401 & 403.
+    // Also allows to return a cached response on network errors (e.g. offline usage).
+    // Defaults to [null].
+    hitCacheOnErrorExcept: [401, 403],
+    // Overrides any HTTP directive to delete entry past this duration.
+    // Useful only when origin server has no cache config or custom behaviour is desired.
+    // Defaults to [null].
+    maxStale: const Duration(days: 7),
+    // Default. Allows 3 cache sets and ease cleanup.
+    priority: CachePriority.normal,
+    // Default. Body and headers encryption with your own algorithm.
+    cipher: null,
+    // Default. Key builder to retrieve requests.
+    keyBuilder: CacheOptions.defaultCacheKeyBuilder,
+    // Default. Allows to cache POST requests.
+    // Overriding [keyBuilder] is strongly recommended when [true].
+    allowPostMethod: false,
+  );
+
+  final Dio _baseHttpClient = DioForBrowser(BaseOptions(
+    baseUrl: 'http://65.108.86.252:11000/',
+  ));
+
+  NetworkProvider() {
+    // _baseHttpClient.interceptors.add(LogInterceptor());
+    _baseHttpClient.interceptors.add(DioCacheInterceptor(options: options));
+  }
+
+  Dio get httpClient => _baseHttpClient;
+}

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:kira_dashboard/models/staking_pool_status.dart';
+import 'package:kira_dashboard/models/validator.dart';
 
 class PoolInfo extends Equatable {
   final int id;

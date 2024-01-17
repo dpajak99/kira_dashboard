@@ -1,6 +1,5 @@
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
-import 'package:kira_dashboard/models/coin.dart';
 
 class MsgDisableBasketDeposits extends TxMsg {
   String get name => 'disable-basket-deposits';
@@ -19,6 +18,9 @@ class MsgDisableBasketDeposits extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDisableBasketWithdraws extends TxMsg {
@@ -38,6 +40,9 @@ class MsgDisableBasketWithdraws extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDisableBasketSwaps extends TxMsg {
@@ -57,6 +62,9 @@ class MsgDisableBasketSwaps extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgBasketTokenMint extends TxMsg {
@@ -76,6 +84,9 @@ class MsgBasketTokenMint extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgBasketTokenBurn extends TxMsg {
@@ -95,6 +106,9 @@ class MsgBasketTokenBurn extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class SwapPair {
@@ -123,6 +137,9 @@ class MsgBasketTokenSwap extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgBasketClaimRewards extends TxMsg {
@@ -140,5 +157,8 @@ class MsgBasketClaimRewards extends TxMsg {
 
   @override
   String? get to => null;
+  
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 

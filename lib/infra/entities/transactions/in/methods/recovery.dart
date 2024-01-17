@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgRegisterRecoverySecret extends TxMsg {
@@ -19,6 +20,9 @@ class MsgRegisterRecoverySecret extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRotateRecoveryAddress extends TxMsg {
@@ -40,6 +44,9 @@ class MsgRotateRecoveryAddress extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgIssueRecoveryTokens extends TxMsg {
@@ -55,6 +62,9 @@ class MsgIssueRecoveryTokens extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgBurnRecoveryTokens extends TxMsg {
@@ -72,6 +82,9 @@ class MsgBurnRecoveryTokens extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRegisterRRTokenHolder extends TxMsg {
@@ -87,6 +100,9 @@ class MsgRegisterRRTokenHolder extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgClaimRRHolderRewards extends TxMsg {
@@ -102,6 +118,9 @@ class MsgClaimRRHolderRewards extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRotateValidatorByHalfRRTokenHolder extends TxMsg {
@@ -121,5 +140,8 @@ class MsgRotateValidatorByHalfRRTokenHolder extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 

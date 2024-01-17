@@ -4,11 +4,24 @@ import 'package:kira_dashboard/utils/router/router.gr.dart';
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {
   @override
-  List<AutoRoute> get routes => [
-        AutoRoute(
-          page: PortfolioRoute.page,
-          path: '/portfolio/:address',
-          initial: true,
-        )
-      ];
+  List<AutoRoute> get routes {
+    return [
+      AutoRoute(
+        page: MenuWrapperRoute.page,
+        initial: true,
+        path: '/',
+        children: [
+          AutoRoute(
+            page: PortfolioRoute.page,
+            path: 'portfolio/:address',
+            initial: true,
+          ),
+          AutoRoute(
+            page: ValidatorsRoute.page,
+            path: 'validators',
+          ),
+        ],
+      ),
+    ];
+  }
 }

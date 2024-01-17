@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/widgets/coin_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/token_icon.dart';
 
 class TransactionsPage extends StatelessWidget {
   final PortfolioPageState state;
@@ -19,6 +21,7 @@ class TransactionsPage extends StatelessWidget {
       title: 'Transactions',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomTable<Transaction>(
             items: state.transactions,
@@ -92,19 +95,36 @@ class TransactionsPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: 'Value',
+                width: 200,
+                textAlign: TextAlign.right,
                 cellBuilder: (BuildContext context, Transaction item) {
-                  return const Text(
-                    'X',
-                    style: TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
-                  );
-                },
-              ),
-              ColumnConfig(
-                title: 'Fee',
-                cellBuilder: (BuildContext context, Transaction item) {
-                  return const Text(
-                    'X',
-                    style: TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (item.amounts.isNotEmpty) ...<Widget>[
+                        Expanded(
+                          child: CoinText(
+                            coin: item.amounts.first,
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                      ] else
+                        const Padding(
+                          padding: EdgeInsets.only(right: 32),
+                          child: Text(
+                            '---',
+                            style: TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                          ),
+                        ),
+                      TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
+                      if (item.amounts.length > 1)
+                        Text(
+                          ' + ${item.amounts.length - 1}',
+                          style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                        ),
+                    ],
                   );
                 },
               ),
@@ -136,7 +156,7 @@ class _DirectionChip extends StatelessWidget {
           },
         ),
         child: Text(
-          direction == 'outbound'? 'OUT' : 'IN',
+          direction == 'outbound' ? 'OUT' : 'IN',
           style: TextStyle(
             fontSize: 12,
             color: switch (direction) {

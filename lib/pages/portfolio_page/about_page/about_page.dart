@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
+import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/user_type_chip.dart';
 import 'package:url_recognizer/url_recognizer.dart';
 
 class AboutPage extends StatelessWidget {
@@ -46,9 +47,14 @@ class AboutPage extends StatelessWidget {
                     Text(
                       '${address.substring(0, 8)}...${address.substring(address.length - 8)}',
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: Color(0xff6c86ad),
                       ),
+                    ),
+                    const SizedBox(height: 8),
+                    UserTypeChip(
+                      userType: state.validator != null ? UserType.validator : UserType.user,
+                      alignment: Alignment.center,
                     ),
                     const SizedBox(height: 8),
                     const Divider(color: Color(0xff222b3a)),
@@ -79,6 +85,126 @@ class AboutPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
+        if (state.validator != null) ...<Widget>[
+          CustomCard(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    const Text(
+                      'STATUS',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xff6c86ad),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      switch (state.validator!.status) {
+                        ValidatorStatus.active => 'ACTIVE',
+                        ValidatorStatus.inactive => 'INACTIVE',
+                        ValidatorStatus.jailed => 'JAILED',
+                        ValidatorStatus.paused => 'PAUSED',
+                      },
+                      style: TextStyle(
+                        fontSize: 28,
+                        color: switch (state.validator!.status) {
+                          ValidatorStatus.active => const Color(0xff35b15f),
+                          ValidatorStatus.inactive => const Color(0xffffa500),
+                          ValidatorStatus.jailed => const Color(0xfff12e1f),
+                          ValidatorStatus.paused => const Color(0xfff12e1f),
+                        },
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      'POOL',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xff6c86ad),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      switch (state.validator!.stakingPoolStatus) {
+                        StakingPoolStatus.withdraw => 'WITHDRAW',
+                        StakingPoolStatus.disabled => 'DISABLED',
+                        StakingPoolStatus.enabled => 'ENABLED',
+                      },
+                      style: TextStyle(
+                        fontSize: 28,
+                        color: switch (state.validator!.stakingPoolStatus) {
+                          StakingPoolStatus.withdraw => const Color(0xffffa500),
+                          StakingPoolStatus.disabled => const Color(0xfff12e1f),
+                          StakingPoolStatus.enabled => const Color(0xff35b15f),
+                        },
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      'STREAK',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xff6c86ad),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      state.validator!.streak,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        color: Color(0xfffbfbfb),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text(
+                      'UPTIME',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xff6c86ad),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${state.validator!.uptime}%',
+                      style: const TextStyle(
+                        fontSize: 28,
+                        color: Color(0xfffbfbfb),
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
         CustomCard(
           title: 'Identity records',
           child: CustomTable(
@@ -92,7 +218,7 @@ class AboutPage extends StatelessWidget {
                     item.key,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                    style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                   );
                 },
               ),
@@ -104,7 +230,7 @@ class AboutPage extends StatelessWidget {
                     item.value,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                    style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                   );
                 },
               ),

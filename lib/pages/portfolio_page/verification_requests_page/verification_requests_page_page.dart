@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/verification_request.dart';
@@ -40,7 +39,7 @@ class VerificationRequestsPage extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Color(0xff6c86ad),
                               ),
                             ),
@@ -56,7 +55,7 @@ class VerificationRequestsPage extends StatelessWidget {
                         DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -67,7 +66,7 @@ class VerificationRequestsPage extends StatelessWidget {
                         item.records.map((e) => e.key).join(', '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -80,7 +79,7 @@ class VerificationRequestsPage extends StatelessWidget {
                         maxLines: 1,
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -127,7 +126,7 @@ class VerificationRequestsPage extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Color(0xff6c86ad),
                               ),
                             ),
@@ -143,7 +142,7 @@ class VerificationRequestsPage extends StatelessWidget {
                         DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -154,7 +153,7 @@ class VerificationRequestsPage extends StatelessWidget {
                         item.records.map((e) => e.key).join(', '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -167,7 +166,7 @@ class VerificationRequestsPage extends StatelessWidget {
                         maxLines: 1,
                         textAlign: TextAlign.right,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                       );
                     },
                   ),

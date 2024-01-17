@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/utils/router/router.dart';
 
 void main() {
+  initLocator();
+
   runApp(MyApp());
 }
 
@@ -12,9 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData baseTheme = ThemeData(brightness: Brightness.dark);
+    ThemeData theme =  baseTheme.copyWith(
+      textTheme: GoogleFonts.robotoTextTheme(baseTheme.textTheme),
+    );
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      theme: theme.copyWith(
+        scaffoldBackgroundColor: const Color(0xff06070a),
         colorScheme: const ColorScheme.dark(
           primary: Color(0xff06070a),
           secondary: Color(0xff06070a),

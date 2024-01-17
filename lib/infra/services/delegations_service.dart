@@ -2,7 +2,7 @@ import 'package:kira_dashboard/infra/entities/staking/delegation_entity.dart';
 import 'package:kira_dashboard/infra/repository/delegations_repository.dart';
 import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/pool_info.dart';
-import 'package:kira_dashboard/models/staking_pool_status.dart';
+import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/models/validator_info.dart';
 
 class DelegationsService {

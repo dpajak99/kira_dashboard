@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/widgets/coin_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
@@ -18,6 +19,7 @@ class BalancesPage extends StatelessWidget {
     return CustomCard(
       title: 'Tokens',
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomTable<Coin>(
@@ -30,7 +32,7 @@ class BalancesPage extends StatelessWidget {
                     children: <Widget>[
                       TokenIcon(size: 24, iconUrl: item.icon),
                       const SizedBox(width: 12),
-                      Expanded(child: Text(item.name, style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)))),
+                      Expanded(child: Text(item.name, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
                     ],
                   );
                 },
@@ -43,11 +45,12 @@ class BalancesPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: 'Balance',
+                flex: 2,
                 textAlign: TextAlign.right,
                 cellBuilder: (BuildContext context, Coin item) {
-                  return Text(
-                    item.toNetworkDenominationString(),
-                    style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                  return CoinText(
+                    coin: item,
+                    style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                     textAlign: TextAlign.right,
                   );
                 },

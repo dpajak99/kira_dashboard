@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/delegation.dart';
-import 'package:kira_dashboard/models/staking_pool_status.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
+import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
@@ -24,6 +23,7 @@ class DelegationsPage extends StatelessWidget {
         CustomCard(
           title: 'Undelegations',
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTable<Undelegation>(
@@ -36,7 +36,7 @@ class DelegationsPage extends StatelessWidget {
                         children: <Widget>[
                           IdentityAvatar(size: 32, address: item.validatorInfo.address),
                           const SizedBox(width: 12),
-                          Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)))),
+                          Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
                         ],
                       );
                     },
@@ -48,7 +48,7 @@ class DelegationsPage extends StatelessWidget {
                         item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -59,7 +59,7 @@ class DelegationsPage extends StatelessWidget {
                       return Text(
                         DateFormat('d MMM y, HH:mm').format(item.expiry),
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: item.expiry.difference(DateTime.now()).inSeconds > 0 ? const Color(0xfff12e1f) : const Color(0xff35b15f),
                         ),
                         textAlign: TextAlign.right,
@@ -91,6 +91,7 @@ class DelegationsPage extends StatelessWidget {
         CustomCard(
           title: 'Delegations',
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTable<Delegation>(
@@ -103,7 +104,7 @@ class DelegationsPage extends StatelessWidget {
                         children: <Widget>[
                           IdentityAvatar(size: 32, address: item.validatorInfo.address),
                           const SizedBox(width: 12),
-                          Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)))),
+                          Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
                         ],
                       );
                     },
@@ -120,7 +121,7 @@ class DelegationsPage extends StatelessWidget {
                     cellBuilder: (BuildContext context, Delegation item) {
                       return Text(
                         '${item.poolInfo.commissionPercentage}%',
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                         textAlign: TextAlign.right,
                       );
                     },

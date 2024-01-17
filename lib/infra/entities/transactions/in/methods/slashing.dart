@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgActivate extends TxMsg {
@@ -13,6 +14,9 @@ class MsgActivate extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgPause extends TxMsg {
@@ -28,6 +32,9 @@ class MsgPause extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgUnpause extends TxMsg {
@@ -43,4 +50,7 @@ class MsgUnpause extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }

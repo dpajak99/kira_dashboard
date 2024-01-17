@@ -31,8 +31,7 @@ class UrlAvatarWidget extends StatelessWidget {
       ),
     );
 
-    Widget secondaryAvatarWidget = ClipRRect(
-      borderRadius: BorderRadius.circular(15),
+    Widget secondaryAvatarWidget = ClipOval(
       child: SizedBox(
         height: secondaryAvatarSize,
         width: secondaryAvatarSize,
@@ -50,8 +49,7 @@ class UrlAvatarWidget extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+            child: ClipOval(
               child: Container(
                 width: primaryAvatarSize,
                 height: primaryAvatarSize,

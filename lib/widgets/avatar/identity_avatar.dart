@@ -24,8 +24,7 @@ class IdentityAvatar extends StatelessWidget {
         size: size,
       );
     } else {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(size*0.05),
+      return ClipOval(
         child: SizedBox(
           height: size,
           width: size,

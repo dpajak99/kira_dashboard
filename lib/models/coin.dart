@@ -56,10 +56,15 @@ class Coin {
   }
 
   String toNetworkDenominationString() {
+
+    return '$networkDenominationAmount $symbol';
+  }
+
+  String get networkDenominationAmount {
     double lowestDenomination = double.parse(amount);
     double networkDenomination = lowestDenomination / pow(10, decimals);
 
-    return '$networkDenomination $symbol';
+    return '$networkDenomination';
   }
 }
 

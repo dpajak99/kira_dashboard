@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class PermInfo {
@@ -75,6 +76,9 @@ class MsgCreateSpendingPool extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDepositSpendingPool extends TxMsg {
@@ -94,6 +98,9 @@ class MsgDepositSpendingPool extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRegisterSpendingPoolBeneficiary extends TxMsg {
@@ -111,6 +118,9 @@ class MsgRegisterSpendingPoolBeneficiary extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgClaimSpendingPool extends TxMsg {
@@ -128,5 +138,8 @@ class MsgClaimSpendingPool extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 

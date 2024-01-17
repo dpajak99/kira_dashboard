@@ -20,6 +20,9 @@ class MsgSubmitProposal extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 enum VoteOption {
@@ -53,6 +56,9 @@ class MsgVoteProposal extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgWhitelistPermissions extends TxMsg {
@@ -72,6 +78,9 @@ class MsgWhitelistPermissions extends TxMsg {
 
   @override
   String? get to => address;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgBlacklistPermissions extends TxMsg {
@@ -91,6 +100,9 @@ class MsgBlacklistPermissions extends TxMsg {
 
   @override
   String? get to => address;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgClaimCouncilor extends TxMsg {
@@ -118,9 +130,10 @@ class MsgClaimCouncilor extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
-
-
 
 class MsgSetNetworkProperties extends TxMsg {
   String get name => 'set-network-properties';
@@ -137,6 +150,9 @@ class MsgSetNetworkProperties extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgSetExecutionFee extends TxMsg {
@@ -162,6 +178,9 @@ class MsgSetExecutionFee extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgCreateRole extends TxMsg {
@@ -181,6 +200,9 @@ class MsgCreateRole extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgAssignRole extends TxMsg {
@@ -200,6 +222,9 @@ class MsgAssignRole extends TxMsg {
 
   @override
   String? get to => address;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgUnassignRole extends TxMsg {
@@ -219,6 +244,9 @@ class MsgUnassignRole extends TxMsg {
 
   @override
   String? get to => address;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgWhitelistRolePermission extends TxMsg {
@@ -238,6 +266,9 @@ class MsgWhitelistRolePermission extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgBlacklistRolePermission extends TxMsg {
@@ -257,6 +288,9 @@ class MsgBlacklistRolePermission extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRemoveWhitelistRolePermission extends TxMsg {
@@ -276,6 +310,9 @@ class MsgRemoveWhitelistRolePermission extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRemoveBlacklistRolePermission extends TxMsg {
@@ -295,6 +332,9 @@ class MsgRemoveBlacklistRolePermission extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class IdentityInfoEntry {
@@ -321,6 +361,9 @@ class MsgRegisterIdentityRecords extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRequestIdentityRecordsVerify extends TxMsg {
@@ -342,6 +385,9 @@ class MsgRequestIdentityRecordsVerify extends TxMsg {
 
   @override
   String? get to => verifier;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[tip];
 }
 
 class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
@@ -361,6 +407,9 @@ class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
@@ -378,4 +427,7 @@ class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }

@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgUpsertTokenAlias extends TxMsg {
@@ -25,6 +26,9 @@ class MsgUpsertTokenAlias extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgUpsertTokenRate extends TxMsg {
@@ -54,4 +58,7 @@ class MsgUpsertTokenRate extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }

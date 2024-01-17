@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class CustodySettings {
@@ -42,6 +43,9 @@ class MsgCreateCustodyRecord extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDisableCustodyRecord extends TxMsg {
@@ -65,6 +69,9 @@ class MsgDisableCustodyRecord extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDropCustodyRecord extends TxMsg {
@@ -84,6 +91,9 @@ class MsgDropCustodyRecord extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgAddToCustodyWhiteList extends TxMsg {
@@ -109,6 +119,9 @@ class MsgAddToCustodyWhiteList extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgAddToCustodyCustodians extends TxMsg {
@@ -134,6 +147,9 @@ class MsgAddToCustodyCustodians extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRemoveFromCustodyCustodians extends TxMsg {
@@ -159,6 +175,9 @@ class MsgRemoveFromCustodyCustodians extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDropCustodyCustodians extends TxMsg {
@@ -182,6 +201,9 @@ class MsgDropCustodyCustodians extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRemoveFromCustodyWhiteList extends TxMsg {
@@ -207,6 +229,9 @@ class MsgRemoveFromCustodyWhiteList extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDropCustodyWhiteList extends TxMsg {
@@ -230,6 +255,9 @@ class MsgDropCustodyWhiteList extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgApproveCustodyTransaction extends TxMsg {
@@ -249,6 +277,9 @@ class MsgApproveCustodyTransaction extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDeclineCustodyTransaction extends TxMsg {
@@ -268,6 +299,9 @@ class MsgDeclineCustodyTransaction extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgPasswordConfirmTransaction extends TxMsg {
@@ -289,6 +323,9 @@ class MsgPasswordConfirmTransaction extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgSend extends TxMsg {
@@ -312,4 +349,7 @@ class MsgSend extends TxMsg {
 
   @override
   String? get to => toAddress;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }

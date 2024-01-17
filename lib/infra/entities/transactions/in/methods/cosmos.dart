@@ -18,4 +18,7 @@ class MsgSend extends TxMsg {
 
   @override
   String? get to => toAddress;
+
+  @override
+  List<CoinEntity> get txAmounts => amounts;
 }

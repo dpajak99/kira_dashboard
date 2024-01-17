@@ -3,6 +3,7 @@ import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
+import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/models/verification_request.dart';
 import 'package:kira_dashboard/pages/page_state.dart';
 
@@ -14,6 +15,7 @@ class PortfolioPageState extends PageState {
   final List<VerificationRequest> inboundVerificationRequests;
   final List<VerificationRequest> outboundVerificationRequests;
   final List<Transaction> transactions;
+  final Validator? validator;
 
   PortfolioPageState({
     required super.isLoading,
@@ -24,8 +26,9 @@ class PortfolioPageState extends PageState {
     this.outboundVerificationRequests = const <VerificationRequest>[],
     this.transactions = const <Transaction>[],
     IdentityRecords? identityRecords,
+    this.validator,
   }) : identityRecords = identityRecords ?? IdentityRecords();
 
   @override
-  List<Object?> get props => <Object?>[balance, identityRecords, delegations, undelegations, inboundVerificationRequests, outboundVerificationRequests];
+  List<Object?> get props => <Object?>[balance, identityRecords, validator, delegations, undelegations, inboundVerificationRequests, outboundVerificationRequests];
 }

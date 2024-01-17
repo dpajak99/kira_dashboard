@@ -20,6 +20,9 @@ class MsgUpsertStakingPool extends TxMsg {
 
   @override
   String? get to => validator;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDelegate extends TxMsg {
@@ -39,6 +42,9 @@ class MsgDelegate extends TxMsg {
 
   @override
   String? get to => validatorAddress;
+
+  @override
+  List<CoinEntity> get txAmounts => amounts;
 }
 
 class MsgUndelegate extends TxMsg {
@@ -58,6 +64,9 @@ class MsgUndelegate extends TxMsg {
 
   @override
   String? get to => validatorAddress;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgClaimRewards extends TxMsg {
@@ -73,6 +82,9 @@ class MsgClaimRewards extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgClaimUndelegation extends TxMsg {
@@ -90,6 +102,9 @@ class MsgClaimUndelegation extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgClaimMaturedUndelegations extends TxMsg {
@@ -105,6 +120,9 @@ class MsgClaimMaturedUndelegations extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgSetCompoundInfo extends TxMsg {
@@ -124,6 +142,9 @@ class MsgSetCompoundInfo extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRegisterDelegator extends TxMsg {
@@ -139,5 +160,8 @@ class MsgRegisterDelegator extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 

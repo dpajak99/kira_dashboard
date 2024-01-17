@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgCreateDappProposal extends TxMsg {
@@ -17,6 +18,9 @@ class MsgCreateDappProposal extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgBondDappProposal extends TxMsg {
@@ -36,6 +40,9 @@ class MsgBondDappProposal extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgReclaimDappBondProposal extends TxMsg {
@@ -55,6 +62,9 @@ class MsgReclaimDappBondProposal extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgJoinDappVerifierWithBond extends TxMsg {
@@ -74,6 +84,9 @@ class MsgJoinDappVerifierWithBond extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgExitDapp extends TxMsg {
@@ -91,6 +104,9 @@ class MsgExitDapp extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRedeemDappPoolTx extends TxMsg {
@@ -112,6 +128,9 @@ class MsgRedeemDappPoolTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgSwapDappPoolTx extends TxMsg {
@@ -133,6 +152,9 @@ class MsgSwapDappPoolTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgConvertDappPoolTx extends TxMsg {
@@ -154,6 +176,9 @@ class MsgConvertDappPoolTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgPauseDappTx extends TxMsg {
@@ -171,6 +196,9 @@ class MsgPauseDappTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgUnPauseDappTx extends TxMsg {
@@ -188,6 +216,9 @@ class MsgUnPauseDappTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgReactivateDappTx extends TxMsg {
@@ -205,6 +236,9 @@ class MsgReactivateDappTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgExecuteDappTx extends TxMsg {
@@ -224,6 +258,9 @@ class MsgExecuteDappTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgDenounceLeaderTx extends TxMsg {
@@ -247,6 +284,9 @@ class MsgDenounceLeaderTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgTransitionDappTx extends TxMsg {
@@ -270,6 +310,9 @@ class MsgTransitionDappTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgApproveDappTransitionTx extends TxMsg {
@@ -289,6 +332,9 @@ class MsgApproveDappTransitionTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgRejectDappTransitionTx extends TxMsg {
@@ -308,6 +354,9 @@ class MsgRejectDappTransitionTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgTransferDappTx extends TxMsg {
@@ -325,6 +374,9 @@ class MsgTransferDappTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgAckTransferDappTx extends TxMsg {
@@ -342,6 +394,9 @@ class MsgAckTransferDappTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgMintCreateFtTx extends TxMsg {
@@ -383,6 +438,9 @@ class MsgMintCreateFtTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgMintCreateNftTx extends TxMsg {
@@ -428,6 +486,9 @@ class MsgMintCreateNftTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgMintIssueTx extends TxMsg {
@@ -449,6 +510,9 @@ class MsgMintIssueTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 
 class MsgMintBurnTx extends TxMsg {
@@ -468,5 +532,8 @@ class MsgMintBurnTx extends TxMsg {
 
   @override
   String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
 

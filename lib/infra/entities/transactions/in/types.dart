@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/methods/basket.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/methods/collectives.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/methods/cosmos.dart' as cosmos;
@@ -15,7 +16,7 @@ import 'package:kira_dashboard/infra/entities/transactions/in/methods/tokens.dar
 abstract class TxMsg {
   String? get from;
   String? get to;
-
+  List<CoinEntity> get txAmounts;
 
   static TxMsg fromJsonByName(String name, Map<String, dynamic> json) {
     return switch (name) {
