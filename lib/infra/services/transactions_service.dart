@@ -1,4 +1,5 @@
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
+import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 import 'package:kira_dashboard/infra/repository/transactions_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
@@ -13,14 +14,19 @@ class TransactionsService {
     List<TransactionEntity> transactionEntities = await transactionsRepository.getAll(address);
 
     List<Transaction> transactions = await Future.wait<Transaction>(transactionEntities.map((TransactionEntity transactionEntity) async {
+      Map<String, dynamic>? msgJson = transactionEntity.txs.firstOrNull;
+      TxMsg? txMsg = msgJson != null ? TxMsg.fromJsonByName(msgJson['type'], msgJson) : null;
+
       return Transaction(
         time: CustomDateUtils.buildDateFromSecondsSinceEpoch(transactionEntity.time),
         hash: transactionEntity.hash,
         status: transactionEntity.status,
         direction: transactionEntity.direction,
-        memo: transactionEntity.memo,
         fee: await tokensService.buildCoins(transactionEntity.fee.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList()),
-        txs: transactionEntity.txs,
+        amounts: [],
+        from: txMsg?.from,
+        to: txMsg?.to,
+        method: txMsg.runtimeType.toString(),
       );
     }));
 

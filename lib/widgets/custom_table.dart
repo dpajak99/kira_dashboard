@@ -4,6 +4,7 @@ typedef CellBuilder<T> = Widget Function(BuildContext context, T item);
 
 class ColumnConfig<T> {
   final int flex;
+  final double? width;
   final String title;
   final TextAlign textAlign;
   final CellBuilder<T> cellBuilder;
@@ -12,6 +13,7 @@ class ColumnConfig<T> {
     required this.title,
     required this.cellBuilder,
     this.flex = 1,
+    this.width,
     this.textAlign = TextAlign.left,
   });
 }
@@ -42,15 +44,26 @@ class CustomTable<T> extends StatelessWidget {
           child: Row(
             children: <Widget>[
               for (int i = 0; i < columns.length; i++)
-                Expanded(
-                  flex: columns[i].flex,
-                  child: _TableCellHeader(
-                    columns[i].title,
-                    first: i == 0,
-                    last: i == columns.length - 1,
-                    textAlign: columns[i].textAlign,
+                if (columns[i].width != null)
+                  SizedBox(
+                    width: columns[i].width,
+                    child: _TableCellHeader(
+                      columns[i].title,
+                      first: i == 0,
+                      last: i == columns.length - 1,
+                      textAlign: columns[i].textAlign,
+                    ),
+                  )
+                else
+                  Expanded(
+                    flex: columns[i].flex,
+                    child: _TableCellHeader(
+                      columns[i].title,
+                      first: i == 0,
+                      last: i == columns.length - 1,
+                      textAlign: columns[i].textAlign,
+                    ),
                   ),
-                ),
             ],
           ),
         ),
@@ -58,15 +71,26 @@ class CustomTable<T> extends StatelessWidget {
           Row(
             children: <Widget>[
               for (int i = 0; i < columns.length; i++)
-                Expanded(
-                  flex: columns[i].flex,
-                  child: _TableCell(
-                    columns[i].cellBuilder(context, item),
-                    first: i == 0,
-                    last: i == columns.length - 1,
-                    textAlign: columns[i].textAlign,
+                if (columns[i].width != null)
+                  SizedBox(
+                    width: columns[i].width,
+                    child: _TableCell(
+                      columns[i].cellBuilder(context, item),
+                      first: i == 0,
+                      last: i == columns.length - 1,
+                      textAlign: columns[i].textAlign,
+                    ),
+                  )
+                else
+                  Expanded(
+                    flex: columns[i].flex,
+                    child: _TableCell(
+                      columns[i].cellBuilder(context, item),
+                      first: i == 0,
+                      last: i == columns.length - 1,
+                      textAlign: columns[i].textAlign,
+                    ),
                   ),
-                ),
             ],
           )
       ],
