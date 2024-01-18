@@ -41,7 +41,7 @@ class TokensService {
       TokenRateEntity? tokenRate = tokenRatesMap[simpleCoin.denom];
 
       return Coin(
-        type: simpleCoin.denom == 'ukex' ? CoinType.native : CoinType.token,
+        type: simpleCoin.denom == 'udev' ? CoinType.native : CoinType.token,
         decimals: tokenAlias?.decimals ?? 0,
         amount: simpleCoin.amount,
         denom: simpleCoin.denom,

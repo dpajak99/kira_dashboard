@@ -9,7 +9,7 @@ class MsgUpsertTokenAlias extends TxMsg {
   final String icon;
   final int decimals;
   final List<String> denoms;
-  final bool invalidated;
+  final bool? invalidated;
   final String proposer;
 
   MsgUpsertTokenAlias.fromJson(Map<String, dynamic> json)
@@ -18,7 +18,7 @@ class MsgUpsertTokenAlias extends TxMsg {
         icon = json['icon'] as String,
         decimals = json['decimals'] as int,
         denoms = (json['denoms'] as List<dynamic>).map((e) => e as String).toList(),
-        invalidated = json['invalidated'] as bool,
+        invalidated = json['invalidated'] as bool?,
         proposer = json['proposer'] as String;
 
   @override

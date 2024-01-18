@@ -17,8 +17,8 @@ class ValidatorEntity extends Equatable {
   final String lastPresentBlock;
   final String missedBlocksCounter;
   final String producedBlocksCounter;
-  final String stakingPoolId;
-  final String stakingPoolStatus;
+  final String? stakingPoolId;
+  final String? stakingPoolStatus;
   final String? website;
   final String? logo;
   final String? social;

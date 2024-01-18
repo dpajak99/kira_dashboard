@@ -26,6 +26,10 @@ class MenuWrapperPage extends StatelessWidget {
                     title: const Text('Blocks'),
                   ),
                   ListTile(
+                    onTap: () => AutoRouter.of(context).navigate(BlockTransactionsRoute()),
+                    title: const Text('Transactions'),
+                  ),
+                  ListTile(
                     onTap: () => AutoRouter.of(context).navigate(const ProposalsRoute()),
                     title: const Text('Proposals'),
                   ),

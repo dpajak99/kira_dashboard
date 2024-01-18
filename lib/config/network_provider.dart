@@ -30,7 +30,7 @@ class NetworkProvider {
   );
 
   final Dio _baseHttpClient = DioForBrowser(BaseOptions(
-    baseUrl: 'http://65.108.86.252:11000/',
+    baseUrl: 'http://89.128.117.28:11000/',
   ));
 
   NetworkProvider() {

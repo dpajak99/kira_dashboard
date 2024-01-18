@@ -57,7 +57,7 @@ class Validator {
   final String lastPresentBlock;
   final String missedBlocksCounter;
   final String producedBlocksCounter;
-  final String stakingPoolId;
+  final String? stakingPoolId;
   final StakingPoolStatus stakingPoolStatus;
   final String? website;
   final String? logo;
@@ -80,7 +80,7 @@ class Validator {
     required this.lastPresentBlock,
     required this.missedBlocksCounter,
     required this.producedBlocksCounter,
-    required this.stakingPoolId,
+    this.stakingPoolId,
     required this.stakingPoolStatus,
     this.website,
     this.logo,

@@ -19,19 +19,25 @@ class TokenIcon extends StatelessWidget {
         iconUrl!,
         width: size,
         height: size,
-        fit: BoxFit.contain,
+        fit: BoxFit.fitHeight,
         errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
           return SizedBox(width: size, height: size);
         },
       );
     }
-    return SizedBox(
-      width: size,
-      height: size,
-      child: CircleAvatar(
-        backgroundColor: const Color(0xff263042),
+
+    if (iconUrl == null) {
+      return SizedBox(
+        width: size,
+        height: size,
+        child: const CircleAvatar(backgroundColor: Color(0xff263042)),
+      );
+    } else {
+      return SizedBox(
+        width: size,
+        height: size,
         child: child,
-      ),
-    );
+      );
+    }
   }
 }

@@ -1,8 +1,10 @@
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
+import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 import 'package:kira_dashboard/infra/repository/transactions_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
+import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/utils/custom_date_utils.dart';
@@ -12,25 +14,49 @@ class TransactionsService {
   final TokensService tokensService = TokensService();
 
   Future<List<Transaction>> getAll(String address) async {
-    List<TransactionEntity> transactionEntities = await transactionsRepository.getAll(address);
+    List<TransactionEntity> transactionEntities = await transactionsRepository.getUserTransactions(address);
 
-    List<Transaction> transactions = await Future.wait<Transaction>(transactionEntities.map((TransactionEntity transactionEntity) async {
-      Map<String, dynamic>? msgJson = transactionEntity.txs.firstOrNull;
+    List<Transaction> transactions = await Future.wait<Transaction>(transactionEntities.map((TransactionEntity entity) async {
+      Map<String, dynamic>? msgJson = entity.txs.firstOrNull;
       TxMsg? txMsg = msgJson != null ? TxMsg.fromJsonByName(msgJson['type'], msgJson) : null;
 
       List<CoinEntity> amounts = <CoinEntity>[...(txMsg?.txAmounts ?? <CoinEntity>[])];
       List<SimpleCoin> coins = amounts.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
 
       return Transaction(
-        time: CustomDateUtils.buildDateFromSecondsSinceEpoch(transactionEntity.time),
-        hash: transactionEntity.hash,
-        status: transactionEntity.status,
-        direction: transactionEntity.direction,
-        fee: await tokensService.buildCoins(transactionEntity.fee.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList()),
+        time: CustomDateUtils.buildDateFromSecondsSinceEpoch(entity.time),
+        hash: entity.hash,
+        status: entity.status,
+        direction: entity.direction,
+        fee: await tokensService.buildCoins(entity.fee.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList()),
         amounts: await tokensService.buildCoins(coins),
         from: txMsg?.from,
         to: txMsg?.to,
         method: txMsg.runtimeType.toString(),
+      );
+    }));
+
+    return transactions;
+  }
+
+  Future<List<BlockTransaction>> getBlockTransactions(String blockId) async {
+    List<BlockTransactionEntity> blockTransactionEntities = await transactionsRepository.getBlockTransactions(blockId);
+
+    List<BlockTransaction> transactions = await Future.wait<BlockTransaction>(blockTransactionEntities.map((BlockTransactionEntity entity) async {
+      TypedMsg? typedMsg = entity.msgs.firstOrNull;
+
+      List<CoinEntity> amounts = <CoinEntity>[...(typedMsg?.data.txAmounts ?? <CoinEntity>[])];
+      List<SimpleCoin> coins = amounts.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
+
+      return BlockTransaction(
+        block: entity.blockHeight,
+        time: CustomDateUtils.buildDateFromSecondsSinceEpoch(entity.blockTimestamp),
+        hash: entity.hash,
+        fee: await tokensService.buildCoins(entity.fees.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList()),
+        amounts: await tokensService.buildCoins(coins),
+        from: typedMsg?.data.from,
+        to: typedMsg?.data.to,
+        method: entity.runtimeType.toString(),
       );
     }));
 

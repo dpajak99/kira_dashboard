@@ -9,10 +9,9 @@ class QueryVerificationRequestsResponse extends Equatable {
   });
 
   factory QueryVerificationRequestsResponse.fromJson(Map<String, dynamic> json) {
+    List<dynamic> verificationRequests = json['verify_records'] != null ? json['verify_records'] as List<dynamic> : List<dynamic>.empty();
     return QueryVerificationRequestsResponse(
-      verificationRequests: ((json['verify_records'] as List<dynamic>?) ?? List<dynamic>.empty())
-          .map((dynamic e) => VerificationRequestEntity.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      verificationRequests: verificationRequests.map((dynamic e) => VerificationRequestEntity.fromJson(e as Map<String, dynamic>)).toList(),
     );
   }
 

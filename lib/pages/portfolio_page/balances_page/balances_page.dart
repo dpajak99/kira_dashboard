@@ -32,7 +32,7 @@ class BalancesPage extends StatelessWidget {
                     children: <Widget>[
                       TokenIcon(size: 24, iconUrl: item.icon),
                       const SizedBox(width: 12),
-                      Expanded(child: Text(item.name, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                      Expanded(child: Text(item.name, maxLines: 1,  style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
                     ],
                   );
                 },

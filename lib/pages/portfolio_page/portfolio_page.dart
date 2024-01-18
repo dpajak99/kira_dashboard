@@ -8,6 +8,7 @@ import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_page.dart';
 import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/verification_requests_page_page.dart';
+import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
 import 'package:kira_dashboard/widgets/sliver_page_padding.dart';
@@ -67,8 +68,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             ],
                           ),
                           const SizedBox(),
-                          Text(
-                            '${widget.address.substring(0, 8)}...${widget.address.substring(widget.address.length - 8)}',
+                          CopyableAddressText(
+                            address: widget.address,
                             style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xff6c86ad),
