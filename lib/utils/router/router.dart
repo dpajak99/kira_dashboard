@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:kira_dashboard/pages/block_transactions_page/block_transactions_page.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 
 @AutoRouterConfig()
@@ -27,6 +28,10 @@ class AppRouter extends $AppRouter {
           AutoRoute(
             page: ProposalsRoute.page,
             path: 'proposals',
+          ),
+          AutoRoute(
+            page: BlockTransactionsRoute.page,
+            path: 'transactions',
           ),
         ],
       ),

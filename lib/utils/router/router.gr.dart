@@ -8,30 +8,46 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i6;
-import 'package:flutter/material.dart' as _i7;
-import 'package:kira_dashboard/pages/blocks_page/blocks_page.dart' as _i1;
-import 'package:kira_dashboard/pages/menu_wrapper_page.dart' as _i2;
-import 'package:kira_dashboard/pages/portfolio_page/portfolio_page.dart' as _i3;
-import 'package:kira_dashboard/pages/proposals_page/proposals_page.dart' as _i4;
+import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:flutter/cupertino.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
+import 'package:kira_dashboard/pages/block_transactions_page/block_transactions_page.dart'
+    as _i1;
+import 'package:kira_dashboard/pages/blocks_page/blocks_page.dart' as _i2;
+import 'package:kira_dashboard/pages/menu_wrapper_page.dart' as _i3;
+import 'package:kira_dashboard/pages/portfolio_page/portfolio_page.dart' as _i4;
+import 'package:kira_dashboard/pages/proposals_page/proposals_page.dart' as _i5;
 import 'package:kira_dashboard/pages/valdators_page/validators_page.dart'
-    as _i5;
+    as _i6;
 
-abstract class $AppRouter extends _i6.RootStackRouter {
+abstract class $AppRouter extends _i7.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i6.PageFactory> pagesMap = {
-    BlocksRoute.name: (routeData) {
-      return _i6.AutoRoutePage<dynamic>(
+  final Map<String, _i7.PageFactory> pagesMap = {
+    BlockTransactionsRoute.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<BlockTransactionsRouteArgs>(
+          orElse: () => BlockTransactionsRouteArgs(
+              blockId: queryParams.optString('block')));
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.BlocksPage(),
+        child: _i1.BlockTransactionsPage(
+          blockId: args.blockId,
+          key: args.key,
+        ),
+      );
+    },
+    BlocksRoute.name: (routeData) {
+      return _i7.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i2.BlocksPage(),
       );
     },
     MenuWrapperRoute.name: (routeData) {
-      return _i6.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.MenuWrapperPage(),
+        child: const _i3.MenuWrapperPage(),
       );
     },
     PortfolioRoute.name: (routeData) {
@@ -42,33 +58,73 @@ abstract class $AppRouter extends _i6.RootStackRouter {
                 'address',
                 '',
               )));
-      return _i6.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.PortfolioPage(
+        child: _i4.PortfolioPage(
           address: args.address,
           key: args.key,
         ),
       );
     },
     ProposalsRoute.name: (routeData) {
-      return _i6.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.ProposalsPage(),
+        child: const _i5.ProposalsPage(),
       );
     },
     ValidatorsRoute.name: (routeData) {
-      return _i6.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.ValidatorsPage(),
+        child: const _i6.ValidatorsPage(),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.BlocksPage]
-class BlocksRoute extends _i6.PageRouteInfo<void> {
-  const BlocksRoute({List<_i6.PageRouteInfo>? children})
+/// [_i1.BlockTransactionsPage]
+class BlockTransactionsRoute
+    extends _i7.PageRouteInfo<BlockTransactionsRouteArgs> {
+  BlockTransactionsRoute({
+    String? blockId,
+    _i8.Key? key,
+    List<_i7.PageRouteInfo>? children,
+  }) : super(
+          BlockTransactionsRoute.name,
+          args: BlockTransactionsRouteArgs(
+            blockId: blockId,
+            key: key,
+          ),
+          rawQueryParams: {'block': blockId},
+          initialChildren: children,
+        );
+
+  static const String name = 'BlockTransactionsRoute';
+
+  static const _i7.PageInfo<BlockTransactionsRouteArgs> page =
+      _i7.PageInfo<BlockTransactionsRouteArgs>(name);
+}
+
+class BlockTransactionsRouteArgs {
+  const BlockTransactionsRouteArgs({
+    this.blockId,
+    this.key,
+  });
+
+  final String? blockId;
+
+  final _i8.Key? key;
+
+  @override
+  String toString() {
+    return 'BlockTransactionsRouteArgs{blockId: $blockId, key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i2.BlocksPage]
+class BlocksRoute extends _i7.PageRouteInfo<void> {
+  const BlocksRoute({List<_i7.PageRouteInfo>? children})
       : super(
           BlocksRoute.name,
           initialChildren: children,
@@ -76,13 +132,13 @@ class BlocksRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'BlocksRoute';
 
-  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.MenuWrapperPage]
-class MenuWrapperRoute extends _i6.PageRouteInfo<void> {
-  const MenuWrapperRoute({List<_i6.PageRouteInfo>? children})
+/// [_i3.MenuWrapperPage]
+class MenuWrapperRoute extends _i7.PageRouteInfo<void> {
+  const MenuWrapperRoute({List<_i7.PageRouteInfo>? children})
       : super(
           MenuWrapperRoute.name,
           initialChildren: children,
@@ -90,16 +146,16 @@ class MenuWrapperRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'MenuWrapperRoute';
 
-  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i3.PortfolioPage]
-class PortfolioRoute extends _i6.PageRouteInfo<PortfolioRouteArgs> {
+/// [_i4.PortfolioPage]
+class PortfolioRoute extends _i7.PageRouteInfo<PortfolioRouteArgs> {
   PortfolioRoute({
     String address = '',
-    _i7.Key? key,
-    List<_i6.PageRouteInfo>? children,
+    _i9.Key? key,
+    List<_i7.PageRouteInfo>? children,
   }) : super(
           PortfolioRoute.name,
           args: PortfolioRouteArgs(
@@ -112,8 +168,8 @@ class PortfolioRoute extends _i6.PageRouteInfo<PortfolioRouteArgs> {
 
   static const String name = 'PortfolioRoute';
 
-  static const _i6.PageInfo<PortfolioRouteArgs> page =
-      _i6.PageInfo<PortfolioRouteArgs>(name);
+  static const _i7.PageInfo<PortfolioRouteArgs> page =
+      _i7.PageInfo<PortfolioRouteArgs>(name);
 }
 
 class PortfolioRouteArgs {
@@ -124,7 +180,7 @@ class PortfolioRouteArgs {
 
   final String address;
 
-  final _i7.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -133,9 +189,9 @@ class PortfolioRouteArgs {
 }
 
 /// generated route for
-/// [_i4.ProposalsPage]
-class ProposalsRoute extends _i6.PageRouteInfo<void> {
-  const ProposalsRoute({List<_i6.PageRouteInfo>? children})
+/// [_i5.ProposalsPage]
+class ProposalsRoute extends _i7.PageRouteInfo<void> {
+  const ProposalsRoute({List<_i7.PageRouteInfo>? children})
       : super(
           ProposalsRoute.name,
           initialChildren: children,
@@ -143,13 +199,13 @@ class ProposalsRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'ProposalsRoute';
 
-  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.ValidatorsPage]
-class ValidatorsRoute extends _i6.PageRouteInfo<void> {
-  const ValidatorsRoute({List<_i6.PageRouteInfo>? children})
+/// [_i6.ValidatorsPage]
+class ValidatorsRoute extends _i7.PageRouteInfo<void> {
+  const ValidatorsRoute({List<_i7.PageRouteInfo>? children})
       : super(
           ValidatorsRoute.name,
           initialChildren: children,
@@ -157,5 +213,5 @@ class ValidatorsRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'ValidatorsRoute';
 
-  static const _i6.PageInfo<void> page = _i6.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
