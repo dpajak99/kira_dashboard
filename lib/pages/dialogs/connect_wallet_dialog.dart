@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kira_dashboard/pages/dialogs/create_wallet_dialog_content.dart';
+import 'package:kira_dashboard/pages/dialogs/create_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_page.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
 class ConnectWalletDialog extends DialogContentWidget {
@@ -19,16 +20,17 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           children: [
             Expanded(
               child: _OptionItem(
                 leading: Icons.abc,
+                onTap: () => DialogPage.of(context).navigate(const SignInMnemonicDialog()),
                 title: 'Mnemonic',
               ),
             ),
-            SizedBox(width: 8),
-            Expanded(
+            const SizedBox(width: 8),
+            const Expanded(
               child: _OptionItem(
                 leading: Icons.file_upload_outlined,
                 title: 'Keyfile',
@@ -93,16 +95,19 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
 class _OptionItem extends StatelessWidget {
   final IconData leading;
   final String title;
+  final VoidCallback? onTap;
 
   const _OptionItem({
     required this.leading,
     required this.title,
+    this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return MouseStateListener(
+      onTap: onTap,
       childBuilder: (Set<MaterialState> states) {
         return Container(
           decoration: BoxDecoration(

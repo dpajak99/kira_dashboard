@@ -30,6 +30,7 @@ class DialogPageState extends State<DialogPage> {
   Widget build(BuildContext context) {
     return CustomDialog(
       title: content.title,
+      width: content.width,
       child: AnimatedSize(
         duration: const Duration(milliseconds: 100),
         curve: Curves.decelerate,

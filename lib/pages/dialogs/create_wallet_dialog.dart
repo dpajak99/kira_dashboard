@@ -14,6 +14,9 @@ class CreateWalletDialog extends DialogContentWidget {
   String get title => 'Create Wallet';
 
   @override
+  double get width => 550;
+
+  @override
   State<StatefulWidget> createState() => _ConnectWalletDialogState();
 }
 

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class CustomDialog extends StatelessWidget {
   final String title;
   final Widget child;
+  final double width;
 
   const CustomDialog({
     required this.title,
     required this.child,
+    required this.width,
     super.key,
   });
 
@@ -14,7 +16,7 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        width: 500,
+        width: width,
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
           color: Color(0xff131823),
