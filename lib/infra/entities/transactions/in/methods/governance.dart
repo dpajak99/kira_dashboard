@@ -395,12 +395,12 @@ class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
 
   final String verifier;
   final int verifyRequestId;
-  final bool yes;
+  final bool? yes;
 
   MsgHandleIdentityRecordsVerifyRequest.fromJson(Map<String, dynamic> json)
       : verifier = json['verifier'] as String,
         verifyRequestId = json['verify_request_id'] as int,
-        yes = json['yes'] as bool;
+        yes = json['yes'] as bool?;
 
   @override
   String? get from => verifier;

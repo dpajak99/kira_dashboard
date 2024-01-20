@@ -29,7 +29,6 @@ class TransactionsPage extends StatelessWidget {
             columns: <ColumnConfig<Transaction>>[
               ColumnConfig(
                 title: 'Hash',
-                width: 100,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return Text(
                     item.hash,
@@ -62,6 +61,7 @@ class TransactionsPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: 'From',
+                width: 170,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return OpenableAddressText(
                     address: item.from,
@@ -81,6 +81,7 @@ class TransactionsPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: 'To',
+                width: 170,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return OpenableAddressText(
                     address: item.to,

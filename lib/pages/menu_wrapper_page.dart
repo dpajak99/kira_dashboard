@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/network_provider.dart';
+import 'package:kira_dashboard/pages/dialogs/connect_wallet_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_page.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
+import 'package:kira_dashboard/widgets/wallet_button.dart';
 
 @RoutePage()
 class MenuWrapperPage extends StatelessWidget {
@@ -73,53 +76,32 @@ class MenuWrapperPage extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      SizedBox(
-                        width: 220,
-                        child: ListTile(
-                          leading: const Icon(
-                            Icons.network_wifi_rounded,
-                            size: 18,
-                            color: Color(0xff59b987),
-                          ),
-                          title: const Text(
-                            'localnet-1',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          subtitle: Text(
-                            '${Uri.parse(getIt<NetworkProvider>().httpClient.options.baseUrl).host} (online)',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color(0xff59b987),
-                            ),
-                          ),
-                        ),
-                      ),
                       Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                         decoration: const BoxDecoration(
-                          color: Color(0xff101c2e),
+                          color: Color(0xff4888f0),
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         child: const Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Icon(
-                              Icons.wallet,
-                              color: Color(0xff4888f0),
+                              Icons.network_wifi_rounded,
+                              size: 18,
                             ),
                             SizedBox(width: 8),
                             Text(
-                              "Connect Wallet",
+                              'localnet-1',
                               style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xff4888f0),
+                                fontSize: 14,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 16),
+                      const WalletButton(),
+                      const SizedBox(width: 8),
                       IconButton(onPressed: () {}, icon: const Icon(Icons.settings))
                     ],
                   ),
