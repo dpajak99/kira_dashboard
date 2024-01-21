@@ -16,6 +16,7 @@ class AppRouter extends $AppRouter {
             page: PortfolioRoute.page,
             path: 'portfolio/:address',
             initial: true,
+            usesPathAsKey: true,
           ),
           AutoRoute(
             page: ValidatorsRoute.page,

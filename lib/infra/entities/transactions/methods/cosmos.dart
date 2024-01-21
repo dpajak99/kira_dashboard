@@ -8,6 +8,12 @@ class MsgSend extends TxMsg {
   final String toAddress;
   final List<CoinEntity> amounts;
 
+  MsgSend({
+    required this.fromAddress,
+    required this.toAddress,
+    required this.amounts,
+  });
+
   MsgSend.fromJson(Map<String, dynamic> json)
       : fromAddress = json['from_address'] as String,
         toAddress = json['to_address'] as String,

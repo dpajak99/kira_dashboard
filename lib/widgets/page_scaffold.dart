@@ -11,7 +11,11 @@ class PageScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      slivers: slivers,
+      slivers: <Widget>[
+        const SliverPadding(padding: EdgeInsets.only(top: 64)),
+        ...slivers,
+        const SliverPadding(padding: EdgeInsets.only(bottom: 32)),
+      ]
     );
   }
 }

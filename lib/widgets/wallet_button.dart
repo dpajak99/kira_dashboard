@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
@@ -5,6 +6,7 @@ import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/connect_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_page.dart';
+import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 
 class WalletButton extends StatelessWidget {
@@ -31,6 +33,7 @@ class _ConnectWalletButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () => showDialog(context: context, builder: (BuildContext context) => const DialogPage(content: ConnectWalletDialog())),
       child: Container(
         decoration: const BoxDecoration(
@@ -70,7 +73,8 @@ class _WalletButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showDialog(context: context, builder: (BuildContext context) => const DialogPage(content: ConnectWalletDialog())),
+      borderRadius: const BorderRadius.all(Radius.circular(12)),
+      onTap: () => AutoRouter.of(context).navigate(PortfolioRoute(address: wallet.address)),
       child: Container(
         decoration: const BoxDecoration(
           color: Color(0xff324054),

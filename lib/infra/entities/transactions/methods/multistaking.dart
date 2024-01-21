@@ -32,6 +32,12 @@ class MsgDelegate extends TxMsg {
   final String validatorAddress;
   final List<CoinEntity> amounts;
 
+  MsgDelegate({
+    required this.delegatorAddress,
+    required this.validatorAddress,
+    required this.amounts,
+  });
+
   MsgDelegate.fromJson(Map<String, dynamic> json)
       : delegatorAddress = json['delegator_address'] as String,
         validatorAddress = json['validator_address'] as String,
@@ -54,6 +60,12 @@ class MsgUndelegate extends TxMsg {
   final String validatorAddress;
   final List<CoinEntity> amounts;
 
+  MsgUndelegate({
+    required this.delegatorAddress,
+    required this.validatorAddress,
+    required this.amounts,
+  });
+
   MsgUndelegate.fromJson(Map<String, dynamic> json)
       : delegatorAddress = json['delegator_address'] as String,
         validatorAddress = json['validator_address'] as String,
@@ -74,8 +86,11 @@ class MsgClaimRewards extends TxMsg {
 
   final String sender;
 
-  MsgClaimRewards.fromJson(Map<String, dynamic> json)
-      : sender = json['sender'] as String;
+  MsgClaimRewards({
+    required this.sender,
+  });
+
+  MsgClaimRewards.fromJson(Map<String, dynamic> json) : sender = json['sender'] as String;
 
   @override
   String? get from => sender;
@@ -91,11 +106,16 @@ class MsgClaimUndelegation extends TxMsg {
   String get name => 'claim_undelegation';
 
   final String sender;
-  final int undelegationId;
+  final String undelegationId;
+
+  MsgClaimUndelegation({
+    required this.sender,
+    required this.undelegationId,
+  });
 
   MsgClaimUndelegation.fromJson(Map<String, dynamic> json)
       : sender = json['sender'] as String,
-        undelegationId = json['undelegation_id'] as int;
+        undelegationId = (json['undelegation_id'] as int).toString();
 
   @override
   String? get from => sender;
@@ -112,8 +132,7 @@ class MsgClaimMaturedUndelegations extends TxMsg {
 
   final String sender;
 
-  MsgClaimMaturedUndelegations.fromJson(Map<String, dynamic> json)
-      : sender = json['sender'] as String;
+  MsgClaimMaturedUndelegations.fromJson(Map<String, dynamic> json) : sender = json['sender'] as String;
 
   @override
   String? get from => sender;
@@ -152,8 +171,7 @@ class MsgRegisterDelegator extends TxMsg {
 
   final String delegator;
 
-  MsgRegisterDelegator.fromJson(Map<String, dynamic> json)
-      : delegator = json['delegator'] as String;
+  MsgRegisterDelegator.fromJson(Map<String, dynamic> json) : delegator = json['delegator'] as String;
 
   @override
   String? get from => delegator;
@@ -164,4 +182,3 @@ class MsgRegisterDelegator extends TxMsg {
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
 }
-

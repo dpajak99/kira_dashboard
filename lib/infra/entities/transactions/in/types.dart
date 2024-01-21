@@ -1,17 +1,17 @@
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/basket.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/collectives.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/cosmos.dart' as cosmos;
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/custody.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/evidence.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/governance.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/layer2.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/multistaking.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/recovery.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/slashing.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/spending.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/staking.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/methods/tokens.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/basket.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/collectives.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/cosmos.dart' as cosmos;
+import 'package:kira_dashboard/infra/entities/transactions/methods/custody.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/evidence.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/governance.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/layer2.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/multistaking.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/recovery.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/slashing.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/spending.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/staking.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/tokens.dart';
 
 abstract class TxMsg {
   String? get from;

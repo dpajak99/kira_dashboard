@@ -25,9 +25,6 @@ class UrlAvatarWidget extends StatelessWidget {
       child: CachedNetworkImage(
         imageUrl: url,
         fit: BoxFit.cover,
-        errorWidget: (BuildContext context, String url, Object error) {
-          return SvgPicture.network(url, fit: BoxFit.cover);
-        },
       ),
     );
 
@@ -50,10 +47,9 @@ class UrlAvatarWidget extends StatelessWidget {
         children: <Widget>[
           Positioned.fill(
             child: ClipOval(
-              child: Container(
+              child: SizedBox(
                 width: primaryAvatarSize,
                 height: primaryAvatarSize,
-                margin: EdgeInsets.only(right: size * 0.06, bottom: size * 0.06),
                 child: primaryAvatarWidget,
               ),
             ),

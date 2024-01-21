@@ -107,7 +107,7 @@ class MsgBlacklistPermissions extends TxMsg {
 
 class MsgClaimCouncilor extends TxMsg {
   String get name => 'claim-councilor';
-  
+
   final String address;
   final String moniker;
   final String username;
@@ -115,7 +115,7 @@ class MsgClaimCouncilor extends TxMsg {
   final String social;
   final String contact;
   final String avatar;
-  
+
   MsgClaimCouncilor.fromJson(Map<String, dynamic> json)
       : address = json['address'] as String,
         moniker = json['moniker'] as String,
@@ -352,6 +352,11 @@ class MsgRegisterIdentityRecords extends TxMsg {
   final String address;
   final List<IdentityInfoEntry> infos;
 
+  MsgRegisterIdentityRecords({
+    required this.address,
+    required this.infos,
+  });
+
   MsgRegisterIdentityRecords.fromJson(Map<String, dynamic> json)
       : address = json['address'] as String,
         infos = (json['infos'] as List<dynamic>).map((e) => IdentityInfoEntry.fromJson(e as Map<String, dynamic>)).toList();
@@ -373,6 +378,13 @@ class MsgRequestIdentityRecordsVerify extends TxMsg {
   final String verifier;
   final List<int> recordIds;
   final CoinEntity tip;
+
+  MsgRequestIdentityRecordsVerify({
+    required this.address,
+    required this.verifier,
+    required this.recordIds,
+    required this.tip,
+  });
 
   MsgRequestIdentityRecordsVerify.fromJson(Map<String, dynamic> json)
       : address = json['address'] as String,
@@ -397,6 +409,12 @@ class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
   final int verifyRequestId;
   final bool? yes;
 
+  MsgHandleIdentityRecordsVerifyRequest({
+    required this.verifier,
+    required this.verifyRequestId,
+    this.yes,
+  });
+
   MsgHandleIdentityRecordsVerifyRequest.fromJson(Map<String, dynamic> json)
       : verifier = json['verifier'] as String,
         verifyRequestId = json['verify_request_id'] as int,
@@ -417,6 +435,11 @@ class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
 
   final String executor;
   final int verifyRequestId;
+
+  MsgCancelIdentityRecordsVerifyRequest({
+    required this.executor,
+    required this.verifyRequestId,
+  });
 
   MsgCancelIdentityRecordsVerifyRequest.fromJson(Map<String, dynamic> json)
       : executor = json['executor'] as String,
