@@ -1,9 +1,7 @@
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:kira_dashboard/models/block.dart';
 import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/pages/block_transactions_page/block_transactions_page_cubit.dart';
 import 'package:kira_dashboard/pages/block_transactions_page/block_transactions_page_state.dart';

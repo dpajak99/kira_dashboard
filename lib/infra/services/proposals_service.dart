@@ -1,8 +1,5 @@
-import 'package:kira_dashboard/infra/entities/blocks/block_entity.dart';
 import 'package:kira_dashboard/infra/entities/proposals/proposal_entity.dart';
-import 'package:kira_dashboard/infra/repository/blocks_repository.dart';
 import 'package:kira_dashboard/infra/repository/proposals_repository.dart';
-import 'package:kira_dashboard/models/block.dart';
 import 'package:kira_dashboard/models/proposal.dart';
 
 class ProposalsService {

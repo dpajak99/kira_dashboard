@@ -5,7 +5,7 @@ import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/connect_wallet_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/dialog_page.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 
@@ -34,7 +34,7 @@ class _ConnectWalletButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      onTap: () => showDialog(context: context, builder: (BuildContext context) => const DialogPage(content: ConnectWalletDialog())),
+      onTap: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: ConnectWalletDialog())),
       child: Container(
         decoration: const BoxDecoration(
           color: Color(0xff101c2e),

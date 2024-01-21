@@ -1,10 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/infra/services/blocks_service.dart';
-import 'package:kira_dashboard/infra/services/validators_service.dart';
 import 'package:kira_dashboard/models/block.dart';
-import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/blocks_page/blocks_page_state.dart';
-import 'package:kira_dashboard/pages/valdators_page/validators_page_state.dart';
 
 class BlocksPageCubit extends Cubit<BlocksPageState> {
   final BlocksService blocksService = BlocksService();

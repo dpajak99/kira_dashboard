@@ -1,15 +1,13 @@
 import 'package:bech32/bech32.dart';
-import 'package:blockchain_utils/bech32/bech32.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/dialog_page.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/send_tokens_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/send_tokens_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field_loading.dart';
 import 'package:kira_dashboard/pages/dialogs/send_transaction_dialog/send_transaction_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/sign_transaction_dialog/sign_transaction_dialog.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
@@ -74,7 +72,7 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => showDialog(context: context, builder: (BuildContext context) => const DialogPage(content: SendTransactionDialog())),
+                onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: SendTransactionDialog())),
                 child: const Text('Send'),
               ),
             ),

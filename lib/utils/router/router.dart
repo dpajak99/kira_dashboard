@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:kira_dashboard/pages/block_transactions_page/block_transactions_page.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 
 @AutoRouterConfig()

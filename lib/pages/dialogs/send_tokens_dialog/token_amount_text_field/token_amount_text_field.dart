@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/models/coin.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/select_token_dialog/select_token_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field_layout.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field_state.dart';
@@ -73,7 +75,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
           tokenWidget: Row(
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () => CustomDialogRoute.of(context).navigate(SelectTokenDialog(address: widget.address)),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Row(

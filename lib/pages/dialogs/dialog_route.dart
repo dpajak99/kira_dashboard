@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
-class DialogPage extends StatefulWidget {
+class CustomDialogRoute extends StatefulWidget {
   final DialogContentWidget content;
 
-  const DialogPage({
+  const CustomDialogRoute({
     super.key,
     required this.content,
   });
 
   @override
-  State<StatefulWidget> createState() => DialogPageState();
+  State<StatefulWidget> createState() => CustomDialogRouteState();
 
-  static DialogPageState of(BuildContext context) {
-    final DialogPageState? dialogPageState = context.findAncestorStateOfType<DialogPageState>();
+  static CustomDialogRouteState of(BuildContext context) {
+    final CustomDialogRouteState? dialogPageState = context.findAncestorStateOfType<CustomDialogRouteState>();
     if (dialogPageState != null) {
       return dialogPageState;
     } else {
@@ -23,7 +23,7 @@ class DialogPage extends StatefulWidget {
   }
 }
 
-class DialogPageState extends State<DialogPage> {
+class CustomDialogRouteState extends State<CustomDialogRoute> {
   late DialogContentWidget content = widget.content;
 
   @override

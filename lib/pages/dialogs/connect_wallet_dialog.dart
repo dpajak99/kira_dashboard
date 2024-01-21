@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/pages/dialogs/create_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/dialog_page.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
@@ -25,7 +25,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
             Expanded(
               child: _OptionItem(
                 leading: Icons.abc,
-                onTap: () => DialogPage.of(context).navigate(const SignInMnemonicDialog()),
+                onTap: () => CustomDialogRoute.of(context).navigate(const SignInMnemonicDialog()),
                 title: 'Mnemonic',
               ),
             ),
@@ -40,7 +40,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
         ),
         const SizedBox(height: 24),
         InkWell(
-          onTap: () => DialogPage.of(context).navigate(const CreateWalletDialog()),
+          onTap: () => CustomDialogRoute.of(context).navigate(const CreateWalletDialog()),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

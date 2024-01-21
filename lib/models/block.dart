@@ -1,5 +1,4 @@
 import 'package:kira_dashboard/infra/entities/blocks/block_entity.dart';
-import 'package:cryptography_utils/cryptography_utils.dart';
 
 class Block {
   final String height;

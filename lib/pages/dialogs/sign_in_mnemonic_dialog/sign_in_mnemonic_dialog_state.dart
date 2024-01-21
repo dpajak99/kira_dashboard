@@ -1,6 +1,4 @@
-import 'package:blockchain_utils/bip/bip/bip.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
 class SignInMnemonicDialogState extends Equatable {
   final int wordsCount;
