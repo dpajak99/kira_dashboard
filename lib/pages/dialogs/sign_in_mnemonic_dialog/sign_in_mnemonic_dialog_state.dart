@@ -1,24 +1,23 @@
+import 'package:blockchain_utils/bip/bip/bip.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
 class SignInMnemonicDialogState extends Equatable {
   final int wordsCount;
-  Map<int, String?> words = <int, String?>{};
+  final bool valid;
 
-  SignInMnemonicDialogState({
-    required this.wordsCount,
-    required this.words,
-  });
+  const SignInMnemonicDialogState({required this.wordsCount, required this.valid});
 
   SignInMnemonicDialogState copyWith({
     int? wordsCount,
-    Map<int, String?>? words,
+    bool? valid,
   }) {
     return SignInMnemonicDialogState(
       wordsCount: wordsCount ?? this.wordsCount,
-      words: words ?? this.words,
+      valid: valid ?? this.valid,
     );
   }
 
   @override
-  List<Object?> get props => <Object?>[wordsCount, words];
+  List<Object?> get props => <Object?>[wordsCount, valid];
 }

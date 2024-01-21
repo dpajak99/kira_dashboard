@@ -41,6 +41,12 @@ class MyApp extends StatelessWidget {
             textStyle: const TextStyle(fontSize: 16),
           ),
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: const Color(0xfffbfbfb),
+            textStyle: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+          ),
+        ),
       ),
       routerConfig: _appRouter.config(),
     );

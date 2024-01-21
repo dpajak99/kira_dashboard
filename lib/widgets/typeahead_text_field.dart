@@ -7,7 +7,7 @@ class TypeaheadTextField extends StatefulWidget {
   final TextStyle style;
   final Color suggestionColor;
   final List<String> suggestionList;
-  final Function (String value, String hint)  onChanged;
+  final List<TextInputFormatter> inputFormatters;
 
   const TypeaheadTextField({
     super.key,
@@ -16,7 +16,7 @@ class TypeaheadTextField extends StatefulWidget {
     required this.style,
     required this.suggestionColor,
     required this.suggestionList,
-    required this.onChanged,
+    required this.inputFormatters,
   });
 
   @override
@@ -60,7 +60,7 @@ class _TypeaheadTextField extends State<TypeaheadTextField> {
                           text: value.text,
                           style: widget.style,
                         ),
-                        if (hint.isNotEmpty && hint != value.text)
+                        if (hint.isNotEmpty && hint != value.text && widget.focusNode.hasFocus)
                           TextSpan(
                             text: hint.substring(value.text.length),
                             style: widget.style.copyWith(
@@ -77,22 +77,17 @@ class _TypeaheadTextField extends State<TypeaheadTextField> {
           Positioned.fill(
             child: Align(
               alignment: Alignment.centerLeft,
-              child: TextField(
+              child: EditableText(
+                undoController: null,
+                selectionColor: Colors.white.withOpacity(0.2),
                 maxLines: 1,
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.zero,
-                  border: InputBorder.none,
-                  isDense: true,
-                ),
-                inputFormatters: <TextInputFormatter>[
-                  LengthLimitingTextInputFormatter(8),
-                ],
+                backgroundCursorColor: Colors.transparent,
+                inputFormatters: widget.inputFormatters,
                 controller: widget.controller,
                 focusNode: widget.focusNode,
                 style: widget.style.copyWith(
                   color: Colors.transparent,
                 ),
-                onChanged: _onChanged,
                 cursorColor: Colors.white,
               ),
             ),
@@ -108,17 +103,11 @@ class _TypeaheadTextField extends State<TypeaheadTextField> {
     }
   }
 
-  void _onChanged(String value) {
-    String hint = findHint(value);
-    widget.onChanged(value, hint);
-  }
-
   void _completeEditing() {
     String hint = findHint(widget.controller.text);
     if (hint.isNotEmpty) {
       widget.controller.text = hint;
     }
-    widget.onChanged(widget.controller.text, hint);
   }
 
   String findHint(String text) {
