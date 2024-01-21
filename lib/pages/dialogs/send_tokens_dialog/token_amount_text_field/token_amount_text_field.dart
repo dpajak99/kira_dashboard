@@ -75,7 +75,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
           tokenWidget: Row(
             children: [
               InkWell(
-                onTap: () => CustomDialogRoute.of(context).navigate(SelectTokenDialog(address: widget.address)),
+                onTap: selectToken,
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Row(
@@ -147,6 +147,14 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
         );
       },
     );
+  }
+
+  Future<void> selectToken() async {
+    Coin? coin = await CustomDialogRoute.of(context).navigate<Coin?>(SelectTokenDialog(address: widget.address));
+    if(coin != null ) {
+      cubit.selectToken(coin);
+      amountTextController.text = '';
+    }
   }
 
   void _validateBalanceText() {

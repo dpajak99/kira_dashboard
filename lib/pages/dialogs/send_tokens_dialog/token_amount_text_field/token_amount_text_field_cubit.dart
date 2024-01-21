@@ -8,4 +8,9 @@ class TokenAmountTextFieldCubit extends Cubit<TokenAmountTextFieldState> {
   final String address;
 
   TokenAmountTextFieldCubit.fromBalance(this.address, Coin balance) : super(TokenAmountTextFieldState.fromBalance(balance));
+
+  void selectToken(Coin coin) {
+    print('selectToken: $coin');
+    emit(TokenAmountTextFieldState.fromBalance(coin));
+  }
 }

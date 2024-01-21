@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
@@ -23,25 +25,74 @@ class CustomDialogRoute extends StatefulWidget {
   }
 }
 
+class DialogRouteConfig {
+  final DialogContentWidget content;
+  final Completer? completer;
+
+  DialogRouteConfig({
+    required this.content,
+    Completer? completer,
+  }) : completer = completer ?? Completer<void>();
+
+  DialogRouteConfig.fromPage(DialogContentWidget page)
+      : content = page,
+        completer = Completer<void>();
+}
+
 class CustomDialogRouteState extends State<CustomDialogRoute> {
-  late DialogContentWidget content = widget.content;
+  late final List<DialogRouteConfig> routeStack = [
+    DialogRouteConfig.fromPage(widget.content),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    List<DialogContentWidget> pages = routeStack.map((e) => e.content).toList();
+    List<Widget> pagesVisibility = <Widget>[];
+    for (int i = 0; i < pages.length; i++) {
+      bool pageVisible = i == pages.length - 1;
+
+      pagesVisibility.add(Visibility(
+        maintainState: true,
+        maintainAnimation: true,
+        visible: pageVisible,
+        child: AnimatedOpacity(
+          opacity: pageVisible ? 1 : 0,
+          duration: const Duration(milliseconds: 300),
+          child: pages[i],
+        ),
+      ));
+    }
+
     return CustomDialog(
-      title: content.title,
-      width: content.width,
+      title: routeStack.last.content.title,
+      width: routeStack.last.content.width,
       child: AnimatedSize(
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.decelerate,
-        child: content,
+        duration: const Duration(milliseconds: 200),
+        child: Stack(
+          children: pagesVisibility,
+        ),
       ),
     );
   }
 
-  void navigate(DialogContentWidget page) {
-    setState(() {
-      content = page;
-    });
+  @optionalTypeArgs
+  Future<T> navigate<T>(DialogContentWidget page) async {
+    Completer completer = Completer<T>();
+    routeStack.add(DialogRouteConfig(
+      content: page,
+      completer: completer,
+    ));
+    setState(() {});
+    return await completer.future;
   }
+
+  void pop<T>([T? result]) {
+    if (routeStack.isNotEmpty) {
+      DialogRouteConfig dialogRouteConfig = routeStack.removeLast();
+      dialogRouteConfig.completer?.complete(result);
+      setState(() {});
+    }
+  }
+
+  bool get showBackButton => routeStack.length > 1;
 }

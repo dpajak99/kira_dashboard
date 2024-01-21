@@ -32,51 +32,54 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
     return BlocBuilder<SendTokensDialogCubit, SendTokensDialogState>(
       bloc: cubit,
       builder: (BuildContext context, SendTokensDialogState state) {
-        return Column(
-          children: [
-            _AddressTextField(
-              controller: TextEditingController(),
-            ),
-            const SizedBox(height: 16),
-            if (state is SendTokensDialogLoadedState)
-              TokenAmountTextField(
-                address: state.address,
-                initialCoin: state.initialCoin,
-              )
-            else
-              const TokenAmountTextFieldLoading(),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                const Text(
-                  'Fee:',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xfffbfbfb),
-                  ),
-                ),
-                const Spacer(),
-                if (state is SendTokensDialogLoadedState)
-                  Text(
-                    state.executionFee.toNetworkDenominationString(),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xff6c86ad),
-                    ),
-                  )
-                else
-                  const SizedShimmer(width: 60, height: 14, reversed: true),
-              ],
-            ),
-            const SizedBox(height: 32),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: SendTransactionDialog())),
-                child: const Text('Send'),
+        return SizedBox(
+          height: 350,
+          child: Column(
+            children: [
+              _AddressTextField(
+                controller: TextEditingController(),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              if (state is SendTokensDialogLoadedState)
+                TokenAmountTextField(
+                  address: state.address,
+                  initialCoin: state.initialCoin,
+                )
+              else
+                const TokenAmountTextFieldLoading(),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Text(
+                    'Fee:',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xfffbfbfb),
+                    ),
+                  ),
+                  const Spacer(),
+                  if (state is SendTokensDialogLoadedState)
+                    Text(
+                      state.executionFee.toNetworkDenominationString(),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xff6c86ad),
+                      ),
+                    )
+                  else
+                    const SizedShimmer(width: 60, height: 14, reversed: true),
+                ],
+              ),
+             const Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: SendTransactionDialog())),
+                  child: const Text('Send'),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

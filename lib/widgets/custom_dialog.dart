@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 
 class CustomDialog extends StatelessWidget {
   final String title;
@@ -31,6 +32,21 @@ class CustomDialog extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
+                  if(CustomDialogRoute.of(context).showBackButton )
+                    Positioned(
+                      left: 0,
+                      bottom: 0,
+                      child: Center(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.chevron_left,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                          onPressed: () => CustomDialogRoute.of(context).pop(),
+                        ),
+                      ),
+                    ),
                   Positioned.fill(
                     child: Center(
                       child: Text(

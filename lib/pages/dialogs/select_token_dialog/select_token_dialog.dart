@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/select_token_dialog/select_token_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/select_token_dialog/select_token_dialog_state.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
@@ -36,6 +37,7 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
             itemBuilder: (BuildContext context, int index) {
               Coin balance = state.balances[index];
               return ListTile(
+                onTap: () => CustomDialogRoute.of(context).pop(balance),
                 contentPadding: EdgeInsets.zero,
                 dense: true,
                 leading: TokenIcon(size: 40, iconUrl: balance.icon),
