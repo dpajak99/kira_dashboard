@@ -5,6 +5,7 @@ import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/pages/dialogs/connect_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_page.dart';
+import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/send_tokens_dialog.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/wallet_button.dart';
 
@@ -38,6 +39,10 @@ class MenuWrapperPage extends StatelessWidget {
                 ListTile(
                   onTap: () => AutoRouter.of(context).navigate(const ProposalsRoute()),
                   title: const Text('Proposals'),
+                ),
+                ElevatedButton(
+                  onPressed: () => showDialog(context: context, builder: (BuildContext context) => const DialogPage(content: SendTokensDialog())),
+                  child: const Text('Test send'),
                 ),
               ],
             ),

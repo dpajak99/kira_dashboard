@@ -90,7 +90,6 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
                         Navigator.of(context).pop();
                       }
                     : null,
-                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff2f8af5)),
                 child: const Text('Connect Wallet'),
               ),
             ],

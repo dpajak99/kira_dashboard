@@ -23,7 +23,7 @@ class BalancesPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomTable<Coin>(
-            items: state.balance,
+            items: state.balance.length > 15 ? state.balance.sublist(0, 15) : state.balance,
             columns: <ColumnConfig<Coin>>[
               ColumnConfig(
                 title: 'Token',

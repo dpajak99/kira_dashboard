@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 class SimpleCoin {
@@ -47,16 +46,27 @@ class Coin {
     required this.name,
     required this.symbol,
     this.rate,
-    this.decimals = 1,
+    this.decimals = 0,
     this.icon,
   });
+
+  Coin copyWith({
+    String? amount,
+  }) {
+    return Coin(
+      type: type,
+      denom: denom,
+      amount: amount ?? this.amount,
+      name: name,
+      symbol: symbol,
+    );
+  }
 
   String toLowestDenominationString() {
     return '$amount $denom';
   }
 
   String toNetworkDenominationString() {
-
     return '$networkDenominationAmount $symbol';
   }
 
@@ -65,6 +75,11 @@ class Coin {
     double networkDenomination = lowestDenomination / pow(10, decimals);
 
     return '$networkDenomination';
+  }
+
+  @override
+  String toString() {
+    return 'Coin{type: $type, denom: $denom, symbol: $symbol, amount: $amount, name: $name, rate: $rate, decimals: $decimals, icon: $icon}';
   }
 }
 

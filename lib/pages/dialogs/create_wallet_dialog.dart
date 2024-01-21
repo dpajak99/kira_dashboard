@@ -115,7 +115,6 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
             signIn();
             Navigator.of(context).pop();
           } : null,
-          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff2f8af5)),
           child: const Text('Create Wallet'),
         ),
       ],

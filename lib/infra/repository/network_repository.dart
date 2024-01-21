@@ -3,7 +3,9 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/network/interx_headers.dart';
+import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/network_status_entity.dart';
+import 'package:kira_dashboard/infra/entities/network/query_network_properties_response.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
 
 class NetworkRepository {
@@ -29,7 +31,18 @@ class NetworkRepository {
       NetworkStatusEntity networkStatusEntity = NetworkStatusEntity.fromJson(response.data!);
       return networkStatusEntity;
     } catch (e) {
-      AppLogger().log(message: 'NetworkStatusEntity');
+      AppLogger().log(message: 'NetworkRepository');
+      rethrow;
+    }
+  }
+
+  Future<NetworkPropertiesEntity> getNetworkProperties() async {
+    try {
+      Response<Map<String, dynamic>> response = await httpClient.get('/api/kira/gov/network_properties');
+      QueryNetworkPropertiesResponse queryNetworkPropertiesResponse = QueryNetworkPropertiesResponse.fromJson(response.data!);
+      return queryNetworkPropertiesResponse.networkProperties;
+    } catch (e) {
+      AppLogger().log(message: 'NetworkRepository');
       rethrow;
     }
   }

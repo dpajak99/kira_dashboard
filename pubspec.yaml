@@ -25,6 +25,8 @@ dependencies:
   get_it: ^7.6.6
   google_fonts: ^6.1.0
   blockchain_utils: ^1.6.0
+  shimmer: ^3.0.0
+  bech32: ^0.2.2
   cryptography_utils:
     git:
       url: git@github.com:snggle/cryptography_utils.git

@@ -8,6 +8,12 @@ import 'package:kira_dashboard/utils/logger/app_logger.dart';
 class TokenAliasesRepository {
   final Dio httpClient = getIt<NetworkProvider>().httpClient;
 
+  Future<String> getDefaultCoinDenom() async {
+    Response<Map<String, dynamic>> response = await httpClient.get('/api/kira/tokens/aliases');
+    QueryTokenAliasesResponse queryTokenAliasesResponse = QueryTokenAliasesResponse.fromJson(response.data!);
+    return queryTokenAliasesResponse.defaultDenom;
+  }
+
   Future<Map<String, TokenAliasEntity>> getAllAsMap() async {
     try {
       Map<String, TokenAliasEntity> tokenAliasesMap = <String, TokenAliasEntity>{};

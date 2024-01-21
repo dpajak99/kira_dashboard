@@ -1,5 +1,9 @@
+import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
+import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/tokens/aliases/token_alias_entity.dart';
 import 'package:kira_dashboard/infra/entities/tokens/rates/token_rate_entity.dart';
+import 'package:kira_dashboard/infra/repository/fees_repository.dart';
+import 'package:kira_dashboard/infra/repository/network_repository.dart';
 import 'package:kira_dashboard/infra/repository/token_aliases_repository.dart';
 import 'package:kira_dashboard/infra/repository/token_rates_repository.dart';
 import 'package:kira_dashboard/models/coin.dart';
@@ -7,18 +11,41 @@ import 'package:kira_dashboard/models/coin.dart';
 class TokensService {
   final TokenRatesRepository tokenRatesRepository = TokenRatesRepository();
   final TokenAliasesRepository tokenAliasesRepository = TokenAliasesRepository();
+  final NetworkRepository networkRepository = NetworkRepository();
+  final FeesRepository feesRepository = FeesRepository();
 
-  Future<List<Coin>> buildCoins(List<SimpleCoin> coins) {
+  Map<String, TokenAliasEntity> tokenAliasesMap = <String, TokenAliasEntity>{};
+  Map<String, TokenRateEntity> tokenRatesMap = <String, TokenRateEntity>{};
+  
+  Future<Coin> getExecutionFeeForMessage(String message) async {
+    String defaultTokenDenom = await getDefaultCoinDenom();
+    try {
+      FeeConfigEntity feeConfigEntity = await feesRepository.getFee(message);
+      return buildCoin(SimpleCoin(amount: feeConfigEntity.executionFee, denom: defaultTokenDenom));
+    } catch (e) {
+      NetworkPropertiesEntity networkPropertiesEntity = await networkRepository.getNetworkProperties();
+      return buildCoin(SimpleCoin(amount: networkPropertiesEntity.minTxFee, denom: defaultTokenDenom));
+    }
+  }
+
+  Future<String> getDefaultCoinDenom() async {
+    return tokenAliasesRepository.getDefaultCoinDenom();
+  }
+
+  Future<List<Coin>> buildCoins(List<SimpleCoin> coins) async {
     return Future.wait(coins.map((SimpleCoin simpleCoin) => buildCoin(simpleCoin)));
   }
 
   Future<Coin> buildCoin(SimpleCoin simpleCoin) async {
-    Map<String, TokenAliasEntity> tokenAliasesMap = await tokenAliasesRepository.getAllAsMap();
-    Map<String, TokenRateEntity> tokenRatesMap = await tokenRatesRepository.getAllAsMap();
+    if (tokenAliasesMap.isEmpty) {
+      tokenAliasesMap = await tokenAliasesRepository.getAllAsMap();
+    }
 
+    if (tokenRatesMap.isEmpty) {
+      tokenRatesMap = await tokenRatesRepository.getAllAsMap();
+    }
 
-
-    if(simpleCoin.denom.contains('/')) {
+    if (simpleCoin.denom.contains('/')) {
       List<String> derivativeDenom = simpleCoin.denom.split('/');
       String derivativePrefix = derivativeDenom[0];
       String derivativeSuffix = derivativeDenom[1];

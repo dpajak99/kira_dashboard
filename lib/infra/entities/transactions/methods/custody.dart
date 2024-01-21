@@ -329,7 +329,7 @@ class MsgPasswordConfirmTransaction extends TxMsg {
 }
 
 class MsgSend extends TxMsg {
-  String get name => 'custody-send';
+  static String get messageName => 'custody-send';
 
   final String fromAddress;
   final String toAddress;

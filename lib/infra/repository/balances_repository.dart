@@ -9,11 +9,30 @@ class BalancesRepository {
   final Dio httpClient = getIt<NetworkProvider>().httpClient;
 
   Future<List<CoinEntity>> getAll(String address) async {
-    try {
-    Response<Map<String, dynamic>> response = await httpClient.get('/api/kira/balances/$address');
-    QueryBalanceResponse queryBalanceResponse = QueryBalanceResponse.fromJson(response.data!);
+    List<CoinEntity> coinEntities = List<CoinEntity>.empty(growable: true);
+    int offset = 0;
+    int limit = 500;
+    bool downloadedAll = false;
 
-    return queryBalanceResponse.balances;
+    try {
+      while(downloadedAll == false) {
+        Response<Map<String, dynamic>> response = await httpClient.get(
+          '/api/kira/balances/$address',
+          queryParameters: {
+            'offset': offset,
+            'limit': limit,
+          },
+        );
+        QueryBalanceResponse queryBalanceResponse = QueryBalanceResponse.fromJson(response.data!);
+        coinEntities.addAll(queryBalanceResponse.balances);
+
+        if( queryBalanceResponse.balances.length < limit) {
+          downloadedAll = true;
+        } else {
+          offset += limit;
+        }
+      }
+      return coinEntities;
     } catch (e) {
       AppLogger().log(message: 'BalancesRepository');
       rethrow;

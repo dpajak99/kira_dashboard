@@ -79,7 +79,7 @@ class _TypeaheadTextField extends State<TypeaheadTextField> {
               alignment: Alignment.centerLeft,
               child: EditableText(
                 undoController: null,
-                selectionColor: Colors.white.withOpacity(0.2),
+                selectionColor: Theme.of(context).textSelectionTheme.selectionColor,
                 maxLines: 1,
                 backgroundCursorColor: Colors.transparent,
                 inputFormatters: widget.inputFormatters,
