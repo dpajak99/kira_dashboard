@@ -50,7 +50,7 @@ class _BlocksPageState extends State<BlocksPage> {
                         cellBuilder: (BuildContext context, Block item) {
                           return OpenableText(
                             text: item.height,
-                            onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(block: item.height)),
+                            onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
                             style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xfffbfbfb),

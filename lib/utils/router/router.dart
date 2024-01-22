@@ -40,7 +40,7 @@ class AppRouter extends $AppRouter {
           ),
           AutoRoute(
             page: BlockDetailsRoute.page,
-            path: 'blocks/:block',
+            path: 'blocks/:height',
             usesPathAsKey: true,
           ),
         ],

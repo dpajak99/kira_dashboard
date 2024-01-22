@@ -85,3 +85,48 @@ class BlockEntity extends Equatable {
   @override
   List<Object?> get props => <Object?>[blockId, blockSize, header, numTxs];
 }
+
+class Commit extends Equatable {
+  final BlockId blockId;
+  final String height;
+  final int round;
+  final List<dynamic> signatures;
+
+  Commit.fromJson(Map<String, dynamic> json)
+      : blockId = BlockId.fromJson(json['block_id']),
+        height = json['height'],
+        round = json['round'],
+        signatures = json['signatures'];
+
+  @override
+  List<Object?> get props => <Object?>[blockId, height, round, signatures];
+
+}
+
+class BlockData extends Equatable {
+  final dynamic data;
+  final dynamic evidence;
+  final Header header;
+  final Commit lastCommit;
+
+  BlockData.fromJson(Map<String, dynamic> json)
+      : data = json['data'],
+        evidence = json['evidence'],
+        header = Header.fromJson(json['header']),
+        lastCommit = Commit.fromJson(json['last_commit']);
+
+  @override
+  List<Object?> get props => <Object?>[data, evidence, header, lastCommit];
+}
+
+class BlockDetailsEntity extends Equatable {
+  final BlockData block;
+  final BlockId blockId;
+
+  BlockDetailsEntity.fromJson(Map<String, dynamic> json)
+      : block = BlockData.fromJson(json['block']),
+        blockId = BlockId.fromJson(json['block_id']);
+
+  @override
+  List<Object?> get props => <Object?>[block, blockId];
+}

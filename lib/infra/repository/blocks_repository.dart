@@ -23,4 +23,18 @@ class BlocksRepository {
       rethrow;
     }
   }
+
+  Future<BlockDetailsEntity> getDetails(String blockHeight) async {
+    try {
+      Response<Map<String, dynamic>> response = await httpClient.get(
+        '/api/blocks/$blockHeight',
+      );
+      BlockDetailsEntity blockDetailsEntity = BlockDetailsEntity.fromJson(response.data!);
+
+      return blockDetailsEntity;
+    } catch (e) {
+      AppLogger().log(message: 'BlocksRepository');
+      rethrow;
+    }
+  }
 }

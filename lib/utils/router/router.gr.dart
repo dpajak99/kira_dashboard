@@ -33,12 +33,12 @@ abstract class $AppRouter extends _i9.RootStackRouter {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<BlockDetailsRouteArgs>(
           orElse: () =>
-              BlockDetailsRouteArgs(block: pathParams.optString('block')));
+              BlockDetailsRouteArgs(height: pathParams.getString('height')));
       return _i9.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.BlockDetailsPage(
           key: args.key,
-          block: args.block,
+          height: args.height,
         ),
       );
     },
@@ -116,15 +116,15 @@ abstract class $AppRouter extends _i9.RootStackRouter {
 class BlockDetailsRoute extends _i9.PageRouteInfo<BlockDetailsRouteArgs> {
   BlockDetailsRoute({
     _i10.Key? key,
-    required String? block,
+    required String height,
     List<_i9.PageRouteInfo>? children,
   }) : super(
           BlockDetailsRoute.name,
           args: BlockDetailsRouteArgs(
             key: key,
-            block: block,
+            height: height,
           ),
-          rawPathParams: {'block': block},
+          rawPathParams: {'height': height},
           initialChildren: children,
         );
 
@@ -137,16 +137,16 @@ class BlockDetailsRoute extends _i9.PageRouteInfo<BlockDetailsRouteArgs> {
 class BlockDetailsRouteArgs {
   const BlockDetailsRouteArgs({
     this.key,
-    required this.block,
+    required this.height,
   });
 
   final _i10.Key? key;
 
-  final String? block;
+  final String height;
 
   @override
   String toString() {
-    return 'BlockDetailsRouteArgs{key: $key, block: $block}';
+    return 'BlockDetailsRouteArgs{key: $key, height: $height}';
   }
 }
 
