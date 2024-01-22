@@ -18,6 +18,8 @@ abstract class TxMsg {
   String? get to;
   List<CoinEntity> get txAmounts;
 
+  Map<String, dynamic> toJson();
+
   static TxMsg fromJsonByName(String name, Map<String, dynamic> json) {
     return switch (name) {
       'disable-basket-deposits' => MsgDisableBasketDeposits.fromJson(json),

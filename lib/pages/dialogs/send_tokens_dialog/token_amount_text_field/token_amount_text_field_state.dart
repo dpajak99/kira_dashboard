@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/models/coin.dart';
 
@@ -11,7 +12,7 @@ class TokenAmountTextFieldState extends Equatable {
   });
 
   TokenAmountTextFieldState.fromBalance(Coin balance) :
-        selectedTokenAmount= balance.copyWith(amount: '0'),
+        selectedTokenAmount= balance.copyWith(amount: Decimal.parse('0')),
         maxTokenAmount = balance;
 
   @override

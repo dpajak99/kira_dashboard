@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/tokens/aliases/token_alias_entity.dart';
@@ -45,6 +46,8 @@ class TokensService {
       tokenRatesMap = await tokenRatesRepository.getAllAsMap();
     }
 
+    Decimal amount = Decimal.parse(simpleCoin.amount);
+
     if (simpleCoin.denom.contains('/')) {
       List<String> derivativeDenom = simpleCoin.denom.split('/');
       String derivativePrefix = derivativeDenom[0];
@@ -56,7 +59,7 @@ class TokensService {
       return DerivativeCoin(
         derivativePrefix: derivativePrefix,
         decimals: tokenAlias?.decimals ?? 0,
-        amount: simpleCoin.amount,
+        amount: amount,
         denom: derivativeSuffix,
         symbol: tokenAlias?.symbol ?? derivativeSuffix.toUpperCase(),
         name: tokenAlias?.name ?? simpleCoin.denom,
@@ -70,7 +73,7 @@ class TokensService {
       return Coin(
         type: simpleCoin.denom == 'udev' ? CoinType.native : CoinType.token,
         decimals: tokenAlias?.decimals ?? 0,
-        amount: simpleCoin.amount,
+        amount: amount,
         denom: simpleCoin.denom,
         symbol: tokenAlias?.symbol ?? simpleCoin.denom.toUpperCase(),
         name: tokenAlias?.name ?? simpleCoin.denom,

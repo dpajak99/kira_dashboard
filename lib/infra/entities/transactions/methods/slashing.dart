@@ -17,6 +17,13 @@ class MsgActivate extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'validator_addr': validatorAddr,
+    };
+  }
 }
 
 class MsgPause extends TxMsg {
@@ -35,6 +42,13 @@ class MsgPause extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'validator_addr': validatorAddr,
+    };
+  }
 }
 
 class MsgUnpause extends TxMsg {
@@ -53,4 +67,11 @@ class MsgUnpause extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'validator_addr': validatorAddr,
+    };
+  }
 }

@@ -13,7 +13,7 @@ class AppRouter extends $AppRouter {
         children: [
           AutoRoute(
             page: PortfolioRoute.page,
-            path: 'portfolio/:address',
+            path: 'address/:address',
             initial: true,
             usesPathAsKey: true,
           ),
@@ -32,6 +32,16 @@ class AppRouter extends $AppRouter {
           AutoRoute(
             page: BlockTransactionsRoute.page,
             path: 'transactions',
+          ),
+          AutoRoute(
+            page: TransactionDetailsRoute.page,
+            path: 'transaction/:hash',
+            usesPathAsKey: true,
+          ),
+          AutoRoute(
+            page: BlockDetailsRoute.page,
+            path: 'blocks/:block',
+            usesPathAsKey: true,
           ),
         ],
       ),

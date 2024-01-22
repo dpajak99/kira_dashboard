@@ -13,7 +13,7 @@ class UserTransactions {
     MsgSend msgSend = MsgSend(
       fromAddress: fromAddress,
       toAddress: toAddress,
-      amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount, denom: e.denom)).toList(),
+      amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount.toString(), denom: e.denom)).toList(),
     );
   }
 
@@ -25,7 +25,7 @@ class UserTransactions {
     MsgDelegate msgDelegate = MsgDelegate(
       delegatorAddress: delegatorAddress,
       validatorAddress: validatorAddress,
-      amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount, denom: e.denom)).toList(),
+      amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount.toString(), denom: e.denom)).toList(),
     );
   }
 
@@ -37,7 +37,7 @@ class UserTransactions {
     MsgUndelegate msgUndelegate = MsgUndelegate(
       delegatorAddress: delegatorAddress,
       validatorAddress: validatorAddress,
-      amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount, denom: e.denom)).toList(),
+      amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount.toString(), denom: e.denom)).toList(),
     );
   }
 
@@ -79,7 +79,7 @@ class UserTransactions {
       address: senderAddress,
       verifier: verifierAddress,
       recordIds: recordIds,
-      tip: CoinEntity(amount: tip.amount, denom: tip.denom),
+      tip: CoinEntity(amount: tip.amount.toString(), denom: tip.denom),
     );
   }
 

@@ -16,6 +16,13 @@ class CoinEntity extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'amount': amount,
+      'denom': denom,
+    };
+  }
+
   @override
   List<Object?> get props => <Object>[amount, denom];
 }

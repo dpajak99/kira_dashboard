@@ -23,6 +23,16 @@ class MsgUpsertStakingPool extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'validator': validator,
+      'enabled': enabled,
+      'commission': commission,
+    };
+  }
 }
 
 class MsgDelegate extends TxMsg {
@@ -51,6 +61,15 @@ class MsgDelegate extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => amounts;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'delegator_address': delegatorAddress,
+      'validator_address': validatorAddress,
+      'amounts': amounts.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class MsgUndelegate extends TxMsg {
@@ -79,6 +98,15 @@ class MsgUndelegate extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'delegator_address': delegatorAddress,
+      'validator_address': validatorAddress,
+      'amounts': amounts.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class MsgClaimRewards extends TxMsg {
@@ -100,6 +128,13 @@ class MsgClaimRewards extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+    };
+  }
 }
 
 class MsgClaimUndelegation extends TxMsg {
@@ -125,6 +160,14 @@ class MsgClaimUndelegation extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'undelegation_id': undelegationId,
+    };
+  }
 }
 
 class MsgClaimMaturedUndelegations extends TxMsg {
@@ -142,6 +185,13 @@ class MsgClaimMaturedUndelegations extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+    };
+  }
 }
 
 class MsgSetCompoundInfo extends TxMsg {
@@ -164,6 +214,15 @@ class MsgSetCompoundInfo extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'all_denom': allDenom,
+      'compound_denoms': compoundDenoms,
+    };
+  }
 }
 
 class MsgRegisterDelegator extends TxMsg {
@@ -181,4 +240,11 @@ class MsgRegisterDelegator extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'delegator': delegator,
+    };
+  }
 }

@@ -18,6 +18,18 @@ class CustodySettings {
         useLimits = json['use_limits'] as bool,
         key = json['key'] as String,
         nextController = json['next_controller'] as String;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'custody_enabled': custodyEnabled,
+      'custody_mode': custodyMode,
+      'use_password': usePassword,
+      'use_white_list': useWhitelist,
+      'use_limits': useLimits,
+      'key': key,
+      'next_controller': nextController,
+    };
+  }
 }
 
 class MsgCreateCustodyRecord extends TxMsg {
@@ -46,6 +58,18 @@ class MsgCreateCustodyRecord extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'custody_settings': custodySettings.toJson(),
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgDisableCustodyRecord extends TxMsg {
@@ -72,6 +96,17 @@ class MsgDisableCustodyRecord extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgDropCustodyRecord extends TxMsg {
@@ -94,6 +129,15 @@ class MsgDropCustodyRecord extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'old_key': oldKey,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgAddToCustodyWhiteList extends TxMsg {
@@ -122,6 +166,18 @@ class MsgAddToCustodyWhiteList extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'add_address': addAddress,
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgAddToCustodyCustodians extends TxMsg {
@@ -150,6 +206,18 @@ class MsgAddToCustodyCustodians extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'add_address': addAddress,
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgRemoveFromCustodyCustodians extends TxMsg {
@@ -178,6 +246,18 @@ class MsgRemoveFromCustodyCustodians extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'remove_address': removeAddress,
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgDropCustodyCustodians extends TxMsg {
@@ -204,6 +284,17 @@ class MsgDropCustodyCustodians extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgRemoveFromCustodyWhiteList extends TxMsg {
@@ -232,6 +323,18 @@ class MsgRemoveFromCustodyWhiteList extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'remove_address': removeAddress,
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgDropCustodyWhiteList extends TxMsg {
@@ -258,6 +361,17 @@ class MsgDropCustodyWhiteList extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'old_key': oldKey,
+      'new_key': newKey,
+      'next_address': nextAddress,
+      'target_address': targetAddress,
+    };
+  }
 }
 
 class MsgApproveCustodyTransaction extends TxMsg {
@@ -280,6 +394,15 @@ class MsgApproveCustodyTransaction extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'from_address': fromAddress,
+      'target_address': targetAddress,
+      'hash': hash,
+    };
+  }
 }
 
 class MsgDeclineCustodyTransaction extends TxMsg {
@@ -302,6 +425,15 @@ class MsgDeclineCustodyTransaction extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'from_address': fromAddress,
+      'target_address': targetAddress,
+      'hash': hash,
+    };
+  }
 }
 
 class MsgPasswordConfirmTransaction extends TxMsg {
@@ -326,6 +458,16 @@ class MsgPasswordConfirmTransaction extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'from_address': fromAddress,
+      'target_address': targetAddress,
+      'hash': hash,
+      'password': password,
+    };
+  }
 }
 
 class MsgSend extends TxMsg {
@@ -352,4 +494,16 @@ class MsgSend extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {
+      'from_address': fromAddress,
+      'to_address': toAddress,
+      'amount': amount,
+      'password': password,
+      'reward': reward,
+    };
+    return data;
+  }
 }

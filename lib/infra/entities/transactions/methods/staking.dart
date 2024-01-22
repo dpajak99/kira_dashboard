@@ -21,4 +21,13 @@ class MsgClaimValidator extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'moniker': moniker,
+      'val_key': valKey,
+      'pub_key': pubKey,
+    };
+  }
 }

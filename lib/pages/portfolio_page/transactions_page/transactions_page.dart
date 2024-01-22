@@ -1,11 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/coin_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
 
 class TransactionsPage extends StatelessWidget {
@@ -30,10 +33,9 @@ class TransactionsPage extends StatelessWidget {
               ColumnConfig(
                 title: 'Hash',
                 cellBuilder: (BuildContext context, Transaction item) {
-                  return Text(
-                    item.hash,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  return OpenableHash(
+                    hash: item.hash,
+                    onTap: () => AutoRouter.of(context).push(TransactionDetailsRoute(hash: item.hash)),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xff2f8af5),

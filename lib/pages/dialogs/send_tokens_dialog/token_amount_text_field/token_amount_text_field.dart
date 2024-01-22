@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,7 +57,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
               ),
               const SizedBox(width: 4),
               InkWell(
-                onTap: () => amountTextController.text = state.maxTokenAmount.networkDenominationAmount,
+                onTap: () => amountTextController.text = state.maxTokenAmount.networkDenominationAmount.toString(),
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   color: const Color(0xff131823),
@@ -161,8 +162,8 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
     if (amountTextController.text.isEmpty) {
       return;
     }
-    int selectedAmount = int.parse(amountTextController.text);
-    if (selectedAmount > int.parse(cubit.state.maxTokenAmount.amount)) {
+    Decimal selectedAmount = Decimal.parse(amountTextController.text);
+    if (selectedAmount > cubit.state.maxTokenAmount.amount) {
       errorNotifier.value = 'Insufficient balance';
     } else {
       errorNotifier.value = null;

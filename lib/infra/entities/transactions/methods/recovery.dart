@@ -23,6 +23,16 @@ class MsgRegisterRecoverySecret extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'challenge': challenge,
+      'nonce': nonce,
+      'proof': proof,
+    };
+  }
 }
 
 class MsgRotateRecoveryAddress extends TxMsg {
@@ -47,6 +57,16 @@ class MsgRotateRecoveryAddress extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'fee_payer': feePayer,
+      'address': address,
+      'recovery': recovery,
+      'proof': proof,
+    };
+  }
 }
 
 class MsgIssueRecoveryTokens extends TxMsg {
@@ -65,6 +85,13 @@ class MsgIssueRecoveryTokens extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+    };
+  }
 }
 
 class MsgBurnRecoveryTokens extends TxMsg {
@@ -85,6 +112,14 @@ class MsgBurnRecoveryTokens extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'rr_coin': rrCoin,
+    };
+  }
 }
 
 class MsgRegisterRRTokenHolder extends TxMsg {
@@ -103,6 +138,13 @@ class MsgRegisterRRTokenHolder extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'holder': holder,
+    };
+  }
 }
 
 class MsgClaimRRHolderRewards extends TxMsg {
@@ -121,6 +163,13 @@ class MsgClaimRRHolderRewards extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+    };
+  }
 }
 
 class MsgRotateValidatorByHalfRRTokenHolder extends TxMsg {
@@ -143,5 +192,14 @@ class MsgRotateValidatorByHalfRRTokenHolder extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'rr_holder': rrHolder,
+      'address': address,
+      'recovery': recovery,
+    };
+  }
 }
 

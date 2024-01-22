@@ -15,7 +15,7 @@ class CoinText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String prefixedTokenAmountString = coin.toNetworkDenominationString();
+    String prefixedTokenAmountString = coin.toNetworkDenominationString(prettify: true);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints size) {

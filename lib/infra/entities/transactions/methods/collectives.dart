@@ -10,6 +10,14 @@ class DepositWhitelist {
     any = json['any'] as bool,
     roles = (json['roles'] as List<dynamic>).map((e) => e as int).toList(),
     accounts = (json['accounts'] as List<dynamic>).map((e) => e as String).toList();
+
+  Map<String, dynamic> toJson() {
+    return {
+      'any': any,
+      'roles': roles,
+      'accounts': accounts,
+    };
+  }
 }
 
 class OwnersWhitelist {
@@ -19,6 +27,13 @@ class OwnersWhitelist {
   OwnersWhitelist.fromJson(Map<String, dynamic> json) :
         roles = (json['roles'] as List<dynamic>).map((e) => e as int).toList(),
         accounts = (json['accounts'] as List<dynamic>).map((e) => e as String).toList();
+
+  Map<String, dynamic> toJson() {
+    return {
+      'roles': roles,
+      'accounts': accounts,
+    };
+  }
 }
 
 class WeightedSpendingPool {
@@ -28,6 +43,13 @@ class WeightedSpendingPool {
   WeightedSpendingPool.fromJson(Map<String, dynamic> json) :
         name = json['name'] as String,
         weight = json['weight'] as int;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'weight': weight,
+    };
+  }
 }
 
 class MsgCreateCollective extends TxMsg {
@@ -70,6 +92,25 @@ class MsgCreateCollective extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'name': name,
+      'description': description,
+      'bonds': bonds,
+      'deposit_whitelist': depositWhitelist.toJson(),
+      'owners_whitelist': ownersWhitelist.toJson(),
+      'spending_pools': spendingPools.map((e) => e.toJson()).toList(),
+      'claim_start': claimStart,
+      'claim_period': claimPeriod,
+      'claim_end': claimEnd,
+      'vote_quorum': voteQuorum,
+      'vote_period': votePeriod,
+      'vote_enactment': voteEnactment,
+    };
+  }
 }
 
 
@@ -93,6 +134,15 @@ class MsgBondCollective extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'name': name,
+      'bonds': bonds,
+    };
+  }
 }
 
 
@@ -120,6 +170,17 @@ class MsgDonateCollective extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'name': name,
+      'locking': locking,
+      'donation': donation,
+      'donation_lock': donationLock,
+    };
+  }
 }
 
 
@@ -141,6 +202,14 @@ class MsgWithdrawCollective extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'name': name,
+    };
+  }
 }
 
 

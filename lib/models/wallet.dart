@@ -43,6 +43,11 @@ class Wallet {
 
   Wallet.deriveDefaultPath(this.bip44) : derivedBip44 = bip44.deriveDefaultPath;
 
+  Wallet({
+    required this.bip44,
+    required this.derivedBip44,
+  });
+
   factory Wallet.fromMnemonic({
     required Mnemonic mnemonic,
   }) {

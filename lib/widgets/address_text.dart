@@ -29,14 +29,41 @@ class CopyableAddressText extends StatelessWidget {
   }
 }
 
+class CopyableText extends StatelessWidget {
+  final String text;
+  final TextStyle style;
+
+  const CopyableText({
+    super.key,
+    required this.text,
+    required this.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconTextButton(
+      text: text,
+      style: style,
+      icon: Icons.copy,
+      onTap: () => _copyText(context),
+    );
+  }
+
+  void _copyText(BuildContext context) {
+    Clipboard.setData(ClipboardData(text: text));
+  }
+}
+
 class OpenableAddressText extends StatelessWidget {
   final String? address;
   final TextStyle style;
+  final bool full;
 
   const OpenableAddressText({
     super.key,
     required this.address,
     required this.style,
+    this.full = false,
   });
 
   @override
@@ -44,6 +71,7 @@ class OpenableAddressText extends StatelessWidget {
     return _AddressText(
       address: address,
       style: style,
+      full: full,
       icon: Icons.open_in_new,
       onTap: () => _openAddress(context),
     );
@@ -59,6 +87,7 @@ class _AddressText extends StatelessWidget {
   final TextStyle style;
   final IconData icon;
   final VoidCallback onTap;
+  final bool full;
 
   const _AddressText({
     super.key,
@@ -66,18 +95,19 @@ class _AddressText extends StatelessWidget {
     required this.style,
     required this.icon,
     required this.onTap,
+    this.full = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    if( address == null ) {
+    if (address == null) {
       return Text(
         '---',
         style: style,
       );
     }
     return IconTextButton(
-      text: '${address!.substring(0, 8)}...${address!.substring(address!.length - 4)}',
+      text: full ? address! : '${address!.substring(0, 8)}...${address!.substring(address!.length - 4)}',
       style: style,
       icon: icon,
       onTap: onTap,

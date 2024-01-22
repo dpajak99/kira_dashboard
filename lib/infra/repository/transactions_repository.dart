@@ -5,6 +5,7 @@ import 'package:kira_dashboard/infra/entities/transactions/block_transaction_ent
 import 'package:kira_dashboard/infra/entities/transactions/in/query_transactions_response.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/query_block_transactions_response.dart';
+import 'package:kira_dashboard/infra/entities/transactions/transaction_result_entity.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
@@ -39,7 +40,19 @@ class TransactionsRepository {
 
       return queryBlockTransactionsResponse.transactions;
     } catch (e) {
-      AppLogger().log(message: 'AccountsRepository');
+      AppLogger().log(message: 'TransactionsRepository');
+      rethrow;
+    }
+  }
+
+  Future<TransactionResultEntity> getTransactionResult(String hash) async {
+    try {
+      Response<Map<String, dynamic>> response = await httpClient.get('api/transactions/$hash');
+      TransactionResultEntity transactionResultEntity = TransactionResultEntity.fromJson(response.data!);
+
+      return transactionResultEntity;
+    } catch (e) {
+      AppLogger().log(message: 'TransactionsRepository');
       rethrow;
     }
   }

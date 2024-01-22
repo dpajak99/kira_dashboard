@@ -10,6 +10,14 @@ class PermInfo {
       : account = json['account'] as String,
         poolName = json['pool_name'] as String,
         lastClaim = json['last_claim'] as int;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'account': account,
+      'pool_name': poolName,
+      'last_claim': lastClaim,
+    };
+  }
 }
 
 class WeightedPermInfo {
@@ -19,6 +27,13 @@ class WeightedPermInfo {
   WeightedPermInfo.fromJson(Map<String, dynamic> json)
       : roles = json['roles'] as WeightedRole,
         accounts = json['accounts'] as WeightedAccount;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'roles': roles,
+      'accounts': accounts,
+    };
+  }
 }
 
 class WeightedRole {
@@ -28,6 +43,13 @@ class WeightedRole {
   WeightedRole.fromJson(Map<String, dynamic> json)
       : role = json['role'] as String,
         weight = json['weight'] as int;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'role': role,
+      'weight': weight,
+    };
+  }
 }
 
 class WeightedAccount {
@@ -37,6 +59,13 @@ class WeightedAccount {
   WeightedAccount.fromJson(Map<String, dynamic> json)
       : account = json['account'] as String,
         weight = json['weight'] as int;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'account': account,
+      'weight': weight,
+    };
+  }
 }
 
 class MsgCreateSpendingPool extends TxMsg {
@@ -79,6 +108,25 @@ class MsgCreateSpendingPool extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'claim_start': claimStart,
+      'claim_end': claimEnd,
+      'claim_expiry': claimexpiry,
+      'rates': rates,
+      'vote_quorum': voteQuorum,
+      'vote_period': votePeriod,
+      'vote_enactment': voteEnactment,
+      'owners': owners.toJson(),
+      'beneficiaries': beneficiaries.toJson(),
+      'sender': sender,
+      'dynamic_rate': dynamicRate,
+      'dynamic_rate_period': dynamicRatePeriod,
+    };
+  }
 }
 
 class MsgDepositSpendingPool extends TxMsg {
@@ -101,6 +149,15 @@ class MsgDepositSpendingPool extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dynamic_rate': dynamicRate,
+      'dynamic_rate_period': dynamicRatePeriod,
+    };
+  }
 }
 
 class MsgRegisterSpendingPoolBeneficiary extends TxMsg {
@@ -121,6 +178,14 @@ class MsgRegisterSpendingPoolBeneficiary extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'pool_name': poolName,
+    };
+  }
 }
 
 class MsgClaimSpendingPool extends TxMsg {
@@ -141,5 +206,13 @@ class MsgClaimSpendingPool extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'pool_name': poolName,
+    };
+  }
 }
 

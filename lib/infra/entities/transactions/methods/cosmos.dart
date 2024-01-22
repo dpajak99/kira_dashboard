@@ -27,4 +27,13 @@ class MsgSend extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => amounts;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'from_address': fromAddress,
+      'to_address': toAddress,
+      'amount': amounts.map((e) => e.toJson()).toList(),
+    };
+  }
 }

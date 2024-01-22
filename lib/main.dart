@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/hive.dart';
 import 'package:kira_dashboard/utils/router/router.dart';
 
 ButtonStyle darkElevatedButton = ElevatedButton.styleFrom(
@@ -21,8 +23,10 @@ ButtonStyle lightElevatedButton = ElevatedButton.styleFrom(
   minimumSize: const Size(100, 50),
 );
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
   initLocator();
+  await initHive();
 
   runApp(MyApp());
 }

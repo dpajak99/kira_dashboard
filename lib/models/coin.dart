@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:decimal/decimal.dart';
+import 'package:kira_dashboard/utils/decimal_utils.dart';
+
 class SimpleCoin {
   final String amount;
   final String denom;
@@ -33,7 +36,7 @@ class Coin {
   final CoinType type;
   final String denom;
   final String symbol;
-  final String amount;
+  final Decimal amount;
   final String name;
   final String? rate;
   final int decimals;
@@ -51,7 +54,7 @@ class Coin {
   });
 
   Coin copyWith({
-    String? amount,
+    Decimal? amount,
   }) {
     return Coin(
       type: type,
@@ -62,19 +65,27 @@ class Coin {
     );
   }
 
-  String toLowestDenominationString() {
-    return '$amount $denom';
+  String toLowestDenominationString({bool prettify = false}) {
+    if (prettify) {
+      return '${DecimalUtils.prettifyDecimal(amount)} $denom';
+    } else {
+      return '$amount $denom';
+    }
   }
 
-  String toNetworkDenominationString() {
-    return '$networkDenominationAmount $symbol';
+  String toNetworkDenominationString({bool prettify = false}) {
+    if (prettify) {
+      return '${DecimalUtils.prettifyDecimal(networkDenominationAmount)} $symbol';
+    } else {
+      return '$networkDenominationAmount $symbol';
+    }
   }
 
-  String get networkDenominationAmount {
-    double lowestDenomination = double.parse(amount);
-    double networkDenomination = lowestDenomination / pow(10, decimals);
+  Decimal get networkDenominationAmount {
+    Decimal lowestDenomination = amount;
+    Decimal networkDenomination = lowestDenomination.shift(decimals);
 
-    return '$networkDenomination';
+    return networkDenomination;
   }
 
   @override
@@ -98,12 +109,12 @@ class DerivativeCoin extends Coin {
   }) : super(type: CoinType.derivative);
 
   @override
-  String toLowestDenominationString() {
-    return '${super.toLowestDenominationString()} (staked)';
+  String toLowestDenominationString({bool prettify = false}) {
+    return '${super.toLowestDenominationString(prettify: prettify)} (staked)';
   }
 
   @override
-  String toNetworkDenominationString() {
-    return '${super.toNetworkDenominationString()} (staked)';
+  String toNetworkDenominationString({bool prettify = false}) {
+    return '${super.toNetworkDenominationString(prettify: prettify)} (staked)';
   }
 }

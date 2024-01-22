@@ -23,6 +23,16 @@ class MsgSubmitProposal extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'title': title,
+      'description': description,
+      'content': content,
+    };
+  }
 }
 
 enum VoteOption {
@@ -59,6 +69,16 @@ class MsgVoteProposal extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposal_id': proposalId,
+      'voter': voter,
+      'option': option?.index,
+      'slash': slash,
+    };
+  }
 }
 
 class MsgWhitelistPermissions extends TxMsg {
@@ -81,6 +101,15 @@ class MsgWhitelistPermissions extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'address': address,
+      'permission': permission,
+    };
+  }
 }
 
 class MsgBlacklistPermissions extends TxMsg {
@@ -103,6 +132,15 @@ class MsgBlacklistPermissions extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'address': address,
+      'permission': permission,
+    };
+  }
 }
 
 class MsgClaimCouncilor extends TxMsg {
@@ -133,6 +171,19 @@ class MsgClaimCouncilor extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'moniker': moniker,
+      'username': username,
+      'description': description,
+      'social': social,
+      'contact': contact,
+      'avatar': avatar,
+    };
+  }
 }
 
 class MsgSetNetworkProperties extends TxMsg {
@@ -153,6 +204,14 @@ class MsgSetNetworkProperties extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'network_properties': networkProperties,
+      'proposer': proposer,
+    };
+  }
 }
 
 class MsgSetExecutionFee extends TxMsg {
@@ -181,6 +240,18 @@ class MsgSetExecutionFee extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'transaction_type': transactionType,
+      'execution_fee': executionFee,
+      'failure_fee': failureFee,
+      'timeout': timeout,
+      'default_parameters': defaultParameters,
+      'proposer': proposer,
+    };
+  }
 }
 
 class MsgCreateRole extends TxMsg {
@@ -203,6 +274,15 @@ class MsgCreateRole extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'role_sid': roleSid,
+      'role_description': roleDescription,
+    };
+  }
 }
 
 class MsgAssignRole extends TxMsg {
@@ -225,6 +305,15 @@ class MsgAssignRole extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'address': address,
+      'role_id': roleId,
+    };
+  }
 }
 
 class MsgUnassignRole extends TxMsg {
@@ -247,6 +336,15 @@ class MsgUnassignRole extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'address': address,
+      'role_id': roleId,
+    };
+  }
 }
 
 class MsgWhitelistRolePermission extends TxMsg {
@@ -269,6 +367,15 @@ class MsgWhitelistRolePermission extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'role_identifier': roleIdentifier,
+      'permission': permission,
+    };
+  }
 }
 
 class MsgBlacklistRolePermission extends TxMsg {
@@ -291,6 +398,15 @@ class MsgBlacklistRolePermission extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'role_identifier': roleIdentifier,
+      'permission': permission,
+    };
+  }
 }
 
 class MsgRemoveWhitelistRolePermission extends TxMsg {
@@ -313,6 +429,15 @@ class MsgRemoveWhitelistRolePermission extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'role_identifier': roleIdentifier,
+      'permission': permission,
+    };
+  }
 }
 
 class MsgRemoveBlacklistRolePermission extends TxMsg {
@@ -335,6 +460,15 @@ class MsgRemoveBlacklistRolePermission extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'proposer': proposer,
+      'role_identifier': roleIdentifier,
+      'permission': permission,
+    };
+  }
 }
 
 class IdentityInfoEntry {
@@ -344,6 +478,13 @@ class IdentityInfoEntry {
   IdentityInfoEntry.fromJson(Map<String, dynamic> json)
       : key = json['key'] as String,
         info = json['info'] as String;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'key': key,
+      'info': info,
+    };
+  }
 }
 
 class MsgRegisterIdentityRecords extends TxMsg {
@@ -369,6 +510,15 @@ class MsgRegisterIdentityRecords extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    final List<Map<String, dynamic>> infosJson = infos.map((e) => e.toJson()).toList();
+    return {
+      'address': address,
+      'infos': infosJson,
+    };
+  }
 }
 
 class MsgRequestIdentityRecordsVerify extends TxMsg {
@@ -400,6 +550,17 @@ class MsgRequestIdentityRecordsVerify extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[tip];
+
+  @override
+  Map<String, dynamic> toJson() {
+    final List<int> recordIdsJson = recordIds;
+    return {
+      'address': address,
+      'verifier': verifier,
+      'record_ids': recordIdsJson,
+      'tip': tip.toJson(),
+    };
+  }
 }
 
 class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
@@ -428,6 +589,16 @@ class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    final bool? yesJson = yes;
+    return {
+      'verifier': verifier,
+      'verify_request_id': verifyRequestId,
+      'yes': yesJson,
+    };
+  }
 }
 
 class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
@@ -453,4 +624,12 @@ class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'executor': executor,
+      'verify_request_id': verifyRequestId,
+    };
+  }
 }

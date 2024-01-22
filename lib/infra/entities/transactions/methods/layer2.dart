@@ -21,6 +21,15 @@ class MsgCreateDappProposal extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp': dapp,
+      'bond': bond,
+    };
+  }
 }
 
 class MsgBondDappProposal extends TxMsg {
@@ -43,6 +52,15 @@ class MsgBondDappProposal extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'bond': bond,
+    };
+  }
 }
 
 class MsgReclaimDappBondProposal extends TxMsg {
@@ -65,6 +83,15 @@ class MsgReclaimDappBondProposal extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'bond': bond,
+    };
+  }
 }
 
 class MsgJoinDappVerifierWithBond extends TxMsg {
@@ -87,6 +114,15 @@ class MsgJoinDappVerifierWithBond extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'interx': interx,
+    };
+  }
 }
 
 class MsgExitDapp extends TxMsg {
@@ -107,6 +143,14 @@ class MsgExitDapp extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+    };
+  }
 }
 
 class MsgRedeemDappPoolTx extends TxMsg {
@@ -131,6 +175,16 @@ class MsgRedeemDappPoolTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'lp_token': lpToken,
+      'slippage': slippage,
+    };
+  }
 }
 
 class MsgSwapDappPoolTx extends TxMsg {
@@ -155,6 +209,16 @@ class MsgSwapDappPoolTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'token': token,
+      'slippage': slippage,
+    };
+  }
 }
 
 class MsgConvertDappPoolTx extends TxMsg {
@@ -179,6 +243,16 @@ class MsgConvertDappPoolTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'target_dapp_name': targetDappName,
+      'lp_token': lpToken,
+    };
+  }
 }
 
 class MsgPauseDappTx extends TxMsg {
@@ -199,6 +273,14 @@ class MsgPauseDappTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+    };
+  }
 }
 
 class MsgUnPauseDappTx extends TxMsg {
@@ -219,6 +301,14 @@ class MsgUnPauseDappTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+    };
+  }
 }
 
 class MsgReactivateDappTx extends TxMsg {
@@ -239,6 +329,13 @@ class MsgReactivateDappTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'dapp_name': dappName,
+    };
+  }
 }
 
 class MsgExecuteDappTx extends TxMsg {
@@ -261,6 +358,15 @@ class MsgExecuteDappTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'gateway': gateway,
+    };
+  }
 }
 
 class MsgDenounceLeaderTx extends TxMsg {
@@ -287,6 +393,17 @@ class MsgDenounceLeaderTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+    @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'leader': leader,
+      'denounce_text': denounceText,
+      'version': version,
+    };
+  }
 }
 
 class MsgTransitionDappTx extends TxMsg {
@@ -313,6 +430,17 @@ class MsgTransitionDappTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'status_hash': statusHash,
+      'onchain_messages': onchainMessages,
+      'version': version,
+    };
+  }
 }
 
 class MsgApproveDappTransitionTx extends TxMsg {
@@ -335,6 +463,15 @@ class MsgApproveDappTransitionTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+    @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'version': version,
+    };
+  }
 }
 
 class MsgRejectDappTransitionTx extends TxMsg {
@@ -357,6 +494,15 @@ class MsgRejectDappTransitionTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+    @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'dapp_name': dappName,
+      'version': version,
+    };
+  }
 }
 
 class MsgTransferDappTx extends TxMsg {
@@ -377,6 +523,14 @@ class MsgTransferDappTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+    @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'requests': requests,
+    };
+  }
 }
 
 class MsgAckTransferDappTx extends TxMsg {
@@ -397,6 +551,14 @@ class MsgAckTransferDappTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+    @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'responses': responses,
+    };
+  }
 }
 
 class MsgMintCreateFtTx extends TxMsg {
@@ -441,6 +603,26 @@ class MsgMintCreateFtTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+    @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'denom_suffix': denomSuffix,
+      'name': name,
+      'symbol': symbol,
+      'icon': icon,
+      'description': description,
+      'website': website,
+      'social': social,
+      'decimals': decimals,
+      'cap': cap,
+      'supply': supply,
+      'holders': holders,
+      'fee': fee,
+      'owner': owner,
+    };
+  }
 }
 
 class MsgMintCreateNftTx extends TxMsg {
@@ -489,6 +671,28 @@ class MsgMintCreateNftTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+    @override
+    Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'denom_suffix': denomSuffix,
+      'name': name,
+      'symbol': symbol,
+      'icon': icon,
+      'description': description,
+      'website': website,
+      'social': social,
+      'decimals': decimals,
+      'cap': cap,
+      'supply': supply,
+      'holders': holders,
+      'fee': fee,
+      'owner': owner,
+      'metadata': metadata,
+      'hash': hash,
+    };
+  }
 }
 
 class MsgMintIssueTx extends TxMsg {
@@ -513,6 +717,16 @@ class MsgMintIssueTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'denom': denom,
+      'amount': amount,
+      'receiver': receiver,
+    };
+  }
 }
 
 class MsgMintBurnTx extends TxMsg {
@@ -535,5 +749,14 @@ class MsgMintBurnTx extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'sender': sender,
+      'denom': denom,
+      'amount': amount,
+    };
+  }
 }
 

@@ -19,4 +19,12 @@ class MsgSubmitEvidence extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'submitter': submitter,
+      'evidence': evidence,
+    };
+  }
 }

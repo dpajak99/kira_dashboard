@@ -29,6 +29,19 @@ class MsgUpsertTokenAlias extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'symbol': symbol,
+      'name': name,
+      'icon': icon,
+      'decimals': decimals,
+      'denoms': denoms,
+      'invalidated': invalidated,
+      'proposer': proposer,
+    };
+  }
 }
 
 class MsgUpsertTokenRate extends TxMsg {
@@ -61,4 +74,18 @@ class MsgUpsertTokenRate extends TxMsg {
 
   @override
   List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'denom': denom,
+      'rate': rate,
+      'fee_payments': feePayments,
+      'stake_cap': stakeCap,
+      'stake_min': stakeMin,
+      'stake_token': stakeToken,
+      'invalidated': invalidated,
+      'proposer': proposer,
+    };
+  }
 }

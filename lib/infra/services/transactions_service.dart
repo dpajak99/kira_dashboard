@@ -2,11 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
+import 'package:kira_dashboard/infra/entities/transactions/transaction_result_entity.dart';
 import 'package:kira_dashboard/infra/repository/transactions_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/transaction.dart';
+import 'package:kira_dashboard/models/transaction_result.dart';
 import 'package:kira_dashboard/utils/custom_date_utils.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
@@ -62,5 +64,22 @@ class TransactionsService {
     }));
 
     return transactions;
+  }
+
+  Future<TransactionResult> getTransactionResult(String hash) async {
+    TransactionResultEntity transactionResultEntity = await transactionsRepository.getTransactionResult(hash);
+    List<Coin> fees = await tokensService.buildCoins(transactionResultEntity.fees.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList());
+
+    return TransactionResult(
+      hash: transactionResultEntity.hash,
+      status: TxStatusType.fromString(transactionResultEntity.status),
+      blockHeight: transactionResultEntity.blockHeight,
+      blockTimestamp: CustomDateUtils.buildDateFromSecondsSinceEpoch(transactionResultEntity.blockTimestamp),
+      confirmation: transactionResultEntity.confirmation,
+      msgs: transactionResultEntity.msgs.map((e) => e.data).toList(),
+      transactions: transactionResultEntity.transactions,
+      fees: fees,
+      memo: transactionResultEntity.memo,
+    );
   }
 }

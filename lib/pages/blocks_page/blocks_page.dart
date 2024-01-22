@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +50,7 @@ class _BlocksPageState extends State<BlocksPage> {
                         cellBuilder: (BuildContext context, Block item) {
                           return OpenableText(
                             text: item.height,
-                            onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
+                            onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(block: item.height)),
                             style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xfffbfbfb),
@@ -89,10 +88,9 @@ class _BlocksPageState extends State<BlocksPage> {
                       ColumnConfig(
                         title: 'Transactions',
                         cellBuilder: (BuildContext context, Block item) {
-                          return Text(
-                            item.numTxs,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          return OpenableText(
+                            text: item.numTxs,
+                            onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
                             style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xfffbfbfb),
