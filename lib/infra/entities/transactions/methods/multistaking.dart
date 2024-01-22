@@ -36,7 +36,7 @@ class MsgUpsertStakingPool extends TxMsg {
 }
 
 class MsgDelegate extends TxMsg {
-  String get name => 'delegate';
+  static String get messageName => 'delegate';
 
   final String delegatorAddress;
   final String validatorAddress;

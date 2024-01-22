@@ -14,6 +14,7 @@ enum TxStatusType {
       case 'success':
         return TxStatusType.confirmed;
       case 'failed':
+      case 'failure':
         return TxStatusType.failed;
       case 'pending':
         return TxStatusType.pending;

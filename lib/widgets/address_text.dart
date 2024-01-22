@@ -118,19 +118,21 @@ class _AddressText extends StatelessWidget {
 class IconTextButton extends StatelessWidget {
   final String text;
   final TextStyle style;
-  final IconData icon;
+  final IconData? icon;
   final VoidCallback onTap;
   final double gap;
   final Color highlightColor;
+  final double? rotateAngle;
 
   const IconTextButton({
     super.key,
     required this.text,
     required this.style,
-    required this.icon,
+    this.icon,
     required this.onTap,
     this.highlightColor = const Color(0xff4888f0),
     this.gap = 8,
+    this.rotateAngle,
   });
 
   @override
@@ -138,6 +140,16 @@ class IconTextButton extends StatelessWidget {
     return MouseStateListener(
       onTap: onTap,
       childBuilder: (Set<MaterialState> states) {
+        Widget? iconWidget = icon != null ?  Icon(
+          icon,
+          size: 16,
+          color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+        ) : null;
+
+        if (rotateAngle != null) {
+          iconWidget = Transform.rotate(angle: rotateAngle!, child: iconWidget);
+        }
+
         return RichText(
           text: TextSpan(
             text: text,
@@ -145,15 +157,12 @@ class IconTextButton extends StatelessWidget {
               color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
             ),
             children: [
+              if(iconWidget != null)
               WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
                 child: Padding(
                   padding: EdgeInsets.only(left: gap),
-                  child: Icon(
-                    icon,
-                    size: 16,
-                    color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
-                  ),
+                  child: iconWidget,
                 ),
               ),
             ],

@@ -10,16 +10,11 @@ import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog_state.dart';
+import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/custom_tab_bar.dart';
 
 class SignInMnemonicDialog extends DialogContentWidget {
   const SignInMnemonicDialog({super.key});
-
-  @override
-  String get title => 'Sign in using Mnemonic';
-
-  @override
-  double get width => 550;
 
   @override
   State<StatefulWidget> createState() => _SignInMnemonicDialog();
@@ -49,53 +44,58 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInMnemonicDialogCubit, SignInMnemonicDialogState>(
-      bloc: cubit,
-      builder: (BuildContext context, SignInMnemonicDialogState state) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Color(0xff10141C),
-            borderRadius: BorderRadius.all(Radius.circular(24)),
-          ),
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Select mnemonic size',
-                style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomTabBar(
-                    tabController: tabController,
-                    tabs: availableMnemonicSizes.map((int mnemonicSize) => Tab(text: mnemonicSize.toString())).toList(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                'Enter mnemonic passphrase',
-                style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
-              ),
-              const SizedBox(height: 8),
-              ..._buildCells(state),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: state.valid
-                    ? () {
-                        signIn(cubit.mnemonicList);
-                        Navigator.of(context).pop();
-                      }
-                    : null,
-                child: const Text('Connect Wallet'),
-              ),
-            ],
-          ),
-        );
-      },
+    return CustomDialog(
+      title: 'Sign in using Mnemonic',
+      width: 550,
+      scrollable: false,
+      child: BlocBuilder<SignInMnemonicDialogCubit, SignInMnemonicDialogState>(
+        bloc: cubit,
+        builder: (BuildContext context, SignInMnemonicDialogState state) {
+          return Container(
+            decoration: const BoxDecoration(
+              color: Color(0xff10141C),
+              borderRadius: BorderRadius.all(Radius.circular(24)),
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Select mnemonic size',
+                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomTabBar(
+                      tabController: tabController,
+                      tabs: availableMnemonicSizes.map((int mnemonicSize) => Tab(text: mnemonicSize.toString())).toList(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'Enter mnemonic passphrase',
+                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                ),
+                const SizedBox(height: 8),
+                ..._buildCells(state),
+                const SizedBox(height: 32),
+                ElevatedButton(
+                  onPressed: state.valid
+                      ? () {
+                          signIn(cubit.mnemonicList);
+                          Navigator.of(context).pop();
+                        }
+                      : null,
+                  child: const Text('Connect Wallet'),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 

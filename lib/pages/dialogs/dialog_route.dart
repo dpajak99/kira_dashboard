@@ -63,15 +63,8 @@ class CustomDialogRouteState extends State<CustomDialogRoute> {
       ));
     }
 
-    return CustomDialog(
-      title: routeStack.last.content.title,
-      width: routeStack.last.content.width,
-      child: AnimatedSize(
-        duration: const Duration(milliseconds: 200),
-        child: Stack(
-          children: pagesVisibility,
-        ),
-      ),
+    return Stack(
+      children: pagesVisibility,
     );
   }
 

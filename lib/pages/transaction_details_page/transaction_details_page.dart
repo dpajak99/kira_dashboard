@@ -1,10 +1,12 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_view/json_view.dart';
 import 'package:kira_dashboard/models/transaction_result.dart';
 import 'package:kira_dashboard/pages/transaction_details_page/transaction_details_cubit.dart';
 import 'package:kira_dashboard/pages/transaction_details_page/transaction_details_state.dart';
+import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
@@ -109,7 +111,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                                   OpenableText(
                                     text: state.transactionResult!.blockHeight.toString(),
                                     style: valueStyle,
-                                    onTap: () {},
+                                    onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: state.transactionResult!.blockHeight.toString())),
                                   ),
                                   const SizedBox(width: 16),
                                   _MethodChip('${state.transactionResult!.confirmation} Block Confirmations'),

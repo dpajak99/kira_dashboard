@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:bech32/bech32.dart';
 import 'package:blockies_svg/blockies_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,9 +20,16 @@ class IdentityAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String avatarData;
+    try {
+      Bech32 seperatedAddress = bech32.decode(address);
+      avatarData = base64Encode(seperatedAddress.data);
+    } catch (e) {
+      avatarData = address;
+    }
     if (avatarUrl != null) {
       return UrlAvatarWidget(
-        address: address,
+        address: avatarData,
         url: avatarUrl!,
         size: size,
       );
@@ -29,7 +39,7 @@ class IdentityAvatar extends StatelessWidget {
           height: size,
           width: size,
           child: SvgPicture.string(
-            Blockies(seed: address).toSvg(size: size.toInt()),
+            Blockies(seed: avatarData).toSvg(size: size.toInt()),
             width: size,
             height: size,
           ),

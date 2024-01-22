@@ -110,11 +110,11 @@ class DerivativeCoin extends Coin {
 
   @override
   String toLowestDenominationString({bool prettify = false}) {
-    return '${super.toLowestDenominationString(prettify: prettify)} (staked)';
+    return '$amount ${derivativePrefix.toLowerCase()}/${denom.toUpperCase()}';
   }
 
   @override
   String toNetworkDenominationString({bool prettify = false}) {
-    return '${super.toNetworkDenominationString(prettify: prettify)} (staked)';
+    return '$networkDenominationAmount ${derivativePrefix.toLowerCase()}/${symbol.toUpperCase()}';
   }
 }

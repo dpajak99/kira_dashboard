@@ -1,9 +1,17 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
 import 'package:kira_dashboard/models/validator.dart';
+import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/send_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/undelegate_tokens_dialog/undelegate_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
@@ -126,6 +134,7 @@ class DelegationsPage extends StatelessWidget {
                       );
                     },
                   ),
+                  if( state.isMyWallet )
                   ColumnConfig(
                     title: 'Actions',
                     textAlign: TextAlign.right,
@@ -133,10 +142,32 @@ class DelegationsPage extends StatelessWidget {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.info_outline, size: 20, color: Color(0xff2f8af5)),
-                            visualDensity: VisualDensity.compact,
+                          IconTextButton(
+                            text: 'Undelegate',
+                            gap: 4,
+                            highlightColor: const Color(0xfffbfbfb),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff4888f0),
+                            ),
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) => CustomDialogRoute(content: UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          IconTextButton(
+                            text: 'Delegate',
+                            gap: 4,
+                            highlightColor: const Color(0xfffbfbfb),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff4888f0),
+                            ),
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) => CustomDialogRoute(content: DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+                            ),
                           ),
                         ],
                       );

@@ -10,15 +10,21 @@ import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_tex
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field_state.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
 
+class TokenAmountTextFieldController extends ValueNotifier<Coin?> {
+  TokenAmountTextFieldController() : super(null);
+}
+
 class TokenAmountTextField extends StatefulWidget {
+  final TokenAmountTextFieldController controller;
   final String address;
   final Coin initialCoin;
 
-  const TokenAmountTextField({
+  TokenAmountTextField({
     required this.address,
     required this.initialCoin,
+    TokenAmountTextFieldController? controller,
     super.key,
-  });
+  }) : controller = controller ?? TokenAmountTextFieldController();
 
   @override
   State<StatefulWidget> createState() => _TokenAmountTextFieldState();
@@ -166,6 +172,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
     if (selectedAmount > cubit.state.maxTokenAmount.amount) {
       errorNotifier.value = 'Insufficient balance';
     } else {
+      widget.controller.value = cubit.state.selectedTokenAmount.copyWith(amount: selectedAmount);
       errorNotifier.value = null;
     }
   }

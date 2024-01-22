@@ -2,6 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/models/validator.dart';
+import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_cubit.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_state.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
@@ -34,17 +36,21 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
         BlocBuilder<ValidatorsPageCubit, ValidatorsPageState>(
           bloc: cubit,
           builder: (BuildContext context, ValidatorsPageState state) {
-            return SliverPagePadding( sliver: SliverGrid.builder(
+            return SliverPagePadding(
+              sliver: SliverGrid.builder(
                 itemCount: state.validators.length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 350.0,
-                  mainAxisExtent: 350,
+                  mainAxisExtent: 420,
                   crossAxisSpacing: 20.0,
                   mainAxisSpacing: 20.0,
                   childAspectRatio: 1,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  return _ValidatorTile(validator: state.validators[index]);
+                  return _ValidatorTile(
+                    validator: state.validators[index],
+                    signedIn: state.isSignedIn,
+                  );
                 },
               ),
             );
@@ -57,9 +63,11 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
 
 class _ValidatorTile extends StatelessWidget {
   final Validator validator;
+  final bool signedIn;
 
   const _ValidatorTile({
     required this.validator,
+    required this.signedIn,
     super.key,
   });
 
@@ -156,6 +164,23 @@ class _ValidatorTile extends StatelessWidget {
                           ),
                         ],
                       ),
+                      if (signedIn) ...<Widget>[
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (BuildContext context) => CustomDialogRoute(
+                                content: DelegateTokensDialog(
+                                  valoperAddress: validator.valkey,
+                                ),
+                              ),
+                            ),
+                            child: const Text('Delegate'),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

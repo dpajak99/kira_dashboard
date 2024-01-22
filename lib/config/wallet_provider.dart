@@ -13,11 +13,16 @@ class WalletProvider extends ValueNotifier<Wallet?> {
 
   void init() async {
     Wallet? wallet = await unsafeWalletService.getWallet();
-    value = wallet;
+    if( wallet != null ) {
+      value = wallet;
+      notifyListeners();
+    }
   }
 
   void signIn(Wallet wallet) {
     value = wallet;
     unsafeWalletService.saveWallet(wallet);
   }
+  
+  bool get isSignedIn => value != null;
 }
