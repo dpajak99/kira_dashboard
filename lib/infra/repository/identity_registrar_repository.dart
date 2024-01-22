@@ -5,13 +5,17 @@ import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record
 import 'package:kira_dashboard/infra/entities/identity_registrar/query_identity_record_response.dart';
 import 'package:kira_dashboard/infra/entities/identity_registrar/query_identity_records_response.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class IdentityRegistrarRepository {
   final Dio httpClient = getIt<NetworkProvider>().httpClient;
 
-  Future<List<IdentityRecordEntity>> getAllByAddress(String address) async {
+  Future<List<IdentityRecordEntity>> getPage(String address, PaginatedRequest paginatedRequest) async {
     try {
-      Response<Map<String, dynamic>> response = await httpClient.get('/api/kira/gov/identity_records/$address');
+      Response<Map<String, dynamic>> response = await httpClient.get(
+        '/api/kira/gov/identity_records/$address',
+        queryParameters: paginatedRequest.toJson(),
+      );
       QueryIdentityRecordsResponse queryIdentityRecordsResponse = QueryIdentityRecordsResponse.fromJson(response.data!);
 
       return queryIdentityRecordsResponse.records;

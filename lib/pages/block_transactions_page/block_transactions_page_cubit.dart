@@ -4,6 +4,7 @@ import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/models/network_status.dart';
 import 'package:kira_dashboard/pages/block_transactions_page/block_transactions_page_state.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class BlockTransactionsPageCubit extends Cubit<BlockTransactionsPageState> {
   final TransactionsService transactionsService = TransactionsService();
@@ -16,7 +17,8 @@ class BlockTransactionsPageCubit extends Cubit<BlockTransactionsPageState> {
       NetworkStatus networkStatus = await networkService.getStatus();
       blockId = networkStatus.block.toString();
     }
-    List<BlockTransaction> transactions = await transactionsService.getBlockTransactions(blockId);
+    PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
+    List<BlockTransaction> transactions = await transactionsService.getBlockTransactionsPage(blockId, paginatedRequest);
 
     emit(BlockTransactionsPageState(
       isLoading: false,

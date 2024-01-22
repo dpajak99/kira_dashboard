@@ -9,8 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/cupertino.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/material.dart' as _i8;
 import 'package:kira_dashboard/pages/block_transactions_page/block_transactions_page.dart'
     as _i1;
 import 'package:kira_dashboard/pages/blocks_page/blocks_page.dart' as _i2;
@@ -154,7 +153,7 @@ class MenuWrapperRoute extends _i7.PageRouteInfo<void> {
 class PortfolioRoute extends _i7.PageRouteInfo<PortfolioRouteArgs> {
   PortfolioRoute({
     String address = '',
-    _i9.Key? key,
+    _i8.Key? key,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           PortfolioRoute.name,
@@ -180,7 +179,7 @@ class PortfolioRouteArgs {
 
   final String address;
 
-  final _i9.Key? key;
+  final _i8.Key? key;
 
   @override
   String toString() {

@@ -8,13 +8,14 @@ import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/utils/custom_date_utils.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class TransactionsService {
   final TransactionsRepository transactionsRepository = TransactionsRepository();
   final TokensService tokensService = TokensService();
 
-  Future<List<Transaction>> getAll(String address) async {
-    List<TransactionEntity> transactionEntities = await transactionsRepository.getUserTransactions(address);
+  Future<List<Transaction>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
+    List<TransactionEntity> transactionEntities = await transactionsRepository.getUserTransactionsPage(address, paginatedRequest);
 
     List<Transaction> transactions = await Future.wait<Transaction>(transactionEntities.map((TransactionEntity entity) async {
       Map<String, dynamic>? msgJson = entity.txs.firstOrNull;
@@ -39,8 +40,8 @@ class TransactionsService {
     return transactions;
   }
 
-  Future<List<BlockTransaction>> getBlockTransactions(String blockId) async {
-    List<BlockTransactionEntity> blockTransactionEntities = await transactionsRepository.getBlockTransactions(blockId);
+  Future<List<BlockTransaction>> getBlockTransactionsPage(String blockId, PaginatedRequest paginatedRequest) async {
+    List<BlockTransactionEntity> blockTransactionEntities = await transactionsRepository.getBlockTransactions(blockId, paginatedRequest);
 
     List<BlockTransaction> transactions = await Future.wait<BlockTransaction>(blockTransactionEntities.map((BlockTransactionEntity entity) async {
       TypedMsg? typedMsg = entity.msgs.firstOrNull;

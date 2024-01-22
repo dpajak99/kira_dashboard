@@ -1,6 +1,7 @@
 import 'package:bech32/bech32.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/send_tokens_dialog_cubit.dart';
@@ -12,7 +13,12 @@ import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 class SendTokensDialog extends DialogContentWidget {
-  const SendTokensDialog({super.key});
+  final Coin? initialCoin;
+
+  const SendTokensDialog({
+    this.initialCoin,
+    super.key,
+  });
 
   @override
   String get title => 'Send tokens';
@@ -25,7 +31,7 @@ class SendTokensDialog extends DialogContentWidget {
 }
 
 class _SendTokensDialogState extends State<SendTokensDialog> {
-  final SendTokensDialogCubit cubit = SendTokensDialogCubit();
+  late final SendTokensDialogCubit cubit = SendTokensDialogCubit(initialCoin: widget.initialCoin);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +76,7 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                     const SizedShimmer(width: 60, height: 14, reversed: true),
                 ],
               ),
-             const Spacer(),
+              const Spacer(),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -165,7 +171,6 @@ class _AddressTextFieldState extends State<_AddressTextField> {
                       style: const TextStyle(fontSize: 20, color: Color(0xfffbfbfb)),
                       cursorColor: const Color(0xfffbfbfb),
                       cursorWidth: 1,
-                      onChanged: (String value) => widget.controller.text = value,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         isDense: true,
@@ -209,6 +214,7 @@ class _AddressTextFieldState extends State<_AddressTextField> {
 
     if (focusNode.hasFocus == false) {
       tmpController.text = controller.text;
+      addressValid = _validateAddress(tmpController.text);
 
       if (addressValid) {
         controller.text = '${controller.text.substring(0, 10)}...${controller.text.substring(controller.text.length - 5)}';

@@ -4,13 +4,17 @@ import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/proposals/proposal_entity.dart';
 import 'package:kira_dashboard/infra/entities/proposals/query_proposals_response.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class ProposalsRepository {
   final Dio httpClient = getIt<NetworkProvider>().httpClient;
 
-  Future<List<ProposalEntity>> getAll() async {
+  Future<List<ProposalEntity>> getPage(PaginatedRequest paginatedRequest) async {
     try {
-      Response<Map<String, dynamic>> response = await httpClient.get('/api/kira/gov/proposals');
+      Response<Map<String, dynamic>> response = await httpClient.get(
+        '/api/kira/gov/proposals',
+        queryParameters: paginatedRequest.toJson(),
+      );
       QueryProposalsResponse queryProposalsResponse = QueryProposalsResponse.fromJson(response.data!);
 
       return queryProposalsResponse.proposals;

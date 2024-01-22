@@ -6,15 +6,19 @@ import 'package:kira_dashboard/infra/entities/transactions/in/query_transactions
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/query_block_transactions_response.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class TransactionsRepository {
   final Dio httpClient = getIt<NetworkProvider>().httpClient;
 
-  Future<List<TransactionEntity>> getUserTransactions(String address) async {
+  Future<List<TransactionEntity>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
     try {
       Response<Map<String, dynamic>> response = await httpClient.get(
         '/api/transactions',
-        queryParameters: <String, dynamic>{'address': address},
+        queryParameters: <String, dynamic>{
+          'address': address,
+          ...paginatedRequest.toJson(),
+        },
       );
       QueryTransactionsResponse queryTransactionsResponse = QueryTransactionsResponse.fromJson(response.data!);
 
@@ -25,9 +29,12 @@ class TransactionsRepository {
     }
   }
 
-  Future<List<BlockTransactionEntity>> getBlockTransactions(String blockId) async {
+  Future<List<BlockTransactionEntity>> getBlockTransactions(String blockId, PaginatedRequest paginatedRequest) async {
     try {
-      Response<Map<String, dynamic>> response = await httpClient.get('api/blocks/$blockId/transactions');
+      Response<Map<String, dynamic>> response = await httpClient.get(
+        'api/blocks/$blockId/transactions',
+        queryParameters: paginatedRequest.toJson(),
+      );
       QueryBlockTransactionsResponse queryBlockTransactionsResponse = QueryBlockTransactionsResponse.fromJson(response.data!);
 
       return queryBlockTransactionsResponse.transactions;

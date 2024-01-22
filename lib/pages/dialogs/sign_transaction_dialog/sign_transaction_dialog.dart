@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/main.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 
 class SignTransactionDialog extends DialogContentWidget {
@@ -39,7 +40,8 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
         const SizedBox(height: 48),
         SizedBox(
           width: double.infinity,
-          child: OutlinedButton(
+          child: ElevatedButton(
+            style: lightElevatedButton,
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
           ),

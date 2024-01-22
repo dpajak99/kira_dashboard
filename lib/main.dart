@@ -3,6 +3,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/utils/router/router.dart';
 
+ButtonStyle darkElevatedButton = ElevatedButton.styleFrom(
+  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+  backgroundColor: const Color(0xff2f8af5),
+  foregroundColor: const Color(0xfffbfbfb),
+  textStyle: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+  padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
+  minimumSize: const Size(100, 50),
+);
+
+ButtonStyle lightElevatedButton = ElevatedButton.styleFrom(
+  side: const BorderSide(color: Colors.transparent),
+  backgroundColor: const Color(0xff182a44),
+  foregroundColor: const Color(0xff2f8af5),
+  textStyle: const TextStyle(fontSize: 16, color: Color(0xff2f8af5)),
+  padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
+  minimumSize: const Size(100, 50),
+);
+
 void main() {
   initLocator();
 
@@ -44,25 +62,18 @@ class MyApp extends StatelessWidget {
             textStyle: const TextStyle(fontSize: 16),
           ),
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
-            backgroundColor: const Color(0xff2f8af5),
-            foregroundColor: const Color(0xfffbfbfb),
-            textStyle: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
-            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
-            minimumSize: const Size(100, 50),
-          ),
-        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(style: darkElevatedButton),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-            side: const BorderSide(color: Colors.transparent),
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
-            backgroundColor: const Color(0xff182a44),
-            foregroundColor: const Color(0xff2f8af5),
-            textStyle: const TextStyle(fontSize: 16, color: Color(0xff2f8af5)),
-            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
-            minimumSize: const Size(100, 50),
+            textStyle: const TextStyle(fontSize: 16),
+            foregroundColor: const Color(0xff6c86ad),
+            side: const BorderSide(
+              width: 1.0,
+              color: Color(0xff6c86ad),
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
           ),
         ),
       ),

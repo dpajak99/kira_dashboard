@@ -5,6 +5,7 @@ import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
 import 'package:kira_dashboard/models/validator_info.dart';
 import 'package:kira_dashboard/utils/custom_date_utils.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class UndelegationsService {
   final TokensService tokensService = TokensService();
@@ -12,8 +13,8 @@ class UndelegationsService {
 
   UndelegationsService();
 
-  Future<List<Undelegation>> getAll(String address) async {
-    List<UndelegationEntity> undelegationEntities = await undelegationsRepository.getAll(address);
+  Future<List<Undelegation>> getPage(String address, PaginatedRequest paginatedRequest) async {
+    List<UndelegationEntity> undelegationEntities = await undelegationsRepository.getPage(address, paginatedRequest);
     List<Undelegation> undelegations = await Future.wait(undelegationEntities.map((e) async => Undelegation(
       id: e.id,
       expiry: CustomDateUtils.buildDateFromSecondsSinceEpoch(int.parse(e.expiry)),

@@ -1,12 +1,13 @@
 import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record_entity.dart';
 import 'package:kira_dashboard/infra/repository/identity_registrar_repository.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class IdentityRegistrarService {
   final IdentityRegistrarRepository identityRegistrarRepository = IdentityRegistrarRepository();
 
-  Future<IdentityRecords> getAllByAddress(String address) async {
-    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getAllByAddress(address);
+  Future<IdentityRecords> getAllByAddress(String address, PaginatedRequest paginatedRequest) async {
+    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getPage(address, paginatedRequest);
     Map<String, IdentityRecordEntity> identityRecordsMap = <String, IdentityRecordEntity>{};
     for (IdentityRecordEntity identityRecord in identityRecords) {
       identityRecordsMap[identityRecord.key] = identityRecord;

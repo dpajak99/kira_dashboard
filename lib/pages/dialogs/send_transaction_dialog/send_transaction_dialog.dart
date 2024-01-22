@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/main.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 
 class SendTransactionDialog extends DialogContentWidget {
@@ -40,7 +41,8 @@ class _SendTransactionDialog extends State<SendTransactionDialog> {
         const SizedBox(height: 16),
         SizedBox(
           width: double.infinity,
-          child: OutlinedButton(
+          child: ElevatedButton(
+            style: lightElevatedButton,
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
           ),

@@ -16,9 +16,11 @@ class PortfolioPageState extends PageState {
   final List<VerificationRequest> outboundVerificationRequests;
   final List<Transaction> transactions;
   final Validator? validator;
+  final bool isMyWallet;
 
   PortfolioPageState({
     required super.isLoading,
+    required this.isMyWallet,
     this.balance = const <Coin>[],
     this.delegations = const <Delegation>[],
     this.undelegations = const <Undelegation>[],
@@ -29,6 +31,32 @@ class PortfolioPageState extends PageState {
     this.validator,
   }) : identityRecords = identityRecords ?? IdentityRecords();
 
+  PortfolioPageState copyWith({
+    bool? isLoading,
+    List<Coin>? balance,
+    IdentityRecords? identityRecords,
+    List<Delegation>? delegations,
+    List<Undelegation>? undelegations,
+    List<VerificationRequest>? inboundVerificationRequests,
+    List<VerificationRequest>? outboundVerificationRequests,
+    List<Transaction>? transactions,
+    Validator? validator,
+    bool? isMyWallet,
+  }) {
+    return PortfolioPageState(
+      isLoading: isLoading ?? this.isLoading,
+      balance: balance ?? this.balance,
+      identityRecords: identityRecords ?? this.identityRecords,
+      delegations: delegations ?? this.delegations,
+      undelegations: undelegations ?? this.undelegations,
+      inboundVerificationRequests: inboundVerificationRequests ?? this.inboundVerificationRequests,
+      outboundVerificationRequests: outboundVerificationRequests ?? this.outboundVerificationRequests,
+      transactions: transactions ?? this.transactions,
+      validator: validator ?? this.validator,
+      isMyWallet: isMyWallet ?? this.isMyWallet,
+    );
+  }
+
   @override
-  List<Object?> get props => <Object?>[balance, identityRecords, validator, delegations, undelegations, inboundVerificationRequests, outboundVerificationRequests];
+  List<Object?> get props => <Object?>[isMyWallet, balance, identityRecords, validator, delegations, undelegations, inboundVerificationRequests, outboundVerificationRequests];
 }

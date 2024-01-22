@@ -4,19 +4,20 @@ import 'package:kira_dashboard/infra/services/identity_registrar_service.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/verification_request.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class VerificationRequestsService {
   final TokensService tokensService = TokensService();
   final IdentityRegistrarService identityRegistrarService = IdentityRegistrarService();
   final VerificationRequestsRepository verificationRequestsRepository = VerificationRequestsRepository();
 
-  Future<List<VerificationRequest>> getAllInbound(String address) async {
-    List<VerificationRequestEntity> verificationRequestEntities = await verificationRequestsRepository.getAllInbound(address);
+  Future<List<VerificationRequest>> getInboundPage(String address, PaginatedRequest paginatedRequest) async {
+    List<VerificationRequestEntity> verificationRequestEntities = await verificationRequestsRepository.getInboundPage(address, paginatedRequest);
     return parseEntities(verificationRequestEntities);
   }
 
-  Future<List<VerificationRequest>> getAllOutbound(String address) async {
-    List<VerificationRequestEntity> verificationRequestEntities = await verificationRequestsRepository.getAllOutbound(address);
+  Future<List<VerificationRequest>> getOutboundPage(String address, PaginatedRequest paginatedRequest) async {
+    List<VerificationRequestEntity> verificationRequestEntities = await verificationRequestsRepository.getOutboundPage(address, paginatedRequest);
     return parseEntities(verificationRequestEntities);
   }
 

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kira_dashboard/pages/portfolio_page/portfolio_page.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
@@ -17,9 +16,11 @@ class CopyableAddressText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return _AddressText(
+      address: address,
+      style: style,
+      icon: Icons.copy,
       onTap: () => _copyAddress(context),
-      child: _AddressText(address: address, style: style, icon: Icons.copy),
     );
   }
 
@@ -40,20 +41,11 @@ class OpenableAddressText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseStateListener(
+    return _AddressText(
+      address: address,
+      style: style,
+      icon: Icons.open_in_new,
       onTap: () => _openAddress(context),
-      childBuilder: (Set<MaterialState> states) {
-        if(address == null) {
-          return Text('---', style: style);
-        }
-        return _AddressText(
-          address: address!,
-          style: style.copyWith(
-            color: states.contains(MaterialState.hovered) ? const Color(0xff4888f0) : style.color,
-          ),
-          icon: Icons.open_in_new,
-        );
-      },
     );
   }
 
@@ -63,33 +55,81 @@ class OpenableAddressText extends StatelessWidget {
 }
 
 class _AddressText extends StatelessWidget {
-  final String address;
+  final String? address;
   final TextStyle style;
   final IconData icon;
+  final VoidCallback onTap;
 
   const _AddressText({
     super.key,
     required this.address,
     required this.style,
     required this.icon,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: '${address.substring(0, 8)}...${address.substring(address.length - 4)}',
+    if( address == null ) {
+      return Text(
+        '---',
         style: style,
-        children: [
-          WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Icon(icon, size: 16, color: style.color),
+      );
+    }
+    return IconTextButton(
+      text: '${address!.substring(0, 8)}...${address!.substring(address!.length - 4)}',
+      style: style,
+      icon: icon,
+      onTap: onTap,
+    );
+  }
+}
+
+class IconTextButton extends StatelessWidget {
+  final String text;
+  final TextStyle style;
+  final IconData icon;
+  final VoidCallback onTap;
+  final double gap;
+  final Color highlightColor;
+
+  const IconTextButton({
+    super.key,
+    required this.text,
+    required this.style,
+    required this.icon,
+    required this.onTap,
+    this.highlightColor = const Color(0xff4888f0),
+    this.gap = 8,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseStateListener(
+      onTap: onTap,
+      childBuilder: (Set<MaterialState> states) {
+        return RichText(
+          text: TextSpan(
+            text: text,
+            style: style.copyWith(
+              color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
             ),
+            children: [
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Padding(
+                  padding: EdgeInsets.only(left: gap),
+                  child: Icon(
+                    icon,
+                    size: 16,
+                    color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

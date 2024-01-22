@@ -4,14 +4,15 @@ import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/pool_info.dart';
 import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/models/validator_info.dart';
+import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class DelegationsService {
   final DelegationsRepository delegationsRepository = DelegationsRepository();
 
   DelegationsService();
 
-  Future<List<Delegation>> getAll(String address) async {
-    List<DelegationEntity> delegationEntities = await delegationsRepository.getAll(address);
+  Future<List<Delegation>> getPage(String address, PaginatedRequest paginatedRequest) async {
+    List<DelegationEntity> delegationEntities = await delegationsRepository.getAll(address, paginatedRequest);
     List<Delegation> delegations = delegationEntities.map((e) => Delegation(
       validatorInfo: ValidatorInfo(
         moniker: e.validatorInfo.moniker,
