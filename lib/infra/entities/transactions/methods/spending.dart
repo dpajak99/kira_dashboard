@@ -69,7 +69,13 @@ class WeightedAccount {
 }
 
 class MsgCreateSpendingPool extends TxMsg {
-  String get _name => 'create-spending-pool';
+  static String get interxName => 'create-spending-pool';
+
+  @override
+  String get messageType => '/kira.spending.MsgCreateSpendingPool';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgCreateSpendingPool';
 
   final String name;
   final int claimStart;
@@ -130,7 +136,13 @@ class MsgCreateSpendingPool extends TxMsg {
 }
 
 class MsgDepositSpendingPool extends TxMsg {
-  String get name => 'deposit-spending-pool';
+  static String get interxName => 'deposit-spending-pool';
+
+  @override
+  String get messageType => '/kira.spending.MsgDepositSpendingPool';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDepositSpendingPool';
 
   final String sender;
   final bool dynamicRate;
@@ -161,7 +173,13 @@ class MsgDepositSpendingPool extends TxMsg {
 }
 
 class MsgRegisterSpendingPoolBeneficiary extends TxMsg {
-  String get name => 'register-spending-pool-beneficiary';
+  static String get interxName => 'register-spending-pool-beneficiary';
+
+  @override
+  String get messageType => '/kira.spending.MsgRegisterSpendingPoolBeneficiary';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRegisterSpendingPoolBeneficiary';
 
   final String sender;
   final String poolName;
@@ -189,7 +207,13 @@ class MsgRegisterSpendingPoolBeneficiary extends TxMsg {
 }
 
 class MsgClaimSpendingPool extends TxMsg {
-  String get name => 'claim-spending-pool';
+  static String get interxName => 'claim-spending-pool';
+
+  @override
+  String get messageType => '/kira.spending.MsgClaimSpendingPool';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgClaimSpendingPool';
 
   final String sender;
   final String poolName;

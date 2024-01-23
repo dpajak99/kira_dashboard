@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgDisableBasketDeposits extends TxMsg {
-  String get name => 'disable-basket-deposits';
+  static String get interxName => 'disable-basket-deposits';
+
+  @override
+  String get messageType => '/kira.basket.MsgDisableBasketDeposits';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDisableBasketDeposits';
 
   final String sender;
   final int basketId;
@@ -35,7 +41,13 @@ class MsgDisableBasketDeposits extends TxMsg {
 }
 
 class MsgDisableBasketWithdraws extends TxMsg {
-  String get name => 'disable-basket-withdraws';
+  static String get interxName => 'disable-basket-withdraws';
+
+  @override
+  String get messageType => '/kira.basket.MsgDisableBasketWithdraws';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDisableBasketWithdraws';
 
   final String sender;
   final int basketId;
@@ -68,7 +80,13 @@ class MsgDisableBasketWithdraws extends TxMsg {
 }
 
 class MsgDisableBasketSwaps extends TxMsg {
-  String get name => 'disable-basket-swaps';
+  static String get interxName => 'disable-basket-swaps';
+
+  @override
+  String get messageType => '/kira.basket.MsgDisableBasketSwaps';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDisableBasketSwaps';
 
   final String sender;
   final int basketId;
@@ -101,7 +119,13 @@ class MsgDisableBasketSwaps extends TxMsg {
 }
 
 class MsgBasketTokenMint extends TxMsg {
-  String get name => 'basket-token-mint';
+  static String get interxName => 'basket-token-mint';
+
+  @override
+  String get messageType => '/kira.basket.MsgBasketTokenMint';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBasketTokenMint';
 
   final String sender;
   final int basketId;
@@ -134,7 +158,13 @@ class MsgBasketTokenMint extends TxMsg {
 }
 
 class MsgBasketTokenBurn extends TxMsg {
-  String get name => 'basket-token-burn';
+  static String get interxName => 'basket-token-burn';
+
+  @override
+  String get messageType => '/kira.basket.MsgBasketTokenBurn';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBasketTokenBurn';
 
   final String sender;
   final int basketId;
@@ -177,7 +207,13 @@ class SwapPair {
 }
 
 class MsgBasketTokenSwap extends TxMsg {
-  String get name => 'basket-token-swap';
+  static String get interxName => 'basket-token-swap';
+
+  @override
+  String get messageType => '/kira.basket.MsgBasketTokenSwap';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBasketTokenSwap';
 
   final String sender;
   final int basketId;
@@ -209,7 +245,13 @@ class MsgBasketTokenSwap extends TxMsg {
 }
 
 class MsgBasketClaimRewards extends TxMsg {
-  String get name => 'basket-claim-rewards';
+  static String get interxName => 'basket-claim-rewards';
+
+  @override
+  String get messageType => '/kira.basket.MsgBasketClaimRewards';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBasketClaimRewards';
 
   final String sender;
   final List<String> basketTokens;

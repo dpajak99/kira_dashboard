@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgUpsertStakingPool extends TxMsg {
-  String get name => 'upsert_staking_pool';
+  static String get interxName => 'upsert_staking_pool';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgUpsertStakingPool';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgUpsertStakingPool';
 
   final String sender;
   final String validator;
@@ -36,7 +42,13 @@ class MsgUpsertStakingPool extends TxMsg {
 }
 
 class MsgDelegate extends TxMsg {
-  static String get messageName => 'delegate';
+  static String get interxName => 'delegate';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgDelegate';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDelegate';
 
   final String delegatorAddress;
   final String validatorAddress;
@@ -73,7 +85,13 @@ class MsgDelegate extends TxMsg {
 }
 
 class MsgUndelegate extends TxMsg {
-  String get name => 'undelegate';
+  static String get interxName => 'undelegate';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgUndelegate';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgUndelegate';
 
   final String delegatorAddress;
   final String validatorAddress;
@@ -110,7 +128,13 @@ class MsgUndelegate extends TxMsg {
 }
 
 class MsgClaimRewards extends TxMsg {
-  String get name => 'claim_rewards';
+  static String get interxName => 'claim_rewards';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgClaimRewards';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgClaimRewards';
 
   final String sender;
 
@@ -138,7 +162,13 @@ class MsgClaimRewards extends TxMsg {
 }
 
 class MsgClaimUndelegation extends TxMsg {
-  String get name => 'claim_undelegation';
+  static String get interxName => 'claim_undelegation';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgClaimUndelegation';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgClaimUndelegation';
 
   final String sender;
   final String undelegationId;
@@ -171,7 +201,13 @@ class MsgClaimUndelegation extends TxMsg {
 }
 
 class MsgClaimMaturedUndelegations extends TxMsg {
-  String get name => 'claim_matured_undelegations';
+  static String get interxName => 'claim_matured_undelegations';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgClaimMaturedUndelegations';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgClaimMaturedUndelegations';
 
   final String sender;
 
@@ -195,7 +231,13 @@ class MsgClaimMaturedUndelegations extends TxMsg {
 }
 
 class MsgSetCompoundInfo extends TxMsg {
-  String get name => 'set_compound_info';
+  static String get interxName => 'set_compound_info';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgSetCompoundInfo';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgSetCompoundInfo';
 
   final String sender;
   final bool allDenom;
@@ -226,7 +268,13 @@ class MsgSetCompoundInfo extends TxMsg {
 }
 
 class MsgRegisterDelegator extends TxMsg {
-  String get name => 'register_delegator';
+  static String get interxName => 'register_delegator';
+
+  @override
+  String get messageType => '/kira.multistaking.MsgRegisterDelegator';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRegisterDelegator';
 
   final String delegator;
 

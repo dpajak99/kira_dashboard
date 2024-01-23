@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgSubmitProposal extends TxMsg {
-  String get name => 'submit-proposal';
+  static String get interxName => 'submit-proposal';
+
+  @override
+  String get messageType => '/kira.gov.MsgSubmitProposal';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgSubmitProposal';
 
   final String proposer;
   final String title;
@@ -48,7 +54,13 @@ enum VoteOption {
 }
 
 class MsgVoteProposal extends TxMsg {
-  String get name => 'vote-proposal';
+  static String get interxName => 'vote-proposal';
+
+  @override
+  String get messageType => '/kira.gov.MsgVoteProposal';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgVoteProposal';
 
   final int proposalId;
   final String voter;
@@ -82,7 +94,13 @@ class MsgVoteProposal extends TxMsg {
 }
 
 class MsgWhitelistPermissions extends TxMsg {
-  String get name => 'whitelist-permissions';
+  static String get interxName => 'whitelist-permissions';
+
+  @override
+  String get messageType => '/kira.gov.MsgWhitelistPermissions';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgWhitelistPermissions';
 
   final String proposer;
   final String address;
@@ -113,7 +131,13 @@ class MsgWhitelistPermissions extends TxMsg {
 }
 
 class MsgBlacklistPermissions extends TxMsg {
-  String get name => 'blacklist-permissions';
+  static String get interxName => 'blacklist-permissions';
+
+  @override
+  String get messageType => '/kira.gov.MsgBlacklistPermissions';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBlacklistPermissions';
 
   final String proposer;
   final String address;
@@ -144,7 +168,13 @@ class MsgBlacklistPermissions extends TxMsg {
 }
 
 class MsgClaimCouncilor extends TxMsg {
-  String get name => 'claim-councilor';
+  static String get interxName => 'claim-councilor';
+
+  @override
+  String get messageType => '/kira.gov.MsgClaimCouncilor';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgClaimCouncilor';
 
   final String address;
   final String moniker;
@@ -187,7 +217,13 @@ class MsgClaimCouncilor extends TxMsg {
 }
 
 class MsgSetNetworkProperties extends TxMsg {
-  String get name => 'set-network-properties';
+  static String get interxName => 'set-network-properties';
+
+  @override
+  String get messageType => '/kira.gov.MsgSetNetworkProperties';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgSetNetworkProperties';
 
   final dynamic networkProperties;
   final String proposer;
@@ -215,7 +251,13 @@ class MsgSetNetworkProperties extends TxMsg {
 }
 
 class MsgSetExecutionFee extends TxMsg {
-  String get name => 'set-execution-fee';
+  static String get name => 'set-execution-fee';
+
+  @override
+  String get messageType => '/kira.gov.MsgSetExecutionFee';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgSetExecutionFee';
 
   final String transactionType;
   final int executionFee;
@@ -255,7 +297,13 @@ class MsgSetExecutionFee extends TxMsg {
 }
 
 class MsgCreateRole extends TxMsg {
-  String get name => 'create-role';
+  static String get interxName => 'create-role';
+
+  @override
+  String get messageType => '/kira.gov.MsgCreateRole';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgCreateRole';
 
   final String proposer;
   final String roleSid;
@@ -286,7 +334,13 @@ class MsgCreateRole extends TxMsg {
 }
 
 class MsgAssignRole extends TxMsg {
-  String get name => 'assign-role';
+  static String get interxName => 'assign-role';
+
+  @override
+  String get messageType => '/kira.gov.MsgAssignRole';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgAssignRole';
 
   final String proposer;
   final String address;
@@ -317,7 +371,13 @@ class MsgAssignRole extends TxMsg {
 }
 
 class MsgUnassignRole extends TxMsg {
-  String get name => 'unassign-role';
+  static String get interxName => 'unassign-role';
+
+  @override
+  String get messageType => '/kira.gov.MsgUnassignRole';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgUnassignRole';
 
   final String proposer;
   final String address;
@@ -348,7 +408,13 @@ class MsgUnassignRole extends TxMsg {
 }
 
 class MsgWhitelistRolePermission extends TxMsg {
-  String get name => 'whitelist-role-permission';
+  static String get interxName => 'whitelist-role-permission';
+
+  @override
+  String get messageType => '/kira.gov.MsgWhitelistRolePermission';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgWhitelistRolePermission';
 
   final String proposer;
   final String roleIdentifier;
@@ -379,7 +445,13 @@ class MsgWhitelistRolePermission extends TxMsg {
 }
 
 class MsgBlacklistRolePermission extends TxMsg {
-  String get name => 'blacklist-role-permission';
+  static String get interxName => 'blacklist-role-permission';
+
+  @override
+  String get messageType => '/kira.gov.MsgBlacklistRolePermission';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBlacklistRolePermission';
 
   final String proposer;
   final String roleIdentifier;
@@ -410,7 +482,13 @@ class MsgBlacklistRolePermission extends TxMsg {
 }
 
 class MsgRemoveWhitelistRolePermission extends TxMsg {
-  String get name => 'remove-whitelist-role-permission';
+  static String get interxName => 'remove-whitelist-role-permission';
+
+  @override
+  String get messageType => '/kira.gov.MsgRemoveWhitelistRolePermission';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRemoveWhitelistRolePermission';
 
   final String proposer;
   final String roleIdentifier;
@@ -441,7 +519,13 @@ class MsgRemoveWhitelistRolePermission extends TxMsg {
 }
 
 class MsgRemoveBlacklistRolePermission extends TxMsg {
-  String get name => 'remove-blacklist-role-permission';
+  static String get interxName => 'remove-blacklist-role-permission';
+
+  @override
+  String get messageType => '/kira.gov.MsgRemoveBlacklistRolePermission';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRemoveBlacklistRolePermission';
 
   final String proposer;
   final String roleIdentifier;
@@ -503,7 +587,13 @@ class IdentityInfoEntry {
 }
 
 class MsgRegisterIdentityRecords extends TxMsg {
-  String get name => 'register-identity-records';
+  static String get interxName => 'register-identity-records';
+
+  @override
+  String get messageType => '/kira.gov.MsgRegisterIdentityRecords';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRegisterIdentityRecords';
 
   final String address;
   final List<IdentityInfoEntry> infos;
@@ -537,7 +627,13 @@ class MsgRegisterIdentityRecords extends TxMsg {
 }
 
 class MsgRequestIdentityRecordsVerify extends TxMsg {
-  String get name => 'request-identity-records-verify';
+  static String get interxName => 'request-identity-records-verify';
+
+  @override
+  String get messageType => '/kira.gov.MsgRequestIdentityRecordsVerify';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRequestIdentityRecordsVerify';
 
   final String address;
   final String verifier;
@@ -579,7 +675,13 @@ class MsgRequestIdentityRecordsVerify extends TxMsg {
 }
 
 class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
-  String get name => 'handle-identity-records-verify-request';
+  static String get interxName => 'handle-identity-records-verify-request';
+
+  @override
+  String get messageType => '/kira.gov.MsgHandleIdentityRecordsVerifyRequest';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgHandleIdentityRecordsVerifyRequest';
 
   final String verifier;
   final int verifyRequestId;
@@ -617,7 +719,13 @@ class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
 }
 
 class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
-  String get name => 'cancel-identity-records-verify-request';
+  static String get interxName => 'cancel-identity-records-verify-request';
+
+  @override
+  String get messageType => '/kira.gov.MsgCancelIdentityRecordsVerifyRequest';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgCancelIdentityRecordsVerifyRequest';
 
   final String executor;
   final int verifyRequestId;

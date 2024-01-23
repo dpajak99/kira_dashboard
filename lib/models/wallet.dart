@@ -7,6 +7,8 @@ import 'package:blockchain_utils/bip/coin_conf/coins_name.dart';
 import 'package:blockchain_utils/bip/ecc/curve/elliptic_curve_types.dart';
 import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
 import 'package:blockchain_utils/bip/slip/slip44/slip44.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:pointycastle/export.dart';
 
 class KiraBip44Coin implements Bip44Coins {
   @override
@@ -54,6 +56,11 @@ class Wallet {
     List<int> seed = Bip39SeedGenerator(mnemonic).generate();
     Bip44 bip44 = Bip44.fromSeed(seed, KiraBip44Coin());
     return Wallet.deriveDefaultPath(bip44);
+  }
+
+  ECPrivateKey get ecPrivateKey {
+    final BigInt privateKeyInt = BigInt.parse(hex.encode(derivedBip44.privateKey.raw), radix: 16);
+    return ECPrivateKey(privateKeyInt, ECCurve_secp256k1());
   }
 
   String get address => derivedBip44.publicKey.toAddress;

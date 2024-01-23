@@ -3,32 +3,48 @@ import 'package:kira_dashboard/main.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
-class SendTransactionDialog extends DialogContentWidget {
-  const SendTransactionDialog({super.key});
+class TransactionResultDialog extends DialogContentWidget {
+  final bool succeeded;
+
+  const TransactionResultDialog({
+    super.key,
+    this.succeeded = true,
+  });
 
   @override
-  State<StatefulWidget> createState() => _SendTransactionDialog();
+  State<StatefulWidget> createState() => _TransactionResultDialogState();
 }
 
-class _SendTransactionDialog extends State<SendTransactionDialog> {
+class _TransactionResultDialogState extends State<TransactionResultDialog> {
   @override
   Widget build(BuildContext context) {
     return CustomDialog(
-      title: 'Transaction sent',
+      title: widget.succeeded ? 'Transaction sent' : 'Transaction failed',
       width: 420,
       scrollable: false,
       child: Column(
         children: [
           const SizedBox(height: 48),
-          const SizedBox(
-            width: 90,
-            height: 90,
-            child: Icon(
-              Icons.done,
-              size: 90,
-              color: Color(0xff59b987),
+          if (widget.succeeded)
+            const SizedBox(
+              width: 90,
+              height: 90,
+              child: Icon(
+                Icons.done,
+                size: 90,
+                color: Color(0xff59b987),
+              ),
+            )
+          else
+            const SizedBox(
+              width: 90,
+              height: 90,
+              child: Icon(
+                Icons.close,
+                size: 90,
+                color: Color(0xffe74c3c),
+              ),
             ),
-          ),
           const SizedBox(height: 48),
           SizedBox(
             width: double.infinity,

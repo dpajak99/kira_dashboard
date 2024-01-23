@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgCreateDappProposal extends TxMsg {
-  String get name => 'create-dapp-proposal';
+  static String get interxName => 'create-dapp-proposal';
+
+  @override
+  String get messageType => '/kira.layer2.MsgCreateDappProposal';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgCreateDappProposal';
 
   final String sender;
   final dynamic dapp;
@@ -33,7 +39,13 @@ class MsgCreateDappProposal extends TxMsg {
 }
 
 class MsgBondDappProposal extends TxMsg {
-  String get name => 'bond-dapp-proposal';
+  static String get interxName => 'bond-dapp-proposal';
+
+  @override
+  String get messageType => '/kira.layer2.MsgBondDappProposal';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBondDappProposal';
 
   final String sender;
   final String dappName;
@@ -64,7 +76,13 @@ class MsgBondDappProposal extends TxMsg {
 }
 
 class MsgReclaimDappBondProposal extends TxMsg {
-  String get name => 'reclaim-dapp-bond-proposal';
+  static String get interxName => 'reclaim-dapp-bond-proposal';
+
+  @override
+  String get messageType => '/kira.layer2.MsgReclaimDappBondProposal';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgReclaimDappBondProposal';
 
   final String sender;
   final String dappName;
@@ -95,7 +113,13 @@ class MsgReclaimDappBondProposal extends TxMsg {
 }
 
 class MsgJoinDappVerifierWithBond extends TxMsg {
-  String get name => 'join-dapp-verifier-with-bond';
+  static String get interxName => 'join-dapp-verifier-with-bond';
+
+  @override
+  String get messageType => '/kira.layer2.MsgJoinDappVerifierWithBond';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgJoinDappVerifierWithBond';
 
   final String sender;
   final String dappName;
@@ -126,7 +150,13 @@ class MsgJoinDappVerifierWithBond extends TxMsg {
 }
 
 class MsgExitDapp extends TxMsg {
-  String get name => 'exit-dapp';
+  static String get interxName => 'exit-dapp';
+
+  @override
+  String get messageType => '/kira.layer2.MsgExitDapp';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgExitDapp';
 
   final String sender;
   final String dappName;
@@ -154,7 +184,13 @@ class MsgExitDapp extends TxMsg {
 }
 
 class MsgRedeemDappPoolTx extends TxMsg {
-  String get name => 'redeem-dapp-pool-tx';
+  static String get interxName => 'redeem-dapp-pool-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgRedeemDappPoolTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRedeemDappPoolTx';
 
   final String sender;
   final String dappName;
@@ -188,7 +224,13 @@ class MsgRedeemDappPoolTx extends TxMsg {
 }
 
 class MsgSwapDappPoolTx extends TxMsg {
-  String get name => 'swap-dapp-pool-tx';
+  static String get interxName => 'swap-dapp-pool-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgSwapDappPoolTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgSwapDappPoolTx';
 
   final String sender;
   final String dappName;
@@ -222,7 +264,13 @@ class MsgSwapDappPoolTx extends TxMsg {
 }
 
 class MsgConvertDappPoolTx extends TxMsg {
-  String get name => 'convert-dapp-pool-tx';
+  static String get interxName => 'convert-dapp-pool-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgConvertDappPoolTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgConvertDappPoolTx';
 
   final String sender;
   final String dappName;
@@ -256,7 +304,13 @@ class MsgConvertDappPoolTx extends TxMsg {
 }
 
 class MsgPauseDappTx extends TxMsg {
-  String get name => 'pause-dapp-tx';
+  static String get interxName => 'pause-dapp-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgPauseDappTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgPauseDappTx';
 
   final String sender;
   final String dappName;
@@ -284,7 +338,13 @@ class MsgPauseDappTx extends TxMsg {
 }
 
 class MsgUnPauseDappTx extends TxMsg {
-  String get name => 'unpause-dapp-tx';
+  static String get interxName => 'unpause-dapp-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgUnPauseDappTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgUnPauseDappTx';
 
   final String sender;
   final String dappName;
@@ -312,7 +372,13 @@ class MsgUnPauseDappTx extends TxMsg {
 }
 
 class MsgReactivateDappTx extends TxMsg {
-  String get name => 'reactivate-dapp-tx';
+  static String get interxName => 'reactivate-dapp-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgReactivateDappTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgReactivateDappTx';
 
   final String sender;
   final String dappName;
@@ -339,7 +405,13 @@ class MsgReactivateDappTx extends TxMsg {
 }
 
 class MsgExecuteDappTx extends TxMsg {
-  String get name => 'execute-dapp-tx';
+  static String get interxName => 'execute-dapp-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgExecuteDappTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgExecuteDappTx';
 
   final String sender;
   final String dappName;
@@ -370,7 +442,13 @@ class MsgExecuteDappTx extends TxMsg {
 }
 
 class MsgDenounceLeaderTx extends TxMsg {
-  String get name => 'denounce-leader-tx';
+  static String get interxName => 'denounce-leader-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgDenounceLeaderTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDenounceLeaderTx';
 
   final String sender;
   final String dappName;
@@ -407,7 +485,13 @@ class MsgDenounceLeaderTx extends TxMsg {
 }
 
 class MsgTransitionDappTx extends TxMsg {
-  String get name => 'transition-dapp-tx';
+  static String get interxName => 'transition-dapp-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgTransitionDappTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgTransitionDappTx';
 
   final String sender;
   final String dappName;
@@ -444,7 +528,13 @@ class MsgTransitionDappTx extends TxMsg {
 }
 
 class MsgApproveDappTransitionTx extends TxMsg {
-  String get name => 'approve-dapp-transition-tx';
+  static String get interxName => 'approve-dapp-transition-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgApproveDappTransitionTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgApproveDappTransitionTx';
 
   final String sender;
   final String dappName;
@@ -475,7 +565,13 @@ class MsgApproveDappTransitionTx extends TxMsg {
 }
 
 class MsgRejectDappTransitionTx extends TxMsg {
-  String get name => 'reject-dapp-transition-tx';
+  static String get interxName => 'reject-dapp-transition-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgRejectDappTransitionTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRejectDappTransitionTx';
 
   final String sender;
   final String dappName;
@@ -506,7 +602,13 @@ class MsgRejectDappTransitionTx extends TxMsg {
 }
 
 class MsgTransferDappTx extends TxMsg {
-  String get name => 'transfer-dapp-tx';
+  static String get interxName => 'transfer-dapp-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgTransferDappTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgTransferDappTx';
 
   final String sender;
   final List<dynamic> requests;
@@ -534,7 +636,13 @@ class MsgTransferDappTx extends TxMsg {
 }
 
 class MsgAckTransferDappTx extends TxMsg {
-  String get name => 'ack-transfer-dapp-tx';
+  static String get interxName => 'ack-transfer-dapp-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgAckTransferDappTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgAckTransferDappTx';
 
   final String sender;
   final List<dynamic> responses;
@@ -562,7 +670,13 @@ class MsgAckTransferDappTx extends TxMsg {
 }
 
 class MsgMintCreateFtTx extends TxMsg {
-  String get _name => 'mint-create-ft-tx';
+  static String get interxName => 'mint-create-ft-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgMintCreateFtTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgMintCreateFtTx';
 
   final String sender;
   final String denomSuffix;
@@ -626,7 +740,13 @@ class MsgMintCreateFtTx extends TxMsg {
 }
 
 class MsgMintCreateNftTx extends TxMsg {
-  String get _name => 'mint-create-nft-tx';
+  static String get interxName => 'mint-create-nft-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgMintCreateNftTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgMintCreateNftTx';
 
   final String sender;
   final String denomSuffix;
@@ -696,7 +816,13 @@ class MsgMintCreateNftTx extends TxMsg {
 }
 
 class MsgMintIssueTx extends TxMsg {
-  String get name => 'mint-issue-tx';
+  static String get interxName => 'mint-issue-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgMintIssueTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgMintIssueTx';
 
   final String sender;
   final String denom;
@@ -730,7 +856,13 @@ class MsgMintIssueTx extends TxMsg {
 }
 
 class MsgMintBurnTx extends TxMsg {
-  String get name => 'mint-burn-tx';
+  static String get interxName => 'mint-burn-tx';
+
+  @override
+  String get messageType => '/kira.layer2.MsgMintBurnTx';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgMintBurnTx';
 
   final String sender;
   final String denom;

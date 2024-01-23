@@ -19,7 +19,7 @@ class UndelegateTokensDialogCubit extends Cubit<UndelegateTokensDialogState> {
   Future<void> _init() async {
     String address = walletProvider.value?.address ?? 'kira143q8vxpvuykt9pq50e6hng9s38vmy844n8k9wx';
     Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(address);
-    Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgDelegate.messageName);
+    Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgDelegate.interxName);
 
     emit(UndelegateTokensDialogLoadedState(
       initialCoin: defaultCoinBalance,

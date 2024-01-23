@@ -22,7 +22,7 @@ class SendTokensDialogCubit extends Cubit<SendTokensDialogState> {
   Future<void> _init() async {
     String address = walletProvider.value?.address ?? 'kira143q8vxpvuykt9pq50e6hng9s38vmy844n8k9wx';
     Coin defaultCoinBalance = initialCoin ?? await balancesService.getDefaultCoinBalance(address);
-    Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgSend.messageName);
+    Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgSend.interxName);
 
     emit(SendTokensDialogLoadedState(
       initialCoin: defaultCoinBalance,

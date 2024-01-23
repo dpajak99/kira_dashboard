@@ -53,7 +53,13 @@ class WeightedSpendingPool {
 }
 
 class MsgCreateCollective extends TxMsg {
-  String get _name => 'create-collective';
+  static String get interxName => 'create-collective';
+
+  @override
+  String get messageType => '/kira.collectives.MsgCreateCollective';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgCreateCollective';
 
   final String sender;
   final String name;
@@ -115,7 +121,13 @@ class MsgCreateCollective extends TxMsg {
 
 
 class MsgBondCollective extends TxMsg {
-  String get _name => 'bond-collective';
+  static String get interxName => 'bond-collective';
+
+  @override
+  String get messageType => '/kira.collectives.MsgBondCollective';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBondCollective';
 
   final String sender;
   final String name;
@@ -147,7 +159,13 @@ class MsgBondCollective extends TxMsg {
 
 
 class MsgDonateCollective extends TxMsg {
-  String get _name => 'donate-collective';
+  static String get interxName => 'donate-collective';
+
+  @override
+  String get messageType => '/kira.collectives.MsgDonateCollective';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDonateCollective';
 
   final String sender;
   final String name;
@@ -185,7 +203,13 @@ class MsgDonateCollective extends TxMsg {
 
 
 class MsgWithdrawCollective extends TxMsg {
-  String get _name => 'withdraw-collective';
+  static String get interxName => 'withdraw-collective';
+
+  @override
+  String get messageType => '/kira.collectives.MsgWithdrawCollective';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgWithdrawCollective';
 
   final String sender;
   final String name;

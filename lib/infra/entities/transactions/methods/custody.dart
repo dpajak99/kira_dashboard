@@ -33,7 +33,13 @@ class CustodySettings {
 }
 
 class MsgCreateCustodyRecord extends TxMsg {
-  String get name => 'create-custody';
+  static String get interxName => 'create-custody';
+
+  @override
+  String get messageType => '/kira.custody.MsgCreateCustodyRecord';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgCreateCustodyRecord';
 
   final String address;
   final CustodySettings custodySettings;
@@ -73,7 +79,13 @@ class MsgCreateCustodyRecord extends TxMsg {
 }
 
 class MsgDisableCustodyRecord extends TxMsg {
-  String get name => 'disable-custody';
+  static String get interxName => 'disable-custody';
+
+  @override
+  String get messageType => '/kira.custody.MsgDisableCustodyRecord';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDisableCustodyRecord';
 
   final String address;
   final String oldKey;
@@ -110,7 +122,13 @@ class MsgDisableCustodyRecord extends TxMsg {
 }
 
 class MsgDropCustodyRecord extends TxMsg {
-  String get name => 'drop-custody';
+  static String get interxName => 'drop-custody';
+
+  @override
+  String get messageType => '/kira.custody.MsgDropCustodyRecord';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDropCustodyRecord';
 
   final String address;
   final String oldKey;
@@ -141,7 +159,13 @@ class MsgDropCustodyRecord extends TxMsg {
 }
 
 class MsgAddToCustodyWhiteList extends TxMsg {
-  String get name => 'add-to-custody-whitelist';
+  static String get interxName => 'add-to-custody-whitelist';
+
+  @override
+  String get messageType => '/kira.custody.MsgAddToCustodyWhiteList';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgAddToCustodyWhiteList';
 
   final String address;
   final List<String> addAddress;
@@ -181,7 +205,13 @@ class MsgAddToCustodyWhiteList extends TxMsg {
 }
 
 class MsgAddToCustodyCustodians extends TxMsg {
-  String get name => 'add-to-custody-custodians';
+  static String get interxName => 'add-to-custody-custodians';
+
+  @override
+  String get messageType => '/kira.custody.MsgAddToCustodyCustodians';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgAddToCustodyCustodians';
 
   final String address;
   final List<String> addAddress;
@@ -221,7 +251,13 @@ class MsgAddToCustodyCustodians extends TxMsg {
 }
 
 class MsgRemoveFromCustodyCustodians extends TxMsg {
-  String get name => 'remove-from-custody-custodians';
+  static String get interxName => 'remove-from-custody-custodians';
+
+  @override
+  String get messageType => '/kira.custody.MsgRemoveFromCustodyCustodians';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRemoveFromCustodyCustodians';
 
   final String address;
   final String removeAddress;
@@ -261,7 +297,13 @@ class MsgRemoveFromCustodyCustodians extends TxMsg {
 }
 
 class MsgDropCustodyCustodians extends TxMsg {
-  String get name => 'drop-custody-custodians';
+  static String get interxName => 'drop-custody-custodians';
+
+  @override
+  String get messageType => '/kira.custody.MsgDropCustodyCustodians';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDropCustodyCustodians';
 
   final String address;
   final String oldKey;
@@ -298,7 +340,13 @@ class MsgDropCustodyCustodians extends TxMsg {
 }
 
 class MsgRemoveFromCustodyWhiteList extends TxMsg {
-  String get name => 'remove-from-custody-whitelist';
+  static String get interxName => 'remove-from-custody-whitelist';
+
+  @override
+  String get messageType => '/kira.custody.MsgRemoveFromCustodyWhiteList';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRemoveFromCustodyWhiteList';
 
   final String address;
   final String removeAddress;
@@ -338,7 +386,13 @@ class MsgRemoveFromCustodyWhiteList extends TxMsg {
 }
 
 class MsgDropCustodyWhiteList extends TxMsg {
-  String get name => 'drop-custody-whitelist';
+  static String get interxNme => 'drop-custody-whitelist';
+
+  @override
+  String get messageType => '/kira.custody.MsgDropCustodyWhiteList';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDropCustodyWhiteList';
 
   final String address;
   final String oldKey;
@@ -375,7 +429,13 @@ class MsgDropCustodyWhiteList extends TxMsg {
 }
 
 class MsgApproveCustodyTransaction extends TxMsg {
-  String get name => 'approve-custody-transaction';
+  static String get interxName => 'approve-custody-transaction';
+
+  @override
+  String get messageType => '/kira.custody.MsgApproveCustodyTransaction';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgApproveCustodyTransaction';
 
   final String fromAddress;
   final String targetAddress;
@@ -406,7 +466,13 @@ class MsgApproveCustodyTransaction extends TxMsg {
 }
 
 class MsgDeclineCustodyTransaction extends TxMsg {
-  String get name => 'decline-custody-transaction';
+  static String get interxName => 'decline-custody-transaction';
+
+  @override
+  String get messageType => '/kira.custody.MsgDeclineCustodyTransaction';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDeclineCustodyTransaction';
 
   final String fromAddress;
   final String targetAddress;
@@ -437,7 +503,13 @@ class MsgDeclineCustodyTransaction extends TxMsg {
 }
 
 class MsgPasswordConfirmTransaction extends TxMsg {
-  String get name => 'password-confirm-transaction';
+  static String get interxName => 'password-confirm-transaction';
+
+  @override
+  String get messageType => '/kira.custody.MsgPasswordConfirmTransaction';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgPasswordConfirmTransaction';
 
   final String fromAddress;
   final String targetAddress;
@@ -471,7 +543,13 @@ class MsgPasswordConfirmTransaction extends TxMsg {
 }
 
 class MsgSend extends TxMsg {
-  static String get messageName => 'custody-send';
+  static String get interxName => 'custody-send';
+
+  @override
+  String get messageType => '/kira.custody.MsgSend';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgSend';
 
   final String fromAddress;
   final String toAddress;

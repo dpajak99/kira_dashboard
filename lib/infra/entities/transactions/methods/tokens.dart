@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgUpsertTokenAlias extends TxMsg {
-  String get _name => 'upsert-token-alias';
+  static String get interxNme => 'upsert-token-alias';
+
+  @override
+  String get messageType => '/kira.tokens.MsgUpsertTokenAlias';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgUpsertTokenAlias';
 
   final String symbol;
   final String name;
@@ -45,7 +51,13 @@ class MsgUpsertTokenAlias extends TxMsg {
 }
 
 class MsgUpsertTokenRate extends TxMsg {
-  String get name => 'upsert-token-rate';
+  static String get interxName => 'upsert-token-rate';
+
+  @override
+  String get messageType => '/kira.tokens.MsgUpsertTokenRate';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgUpsertTokenRate';
 
   final String denom;
   final String rate;

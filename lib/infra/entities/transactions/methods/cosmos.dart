@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgSend extends TxMsg {
-  String get name => 'send';
+  static String get interxName => 'send';
+
+  @override
+  String get messageType => '/cosmos.bank.v1beta1.MsgSend';
+
+  @override
+  String get signatureMessageType => 'cosmos-sdk/MsgSend';
 
   final String fromAddress;
   final String toAddress;

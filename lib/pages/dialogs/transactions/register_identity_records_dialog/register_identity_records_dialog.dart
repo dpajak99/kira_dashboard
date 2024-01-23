@@ -4,7 +4,7 @@ import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/send_transaction_dialog/send_transaction_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transaction_result_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/edit_record_dialog/edit_record_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_state.dart';
@@ -106,7 +106,7 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: SendTransactionDialog())),
+                  onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: TransactionResultDialog())),
                   child: const Text('Delegate'),
                 ),
               ),

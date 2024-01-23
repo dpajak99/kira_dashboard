@@ -214,6 +214,7 @@ class AboutPage extends StatelessWidget {
           title: 'Identity records',
           leading: Row(
             children: [
+              if(state.isMyWallet)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: IconTextButton(

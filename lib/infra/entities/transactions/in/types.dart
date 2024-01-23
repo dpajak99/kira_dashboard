@@ -18,7 +18,25 @@ abstract class TxMsg {
   String? get to;
   List<CoinEntity> get txAmounts;
 
+  String get messageType;
+
+  String get signatureMessageType;
+
   Map<String, dynamic> toJson();
+
+  Map<String, dynamic> toJsonWithType() {
+    return <String, dynamic>{
+      '@type': messageType,
+      ...toJson(),
+    };
+  }
+
+  Map<String, dynamic> toSignatureJson() {
+    return <String, dynamic>{
+      'type': signatureMessageType,
+      'value': toJson(),
+    };
+  }
 
   static TxMsg fromJsonByName(String name, Map<String, dynamic> json) {
     return switch (name) {

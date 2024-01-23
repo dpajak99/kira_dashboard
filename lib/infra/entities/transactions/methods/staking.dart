@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgClaimValidator extends TxMsg {
-  String get name => 'claim-validator';
+  static String get interxName => 'claim-validator';
+
+  @override
+  String get messageType => '/kira.spending.MsgClaimValidator';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgClaimValidator';
 
   final String moniker;
   final String valKey;

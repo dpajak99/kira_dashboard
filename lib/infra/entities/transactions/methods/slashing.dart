@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgActivate extends TxMsg {
-  String get name => 'activate';
+  static String get interxName => 'activate';
+
+  @override
+  String get messageType => '/kira.slashing.MsgActivate';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgActivate';
 
   final String validatorAddr;
 
@@ -27,7 +33,13 @@ class MsgActivate extends TxMsg {
 }
 
 class MsgPause extends TxMsg {
-  String get name => 'pause';
+  static String get interxName => 'pause';
+
+  @override
+  String get messageType => '/kira.slashing.MsgPause';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgPause';
 
   final String validatorAddr;
 
@@ -52,7 +64,13 @@ class MsgPause extends TxMsg {
 }
 
 class MsgUnpause extends TxMsg {
-  String get name => 'unpause';
+  static String get interxName => 'unpause';
+
+  @override
+  String get messageType => '/kira.slashing.MsgUnpause';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgUnpause';
 
   final String validatorAddr;
 

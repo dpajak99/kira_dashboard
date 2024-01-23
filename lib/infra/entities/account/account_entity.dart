@@ -5,7 +5,7 @@ class PubKey extends Equatable {
   final String value;
 
   PubKey.fromJson(Map<String, dynamic> json)
-    : type = json['type'],
+    : type = json['@type'],
       value = json['value'];
 
   @override
@@ -20,7 +20,7 @@ class AccountEntity extends Equatable {
   final String sequence;
 
   AccountEntity.fromJson(Map<String, dynamic> json)
-    : type = json['type'],
+    : type = json['@type'],
       accountNumber = json['account_number'],
       address = json['address'],
       pubKey = PubKey.fromJson(json['pub_key']),

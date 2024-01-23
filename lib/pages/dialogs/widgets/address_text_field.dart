@@ -129,7 +129,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
   }
 
   void _handleFocusChanged() {
-    bool addressValid = _validateAddress(tmpController.text);
+    bool addressValid = _validateAddress(controller.text);
 
     if (focusNode.hasFocus == false) {
       confirmAddress();
@@ -148,6 +148,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
 
     if (addressValid) {
       controller.text = '${controller.text.substring(0, 15)}...${controller.text.substring(controller.text.length - 10)}';
+      widget.controller.text = tmpController.text;
       errorNotifier.value = null;
     } else {
       errorNotifier.value = 'Invalid address';

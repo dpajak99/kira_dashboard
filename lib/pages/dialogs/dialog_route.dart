@@ -78,6 +78,28 @@ class CustomDialogRouteState extends State<CustomDialogRoute> {
     return await completer.future;
   }
 
+  Future<void> replace<T>(DialogContentWidget page) async {
+    Completer completer = Completer<T>();
+    routeStack.removeLast();
+    routeStack.add(DialogRouteConfig(
+      content: page,
+      completer: completer,
+    ));
+    setState(() {});
+    return await completer.future;
+  }
+
+  Future<void> replaceAll<T>(DialogContentWidget page) async {
+    Completer completer = Completer<T>();
+    routeStack.clear();
+    routeStack.add(DialogRouteConfig(
+      content: page,
+      completer: completer,
+    ));
+    setState(() {});
+    return await completer.future;
+  }
+
   void pop<T>([T? result]) {
     if (routeStack.isNotEmpty) {
       DialogRouteConfig dialogRouteConfig = routeStack.removeLast();

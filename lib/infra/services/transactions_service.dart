@@ -1,20 +1,40 @@
+import 'package:kira_dashboard/infra/entities/account/account_entity.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
+import 'package:kira_dashboard/infra/entities/network/headers_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
+import 'package:kira_dashboard/infra/entities/transactions/out/broadcast_req.dart';
 import 'package:kira_dashboard/infra/entities/transactions/transaction_result_entity.dart';
+import 'package:kira_dashboard/infra/repository/accounts_repository.dart';
 import 'package:kira_dashboard/infra/repository/transactions_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/transaction.dart';
+import 'package:kira_dashboard/models/transaction_remote_data.dart';
 import 'package:kira_dashboard/models/transaction_result.dart';
 import 'package:kira_dashboard/utils/custom_date_utils.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class TransactionsService {
+  final AccountsRepository accountsRepository = AccountsRepository();
   final TransactionsRepository transactionsRepository = TransactionsRepository();
   final TokensService tokensService = TokensService();
+
+  Future<void> broadcastTx(BroadcastReq broadcastReq) async {
+    await transactionsRepository.broadcastTransaction(broadcastReq.toJson());
+  }
+
+  Future<TransactionRemoteData> getRemoteUserTransactionData(String address) async {
+    HeadersWrapper<AccountEntity> accountEntity = await accountsRepository.getWithHeaders(address);
+
+    return TransactionRemoteData(
+      accountNumber: accountEntity.data.accountNumber,
+      sequence: accountEntity.data.sequence,
+      chainId: accountEntity.headers.chainId,
+    );
+  }
 
   Future<List<Transaction>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
     List<TransactionEntity> transactionEntities = await transactionsRepository.getUserTransactionsPage(address, paginatedRequest);

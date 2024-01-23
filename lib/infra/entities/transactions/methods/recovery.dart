@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgRegisterRecoverySecret extends TxMsg {
-  String get name => 'register-recovery-secret';
+  static String get interxNme => 'register-recovery-secret';
+
+  @override
+  String get messageType => '/kira.recovery.MsgRegisterRecoverySecret';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRegisterRecoverySecret';
 
   final String address;
   final String challenge;
@@ -36,7 +42,13 @@ class MsgRegisterRecoverySecret extends TxMsg {
 }
 
 class MsgRotateRecoveryAddress extends TxMsg {
-  String get name => 'rotate-recovery-address';
+  static String get interxName => 'rotate-recovery-address';
+
+  @override
+  String get messageType => '/kira.recovery.MsgRotateRecoveryAddress';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRotateRecoveryAddress';
 
   final String feePayer;
   final String address;
@@ -70,7 +82,13 @@ class MsgRotateRecoveryAddress extends TxMsg {
 }
 
 class MsgIssueRecoveryTokens extends TxMsg {
-  String get name => 'issue-recovery-tokens';
+  static String get interxName => 'issue-recovery-tokens';
+
+  @override
+  String get messageType => '/kira.recovery.MsgIssueRecoveryTokens';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgIssueRecoveryTokens';
 
   final String address;
 
@@ -95,7 +113,13 @@ class MsgIssueRecoveryTokens extends TxMsg {
 }
 
 class MsgBurnRecoveryTokens extends TxMsg {
-  String get name => 'burn-recovery-tokens';
+  static String get interxName => 'burn-recovery-tokens';
+
+  @override
+  String get messageType => '/kira.recovery.MsgBurnRecoveryTokens';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgBurnRecoveryTokens';
 
   final String address;
   final String rrCoin;
@@ -123,7 +147,13 @@ class MsgBurnRecoveryTokens extends TxMsg {
 }
 
 class MsgRegisterRRTokenHolder extends TxMsg {
-  String get name => 'register-rrtoken-holder';
+  static String get interxName => 'register-rrtoken-holder';
+
+  @override
+  String get messageType => '/kira.recovery.MsgRegisterRRTokenHolder';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRegisterRRTokenHolder';
 
   final String holder;
 
@@ -148,7 +178,13 @@ class MsgRegisterRRTokenHolder extends TxMsg {
 }
 
 class MsgClaimRRHolderRewards extends TxMsg {
-  String get name => 'claim-rrholder-rewards';
+  static String get interxName => 'claim-rrholder-rewards';
+
+  @override
+  String get messageType => '/kira.recovery.MsgClaimRRHolderRewards';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgClaimRRHolderRewards';
 
   final String sender;
 
@@ -173,7 +209,13 @@ class MsgClaimRRHolderRewards extends TxMsg {
 }
 
 class MsgRotateValidatorByHalfRRTokenHolder extends TxMsg {
-  String get name => 'rotate-validator-by-half-rr-token-holder';
+  static String get interxName => 'rotate-validator-by-half-rr-token-holder';
+
+  @override
+  String get messageType => '/kira.recovery.MsgRotateValidatorByHalfRRTokenHolder';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgRotateValidatorByHalfRRTokenHolder';
 
   final String rrHolder;
   final String address;

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/send_transaction_dialog/send_transaction_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transaction_result_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/token_amount_text_field/token_amount_text_field.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/token_amount_text_field/token_amount_text_field_loading.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/address_text_field.dart';
+import 'package:kira_dashboard/utils/user_transactions.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
@@ -26,6 +28,8 @@ class SendTokensDialog extends DialogContentWidget {
 
 class _SendTokensDialogState extends State<SendTokensDialog> {
   late final SendTokensDialogCubit cubit = SendTokensDialogCubit(initialCoin: widget.initialCoin);
+  final TextEditingController toAddressController = TextEditingController();
+  final TokenAmountTextFieldController tokenAmountTextFieldController = TokenAmountTextFieldController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +45,12 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
               children: [
                 AddressTextField(
                   title: 'Receiver address',
-                  controller: TextEditingController(),
+                  controller: toAddressController,
                 ),
                 const SizedBox(height: 16),
                 if (state is SendTokensDialogLoadedState)
                   TokenAmountTextField(
+                    controller: tokenAmountTextFieldController,
                     address: state.address,
                     initialCoin: state.initialCoin,
                   )
@@ -78,7 +83,22 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: SendTransactionDialog())),
+                    onPressed: () {
+                      String senderAddress = getIt<WalletProvider>().value!.address;
+                      UserTransactions userTransactions = UserTransactions(
+                        txProcessNotificator: DialogTxProcessNotificator(context),
+                        signerAddress: senderAddress,
+                        compressedPublicKey: getIt<WalletProvider>().value!.derivedBip44.publicKey.compressed,
+                        txSigner: UnsafeWalletSigner(context),
+                      );
+
+                      userTransactions.sendTokens(
+                        fromAddress: senderAddress,
+                        toAddress: toAddressController.text,
+                        amounts: [tokenAmountTextFieldController.value!],
+                        fee: (cubit.state as SendTokensDialogLoadedState).executionFee,
+                      );
+                    },
                     child: const Text('Send'),
                   ),
                 ),

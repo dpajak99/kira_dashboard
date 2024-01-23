@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/main.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
+import 'package:kira_dashboard/utils/signature_utils.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
 class SignTransactionDialog extends DialogContentWidget {
-  const SignTransactionDialog({super.key});
+  final String message;
+
+  const SignTransactionDialog({
+    required this.message,
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _SignTransactionDialog();
@@ -19,30 +27,31 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
       scrollable: false,
       child: Column(
         children: [
-          const SizedBox(height: 48),
-          const SizedBox(
-            width: 90,
-            height: 90,
-            child: CircularProgressIndicator(
-              color: Color(0xff2f8af5),
-              strokeWidth: 2,
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              color: Color(0xff06070a),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
-          ),
-          const SizedBox(height: 48),
-          const Text(
-            'Please, sign transaction in your wallet',
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xff6c86ad),
+            child: Column(
+              children: [
+                Text(
+                  widget.message,
+                  style: const TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 48),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              style: lightElevatedButton,
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Close'),
+              style: darkElevatedButton,
+              onPressed: () {
+                String sig = SignatureUtils.generateSignature(wallet: getIt<WalletProvider>().value!, message: widget.message);
+                Navigator.of(context).pop(sig);
+              },
+              child: const Text('Approve'),
             ),
           ),
         ],

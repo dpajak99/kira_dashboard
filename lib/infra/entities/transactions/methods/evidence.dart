@@ -2,7 +2,13 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class MsgSubmitEvidence extends TxMsg {
-  String get name => 'submit_evidence';
+  static String get interxName => 'submit_evidence';
+
+  @override
+  String get messageType => '/kira.gov.MsgSubmitEvidence';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgSubmitEvidence';
 
   final String submitter;
   final String evidence;
