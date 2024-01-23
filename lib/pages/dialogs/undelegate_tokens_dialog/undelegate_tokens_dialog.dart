@@ -69,8 +69,8 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
                         delegations.add(TokenAmountTextFieldController());
                       });
                     },
-                    label: const Text('Add delegation', style: TextStyle(fontSize: 14)),
-                    icon: const Icon(Icons.add),
+                    label: const Text('Add undelegation', style: TextStyle(fontSize: 14)),
+                    icon: const Icon(Icons.add, size: 14),
                   ),
                 ),
               ] else ...<Widget>[

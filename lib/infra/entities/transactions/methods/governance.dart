@@ -475,6 +475,21 @@ class IdentityInfoEntry {
   final String key;
   final String info;
 
+  IdentityInfoEntry({
+    required this.key,
+    required this.info,
+  });
+
+  IdentityInfoEntry copyWith({
+    String? key,
+    String? info,
+  }) {
+    return IdentityInfoEntry(
+      key: key ?? this.key,
+      info: info ?? this.info,
+    );
+  }
+
   IdentityInfoEntry.fromJson(Map<String, dynamic> json)
       : key = json['key'] as String,
         info = json['info'] as String;

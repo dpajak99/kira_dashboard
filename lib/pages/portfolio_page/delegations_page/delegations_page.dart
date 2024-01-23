@@ -144,7 +144,6 @@ class DelegationsPage extends StatelessWidget {
                         children: [
                           IconTextButton(
                             text: 'Undelegate',
-                            gap: 4,
                             highlightColor: const Color(0xfffbfbfb),
                             style: const TextStyle(
                               fontSize: 14,
@@ -158,7 +157,6 @@ class DelegationsPage extends StatelessWidget {
                           const SizedBox(width: 16),
                           IconTextButton(
                             text: 'Delegate',
-                            gap: 4,
                             highlightColor: const Color(0xfffbfbfb),
                             style: const TextStyle(
                               fontSize: 14,

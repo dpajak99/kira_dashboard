@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
+  final Widget? leading;
   final String? title;
 
   const CustomCard({
     super.key,
     required this.child,
+    this.leading,
     this.title,
   });
 
@@ -22,10 +24,17 @@ class CustomCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (title != null) ...<Widget>[
-            Text(title!, style: const TextStyle(fontSize: 24, color: Color(0xfffbfbfb))),
-            const SizedBox(height: 24),
-          ],
+          Row(
+            children: [
+              if (title != null) ...<Widget>[
+                Text(title!, style: const TextStyle(fontSize: 24, color: Color(0xfffbfbfb))),
+              ],
+              if (leading != null) ...<Widget>[
+                Expanded(child: leading!),
+              ],
+            ],
+          ),
+          if (title != null || leading != null) const SizedBox(height: 24),
           SizedBox(width: double.infinity, child: child),
         ],
       ),

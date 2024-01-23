@@ -27,6 +27,7 @@ class CustomDialog extends StatelessWidget {
   final String title;
   final Widget child;
   final double width;
+  final double? height;
   final bool scrollable;
 
   const CustomDialog({
@@ -34,6 +35,7 @@ class CustomDialog extends StatelessWidget {
     required this.child,
     required this.width,
     required this.scrollable,
+    this.height,
     super.key,
   });
 
@@ -174,7 +176,7 @@ class CustomDialog extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(24)),
           child: Container(
             width: width,
-            constraints: scrollable ? const BoxConstraints(maxHeight: 500) : null,
+            constraints: scrollable ? BoxConstraints(maxHeight: height ?? 500) : null,
             decoration: const BoxDecoration(
               color: Color(0xff131823),
               borderRadius: BorderRadius.all(Radius.circular(24)),

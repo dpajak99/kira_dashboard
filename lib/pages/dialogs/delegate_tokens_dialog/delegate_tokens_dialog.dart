@@ -68,7 +68,7 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                       });
                     },
                     label: const Text('Add delegation', style: TextStyle(fontSize: 14)),
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Icons.add, size: 14),
                   ),
                 ),
               ] else ...<Widget>[

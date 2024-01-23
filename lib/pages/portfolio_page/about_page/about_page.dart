@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/models/validator.dart';
+import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/register_identity_records_dialog/register_identity_records_dialog.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
@@ -207,6 +212,27 @@ class AboutPage extends StatelessWidget {
         ],
         CustomCard(
           title: 'Identity records',
+          leading: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: IconTextButton(
+                  text: 'Add',
+                  icon: AppIcons.add,
+                  gap: 4,
+                  highlightColor: const Color(0xfffbfbfb),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Color(0xff4888f0),
+                  ),
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) => const CustomDialogRoute(content: DelegateTokensDialog(valoperAddress: '')),
+                  ),
+                ),
+              ),
+            ],
+          ),
           child: CustomTable(
             items: state.identityRecords.all,
             columns: [
@@ -240,22 +266,56 @@ class AboutPage extends StatelessWidget {
                   return _VerificationChip(verified: item.verifiers.isNotEmpty);
                 },
               ),
-              ColumnConfig(
-                title: 'Actions',
-                textAlign: TextAlign.right,
-                cellBuilder: (BuildContext context, IdentityRecord item) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.info_outline, size: 20, color: Color(0xff2f8af5)),
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    ],
-                  );
-                },
-              ),
+              if (state.isMyWallet)
+                ColumnConfig(
+                  title: 'Actions',
+                  textAlign: TextAlign.right,
+                  cellBuilder: (BuildContext context, IdentityRecord item) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconTextButton(
+                          text: 'Edit',
+                          highlightColor: const Color(0xfffbfbfb),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff4888f0),
+                          ),
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) => CustomDialogRoute(content: RegisterIdentityRecordsDialog(records: [item])),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        IconTextButton(
+                          text: 'Verify',
+                          highlightColor: const Color(0xfffbfbfb),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff4888f0),
+                          ),
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) => const CustomDialogRoute(content: RegisterIdentityRecordsDialog()),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        IconTextButton(
+                          text: 'Delete',
+                          highlightColor: const Color(0xfffbfbfb),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff4888f0),
+                          ),
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) => const CustomDialogRoute(content: RegisterIdentityRecordsDialog()),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
             ],
           ),
         ),
