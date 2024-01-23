@@ -2,8 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/models/validator.dart';
-import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_cubit.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_state.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
@@ -68,7 +68,6 @@ class _ValidatorTile extends StatelessWidget {
   const _ValidatorTile({
     required this.validator,
     required this.signedIn,
-    super.key,
   });
 
   @override
@@ -196,7 +195,7 @@ class _ValidatorTile extends StatelessWidget {
 class _RankBookmark extends StatelessWidget {
   final int rank;
 
-  const _RankBookmark({required this.rank, super.key});
+  const _RankBookmark({required this.rank});
 
   @override
   Widget build(BuildContext context) {

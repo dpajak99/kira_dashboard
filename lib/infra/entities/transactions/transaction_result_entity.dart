@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
-import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class TransactionResultEntity extends Equatable {
   final String hash;

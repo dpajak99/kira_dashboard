@@ -1,6 +1,5 @@
 import 'package:blockchain_utils/bip/bip/bip.dart';
 import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
@@ -141,7 +140,6 @@ class _MnemonicItem extends StatelessWidget {
   const _MnemonicItem({
     required this.index,
     required this.word,
-    super.key,
   });
 
   @override

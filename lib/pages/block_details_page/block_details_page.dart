@@ -1,10 +1,8 @@
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/pages/block_details_page/block_details_cubit.dart';
 import 'package:kira_dashboard/pages/block_details_page/block_details_state.dart';
-import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';

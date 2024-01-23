@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/send_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/wallet_button.dart';
 

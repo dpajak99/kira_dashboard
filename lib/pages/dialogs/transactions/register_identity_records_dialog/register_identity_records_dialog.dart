@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
-import 'package:kira_dashboard/infra/entities/transactions/methods/governance.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
-import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/register_identity_records_dialog/edit_record_dialog/edit_record_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/register_identity_records_dialog/register_identity_records_dialog_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/register_identity_records_dialog/register_identity_records_state.dart';
-import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field.dart';
-import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/token_amount_text_field/token_amount_text_field_loading.dart';
 import 'package:kira_dashboard/pages/dialogs/send_transaction_dialog/send_transaction_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/widgets/address_text_field.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/edit_record_dialog/edit_record_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_dialog_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_state.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/identity_record_input.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
@@ -130,7 +124,6 @@ class _RecordPreview extends StatelessWidget {
   final VoidCallback onEdit;
 
   const _RecordPreview({
-    super.key,
     required this.controller,
     required this.onDelete,
     required this.onEdit,

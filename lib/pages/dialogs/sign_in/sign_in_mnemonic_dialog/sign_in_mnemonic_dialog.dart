@@ -1,15 +1,13 @@
 import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field.dart';
-import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog_state.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog_state.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/custom_tab_bar.dart';
 

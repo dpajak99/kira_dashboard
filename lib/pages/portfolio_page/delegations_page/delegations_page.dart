@@ -1,15 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
 import 'package:kira_dashboard/models/validator.dart';
-import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/send_tokens_dialog/send_tokens_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/undelegate_tokens_dialog/undelegate_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/undelegate_tokens_dialog/undelegate_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';

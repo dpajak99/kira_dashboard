@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
-import 'package:kira_dashboard/infra/entities/transactions/transaction_result_entity.dart';
 import 'package:kira_dashboard/models/coin.dart';
 
 enum TxStatusType {

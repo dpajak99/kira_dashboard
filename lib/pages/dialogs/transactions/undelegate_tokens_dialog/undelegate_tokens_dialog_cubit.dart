@@ -1,12 +1,10 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/multistaking.dart';
 import 'package:kira_dashboard/infra/services/balances_service.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
-import 'package:kira_dashboard/pages/dialogs/delegate_tokens_dialog/delegate_tokens_dialog_state.dart';
-import 'package:kira_dashboard/pages/dialogs/undelegate_tokens_dialog/undelegate_tokens_dialog_state.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/undelegate_tokens_dialog/undelegate_tokens_dialog_state.dart';
 
 class UndelegateTokensDialogCubit extends Cubit<UndelegateTokensDialogState> {
   final BalancesService balancesService = BalancesService();

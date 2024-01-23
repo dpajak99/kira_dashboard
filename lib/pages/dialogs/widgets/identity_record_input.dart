@@ -133,7 +133,6 @@ class _TextField extends StatefulWidget {
     required this.title,
     this.maxLines = 1,
     this.maxLength,
-    super.key,
   });
 
   @override
@@ -157,7 +156,6 @@ class _TextFieldState extends State<_TextField> {
 
   @override
   Widget build(BuildContext context) {
-    print('maxLength: ${widget.maxLength}');
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
@@ -173,6 +171,16 @@ class _TextFieldState extends State<_TextField> {
                 style: const TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
               ),
               const Spacer(),
+              const Spacer(),
+              InkWell(
+                onTap: () => widget.controller.clear(),
+                radius: 30,
+                child: const Icon(
+                  Icons.brush,
+                  color: Color(0xff6c86ad),
+                  size: 16,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 8),

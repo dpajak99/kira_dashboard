@@ -15,7 +15,6 @@ class ValidatorsPageCubit extends Cubit<ValidatorsPageState> {
           isSignedIn: getIt<WalletProvider>().isSignedIn,
         )) {
     walletProvider.addListener(() {
-      print('Notified');
       emit(state.copyWith(isSignedIn: walletProvider.isSignedIn));
     });
   }

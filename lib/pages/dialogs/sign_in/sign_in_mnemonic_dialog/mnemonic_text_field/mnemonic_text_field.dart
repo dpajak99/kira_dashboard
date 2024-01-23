@@ -2,8 +2,8 @@ import 'package:blockchain_utils/bip/bip/bip.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field_state.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field_state.dart';
 import 'package:kira_dashboard/widgets/typeahead_text_field.dart';
 
 class MnemonicTextField extends StatefulWidget {

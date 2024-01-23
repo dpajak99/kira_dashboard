@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
 class CustomDialogRoute extends StatefulWidget {
   final DialogContentWidget content;

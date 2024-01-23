@@ -90,7 +90,6 @@ class _AddressText extends StatelessWidget {
   final bool full;
 
   const _AddressText({
-    super.key,
     required this.address,
     required this.style,
     required this.icon,

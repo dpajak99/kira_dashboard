@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kira_dashboard/pages/dialogs/create_wallet_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/create_wallet_dialog/create_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
@@ -104,7 +104,6 @@ class _OptionItem extends StatelessWidget {
     required this.leading,
     required this.title,
     this.onTap,
-    super.key,
   });
 
   @override
