@@ -176,10 +176,23 @@ class UserTransactions {
     sendTransaction(msg: msgRegisterIdentityRecords, fee: fee, memo: memo);
   }
 
+  Future<void> deleteIdentityRecords({
+    required String senderAddress,
+    required List<String> keys,
+    required Coin fee,
+    String? memo,
+  }) async {
+    MsgDeleteIdentityRecords msgDeleteIdentityRecords = MsgDeleteIdentityRecords(
+      address: senderAddress,
+      keys: keys,
+    );
+    sendTransaction(msg: msgDeleteIdentityRecords, fee: fee, memo: memo);
+  }
+
   Future<void> requestRecordsVerification({
     required String senderAddress,
     required String verifierAddress,
-    required List<int> recordIds,
+    required List<String> recordIds,
     required Coin tip,
     required Coin fee,
     String? memo,

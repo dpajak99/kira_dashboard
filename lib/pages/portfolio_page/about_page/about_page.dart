@@ -4,7 +4,9 @@ import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/delete_identity_records_dialog/delete_identity_records_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_dialog.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_records_dialog/verify_identity_records_dialog.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
@@ -289,7 +291,7 @@ class AboutPage extends StatelessWidget {
                             fontSize: 14,
                             color: Color(0xff4888f0),
                           ),
-                          onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
+                          onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(records: [item],)),
                         ),
                         const SizedBox(width: 16),
                         IconTextButton(
@@ -299,7 +301,7 @@ class AboutPage extends StatelessWidget {
                             fontSize: 14,
                             color: Color(0xff4888f0),
                           ),
-                          onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
+                          onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
                         ),
                       ],
                     );

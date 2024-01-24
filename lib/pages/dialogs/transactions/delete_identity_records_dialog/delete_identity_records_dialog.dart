@@ -2,32 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_records_dialog/verify_identity_records_dialog_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_records_dialog/verify_identity_records_dialog_state.dart';
-import 'package:kira_dashboard/pages/dialogs/widgets/address_text_field.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/delete_identity_records_dialog/delete_identity_records_dialog_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/delete_identity_records_dialog/delete_identity_records_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/identity_records_picker/identity_records_picker.dart';
-import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field.dart';
-import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field_loading.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
-class VerifyIdentityRecordsDialog extends DialogContentWidget {
+class DeleteIdentityRecordsDialog extends DialogContentWidget {
   final List<IdentityRecord> records;
 
-  const VerifyIdentityRecordsDialog({
+  const DeleteIdentityRecordsDialog({
     required this.records,
     super.key,
   });
 
   @override
-  State<StatefulWidget> createState() => _VerifyIdentityRecordsDialogState();
+  State<StatefulWidget> createState() => _DeleteIdentityRecordsDialogState();
 }
 
-class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialog> {
-  late final VerifyIdentityRecordsDialogCubit cubit = VerifyIdentityRecordsDialogCubit();
+class _DeleteIdentityRecordsDialogState extends State<DeleteIdentityRecordsDialog> {
+  late final DeleteIdentityRecordsDialogCubit cubit = DeleteIdentityRecordsDialogCubit();
   final IdentityRecordsPickerController identityRecordsPickerController = IdentityRecordsPickerController();
-  final TextEditingController verifierAddressController = TextEditingController();
-  final TokenAmountTextFieldController tokenAmountTextFieldController = TokenAmountTextFieldController();
   final ValueNotifier<String?> errorNotifier = ValueNotifier<String?>(null);
 
   @override
@@ -35,28 +30,24 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
     super.initState();
     _validateForm();
     identityRecordsPickerController.addListener(_validateForm);
-    tokenAmountTextFieldController.addListener(_validateForm);
-    verifierAddressController.addListener(_validateForm);
   }
 
   @override
   void dispose() {
     cubit.close();
     identityRecordsPickerController.dispose();
-    verifierAddressController.dispose();
-    tokenAmountTextFieldController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomDialog(
-      title: 'Request verification',
+      title: 'Delete records',
       width: 420,
       scrollable: false,
-      child: BlocBuilder<VerifyIdentityRecordsDialogCubit, VerifyIdentityRecordsDialogState>(
+      child: BlocBuilder<DeleteIdentityRecordsDialogCubit, DeleteIdentityRecordsDialogState>(
         bloc: cubit,
-        builder: (BuildContext context, VerifyIdentityRecordsDialogState state) {
+        builder: (BuildContext context, DeleteIdentityRecordsDialogState state) {
           return SizedBox(
             child: Column(
               children: [
@@ -65,20 +56,6 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
                   address: state.address,
                   initialRecords: widget.records,
                 ),
-                const SizedBox(height: 16),
-                AddressTextField(
-                  title: 'Verifier address',
-                  controller: verifierAddressController,
-                ),
-                const SizedBox(height: 16),
-                if (state is VerifyIdentityRecordsDialogLoadedState)
-                  TokenAmountTextField(
-                    controller: tokenAmountTextFieldController,
-                    address: state.address,
-                    initialCoin: state.initialCoin,
-                  )
-                else
-                  const TokenAmountTextFieldLoading(),
                 const SizedBox(height: 8),
                 const Divider(color: Color(0xff222b3a)),
                 const SizedBox(height: 8),
@@ -92,7 +69,7 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
                       ),
                     ),
                     const Spacer(),
-                    if (state is VerifyIdentityRecordsDialogLoadedState)
+                    if (state is DeleteIdentityRecordsDialogLoadedState)
                       Text(
                         state.executionFee.toNetworkDenominationString(),
                         style: const TextStyle(
@@ -114,13 +91,11 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
                         onPressed: error == null
                             ? () {
                                 cubit.sendTransaction(
-                                  toAddress: verifierAddressController.text,
-                                  tip: tokenAmountTextFieldController.value!,
-                                  recordIds: identityRecordsPickerController.value.map((e) => e.id).toList(),
+                                  keys: identityRecordsPickerController.value.map((e) => e.key).toList(),
                                 );
                               }
                             : null,
-                        child: Text(error ?? 'Request verification'),
+                        child: Text(error ?? 'Delete records'),
                       ),
                     );
                   },
@@ -136,10 +111,6 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
   void _validateForm() {
     if(identityRecordsPickerController.value.isEmpty) {
       errorNotifier.value = 'Select records';
-    } else if (verifierAddressController.text.isEmpty) {
-      errorNotifier.value = 'Enter address';
-    } else if (tokenAmountTextFieldController.value == null) {
-      errorNotifier.value = 'Enter value';
     } else {
       errorNotifier.value = null;
     }

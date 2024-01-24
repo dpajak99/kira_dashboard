@@ -626,6 +626,46 @@ class MsgRegisterIdentityRecords extends TxMsg {
   }
 }
 
+class MsgDeleteIdentityRecords extends TxMsg {
+  static String get interxName => 'edit-identity-record';
+
+  @override
+  String get messageType => '/kira.gov.MsgDeleteIdentityRecords';
+
+  @override
+  String get signatureMessageType => 'kiraHub/MsgDeleteIdentityRecords';
+
+  final String address;
+  final List<String> keys;
+
+  MsgDeleteIdentityRecords({
+    required this.address,
+    required this.keys,
+  });
+
+  MsgDeleteIdentityRecords.fromJson(Map<String, dynamic> json)
+      : address = json['address'] as String,
+        keys = (json['keys'] as List<dynamic>).map((e) => e as String).toList();
+
+  @override
+  String? get from => address;
+
+  @override
+  String? get to => null;
+
+  @override
+  List<CoinEntity> get txAmounts => <CoinEntity>[];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'keys': keys,
+    };
+  }
+}
+
+
 class MsgRequestIdentityRecordsVerify extends TxMsg {
   static String get interxName => 'request-identity-records-verify';
 
@@ -637,7 +677,7 @@ class MsgRequestIdentityRecordsVerify extends TxMsg {
 
   final String address;
   final String verifier;
-  final List<int> recordIds;
+  final List<String> recordIds;
   final CoinEntity tip;
 
   MsgRequestIdentityRecordsVerify({
@@ -650,7 +690,7 @@ class MsgRequestIdentityRecordsVerify extends TxMsg {
   MsgRequestIdentityRecordsVerify.fromJson(Map<String, dynamic> json)
       : address = json['address'] as String,
         verifier = json['verifier'] as String,
-        recordIds = (json['record_ids'] as List<dynamic>).map((e) => e as int).toList(),
+        recordIds = (json['record_ids'] as List<dynamic>).map((e) => (e as int).toString()).toList(),
         tip = CoinEntity.fromJson(json['tip'] as Map<String, dynamic>);
 
   @override
@@ -664,11 +704,10 @@ class MsgRequestIdentityRecordsVerify extends TxMsg {
 
   @override
   Map<String, dynamic> toJson() {
-    final List<int> recordIdsJson = recordIds;
     return {
       'address': address,
       'verifier': verifier,
-      'record_ids': recordIdsJson,
+      'record_ids': recordIds,
       'tip': tip.toJson(),
     };
   }

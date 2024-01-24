@@ -94,8 +94,8 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
             children: [
               Checkbox(
                 value: termsAccepted,
-                activeColor: const Color(0xff2f8af5),
                 onChanged: (bool? value) => setState(() => termsAccepted = value ?? false),
+                activeColor: const Color(0xff2f8af5),
                 side: const BorderSide(color: Color(0xff2f8af5), width: 2),
               ),
               const SizedBox(width: 8),

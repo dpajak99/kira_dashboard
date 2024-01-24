@@ -1,3 +1,4 @@
+import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/multistaking.dart';
 import 'package:kira_dashboard/infra/services/balances_service.dart';
@@ -9,13 +10,12 @@ import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart
 class DelegateTokensDialogCubit extends TransactionCubit<DelegateTokensDialogState> {
   final BalancesService balancesService = BalancesService();
   final TokensService tokensService = TokensService();
-  final WalletProvider walletProvider = WalletProvider();
 
   final String validatorAddress;
 
   DelegateTokensDialogCubit({
     required this.validatorAddress,
-  }) : super(const DelegateTokensDialogLoadingState()) {
+  }) : super(DelegateTokensDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
     _init();
   }
 
@@ -32,14 +32,13 @@ class DelegateTokensDialogCubit extends TransactionCubit<DelegateTokensDialogSta
   }
 
   Future<void> _init() async {
-    String address = walletProvider.value?.address ?? 'kira143q8vxpvuykt9pq50e6hng9s38vmy844n8k9wx';
-    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(address);
+    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
     Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgDelegate.interxName);
 
     emit(DelegateTokensDialogLoadedState(
       initialCoin: defaultCoinBalance,
       executionFee: executionFee,
-      address: address,
+      address: state.address,
     ));
   }
 }

@@ -29,12 +29,14 @@ class CustomDialog extends StatelessWidget {
   final double width;
   final double? height;
   final bool scrollable;
+  final EdgeInsets? contentPadding;
 
   const CustomDialog({
     required this.title,
     required this.child,
     required this.width,
     required this.scrollable,
+    this.contentPadding,
     this.height,
     super.key,
   });
@@ -102,7 +104,7 @@ class CustomDialog extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 16),
+              padding: contentPadding ?? const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 16),
               child: child,
             ),
           ),
@@ -110,12 +112,13 @@ class CustomDialog extends StatelessWidget {
       );
     } else {
       childWidget = Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
+            Container(
               width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               height: 40,
               child: Stack(
                 alignment: Alignment.center,
@@ -162,7 +165,10 @@ class CustomDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            child,
+            Padding(
+              padding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+              child: child,
+            ),
           ],
         ),
       );

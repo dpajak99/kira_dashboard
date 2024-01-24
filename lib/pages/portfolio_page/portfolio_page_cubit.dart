@@ -41,7 +41,7 @@ class PortfolioPageCubit extends Cubit<PortfolioPageState> {
     PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
 
     List<Coin> balance = await balancesService.getPage(address, paginatedRequest);
-    IdentityRecords identityRecords = await identityRegistrarService.getAllByAddress(address, paginatedRequest);
+    IdentityRecords identityRecords = await identityRegistrarService.getUserProfile(address);
     List<Delegation> delegations = await delegationsService.getPage(address, paginatedRequest);
     List<Undelegation> undelegations = await undelegationsService.getPage(address, paginatedRequest);
     List<VerificationRequest> inboundVerificationRequests = await verificationRequestsService.getInboundPage(address, paginatedRequest);

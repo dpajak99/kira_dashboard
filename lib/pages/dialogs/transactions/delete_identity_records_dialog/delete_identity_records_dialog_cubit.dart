@@ -4,39 +4,33 @@ import 'package:kira_dashboard/infra/entities/transactions/methods/custody.dart'
 import 'package:kira_dashboard/infra/services/balances_service.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog_state.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/delete_identity_records_dialog/delete_identity_records_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_records_dialog/verify_identity_records_dialog_state.dart';
 
-class VerifyIdentityRecordsDialogCubit extends TransactionCubit<VerifyIdentityRecordsDialogState> {
+class DeleteIdentityRecordsDialogCubit extends TransactionCubit<DeleteIdentityRecordsDialogState> {
   final BalancesService balancesService = BalancesService();
   final TokensService tokensService = TokensService();
 
-  VerifyIdentityRecordsDialogCubit() : super(VerifyIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
+  DeleteIdentityRecordsDialogCubit() : super(DeleteIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
     _init();
   }
 
   Future<void> sendTransaction({
-    required String toAddress,
-    required Coin tip,
-    required List<String> recordIds,
+    required List<String> keys,
     String? memo,
   }) async {
-    txClient.requestRecordsVerification(
+    txClient.deleteIdentityRecords(
       senderAddress: signerAddress,
-      verifierAddress: toAddress,
-      tip: tip,
-      recordIds: recordIds,
-      fee: (state as VerifyIdentityRecordsDialogLoadedState).executionFee,
+      keys: keys,
+      fee: (state as DeleteIdentityRecordsDialogLoadedState).executionFee,
     );
   }
 
   Future<void> _init() async {
-    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
     Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgSend.interxName);
 
-    emit(VerifyIdentityRecordsDialogLoadedState(
-      initialCoin: defaultCoinBalance,
+    emit(DeleteIdentityRecordsDialogLoadedState(
       executionFee: executionFee,
       address: state.address,
     ));

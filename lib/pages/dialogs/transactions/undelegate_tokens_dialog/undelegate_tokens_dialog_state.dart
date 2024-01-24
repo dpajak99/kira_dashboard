@@ -3,25 +3,27 @@ import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/models/coin.dart';
 
 abstract class UndelegateTokensDialogState extends Equatable {
-  const UndelegateTokensDialogState();
+  final String address;
+
+  const UndelegateTokensDialogState({required this.address});
 }
 
 class UndelegateTokensDialogLoadingState extends UndelegateTokensDialogState {
-  const UndelegateTokensDialogLoadingState();
+  const UndelegateTokensDialogLoadingState({required super.address});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [address];
 }
 
 class UndelegateTokensDialogLoadedState extends UndelegateTokensDialogState {
   final Coin executionFee;
   final Coin initialCoin;
-  final String address;
+
 
   const UndelegateTokensDialogLoadedState({
     required this.executionFee,
     required this.initialCoin,
-    required this.address,
+    required super.address
   });
 
   @override

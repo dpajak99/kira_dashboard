@@ -1,5 +1,6 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/governance.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/multistaking.dart';
@@ -12,9 +13,8 @@ import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart
 class RegisterIdentityRecordsDialogCubit extends TransactionCubit<RegisterIdentityRecordsDialogState> {
   final BalancesService balancesService = BalancesService();
   final TokensService tokensService = TokensService();
-  final WalletProvider walletProvider = WalletProvider();
 
-  RegisterIdentityRecordsDialogCubit() : super(const RegisterIdentityRecordsDialogLoadingState()) {
+  RegisterIdentityRecordsDialogCubit() : super(RegisterIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
     _init();
   }
 
@@ -30,14 +30,13 @@ class RegisterIdentityRecordsDialogCubit extends TransactionCubit<RegisterIdenti
   }
 
   Future<void> _init() async {
-    String address = walletProvider.value?.address ?? 'kira143q8vxpvuykt9pq50e6hng9s38vmy844n8k9wx';
-    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(address);
+    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
     Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgDelegate.interxName);
 
     emit(RegisterIdentityRecordsDialogLoadedState(
       initialCoin: defaultCoinBalance,
       executionFee: executionFee,
-      address: address,
+      address: state.address,
     ));
   }
 }

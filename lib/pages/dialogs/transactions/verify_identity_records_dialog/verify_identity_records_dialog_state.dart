@@ -2,25 +2,29 @@ import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/models/coin.dart';
 
 abstract class VerifyIdentityRecordsDialogState extends Equatable {
-  const VerifyIdentityRecordsDialogState();
+  final String address;
+
+  const VerifyIdentityRecordsDialogState({
+    required this.address,
+});
 }
 
 class VerifyIdentityRecordsDialogLoadingState extends VerifyIdentityRecordsDialogState {
-  const VerifyIdentityRecordsDialogLoadingState();
+  const VerifyIdentityRecordsDialogLoadingState({required super.address});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [address];
 }
 
 class VerifyIdentityRecordsDialogLoadedState extends VerifyIdentityRecordsDialogState {
   final Coin executionFee;
   final Coin initialCoin;
-  final String address;
+
 
   const VerifyIdentityRecordsDialogLoadedState({
     required this.executionFee,
     required this.initialCoin,
-    required this.address,
+    required super.address
   });
 
   @override

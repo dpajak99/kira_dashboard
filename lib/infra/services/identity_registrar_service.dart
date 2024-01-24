@@ -6,7 +6,9 @@ import 'package:kira_dashboard/utils/paginated_request.dart';
 class IdentityRegistrarService {
   final IdentityRegistrarRepository identityRegistrarRepository = IdentityRegistrarRepository();
 
-  Future<IdentityRecords> getAllByAddress(String address, PaginatedRequest paginatedRequest) async {
+  Future<IdentityRecords> getUserProfile(String address) async {
+    PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
+
     List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getPage(address, paginatedRequest);
     Map<String, IdentityRecordEntity> identityRecordsMap = <String, IdentityRecordEntity>{};
     for (IdentityRecordEntity identityRecord in identityRecords) {
@@ -20,6 +22,11 @@ class IdentityRegistrarService {
       social: identityRecordsMap['social'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('social')!) : null,
       other: identityRecordsMap.values.map((IdentityRecordEntity e) => IdentityRecord.fromEntity(e)).toList(),
     );
+  }
+
+  Future<List<IdentityRecord>> getPage(String address, PaginatedRequest paginatedRequest) async {
+    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getPage(address, paginatedRequest);
+    return identityRecords.map((IdentityRecordEntity e) => IdentityRecord.fromEntity(e)).toList();
   }
 
   Future<List<IdentityRecord>> getByIds(List<String> ids) async {

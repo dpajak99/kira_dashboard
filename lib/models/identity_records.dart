@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record_entity.dart';
 
 class IdentityRecords {
@@ -24,13 +25,13 @@ class IdentityRecords {
   ];
 }
 
-class IdentityRecord {
+class IdentityRecord extends Equatable {
   final String id;
   final String key;
   final String value;
   final List<String> verifiers;
 
-  IdentityRecord({
+  const IdentityRecord({
     required this.id,
     required this.key,
     required this.value,
@@ -45,4 +46,7 @@ class IdentityRecord {
       verifiers: entity.verifiers,
     );
   }
+
+  @override
+  List<Object?> get props => [id, key, value, verifiers];
 }
