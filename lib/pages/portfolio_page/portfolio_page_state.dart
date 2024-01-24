@@ -9,18 +9,12 @@ import 'package:kira_dashboard/pages/page_state.dart';
 
 class PortfolioPageState extends PageState {
   final IdentityRecords identityRecords;
-  final List<VerificationRequest> inboundVerificationRequests;
-  final List<VerificationRequest> outboundVerificationRequests;
-  final List<Transaction> transactions;
   final Validator? validator;
   final bool isMyWallet;
 
   PortfolioPageState({
     required super.isLoading,
     required this.isMyWallet,
-    this.inboundVerificationRequests = const <VerificationRequest>[],
-    this.outboundVerificationRequests = const <VerificationRequest>[],
-    this.transactions = const <Transaction>[],
     IdentityRecords? identityRecords,
     this.validator,
   }) : identityRecords = identityRecords ?? IdentityRecords();
@@ -29,8 +23,6 @@ class PortfolioPageState extends PageState {
     bool? isLoading,
     List<Coin>? balance,
     IdentityRecords? identityRecords,
-    List<VerificationRequest>? inboundVerificationRequests,
-    List<VerificationRequest>? outboundVerificationRequests,
     List<Transaction>? transactions,
     Validator? validator,
     bool? isMyWallet,
@@ -38,14 +30,11 @@ class PortfolioPageState extends PageState {
     return PortfolioPageState(
       isLoading: isLoading ?? this.isLoading,
       identityRecords: identityRecords ?? this.identityRecords,
-      inboundVerificationRequests: inboundVerificationRequests ?? this.inboundVerificationRequests,
-      outboundVerificationRequests: outboundVerificationRequests ?? this.outboundVerificationRequests,
-      transactions: transactions ?? this.transactions,
       validator: validator ?? this.validator,
       isMyWallet: isMyWallet ?? this.isMyWallet,
     );
   }
 
   @override
-  List<Object?> get props => <Object?>[isMyWallet, identityRecords, validator, inboundVerificationRequests, outboundVerificationRequests];
+  List<Object?> get props => <Object?>[isMyWallet, identityRecords, validator];
 }

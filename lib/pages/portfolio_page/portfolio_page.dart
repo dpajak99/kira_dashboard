@@ -7,7 +7,7 @@ import 'package:kira_dashboard/pages/portfolio_page/delegations_page/delegations
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_page.dart';
-import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/verification_requests_page_page.dart';
+import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/verification_requests_page.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
@@ -195,7 +195,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             if (selectedPage == 0) SliverPagePadding(sliver: SliverToBoxAdapter(child: BalancesPage(address: widget.address, isMyWallet: state.isMyWallet))),
             if (selectedPage == 1) SliverPagePadding(sliver: SliverToBoxAdapter(child: TransactionsPage(address: widget.address, isMyWallet: state.isMyWallet))),
             if (selectedPage == 2) SliverPagePadding(sliver: SliverToBoxAdapter(child: DelegationsPage(address: widget.address, isMyWallet: state.isMyWallet))),
-            if (selectedPage == 3) SliverPagePadding(sliver: SliverToBoxAdapter(child: VerificationRequestsPage(state: state))),
+            if (selectedPage == 3) SliverPagePadding(sliver: SliverToBoxAdapter(child: VerificationRequestsPage(address: widget.address, isMyWallet: state.isMyWallet))),
             if (selectedPage == 4) SliverPagePadding(sliver: SliverToBoxAdapter(child: AboutPage(state: state, address: widget.address))),
           ],
         );
