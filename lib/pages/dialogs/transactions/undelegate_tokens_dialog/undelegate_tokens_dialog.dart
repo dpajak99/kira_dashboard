@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transaction_result_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/token_amount_text_field/token_amount_text_field.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/token_amount_text_field/token_amount_text_field_loading.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/undelegate_tokens_dialog/undelegate_tokens_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/undelegate_tokens_dialog/undelegate_tokens_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/address_text_field.dart';
+import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field.dart';
+import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field_loading.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
@@ -52,6 +50,7 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
     return CustomDialog(
       title: 'Undelegate tokens',
       width: 420,
+      height: 540,
       scrollable: true,
       child: BlocBuilder<UndelegateTokensDialogCubit, UndelegateTokensDialogState>(
         bloc: cubit,

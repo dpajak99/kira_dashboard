@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/infra/entities/transactions/methods/governance.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
@@ -26,14 +27,34 @@ class RegisterIdentityRecordsDialog extends DialogContentWidget {
 
 class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsDialog> {
   late final RegisterIdentityRecordsDialogCubit cubit = RegisterIdentityRecordsDialogCubit();
+  final ValueNotifier<String?> errorNotifier = ValueNotifier<String?>(null);
 
   late List<IdentityRecordInputController> controllers = [
     if (widget.records.isEmpty) IdentityRecordInputController(),
-    for (IdentityRecord record in widget.records) IdentityRecordInputController.fromValue(IdentityRecordInputModel.fromValues(
-      key: record.key,
-      value: record.value,
-    )),
+    for (IdentityRecord record in widget.records)
+      IdentityRecordInputController.fromValue(IdentityRecordInputModel.fromValues(
+        key: record.key,
+        value: record.value,
+      )),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _validateForm();
+    for (IdentityRecordInputController controller in controllers) {
+      controller.addListener(_validateForm);
+    }
+  }
+
+  @override
+  void dispose() {
+    cubit.close();
+    for (IdentityRecordInputController controller in controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +72,12 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
           return Column(
             children: [
               if (controllers.length == 1)
-                IdentityRecordInput(
-                  controller: controllers.first,
-                )
+                IdentityRecordInput(controller: controllers.first)
               else
                 for (IdentityRecordInputController controller in controllers)
                   _RecordPreview(
                     controller: controller,
-                    onDelete: () => setState(() {
-                      controllers.remove(controller);
-                    }),
+                    onDelete: () => _removeRecord(controller),
                     onEdit: () => DialogRouter().navigate(EditRecordDialog(controller: controller)),
                   ),
               const SizedBox(height: 8),
@@ -68,11 +85,7 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
                 alignment: Alignment.centerRight,
                 child: TextButton.icon(
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                  onPressed: () {
-                    setState(() {
-                      controllers.add(IdentityRecordInputController());
-                    });
-                  },
+                  onPressed: _addRecord,
                   label: const Text('Add record', style: TextStyle(fontSize: 14)),
                   icon: const Icon(Icons.add, size: 14),
                 ),
@@ -103,18 +116,61 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
                 ],
               ),
               const SizedBox(height: 32),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => DialogRouter().navigate(const TransactionResultDialog()),
-                  child: const Text('Delegate'),
-                ),
+              ValueListenableBuilder<String?>(
+                valueListenable: errorNotifier,
+                builder: (BuildContext context, String? error, _) {
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: error == null ? () {
+                        cubit.sendTransaction(
+                          identityInfoEntries: controllers.map((e) => IdentityInfoEntry(key: e.irKey, info: e.irValue)).toList(),
+                        );
+                      } : null,
+                      child: Text(error ?? 'Register'),
+                    ),
+                  );
+                },
               ),
             ],
           );
         },
       ),
     );
+  }
+
+  void _addRecord() {
+    setState(() {
+      IdentityRecordInputController controller = IdentityRecordInputController();
+      controller.addListener(_validateForm);
+      controllers.add(controller);
+      _validateForm();
+    });
+  }
+
+  void _removeRecord(IdentityRecordInputController controller) {
+    setState(() {
+      controller.dispose();
+      controllers.remove(controller);
+      _validateForm();
+    });
+  }
+
+  void _validateForm() {
+    bool delegationsValid = true;
+
+    for (IdentityRecordInputController controller in controllers) {
+      if (controller.isValid == false) {
+        delegationsValid = false;
+        break;
+      }
+    }
+
+    if (delegationsValid) {
+      errorNotifier.value = null;
+    } else {
+      errorNotifier.value = 'Enter records';
+    }
   }
 }
 

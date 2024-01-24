@@ -226,7 +226,7 @@ class AboutPage extends StatelessWidget {
                       fontSize: 16,
                       color: Color(0xff4888f0),
                     ),
-                    onTap: () => DialogRouter().navigate(const DelegateTokensDialog(valoperAddress: '')),
+                    onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
                   ),
                 ),
             ],

@@ -19,4 +19,10 @@ abstract class TransactionCubit<T> extends Cubit<T> {
   String get signerAddress => _walletProvider.value!.address;
 
   List<int> get signerPublicKey => _walletProvider.value!.derivedBip44.publicKey.compressed;
+
+  @override
+  void emit(T state) {
+    if(isClosed) return;
+    super.emit(state);
+  }
 }

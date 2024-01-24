@@ -51,6 +51,16 @@ class IdentityRecordInputController extends ValueNotifier<IdentityRecordInputMod
   bool get hasValue => irValue.isNotEmpty;
 
   bool get hasKey => irKey.isNotEmpty;
+
+  bool get isValid {
+    if (irKey.isEmpty) {
+      return false;
+    }
+    if (irValue.isEmpty) {
+      return false;
+    }
+    return true;
+  }
 }
 
 class IdentityRecordInput extends StatefulWidget {

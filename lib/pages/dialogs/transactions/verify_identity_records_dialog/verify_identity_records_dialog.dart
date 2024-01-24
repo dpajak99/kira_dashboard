@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog_state.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_records_dialog/verify_identity_records_dialog_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_records_dialog/verify_identity_records_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/address_text_field.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field_loading.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
-class SendTokensDialog extends DialogContentWidget {
-  final Coin? initialCoin;
-
-  const SendTokensDialog({
-    this.initialCoin,
-    super.key,
-  });
+class VerifyIdentityRecordsDialog extends DialogContentWidget {
+  const VerifyIdentityRecordsDialog({super.key});
 
   @override
-  State<StatefulWidget> createState() => _SendTokensDialogState();
+  State<StatefulWidget> createState() => _VerifyIdentityRecordsDialogState();
 }
 
-class _SendTokensDialogState extends State<SendTokensDialog> {
-  late final SendTokensDialogCubit cubit = SendTokensDialogCubit(initialCoin: widget.initialCoin);
-  final TextEditingController toAddressController = TextEditingController();
+class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialog> {
+  late final VerifyIdentityRecordsDialogCubit cubit = VerifyIdentityRecordsDialogCubit();
+  final TextEditingController verifierAddressController = TextEditingController();
   final TokenAmountTextFieldController tokenAmountTextFieldController = TokenAmountTextFieldController();
   final ValueNotifier<String?> errorNotifier = ValueNotifier<String?>(null);
 
@@ -33,13 +27,13 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
     super.initState();
     _validateForm();
     tokenAmountTextFieldController.addListener(_validateForm);
-    toAddressController.addListener(_validateForm);
+    verifierAddressController.addListener(_validateForm);
   }
 
   @override
   void dispose() {
     cubit.close();
-    toAddressController.dispose();
+    verifierAddressController.dispose();
     tokenAmountTextFieldController.dispose();
     super.dispose();
   }
@@ -47,21 +41,21 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
   @override
   Widget build(BuildContext context) {
     return CustomDialog(
-      title: 'Send tokens',
+      title: 'Request verification',
       width: 420,
       scrollable: false,
-      child: BlocBuilder<SendTokensDialogCubit, SendTokensDialogState>(
+      child: BlocBuilder<VerifyIdentityRecordsDialogCubit, VerifyIdentityRecordsDialogState>(
         bloc: cubit,
-        builder: (BuildContext context, SendTokensDialogState state) {
+        builder: (BuildContext context, VerifyIdentityRecordsDialogState state) {
           return SizedBox(
             child: Column(
               children: [
                 AddressTextField(
-                  title: 'Receiver address',
-                  controller: toAddressController,
+                  title: 'Verifier address',
+                  controller: verifierAddressController,
                 ),
                 const SizedBox(height: 16),
-                if (state is SendTokensDialogLoadedState)
+                if (state is VerifyIdentityRecordsDialogLoadedState)
                   TokenAmountTextField(
                     controller: tokenAmountTextFieldController,
                     address: state.address,
@@ -82,7 +76,7 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                       ),
                     ),
                     const Spacer(),
-                    if (state is SendTokensDialogLoadedState)
+                    if (state is VerifyIdentityRecordsDialogLoadedState)
                       Text(
                         state.executionFee.toNetworkDenominationString(),
                         style: const TextStyle(
@@ -101,13 +95,16 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: error == null ? () {
-                          cubit.sendTransaction(
-                            toAddress: toAddressController.text,
-                            amounts: [tokenAmountTextFieldController.value!],
-                          );
-                        } : null,
-                        child: Text(error ?? 'Send'),
+                        onPressed: error == null
+                            ? () {
+                                cubit.sendTransaction(
+                                  toAddress: verifierAddressController.text,
+                                  tip: tokenAmountTextFieldController.value!,
+                                  recordIds: [],
+                                );
+                              }
+                            : null,
+                        child: Text(error ?? 'Request verification'),
                       ),
                     );
                   },
@@ -121,7 +118,7 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
   }
 
   void _validateForm() {
-    if (toAddressController.text.isEmpty) {
+    if (verifierAddressController.text.isEmpty) {
       errorNotifier.value = 'Enter address';
     } else if (tokenAmountTextFieldController.value == null) {
       errorNotifier.value = 'Enter value';
