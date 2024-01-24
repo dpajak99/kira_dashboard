@@ -17,6 +17,7 @@ class IdentityRegistrarService {
 
     return IdentityRecords(
       username: identityRecordsMap['username'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('username')!) : null,
+      moniker: identityRecordsMap['moniker'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('moniker')!) : null,
       avatar: identityRecordsMap['avatar'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('avatar')!) : null,
       description: identityRecordsMap['description'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('description')!) : null,
       social: identityRecordsMap['social'] != null ? IdentityRecord.fromEntity(identityRecordsMap.remove('social')!) : null,

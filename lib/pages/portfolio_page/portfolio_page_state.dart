@@ -21,9 +21,7 @@ class PortfolioPageState extends PageState {
 
   PortfolioPageState copyWith({
     bool? isLoading,
-    List<Coin>? balance,
     IdentityRecords? identityRecords,
-    List<Transaction>? transactions,
     Validator? validator,
     bool? isMyWallet,
   }) {

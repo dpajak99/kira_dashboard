@@ -118,6 +118,23 @@ class DelegationsPageState extends State<DelegationsPage> {
           builder: (BuildContext context, DelegationsListState state) {
             return CustomCard(
               title: 'Delegations',
+              leading: Row(
+                children: [
+                  if (widget.isMyWallet)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: IconTextButton(
+                        text: 'Claim rewards',
+                        highlightColor: const Color(0xfffbfbfb),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Color(0xff4888f0),
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                ],
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

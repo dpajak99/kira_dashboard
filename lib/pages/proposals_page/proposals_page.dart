@@ -39,6 +39,8 @@ class _ProposalsPageState extends State<ProposalsPage> {
                 child: CustomCard(
                   title: 'Proposals',
                   child: CustomTable<Proposal>(
+                    pageSize: state.pageSize,
+                    loading: state.isLoading,
                     items: state.proposals,
                     columns: [
                       ColumnConfig(

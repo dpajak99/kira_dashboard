@@ -54,6 +54,8 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                     children: [
                       CustomTable<BlockTransaction>(
                         items: state.transactions,
+                        pageSize: state.pageSize,
+                        loading: state.isLoading,
                         columns: <ColumnConfig<BlockTransaction>>[
                           ColumnConfig(
                             title: 'Hash',

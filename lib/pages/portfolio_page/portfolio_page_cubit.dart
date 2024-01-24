@@ -19,9 +19,7 @@ import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class PortfolioPageCubit extends Cubit<PortfolioPageState> {
-
   final IdentityRegistrarService identityRegistrarService = IdentityRegistrarService();
-  final TransactionsService transactionsService = TransactionsService();
   final ValidatorsService validatorsService = ValidatorsService();
 
   final String address;
@@ -38,13 +36,11 @@ class PortfolioPageCubit extends Cubit<PortfolioPageState> {
     PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
 
     IdentityRecords identityRecords = await identityRegistrarService.getUserProfile(address);
-    List<Transaction> transactions = await transactionsService.getUserTransactionsPage(address, paginatedRequest);
     Validator? validator = await validatorsService.getById(address);
 
     emit(state.copyWith(
       isLoading: false,
       identityRecords: identityRecords,
-      transactions: transactions,
       validator: validator,
     ));
   }

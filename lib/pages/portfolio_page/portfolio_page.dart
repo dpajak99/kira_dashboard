@@ -1,9 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kira_dashboard/pages/portfolio_page/about_page/about_page.dart';
 import 'package:kira_dashboard/pages/portfolio_page/balances_page/balances_page.dart';
 import 'package:kira_dashboard/pages/portfolio_page/delegations_page/delegations_page.dart';
+import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identity_records_page.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_page.dart';
@@ -113,7 +113,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          state.identityRecords.username?.value ?? '---',
+                          state.identityRecords.getName(state.validator != null) ?? '---',
                           style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
                         ),
                         CopyableAddressText(
@@ -179,13 +179,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           style: TextStyle(color: selectedPage == 3 ? const Color(0xfffbfbfb) : null),
                         ),
                       ),
-                      TextButton.icon(
+                      TextButton(
                         onPressed: () => setState(() => selectedPage = 4),
-                        label: Text(
-                          'About',
+                        child: Text(
+                          'Identity records',
                           style: TextStyle(color: selectedPage == 4 ? const Color(0xfffbfbfb) : null),
                         ),
-                        icon: Icon(Icons.info_outline, size: 14, color: selectedPage == 4 ? const Color(0xfffbfbfb) : null),
                       ),
                     ],
                   ),
@@ -196,7 +195,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             if (selectedPage == 1) SliverPagePadding(sliver: SliverToBoxAdapter(child: TransactionsPage(address: widget.address, isMyWallet: state.isMyWallet))),
             if (selectedPage == 2) SliverPagePadding(sliver: SliverToBoxAdapter(child: DelegationsPage(address: widget.address, isMyWallet: state.isMyWallet))),
             if (selectedPage == 3) SliverPagePadding(sliver: SliverToBoxAdapter(child: VerificationRequestsPage(address: widget.address, isMyWallet: state.isMyWallet))),
-            if (selectedPage == 4) SliverPagePadding(sliver: SliverToBoxAdapter(child: AboutPage(state: state, address: widget.address))),
+            if (selectedPage == 4) SliverPagePadding(sliver: SliverToBoxAdapter(child: IdentityRecordsPage(address: widget.address, isMyWallet: state.isMyWallet))),
           ],
         );
       },

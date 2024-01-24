@@ -42,6 +42,8 @@ class _BlocksPageState extends State<BlocksPage> {
                 child: CustomCard(
                   title: 'Blocks',
                   child: CustomTable<Block>(
+                    pageSize: state.pageSize,
+                    loading: state.isLoading,
                     items: state.blocks,
                     columns: [
                       ColumnConfig(

@@ -3,6 +3,7 @@ import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record
 
 class IdentityRecords {
   final IdentityRecord? username;
+  final IdentityRecord? moniker;
   final IdentityRecord? avatar;
   final IdentityRecord? description;
   final IdentityRecord? social;
@@ -10,14 +11,24 @@ class IdentityRecords {
 
   IdentityRecords({
     this.username,
+    this.moniker,
     this.avatar,
     this.description,
     this.social,
     this.other = const <IdentityRecord>[],
   });
 
+  String? getName(bool validator) {
+    if (validator) {
+      return moniker?.value ?? username?.value;
+    } else {
+      return username?.value;
+    }
+  }
+
   List<IdentityRecord> get all => <IdentityRecord>[
         if (username != null) username!,
+        if (moniker != null) moniker!,
         if (avatar != null) avatar!,
         if (description != null) description!,
         if (social != null) social!,

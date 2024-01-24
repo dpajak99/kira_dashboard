@@ -2,6 +2,7 @@ import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/pages/page_state.dart';
 
 class BlockTransactionsPageState extends PageState {
+  final int pageSize = 10;
   final List<BlockTransaction> transactions;
 
   const BlockTransactionsPageState({

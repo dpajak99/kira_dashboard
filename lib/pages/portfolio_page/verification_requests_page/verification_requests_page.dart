@@ -217,22 +217,27 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                           );
                         },
                       ),
-                      ColumnConfig(
-                        title: 'Actions',
-                        textAlign: TextAlign.right,
-                        cellBuilder: (BuildContext context, VerificationRequest item) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.info_outline, size: 20, color: Color(0xff2f8af5)),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+                      if (widget.isMyWallet)
+                        ColumnConfig(
+                          title: 'Actions',
+                          textAlign: TextAlign.right,
+                          cellBuilder: (BuildContext context, VerificationRequest item) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconTextButton(
+                                  text: 'Cancel',
+                                  highlightColor: const Color(0xfffbfbfb),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff4888f0),
+                                  ),
+                                  onTap: () {},
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                     ],
                   ),
                 ],

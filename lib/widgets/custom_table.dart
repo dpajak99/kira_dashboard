@@ -39,87 +39,96 @@ class CustomTable<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Color(0xff222b3a),
-                width: 1,
+        if (loading == false && items.isEmpty)
+          const SizedBox(
+            height: 300,
+            child: Center(
+              child: Text('Nothing here :(', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Color(0xff6c86ad))),
+            ),
+          )
+        else ...<Widget>[
+          Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Color(0xff222b3a),
+                  width: 1,
+                ),
               ),
             ),
+            child: Row(
+              children: <Widget>[
+                for (int i = 0; i < columns.length; i++)
+                  if (columns[i].width != null)
+                    SizedBox(
+                      width: columns[i].width,
+                      child: _TableCellHeader(
+                        columns[i].title,
+                        padding: columns[i].padding,
+                        first: i == 0,
+                        last: i == columns.length - 1,
+                        textAlign: columns[i].textAlign,
+                      ),
+                    )
+                  else
+                    Expanded(
+                      flex: columns[i].flex,
+                      child: _TableCellHeader(
+                        columns[i].title,
+                        padding: columns[i].padding,
+                        first: i == 0,
+                        last: i == columns.length - 1,
+                        textAlign: columns[i].textAlign,
+                      ),
+                    ),
+              ],
+            ),
           ),
-          child: Row(
-            children: <Widget>[
-              for (int i = 0; i < columns.length; i++)
-                if (columns[i].width != null)
-                  SizedBox(
-                    width: columns[i].width,
-                    child: _TableCellHeader(
-                      columns[i].title,
-                      padding: columns[i].padding,
-                      first: i == 0,
-                      last: i == columns.length - 1,
-                      textAlign: columns[i].textAlign,
+          for (int y = 0; (y < (loading ? pageSize : items.length)); y++)
+            Row(
+              children: <Widget>[
+                for (int x = 0; x < columns.length; x++)
+                  if (columns[x].width != null)
+                    SizedBox(
+                      width: columns[x].width,
+                      child: _TableCell(
+                        loading
+                            ? Align(
+                                alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                                child: SizedShimmer(
+                                  height: 18,
+                                  width: 200,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              )
+                            : columns[x].cellBuilder(context, items[y]),
+                        first: x == 0,
+                        last: x == columns.length - 1,
+                        textAlign: columns[x].textAlign,
+                      ),
+                    )
+                  else
+                    Expanded(
+                      flex: columns[x].flex,
+                      child: _TableCell(
+                        loading
+                            ? Align(
+                                alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                                child: SizedShimmer(
+                                  height: 18,
+                                  width: 200,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                              )
+                            : columns[x].cellBuilder(context, items[y]),
+                        first: x == 0,
+                        last: x == columns.length - 1,
+                        textAlign: columns[x].textAlign,
+                      ),
                     ),
-                  )
-                else
-                  Expanded(
-                    flex: columns[i].flex,
-                    child: _TableCellHeader(
-                      columns[i].title,
-                      padding: columns[i].padding,
-                      first: i == 0,
-                      last: i == columns.length - 1,
-                      textAlign: columns[i].textAlign,
-                    ),
-                  ),
-            ],
-          ),
-        ),
-        for (int y = 0; (y < (loading ? pageSize : items.length)); y++)
-          Row(
-            children: <Widget>[
-              for (int x = 0; x < columns.length; x++)
-                if (columns[x].width != null)
-                  SizedBox(
-                    width: columns[x].width,
-                    child: _TableCell(
-                      loading
-                          ? Align(
-                              alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
-                              child: SizedShimmer(
-                                height: 18,
-                                width: 200,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            )
-                          : columns[x].cellBuilder(context, items[y]),
-                      first: x == 0,
-                      last: x == columns.length - 1,
-                      textAlign: columns[x].textAlign,
-                    ),
-                  )
-                else
-                  Expanded(
-                    flex: columns[x].flex,
-                    child: _TableCell(
-                      loading
-                          ? Align(
-                              alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
-                              child: SizedShimmer(
-                                height: 18,
-                                width: 200,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            )
-                          : columns[x].cellBuilder(context, items[y]),
-                      first: x == 0,
-                      last: x == columns.length - 1,
-                      textAlign: columns[x].textAlign,
-                    ),
-                  ),
-            ],
-          )
+              ],
+            ),
+        ],
       ],
     );
   }
