@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 typedef CellBuilder<T> = Widget Function(BuildContext context, T item);
 
@@ -21,6 +22,8 @@ class ColumnConfig<T> {
 }
 
 class CustomTable<T> extends StatelessWidget {
+  final int pageSize;
+  final bool loading;
   final List<T> items;
   final List<ColumnConfig<T>> columns;
 
@@ -28,6 +31,8 @@ class CustomTable<T> extends StatelessWidget {
     super.key,
     required this.items,
     required this.columns,
+    this.pageSize = 10,
+    this.loading = false,
   });
 
   @override
@@ -71,28 +76,46 @@ class CustomTable<T> extends StatelessWidget {
             ],
           ),
         ),
-        for (T item in items)
+        for (int y = 0; (y < (loading ? pageSize : items.length)); y++)
           Row(
             children: <Widget>[
-              for (int i = 0; i < columns.length; i++)
-                if (columns[i].width != null)
+              for (int x = 0; x < columns.length; x++)
+                if (columns[x].width != null)
                   SizedBox(
-                    width: columns[i].width,
+                    width: columns[x].width,
                     child: _TableCell(
-                      columns[i].cellBuilder(context, item),
-                      first: i == 0,
-                      last: i == columns.length - 1,
-                      textAlign: columns[i].textAlign,
+                      loading
+                          ? Align(
+                              alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                              child: SizedShimmer(
+                                height: 18,
+                                width: 200,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            )
+                          : columns[x].cellBuilder(context, items[y]),
+                      first: x == 0,
+                      last: x == columns.length - 1,
+                      textAlign: columns[x].textAlign,
                     ),
                   )
                 else
                   Expanded(
-                    flex: columns[i].flex,
+                    flex: columns[x].flex,
                     child: _TableCell(
-                      columns[i].cellBuilder(context, item),
-                      first: i == 0,
-                      last: i == columns.length - 1,
-                      textAlign: columns[i].textAlign,
+                      loading
+                          ? Align(
+                              alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                              child: SizedShimmer(
+                                height: 18,
+                                width: 200,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            )
+                          : columns[x].cellBuilder(context, items[y]),
+                      first: x == 0,
+                      last: x == columns.length - 1,
+                      textAlign: columns[x].textAlign,
                     ),
                   ),
             ],

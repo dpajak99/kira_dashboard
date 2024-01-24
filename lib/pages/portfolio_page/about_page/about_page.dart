@@ -32,66 +32,6 @@ class AboutPage extends StatelessWidget {
 
     return Column(
       children: [
-        CustomCard(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IdentityAvatar(
-                      address: address,
-                      avatarUrl: state.identityRecords.avatar?.value,
-                      size: 156,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      state.identityRecords.username?.value ?? '',
-                      style: const TextStyle(fontSize: 24, color: Color(0xfffbfbfb)),
-                    ),
-                    Text(
-                      '${address.substring(0, 8)}...${address.substring(address.length - 8)}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xff6c86ad),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    UserTypeChip(
-                      userType: state.validator != null ? UserType.validator : UserType.user,
-                      alignment: Alignment.center,
-                    ),
-                    const SizedBox(height: 8),
-                    const Divider(color: Color(0xff222b3a)),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      children: socials.map((SocialUrl e) {
-                        return IconButton(onPressed: () {}, icon: Icon(e.icon), visualDensity: VisualDensity.compact);
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('About', style: TextStyle(fontSize: 24)),
-                    const SizedBox(height: 24),
-                    Text(
-                      state.identityRecords.description?.value ?? '',
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
         if (state.validator != null) ...<Widget>[
           CustomCard(
             child: Row(

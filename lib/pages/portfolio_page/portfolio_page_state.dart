@@ -8,7 +8,6 @@ import 'package:kira_dashboard/models/verification_request.dart';
 import 'package:kira_dashboard/pages/page_state.dart';
 
 class PortfolioPageState extends PageState {
-  final List<Coin> balance;
   final IdentityRecords identityRecords;
   final List<Delegation> delegations;
   final List<Undelegation> undelegations;
@@ -21,7 +20,6 @@ class PortfolioPageState extends PageState {
   PortfolioPageState({
     required super.isLoading,
     required this.isMyWallet,
-    this.balance = const <Coin>[],
     this.delegations = const <Delegation>[],
     this.undelegations = const <Undelegation>[],
     this.inboundVerificationRequests = const <VerificationRequest>[],
@@ -45,7 +43,6 @@ class PortfolioPageState extends PageState {
   }) {
     return PortfolioPageState(
       isLoading: isLoading ?? this.isLoading,
-      balance: balance ?? this.balance,
       identityRecords: identityRecords ?? this.identityRecords,
       delegations: delegations ?? this.delegations,
       undelegations: undelegations ?? this.undelegations,
@@ -58,5 +55,5 @@ class PortfolioPageState extends PageState {
   }
 
   @override
-  List<Object?> get props => <Object?>[isMyWallet, balance, identityRecords, validator, delegations, undelegations, inboundVerificationRequests, outboundVerificationRequests];
+  List<Object?> get props => <Object?>[isMyWallet, identityRecords, validator, delegations, undelegations, inboundVerificationRequests, outboundVerificationRequests];
 }

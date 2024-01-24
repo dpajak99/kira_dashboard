@@ -19,7 +19,7 @@ import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class PortfolioPageCubit extends Cubit<PortfolioPageState> {
-  final BalancesService balancesService = BalancesService();
+
   final IdentityRegistrarService identityRegistrarService = IdentityRegistrarService();
   final DelegationsService delegationsService = DelegationsService();
   final UndelegationsService undelegationsService = UndelegationsService();
@@ -40,7 +40,6 @@ class PortfolioPageCubit extends Cubit<PortfolioPageState> {
   Future<void> init() async {
     PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
 
-    List<Coin> balance = await balancesService.getPage(address, paginatedRequest);
     IdentityRecords identityRecords = await identityRegistrarService.getUserProfile(address);
     List<Delegation> delegations = await delegationsService.getPage(address, paginatedRequest);
     List<Undelegation> undelegations = await undelegationsService.getPage(address, paginatedRequest);
@@ -51,7 +50,6 @@ class PortfolioPageCubit extends Cubit<PortfolioPageState> {
 
     emit(state.copyWith(
       isLoading: false,
-      balance: balance,
       identityRecords: identityRecords,
       delegations: delegations,
       undelegations: undelegations,

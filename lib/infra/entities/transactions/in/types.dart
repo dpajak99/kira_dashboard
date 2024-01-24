@@ -86,6 +86,7 @@ abstract class TxMsg {
       'remove-whitelist-role-permission' => MsgRemoveWhitelistRolePermission.fromJson(json),
       'remove-blacklist-role-permission' => MsgRemoveBlacklistRolePermission.fromJson(json),
       'register-identity-records' => MsgRegisterIdentityRecords.fromJson(json),
+      'edit-identity-record' => MsgDeleteIdentityRecords.fromJson(json),
       'request-identity-records-verify' => MsgRequestIdentityRecordsVerify.fromJson(json),
       'handle-identity-records-verify-request' => MsgHandleIdentityRecordsVerifyRequest.fromJson(json),
       'cancel-identity-records-verify-request' => MsgCancelIdentityRecordsVerifyRequest.fromJson(json),

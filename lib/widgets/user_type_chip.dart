@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 enum UserType {
   validator,
   user,
+  yourAccount,
 }
 
 class UserTypeChip extends StatelessWidget {
@@ -26,15 +27,21 @@ class UserTypeChip extends StatelessWidget {
           color: switch (userType) {
             UserType.user => const Color(0xff263042),
             UserType.validator => const Color(0x292f8af5),
+            UserType.yourAccount => const Color(0x2959b987),
           },
         ),
         child: Text(
-          userType == UserType.user ? 'User' : 'Validator',
+          switch (userType) {
+            UserType.user => 'User',
+            UserType.validator => 'Validator',
+            UserType.yourAccount => 'Your account',
+          },
           style: TextStyle(
             fontSize: 12,
             color: switch (userType) {
               UserType.user => const Color(0xff6c86ad),
               UserType.validator => const Color(0xff2f8af5),
+              UserType.yourAccount => const Color(0xff59b987),
             },
           ),
         ),
