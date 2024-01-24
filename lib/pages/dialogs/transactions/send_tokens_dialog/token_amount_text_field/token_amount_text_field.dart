@@ -18,10 +18,12 @@ class TokenAmountTextField extends StatefulWidget {
   final TokenAmountTextFieldController controller;
   final String address;
   final Coin initialCoin;
+  final VoidCallback? onClose;
 
   TokenAmountTextField({
     required this.address,
     required this.initialCoin,
+    this.onClose,
     TokenAmountTextFieldController? controller,
     super.key,
   }) : controller = controller ?? TokenAmountTextFieldController();
@@ -56,6 +58,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
       builder: (BuildContext context, TokenAmountTextFieldState state) {
         return TokenAmountTextFieldLayout(
           balanceWidget: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Balance: ${state.maxTokenAmount.networkDenominationAmount}',
@@ -77,6 +80,13 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
                   ),
                 ),
               ),
+              if (widget.onClose != null) ...<Widget>[
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: widget.onClose,
+                  child: const Icon(Icons.close, size: 14, color: Color(0xff6c86ad)),
+                ),
+              ]
             ],
           ),
           tokenWidget: Row(
@@ -158,7 +168,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
 
   Future<void> selectToken() async {
     Coin? coin = await DialogRouter().navigate<Coin?>(SelectTokenDialog(address: widget.address));
-    if(coin != null ) {
+    if (coin != null) {
       cubit.selectToken(coin);
       amountTextController.text = '';
     }

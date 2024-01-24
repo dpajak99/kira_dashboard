@@ -24,16 +24,35 @@ class DelegateTokensDialog extends DialogContentWidget {
 }
 
 class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
-  late final DelegateTokensDialogCubit cubit = DelegateTokensDialogCubit();
+  late final DelegateTokensDialogCubit cubit = DelegateTokensDialogCubit(validatorAddress: widget.valoperAddress);
+  final ValueNotifier<String?> errorNotifier = ValueNotifier<String?>(null);
+
   List<TokenAmountTextFieldController> delegations = [
     TokenAmountTextFieldController(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _validateForm();
+    delegations.first.addListener(_validateForm);
+  }
+
+  @override
+  void dispose() {
+    cubit.close();
+    for(TokenAmountTextFieldController controller in delegations) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomDialog(
       title: 'Delegate tokens',
       width: 420,
+      height: 600,
       scrollable: true,
       child: BlocBuilder<DelegateTokensDialogCubit, DelegateTokensDialogState>(
         bloc: cubit,
@@ -50,6 +69,7 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: TokenAmountTextField(
+                      onClose: delegations.length > 1 ? () => _removeDelegation(delegations[i]) : null,
                       controller: delegations[i],
                       address: state.address,
                       initialCoin: state.initialCoin,
@@ -60,11 +80,7 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                   alignment: Alignment.centerRight,
                   child: TextButton.icon(
                     style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                    onPressed: () {
-                      setState(() {
-                        delegations.add(TokenAmountTextFieldController());
-                      });
-                    },
+                    onPressed: _addDelegation,
                     label: const Text('Add delegation', style: TextStyle(fontSize: 14)),
                     icon: const Icon(Icons.add, size: 14),
                   ),
@@ -73,7 +89,9 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                 const SizedBox(height: 16),
                 const TokenAmountTextFieldLoading(),
               ],
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
+              const Divider(color: Color(0xff222b3a)),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   const Text(
@@ -97,17 +115,60 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                 ],
               ),
               const SizedBox(height: 64),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => DialogRouter().navigate(const TransactionResultDialog()),
-                  child: const Text('Delegate'),
-                ),
+              ValueListenableBuilder<String?>(
+                valueListenable: errorNotifier,
+                builder: (BuildContext context, String? error, _) {
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: error == null ? () {
+                        cubit.sendTransaction(
+                          amounts: delegations.map((e) => e.value!).toList(),
+                        );
+                      } : null,
+                      child: Text(error ?? 'Delegate'),
+                    ),
+                  );
+                },
               ),
             ],
           );
         },
       ),
     );
+  }
+
+  void _addDelegation() {
+    setState(() {
+      TokenAmountTextFieldController controller = TokenAmountTextFieldController();
+      controller.addListener(_validateForm);
+      delegations.add(controller);
+      _validateForm();
+    });
+  }
+
+  void _removeDelegation(TokenAmountTextFieldController controller) {
+    setState(() {
+      controller.dispose();
+      delegations.remove(controller);
+      _validateForm();
+    });
+  }
+
+  void _validateForm() {
+    bool delegationsValid = true;
+
+    for(TokenAmountTextFieldController controller in delegations) {
+      if (controller.value == null) {
+        delegationsValid = false;
+        break;
+      }
+    }
+
+    if (delegationsValid) {
+      errorNotifier.value = null;
+    } else {
+      errorNotifier.value = 'Enter amount';
+    }
   }
 }

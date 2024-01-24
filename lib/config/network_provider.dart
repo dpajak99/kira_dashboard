@@ -17,7 +17,7 @@ class NetworkProvider {
     // Overrides any HTTP directive to delete entry past this duration.
     // Useful only when origin server has no cache config or custom behaviour is desired.
     // Defaults to [null].
-    maxStale: const Duration(days: 7),
+    maxStale: const Duration(seconds: 10),
     // Default. Allows 3 cache sets and ease cleanup.
     priority: CachePriority.normal,
     // Default. Body and headers encryption with your own algorithm.

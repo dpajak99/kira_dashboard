@@ -45,6 +45,7 @@ class TransactionsPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: 'Method',
+                width: 120,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return _MethodChip(item.method);
                 },
@@ -96,7 +97,6 @@ class TransactionsPage extends StatelessWidget {
               ),
               ColumnConfig(
                 title: 'Value',
-                width: 180,
                 textAlign: TextAlign.right,
                 cellBuilder: (BuildContext context, Transaction item) {
                   return Row(
