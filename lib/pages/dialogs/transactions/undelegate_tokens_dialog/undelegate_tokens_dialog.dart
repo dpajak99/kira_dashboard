@@ -24,10 +24,28 @@ class UndelegateTokensDialog extends DialogContentWidget {
 }
 
 class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
-  late final UndelegateTokensDialogCubit cubit = UndelegateTokensDialogCubit();
-  List<TokenAmountTextFieldController> delegations = [
+  late final UndelegateTokensDialogCubit cubit = UndelegateTokensDialogCubit(validatorAddress: widget.valoperAddress);
+  final ValueNotifier<String?> errorNotifier = ValueNotifier<String?>(null);
+
+  List<TokenAmountTextFieldController> undelegations = [
     TokenAmountTextFieldController(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _validateForm();
+    undelegations.first.addListener(_validateForm);
+  }
+
+  @override
+  void dispose() {
+    cubit.close();
+    for(TokenAmountTextFieldController controller in undelegations) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +64,12 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
                 controller: TextEditingController(text: widget.valoperAddress),
               ),
               if (state is UndelegateTokensDialogLoadedState) ...<Widget>[
-                for (int i = 0; i < delegations.length; i++)
+                for (int i = 0; i < undelegations.length; i++)
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: TokenAmountTextField(
-                      controller: delegations[i],
+                      onClose: undelegations.length > 1 ? () => _removeUndelegation(undelegations[i]) : null,
+                      controller: undelegations[i],
                       address: state.address,
                       initialCoin: state.initialCoin,
                     ),
@@ -60,11 +79,7 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
                   alignment: Alignment.centerRight,
                   child: TextButton.icon(
                     style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                    onPressed: () {
-                      setState(() {
-                        delegations.add(TokenAmountTextFieldController());
-                      });
-                    },
+                    onPressed: _addUndelegation,
                     label: const Text('Add undelegation', style: TextStyle(fontSize: 14)),
                     icon: const Icon(Icons.add, size: 14),
                   ),
@@ -73,7 +88,9 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
                 const SizedBox(height: 16),
                 const TokenAmountTextFieldLoading(),
               ],
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
+              const Divider(color: Color(0xff222b3a)),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   const Text(
@@ -97,17 +114,60 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
                 ],
               ),
               const SizedBox(height: 64),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => DialogRouter().navigate(const TransactionResultDialog()),
-                  child: const Text('Undelegate'),
-                ),
+              ValueListenableBuilder<String?>(
+                valueListenable: errorNotifier,
+                builder: (BuildContext context, String? error, _) {
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: error == null ? () {
+                        cubit.sendTransaction(
+                          amounts: undelegations.map((e) => e.value!).toList(),
+                        );
+                      } : null,
+                      child: Text(error ?? 'Undelegate'),
+                    ),
+                  );
+                },
               ),
             ],
           );
         },
       ),
     );
+  }
+
+  void _addUndelegation() {
+    setState(() {
+      TokenAmountTextFieldController controller = TokenAmountTextFieldController();
+      controller.addListener(_validateForm);
+      undelegations.add(controller);
+      _validateForm();
+    });
+  }
+
+  void _removeUndelegation(TokenAmountTextFieldController controller) {
+    setState(() {
+      controller.dispose();
+      undelegations.remove(controller);
+      _validateForm();
+    });
+  }
+
+  void _validateForm() {
+    bool undelegationsValid = true;
+
+    for(TokenAmountTextFieldController controller in undelegations) {
+      if (controller.value == null) {
+        undelegationsValid = false;
+        break;
+      }
+    }
+
+    if (undelegationsValid) {
+      errorNotifier.value = null;
+    } else {
+      errorNotifier.value = 'Enter amount';
+    }
   }
 }

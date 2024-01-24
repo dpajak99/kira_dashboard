@@ -4,16 +4,31 @@ import 'package:kira_dashboard/infra/entities/transactions/methods/multistaking.
 import 'package:kira_dashboard/infra/services/balances_service.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/undelegate_tokens_dialog/undelegate_tokens_dialog_state.dart';
 
-class UndelegateTokensDialogCubit extends Cubit<UndelegateTokensDialogState> {
+class UndelegateTokensDialogCubit extends TransactionCubit<UndelegateTokensDialogState> {
   final BalancesService balancesService = BalancesService();
   final TokensService tokensService = TokensService();
   final WalletProvider walletProvider = WalletProvider();
+  final String validatorAddress;
 
-
-  UndelegateTokensDialogCubit() : super(const UndelegateTokensDialogLoadingState()) {
+  UndelegateTokensDialogCubit({
+    required this.validatorAddress,
+  }) : super(const UndelegateTokensDialogLoadingState()) {
     _init();
+  }
+
+  Future<void> sendTransaction({
+    required List<Coin> amounts,
+    String? memo,
+  }) async {
+    txClient.undelegateTokens(
+      delegatorAddress: signerAddress,
+      validatorAddress: validatorAddress,
+      amounts: amounts,
+      fee: (state as UndelegateTokensDialogLoadedState).executionFee,
+    );
   }
 
   Future<void> _init() async {
