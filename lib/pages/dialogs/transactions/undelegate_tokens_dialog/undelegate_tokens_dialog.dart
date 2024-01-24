@@ -100,7 +100,7 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: TransactionResultDialog())),
+                  onPressed: () => DialogRouter().navigate(const TransactionResultDialog()),
                   child: const Text('Undelegate'),
                 ),
               ),

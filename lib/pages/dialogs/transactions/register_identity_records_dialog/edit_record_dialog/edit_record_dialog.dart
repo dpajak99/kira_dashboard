@@ -40,7 +40,7 @@ class _EditRecordDialogState extends State<EditRecordDialog> {
                 child: ElevatedButton(
                   style: lightElevatedButton,
                   onPressed: () {
-                    CustomDialogRoute.of(context).pop();
+                    DialogRouter().navigateBack();
                   },
                   child: const Text('Cancel'),
                 ),
@@ -51,7 +51,7 @@ class _EditRecordDialogState extends State<EditRecordDialog> {
                   style: darkElevatedButton,
                   onPressed: () {
                     widget.controller.value = controller.value;
-                    CustomDialogRoute.of(context).pop();
+                    DialogRouter().navigateBack();
                   },
                   child: const Text('Save'),
                 ),

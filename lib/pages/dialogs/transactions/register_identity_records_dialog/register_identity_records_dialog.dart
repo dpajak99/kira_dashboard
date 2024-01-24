@@ -61,7 +61,7 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
                     onDelete: () => setState(() {
                       controllers.remove(controller);
                     }),
-                    onEdit: () => CustomDialogRoute.of(context).navigate(EditRecordDialog(controller: controller)),
+                    onEdit: () => DialogRouter().navigate(EditRecordDialog(controller: controller)),
                   ),
               const SizedBox(height: 8),
               Align(
@@ -106,7 +106,7 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: TransactionResultDialog())),
+                  onPressed: () => DialogRouter().navigate(const TransactionResultDialog()),
                   child: const Text('Delegate'),
                 ),
               ),

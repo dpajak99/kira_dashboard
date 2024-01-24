@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/verification_request.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_dialog.dart';
 import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
+import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
@@ -34,13 +37,11 @@ class VerificationRequestsPage extends StatelessWidget {
                           IdentityAvatar(size: 32, address: item.address),
                           const SizedBox(width: 12),
                           Expanded(
-                            child: Text(
-                              '${item.address.substring(0, 8)}...${item.address.substring(item.address.length - 8)}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            child: OpenableAddressText(
+                              address: item.address,
                               style: const TextStyle(
                                 fontSize: 14,
-                                color: Color(0xff6c86ad),
+                                color: Color(0xff2f8af5),
                               ),
                             ),
                           ),
@@ -83,6 +84,7 @@ class VerificationRequestsPage extends StatelessWidget {
                       );
                     },
                   ),
+                  if(state.isMyWallet)
                   ColumnConfig(
                     title: 'Actions',
                     textAlign: TextAlign.right,
@@ -90,10 +92,24 @@ class VerificationRequestsPage extends StatelessWidget {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.info_outline, size: 20, color: Color(0xff2f8af5)),
-                            visualDensity: VisualDensity.compact,
+                          IconTextButton(
+                            text: 'Approve',
+                            highlightColor: const Color(0xfffbfbfb),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff4888f0),
+                            ),
+                            onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
+                          ),
+                          const SizedBox(width: 16),
+                          IconTextButton(
+                            text: 'Reject',
+                            highlightColor: const Color(0xfffbfbfb),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff4888f0),
+                            ),
+                            onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
                           ),
                         ],
                       );
@@ -118,16 +134,14 @@ class VerificationRequestsPage extends StatelessWidget {
                     cellBuilder: (BuildContext context, VerificationRequest item) {
                       return Row(
                         children: <Widget>[
-                          IdentityAvatar(size: 32, address: item.address),
+                          IdentityAvatar(size: 32, address: item.verifier),
                           const SizedBox(width: 12),
                           Expanded(
-                            child: Text(
-                              '${item.address.substring(0, 8)}...${item.address.substring(item.address.length - 8)}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                            child: OpenableAddressText(
+                              address: item.verifier,
                               style: const TextStyle(
                                 fontSize: 14,
-                                color: Color(0xff6c86ad),
+                                color: Color(0xff2f8af5),
                               ),
                             ),
                           ),

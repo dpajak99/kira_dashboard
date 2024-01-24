@@ -168,14 +168,7 @@ class _ValidatorTile extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () => showDialog(
-                              context: context,
-                              builder: (BuildContext context) => CustomDialogRoute(
-                                content: DelegateTokensDialog(
-                                  valoperAddress: validator.valkey,
-                                ),
-                              ),
-                            ),
+                            onPressed: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: validator.valkey,)),
                             child: const Text('Delegate'),
                           ),
                         ),

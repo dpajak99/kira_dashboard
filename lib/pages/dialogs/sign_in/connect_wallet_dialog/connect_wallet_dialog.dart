@@ -27,7 +27,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
               Expanded(
                 child: _OptionItem(
                   leading: Icons.abc,
-                  onTap: () => CustomDialogRoute.of(context).navigate(const SignInMnemonicDialog()),
+                  onTap: () => DialogRouter().navigate(const SignInMnemonicDialog()),
                   title: 'Mnemonic',
                 ),
               ),
@@ -42,7 +42,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           ),
           const SizedBox(height: 24),
           InkWell(
-            onTap: () => CustomDialogRoute.of(context).navigate(const CreateWalletDialog()),
+            onTap: () => DialogRouter().navigate(const CreateWalletDialog()),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

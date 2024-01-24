@@ -3,6 +3,9 @@ import 'package:kira_dashboard/utils/router/router.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends $AppRouter {
+
+  AppRouter({super.navigatorKey});
+
   @override
   List<AutoRoute> get routes {
     return [

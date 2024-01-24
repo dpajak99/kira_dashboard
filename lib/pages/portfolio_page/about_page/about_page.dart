@@ -214,24 +214,21 @@ class AboutPage extends StatelessWidget {
           title: 'Identity records',
           leading: Row(
             children: [
-              if(state.isMyWallet)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: IconTextButton(
-                  text: 'Add',
-                  icon: AppIcons.add,
-                  gap: 4,
-                  highlightColor: const Color(0xfffbfbfb),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Color(0xff4888f0),
-                  ),
-                  onTap: () => showDialog(
-                    context: context,
-                    builder: (BuildContext context) => const CustomDialogRoute(content: DelegateTokensDialog(valoperAddress: '')),
+              if (state.isMyWallet)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: IconTextButton(
+                    text: 'Add',
+                    icon: AppIcons.add,
+                    gap: 4,
+                    highlightColor: const Color(0xfffbfbfb),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Color(0xff4888f0),
+                    ),
+                    onTap: () => DialogRouter().navigate(const DelegateTokensDialog(valoperAddress: '')),
                   ),
                 ),
-              ),
             ],
           ),
           child: CustomTable(
@@ -282,10 +279,7 @@ class AboutPage extends StatelessWidget {
                             fontSize: 14,
                             color: Color(0xff4888f0),
                           ),
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (BuildContext context) => CustomDialogRoute(content: RegisterIdentityRecordsDialog(records: [item])),
-                          ),
+                          onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
                         ),
                         const SizedBox(width: 16),
                         IconTextButton(
@@ -295,10 +289,7 @@ class AboutPage extends StatelessWidget {
                             fontSize: 14,
                             color: Color(0xff4888f0),
                           ),
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (BuildContext context) => const CustomDialogRoute(content: RegisterIdentityRecordsDialog()),
-                          ),
+                          onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
                         ),
                         const SizedBox(width: 16),
                         IconTextButton(
@@ -308,10 +299,7 @@ class AboutPage extends StatelessWidget {
                             fontSize: 14,
                             color: Color(0xff4888f0),
                           ),
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (BuildContext context) => const CustomDialogRoute(content: RegisterIdentityRecordsDialog()),
-                          ),
+                          onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
                         ),
                       ],
                     );

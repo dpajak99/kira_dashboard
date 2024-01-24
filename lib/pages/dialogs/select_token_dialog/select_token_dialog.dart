@@ -36,7 +36,7 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
               itemBuilder: (BuildContext context, int index) {
                 Coin balance = state.balances[index];
                 return ListTile(
-                  onTap: () => CustomDialogRoute.of(context).pop(balance),
+                  onTap: () => DialogRouter().navigateBack(balance),
                   contentPadding: EdgeInsets.zero,
                   dense: true,
                   leading: TokenIcon(size: 40, iconUrl: balance.icon),

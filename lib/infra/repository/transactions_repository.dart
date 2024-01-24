@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';

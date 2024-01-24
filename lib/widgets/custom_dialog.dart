@@ -57,7 +57,7 @@ class CustomDialog extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    if (CustomDialogRoute.of(context).showBackButton)
+                    if (DialogRouter().showBackButton)
                       Positioned(
                         left: 0,
                         bottom: 0,
@@ -68,7 +68,7 @@ class CustomDialog extends StatelessWidget {
                               color: Colors.white,
                               size: 24,
                             ),
-                            onPressed: () => CustomDialogRoute.of(context).pop(),
+                            onPressed: () => DialogRouter().navigateBack(),
                           ),
                         ),
                       ),
@@ -120,7 +120,7 @@ class CustomDialog extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  if (CustomDialogRoute.of(context).showBackButton)
+                  if (DialogRouter().showBackButton)
                     Positioned(
                       left: 0,
                       bottom: 0,
@@ -131,7 +131,7 @@ class CustomDialog extends StatelessWidget {
                             color: Colors.white,
                             size: 24,
                           ),
-                          onPressed: () => CustomDialogRoute.of(context).pop(),
+                          onPressed: () => DialogRouter().navigateBack(),
                         ),
                       ),
                     ),

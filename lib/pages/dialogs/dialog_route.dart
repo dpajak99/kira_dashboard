@@ -1,47 +1,121 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:kira_dashboard/main.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 
-class CustomDialogRoute extends StatefulWidget {
-  final DialogContentWidget content;
-
-  const CustomDialogRoute({
-    super.key,
-    required this.content,
-  });
-
-  @override
-  State<StatefulWidget> createState() => CustomDialogRouteState();
-
-  static CustomDialogRouteState of(BuildContext context) {
-    final CustomDialogRouteState? dialogPageState = context.findAncestorStateOfType<CustomDialogRouteState>();
-    if (dialogPageState != null) {
-      return dialogPageState;
-    } else {
-      throw Exception('Cannot get _DialogPageState state');
-    }
-  }
-}
-
-class DialogRouteConfig {
+class _DialogRouteConfig {
   final DialogContentWidget content;
   final Completer? completer;
 
-  DialogRouteConfig({
+  _DialogRouteConfig({
     required this.content,
     Completer? completer,
   }) : completer = completer ?? Completer<void>();
 
-  DialogRouteConfig.fromPage(DialogContentWidget page)
+  _DialogRouteConfig.fromPage(DialogContentWidget page)
       : content = page,
         completer = Completer<void>();
 }
 
-class CustomDialogRouteState extends State<CustomDialogRoute> {
-  late final List<DialogRouteConfig> routeStack = [
-    DialogRouteConfig.fromPage(widget.content),
-  ];
+class DialogRouter {
+  static final DialogRouter _singleton = DialogRouter._internal();
+
+  factory DialogRouter() {
+    return _singleton;
+  }
+
+  factory DialogRouter.seperated() {
+    _singleton.childRoute = DialogRouter._internal(_singleton);
+    return _singleton.childRoute!;
+  }
+
+  DialogRouter._internal([this.rootRoute]);
+
+  GlobalKey dialogKey = GlobalKey();
+
+  DialogRouter? rootRoute;
+  DialogRouter? childRoute;
+
+  Future<T?> navigate<T>(DialogContentWidget page) async {
+    if (_currentState != null) {
+      return _currentState!.navigate<T>(page);
+    } else {
+      T? result = await showDialog<T>(
+        context: navigatorKey.currentContext!,
+        builder: (BuildContext context) => _CustomDialogRoute(
+          key: dialogKey,
+          firstPage: page,
+        ),
+      );
+      rootRoute?.childRoute = null;
+      return result;
+    }
+  }
+
+  Future<T?> replace<T>(DialogContentWidget page) async {
+    if (_currentState != null) {
+      return _currentState!.replace(page);
+    } else {
+      return null;
+    }
+  }
+
+  Future<T?> replaceAll<T>(DialogContentWidget page) async {
+    if (_currentState != null) {
+      return _currentState!.replaceAll(page);
+    } else {
+      return null;
+    }
+  }
+
+  void navigateBack<T>([T? result]) {
+    if (_currentState != null) {
+      return _currentState!.navigateBack(result);
+    } else {
+      return Navigator.of(navigatorKey.currentContext!).pop(result);
+    }
+  }
+
+  bool get showBackButton {
+    if (_currentState != null) {
+      return _currentState!.showBackButton;
+    } else {
+      return false;
+    }
+  }
+
+  _CustomDialogRouteState? get _currentState {
+    if (childRoute != null) {
+      return childRoute!._currentState;
+    } else if (dialogKey.currentState != null) {
+      return dialogKey.currentState as _CustomDialogRouteState;
+    } else {
+      return null;
+    }
+  }
+}
+
+class _CustomDialogRoute extends StatefulWidget {
+  final DialogContentWidget? firstPage;
+
+  const _CustomDialogRoute({super.key, this.firstPage});
+
+  @override
+  State<StatefulWidget> createState() => _CustomDialogRouteState();
+}
+
+class _CustomDialogRouteState extends State<_CustomDialogRoute> {
+  final List<_DialogRouteConfig> routeStack = <_DialogRouteConfig>[];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.firstPage != null) {
+      routeStack.add(_DialogRouteConfig.fromPage(widget.firstPage!));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +144,7 @@ class CustomDialogRouteState extends State<CustomDialogRoute> {
   @optionalTypeArgs
   Future<T> navigate<T>(DialogContentWidget page) async {
     Completer completer = Completer<T>();
-    routeStack.add(DialogRouteConfig(
+    routeStack.add(_DialogRouteConfig(
       content: page,
       completer: completer,
     ));
@@ -78,10 +152,11 @@ class CustomDialogRouteState extends State<CustomDialogRoute> {
     return await completer.future;
   }
 
-  Future<void> replace<T>(DialogContentWidget page) async {
+  @optionalTypeArgs
+  Future<T> replace<T>(DialogContentWidget page) async {
     Completer completer = Completer<T>();
     routeStack.removeLast();
-    routeStack.add(DialogRouteConfig(
+    routeStack.add(_DialogRouteConfig(
       content: page,
       completer: completer,
     ));
@@ -89,10 +164,11 @@ class CustomDialogRouteState extends State<CustomDialogRoute> {
     return await completer.future;
   }
 
-  Future<void> replaceAll<T>(DialogContentWidget page) async {
+  @optionalTypeArgs
+  Future<T?> replaceAll<T>(DialogContentWidget page) async {
     Completer completer = Completer<T>();
     routeStack.clear();
-    routeStack.add(DialogRouteConfig(
+    routeStack.add(_DialogRouteConfig(
       content: page,
       completer: completer,
     ));
@@ -100,9 +176,9 @@ class CustomDialogRouteState extends State<CustomDialogRoute> {
     return await completer.future;
   }
 
-  void pop<T>([T? result]) {
+  void navigateBack<T>([T? result]) {
     if (routeStack.isNotEmpty) {
-      DialogRouteConfig dialogRouteConfig = routeStack.removeLast();
+      _DialogRouteConfig dialogRouteConfig = routeStack.removeLast();
       dialogRouteConfig.completer?.complete(result);
       setState(() {});
     }

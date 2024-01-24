@@ -157,7 +157,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
   }
 
   Future<void> selectToken() async {
-    Coin? coin = await CustomDialogRoute.of(context).navigate<Coin?>(SelectTokenDialog(address: widget.address));
+    Coin? coin = await DialogRouter().navigate<Coin?>(SelectTokenDialog(address: widget.address));
     if(coin != null ) {
       cubit.selectToken(coin);
       amountTextController.text = '';
@@ -166,10 +166,13 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
 
   void _validateBalanceText() {
     if (amountTextController.text.isEmpty) {
+      widget.controller.value = null;
+      errorNotifier.value = null;
       return;
     }
     Decimal selectedAmount = Decimal.parse(amountTextController.text);
     if (selectedAmount > cubit.state.maxTokenAmount.amount) {
+      widget.controller.value = null;
       errorNotifier.value = 'Insufficient balance';
     } else {
       widget.controller.value = cubit.state.selectedTokenAmount.copyWith(amount: selectedAmount);

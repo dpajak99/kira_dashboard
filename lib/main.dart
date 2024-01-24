@@ -7,8 +7,11 @@ import 'package:kira_dashboard/utils/router/router.dart';
 
 ButtonStyle darkElevatedButton = ElevatedButton.styleFrom(
   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+  animationDuration: Duration.zero,
   backgroundColor: const Color(0xff2f8af5),
+  disabledBackgroundColor: const Color(0xff354053),
   foregroundColor: const Color(0xfffbfbfb),
+  disabledForegroundColor: const Color(0xff7185ab),
   textStyle: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
   padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
   minimumSize: const Size(100, 50),
@@ -16,12 +19,17 @@ ButtonStyle darkElevatedButton = ElevatedButton.styleFrom(
 
 ButtonStyle lightElevatedButton = ElevatedButton.styleFrom(
   side: const BorderSide(color: Colors.transparent),
+  animationDuration: Duration.zero,
   backgroundColor: const Color(0xff182a44),
+  disabledBackgroundColor: const Color(0xff354053),
   foregroundColor: const Color(0xff2f8af5),
+  disabledForegroundColor: const Color(0xff7185ab),
   textStyle: const TextStyle(fontSize: 16, color: Color(0xff2f8af5)),
   padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
   minimumSize: const Size(100, 50),
 );
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -32,7 +40,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final AppRouter _appRouter = AppRouter();
+  final AppRouter _appRouter = AppRouter(navigatorKey: navigatorKey);
 
   MyApp({super.key});
 

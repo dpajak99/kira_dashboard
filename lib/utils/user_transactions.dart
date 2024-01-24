@@ -30,31 +30,34 @@ import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transacti
 import 'package:kira_dashboard/utils/map_utils.dart';
 
 abstract class TxProcessNotificator {
-  void confirmTransaction();
-  
-  void transactionFailed();
-  
-  void transactionSucceeded();
+  void notifyConfirmTransaction();
+
+  void notifyTransactionFailed();
+
+  void notifyBroadcastTransaction();
+
+  void notifyTransactionSucceeded();
 }
 
 class DialogTxProcessNotificator implements TxProcessNotificator {
-  final BuildContext context;
-
-  DialogTxProcessNotificator(this.context);
-
   @override
-  void confirmTransaction() {
-    CustomDialogRoute.of(context).navigate(const ConfirmTransactionDialog());
+  void notifyConfirmTransaction() {
+    DialogRouter().navigate(const ConfirmTransactionDialog());
   }
 
   @override
-  void transactionFailed() {
-    CustomDialogRoute.of(context).replaceAll(const TransactionResultDialog(succeeded: false));
+  void notifyBroadcastTransaction() {
+    DialogRouter().replaceAll(const TransactionResultDialog(status: TransactionProcessStatus.broadcast));
   }
 
   @override
-  void transactionSucceeded() {
-    CustomDialogRoute.of(context).replaceAll(const TransactionResultDialog(succeeded: true));
+  void notifyTransactionFailed() {
+    DialogRouter().replaceAll(const TransactionResultDialog(status: TransactionProcessStatus.failed));
+  }
+
+  @override
+  void notifyTransactionSucceeded() {
+    DialogRouter().replaceAll(const TransactionResultDialog(status: TransactionProcessStatus.success));
   }
 }
 
@@ -63,9 +66,7 @@ abstract class TxSigner {
 }
 
 class UnsafeWalletSigner extends TxSigner {
-  final BuildContext context;
-
-  UnsafeWalletSigner(this.context);
+  UnsafeWalletSigner();
 
   @override
   Future<String?> sign(String message) async {
@@ -73,10 +74,7 @@ class UnsafeWalletSigner extends TxSigner {
   }
 
   Future<String?> _getSignature(String message) async {
-    String? signature = await showDialog<String?>(
-      context: context,
-      builder: (BuildContext context) => CustomDialogRoute(content: SignTransactionDialog(message: message)),
-    );
+    String? signature = await DialogRouter.seperated().navigate<String?>(SignTransactionDialog(message: message));
     return signature;
   }
 }
@@ -228,17 +226,18 @@ class UserTransactions {
     required Coin fee,
     String? memo,
   }) async {
-    txProcessNotificator.confirmTransaction();
+    txProcessNotificator.notifyConfirmTransaction();
     TransactionRemoteData transactionRemoteData = await transactionsService.getRemoteUserTransactionData(signerAddress);
 
     String message = await prepareMessage(transactionRemoteData: transactionRemoteData, msg: msg, fee: fee, memo: memo);
 
     String? signature = await txSigner.sign(message);
-    if( signature == null ) {
-      txProcessNotificator.transactionFailed();
+    if (signature == null) {
+      txProcessNotificator.notifyTransactionFailed();
       return;
     }
 
+    txProcessNotificator.notifyBroadcastTransaction();
 
     SignerInfo signerInfo = SignerInfo(
       publicKey: TxPubKey(key: base64Encode(compressedPublicKey)),
@@ -267,7 +266,7 @@ class UserTransactions {
 
     await transactionsService.broadcastTx(broadcastReq);
 
-    txProcessNotificator.transactionSucceeded();
+    txProcessNotificator.notifyTransactionSucceeded();
   }
 
   Future<String> prepareMessage({

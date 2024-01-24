@@ -37,10 +37,6 @@ class MenuWrapperPage extends StatelessWidget {
                   onTap: () => AutoRouter.of(context).navigate(const ProposalsRoute()),
                   title: const Text('Proposals'),
                 ),
-                ElevatedButton(
-                  onPressed: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: SendTokensDialog())),
-                  child: const Text('Test send'),
-                ),
               ],
             ),
           ),

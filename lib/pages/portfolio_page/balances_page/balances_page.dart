@@ -60,31 +60,28 @@ class BalancesPage extends StatelessWidget {
                 },
               ),
               if (state.isMyWallet)
-              ColumnConfig(
-                title: 'Actions',
-                textAlign: TextAlign.right,
-                cellBuilder: (BuildContext context, Coin item) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconTextButton(
-                        text: 'Send',
-                        gap: 4,
-                        icon: AppIcons.arrow_up_right,
-                        highlightColor: const Color(0xfffbfbfb),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xff4888f0),
+                ColumnConfig(
+                  title: 'Actions',
+                  textAlign: TextAlign.right,
+                  cellBuilder: (BuildContext context, Coin item) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconTextButton(
+                          text: 'Send',
+                          gap: 4,
+                          icon: AppIcons.arrow_up_right,
+                          highlightColor: const Color(0xfffbfbfb),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff4888f0),
+                          ),
+                          onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: item)),
                         ),
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) => CustomDialogRoute(content: SendTokensDialog(initialCoin: item)),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                      ],
+                    );
+                  },
+                ),
             ],
           ),
         ],

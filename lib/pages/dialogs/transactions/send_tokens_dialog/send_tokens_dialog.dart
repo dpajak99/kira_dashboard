@@ -30,6 +30,23 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
   late final SendTokensDialogCubit cubit = SendTokensDialogCubit(initialCoin: widget.initialCoin);
   final TextEditingController toAddressController = TextEditingController();
   final TokenAmountTextFieldController tokenAmountTextFieldController = TokenAmountTextFieldController();
+  final ValueNotifier<String?> errorNotifier = ValueNotifier<String?>(null);
+
+  @override
+  void initState() {
+    super.initState();
+    _validateForm();
+    tokenAmountTextFieldController.addListener(_validateForm);
+    toAddressController.addListener(_validateForm);
+  }
+
+  @override
+  void dispose() {
+    cubit.close();
+    toAddressController.dispose();
+    tokenAmountTextFieldController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +73,9 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                   )
                 else
                   const TokenAmountTextFieldLoading(),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
+                const Divider(color: Color(0xff222b3a)),
+                const SizedBox(height: 8),
                 Row(
                   children: [
                     const Text(
@@ -80,27 +99,22 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                   ],
                 ),
                 const SizedBox(height: 64),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      String senderAddress = getIt<WalletProvider>().value!.address;
-                      UserTransactions userTransactions = UserTransactions(
-                        txProcessNotificator: DialogTxProcessNotificator(context),
-                        signerAddress: senderAddress,
-                        compressedPublicKey: getIt<WalletProvider>().value!.derivedBip44.publicKey.compressed,
-                        txSigner: UnsafeWalletSigner(context),
-                      );
-
-                      userTransactions.sendTokens(
-                        fromAddress: senderAddress,
-                        toAddress: toAddressController.text,
-                        amounts: [tokenAmountTextFieldController.value!],
-                        fee: (cubit.state as SendTokensDialogLoadedState).executionFee,
-                      );
-                    },
-                    child: const Text('Send'),
-                  ),
+                ValueListenableBuilder<String?>(
+                  valueListenable: errorNotifier,
+                  builder: (BuildContext context, String? error, _) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: error == null ? () {
+                          cubit.sendTransaction(
+                            toAddress: toAddressController.text,
+                            amounts: [tokenAmountTextFieldController.value!],
+                          );
+                        } : null,
+                        child: Text(error ?? 'Send'),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -108,5 +122,15 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
         },
       ),
     );
+  }
+
+  void _validateForm() {
+    if (toAddressController.text.isEmpty) {
+      errorNotifier.value = 'Enter address';
+    } else if (tokenAmountTextFieldController.value == null) {
+      errorNotifier.value = 'Enter value';
+    } else {
+      errorNotifier.value = null;
+    }
   }
 }

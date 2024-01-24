@@ -151,6 +151,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
       widget.controller.text = tmpController.text;
       errorNotifier.value = null;
     } else {
+      widget.controller.text = '';
       errorNotifier.value = 'Invalid address';
     }
 

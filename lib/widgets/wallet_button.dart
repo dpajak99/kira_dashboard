@@ -33,7 +33,7 @@ class _ConnectWalletButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      onTap: () => showDialog(context: context, builder: (BuildContext context) => const CustomDialogRoute(content: ConnectWalletDialog())),
+      onTap: () => DialogRouter().navigate(const ConnectWalletDialog()),
       child: Container(
         decoration: const BoxDecoration(
           color: Color(0xff101c2e),

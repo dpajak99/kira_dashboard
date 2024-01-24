@@ -130,43 +130,37 @@ class DelegationsPage extends StatelessWidget {
                       );
                     },
                   ),
-                  if( state.isMyWallet )
-                  ColumnConfig(
-                    title: 'Actions',
-                    textAlign: TextAlign.right,
-                    cellBuilder: (BuildContext context, Delegation item) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconTextButton(
-                            text: 'Undelegate',
-                            highlightColor: const Color(0xfffbfbfb),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xff4888f0),
+                  if (state.isMyWallet)
+                    ColumnConfig(
+                      title: 'Actions',
+                      textAlign: TextAlign.right,
+                      cellBuilder: (BuildContext context, Delegation item) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconTextButton(
+                              text: 'Undelegate',
+                              highlightColor: const Color(0xfffbfbfb),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff4888f0),
+                              ),
+                              onTap: () => DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
                             ),
-                            onTap: () => showDialog(
-                              context: context,
-                              builder: (BuildContext context) => CustomDialogRoute(content: UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+                            const SizedBox(width: 16),
+                            IconTextButton(
+                              text: 'Delegate',
+                              highlightColor: const Color(0xfffbfbfb),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff4888f0),
+                              ),
+                              onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          IconTextButton(
-                            text: 'Delegate',
-                            highlightColor: const Color(0xfffbfbfb),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xff4888f0),
-                            ),
-                            onTap: () => showDialog(
-                              context: context,
-                              builder: (BuildContext context) => CustomDialogRoute(content: DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                          ],
+                        );
+                      },
+                    ),
                 ],
               ),
             ],
