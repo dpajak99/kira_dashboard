@@ -9,8 +9,6 @@ import 'package:kira_dashboard/pages/page_state.dart';
 
 class PortfolioPageState extends PageState {
   final IdentityRecords identityRecords;
-  final List<Delegation> delegations;
-  final List<Undelegation> undelegations;
   final List<VerificationRequest> inboundVerificationRequests;
   final List<VerificationRequest> outboundVerificationRequests;
   final List<Transaction> transactions;
@@ -20,8 +18,6 @@ class PortfolioPageState extends PageState {
   PortfolioPageState({
     required super.isLoading,
     required this.isMyWallet,
-    this.delegations = const <Delegation>[],
-    this.undelegations = const <Undelegation>[],
     this.inboundVerificationRequests = const <VerificationRequest>[],
     this.outboundVerificationRequests = const <VerificationRequest>[],
     this.transactions = const <Transaction>[],
@@ -33,8 +29,6 @@ class PortfolioPageState extends PageState {
     bool? isLoading,
     List<Coin>? balance,
     IdentityRecords? identityRecords,
-    List<Delegation>? delegations,
-    List<Undelegation>? undelegations,
     List<VerificationRequest>? inboundVerificationRequests,
     List<VerificationRequest>? outboundVerificationRequests,
     List<Transaction>? transactions,
@@ -44,8 +38,6 @@ class PortfolioPageState extends PageState {
     return PortfolioPageState(
       isLoading: isLoading ?? this.isLoading,
       identityRecords: identityRecords ?? this.identityRecords,
-      delegations: delegations ?? this.delegations,
-      undelegations: undelegations ?? this.undelegations,
       inboundVerificationRequests: inboundVerificationRequests ?? this.inboundVerificationRequests,
       outboundVerificationRequests: outboundVerificationRequests ?? this.outboundVerificationRequests,
       transactions: transactions ?? this.transactions,
@@ -55,5 +47,5 @@ class PortfolioPageState extends PageState {
   }
 
   @override
-  List<Object?> get props => <Object?>[isMyWallet, identityRecords, validator, delegations, undelegations, inboundVerificationRequests, outboundVerificationRequests];
+  List<Object?> get props => <Object?>[isMyWallet, identityRecords, validator, inboundVerificationRequests, outboundVerificationRequests];
 }

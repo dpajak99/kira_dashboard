@@ -194,7 +194,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ),
             if (selectedPage == 0) SliverPagePadding(sliver: SliverToBoxAdapter(child: BalancesPage(address: widget.address, isMyWallet: state.isMyWallet))),
             if (selectedPage == 1) SliverPagePadding(sliver: SliverToBoxAdapter(child: TransactionsPage(state: state))),
-            if (selectedPage == 2) SliverPagePadding(sliver: SliverToBoxAdapter(child: DelegationsPage(state: state))),
+            if (selectedPage == 2) SliverPagePadding(sliver: SliverToBoxAdapter(child: DelegationsPage(address: widget.address, isMyWallet: state.isMyWallet))),
             if (selectedPage == 3) SliverPagePadding(sliver: SliverToBoxAdapter(child: VerificationRequestsPage(state: state))),
             if (selectedPage == 4) SliverPagePadding(sliver: SliverToBoxAdapter(child: AboutPage(state: state, address: widget.address))),
           ],
