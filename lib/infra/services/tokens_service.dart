@@ -3,8 +3,6 @@ import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/tokens/aliases/token_alias_entity.dart';
 import 'package:kira_dashboard/infra/entities/tokens/rates/token_rate_entity.dart';
-import 'package:kira_dashboard/infra/repository/fees_repository.dart';
-import 'package:kira_dashboard/infra/repository/network_repository.dart';
 import 'package:kira_dashboard/infra/repository/token_aliases_repository.dart';
 import 'package:kira_dashboard/infra/repository/token_rates_repository.dart';
 import 'package:kira_dashboard/models/coin.dart';
@@ -12,22 +10,9 @@ import 'package:kira_dashboard/models/coin.dart';
 class TokensService {
   final TokenRatesRepository tokenRatesRepository = TokenRatesRepository();
   final TokenAliasesRepository tokenAliasesRepository = TokenAliasesRepository();
-  final NetworkRepository networkRepository = NetworkRepository();
-  final FeesRepository feesRepository = FeesRepository();
 
   Map<String, TokenAliasEntity> tokenAliasesMap = <String, TokenAliasEntity>{};
   Map<String, TokenRateEntity> tokenRatesMap = <String, TokenRateEntity>{};
-  
-  Future<Coin> getExecutionFeeForMessage(String message) async {
-    String defaultTokenDenom = await getDefaultCoinDenom();
-    try {
-      FeeConfigEntity feeConfigEntity = await feesRepository.getFee(message);
-      return buildCoin(SimpleCoin(amount: feeConfigEntity.executionFee, denom: defaultTokenDenom));
-    } catch (e) {
-      NetworkPropertiesEntity networkPropertiesEntity = await networkRepository.getNetworkProperties();
-      return buildCoin(SimpleCoin(amount: networkPropertiesEntity.minTxFee, denom: defaultTokenDenom));
-    }
-  }
 
   Future<String> getDefaultCoinDenom() async {
     return tokenAliasesRepository.getDefaultCoinDenom();

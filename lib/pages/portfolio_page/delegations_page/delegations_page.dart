@@ -76,32 +76,33 @@ class DelegationsPageState extends State<DelegationsPage> {
                         },
                       ),
                       ColumnConfig(
-                        title: 'Expiry',
+                        title: 'Claim',
                         textAlign: TextAlign.right,
                         cellBuilder: (BuildContext context, Undelegation item) {
+                          bool claimable = item.expiry.difference(DateTime.now()).inSeconds <= 0;
+
+                          if (claimable && widget.isMyWallet) {
+                            return Align(
+                              alignment: Alignment.centerRight,
+                              child: IconTextButton(
+                                text: 'Claim',
+                                highlightColor: const Color(0xfffbfbfb),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff4888f0),
+                                ),
+                                onTap: () => undelegationsListCubit.claimUndelegation(undelegationId: item.id.toString()),
+                              ),
+                            );
+                          }
+
                           return Text(
                             DateFormat('d MMM y, HH:mm').format(item.expiry),
                             style: TextStyle(
                               fontSize: 14,
-                              color: item.expiry.difference(DateTime.now()).inSeconds > 0 ? const Color(0xfff12e1f) : const Color(0xff35b15f),
+                              color: claimable ? const Color(0xff35b15f) : const Color(0xfff12e1f) ,
                             ),
                             textAlign: TextAlign.right,
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Actions',
-                        textAlign: TextAlign.right,
-                        cellBuilder: (BuildContext context, Undelegation item) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.info_outline, size: 20, color: Color(0xff2f8af5)),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            ],
                           );
                         },
                       ),

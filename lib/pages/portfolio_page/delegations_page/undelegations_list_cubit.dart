@@ -3,11 +3,12 @@ import 'package:kira_dashboard/infra/services/delegations_service.dart';
 import 'package:kira_dashboard/infra/services/undelegations_service.dart';
 import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/delegations_page/delegations_list_state.dart';
 import 'package:kira_dashboard/pages/portfolio_page/delegations_page/undelegations_list_state.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
-class UndelegationsListCubit extends Cubit<UndelegationsListState> {
+class UndelegationsListCubit extends TransactionCubit<UndelegationsListState> {
   final UndelegationsService undelegationsService = UndelegationsService();
 
   final String address;
@@ -18,6 +19,16 @@ class UndelegationsListCubit extends Cubit<UndelegationsListState> {
     required this.isMyWallet,
   }) : super(const UndelegationsListState(isLoading: true)) {
     _init();
+  }
+
+  Future<void> claimUndelegation({
+    required String undelegationId,
+    String? memo,
+  }) async {
+    txClient.claimUndelegation(
+      senderAddress: signerAddress,
+      undelegationId: undelegationId,
+    );
   }
 
   Future<void> _init() async {

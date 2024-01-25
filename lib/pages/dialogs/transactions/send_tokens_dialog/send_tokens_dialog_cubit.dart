@@ -2,14 +2,14 @@ import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/custody.dart';
 import 'package:kira_dashboard/infra/services/balances_service.dart';
-import 'package:kira_dashboard/infra/services/tokens_service.dart';
+import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 
 class SendTokensDialogCubit extends TransactionCubit<SendTokensDialogState> {
   final BalancesService balancesService = BalancesService();
-  final TokensService tokensService = TokensService();
+  final TransactionsService transactionsService = TransactionsService();
 
   final Coin? initialCoin;
 
@@ -34,7 +34,7 @@ class SendTokensDialogCubit extends TransactionCubit<SendTokensDialogState> {
 
   Future<void> _init() async {
     Coin defaultCoinBalance = initialCoin ?? await balancesService.getDefaultCoinBalance(state.address);
-    Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgSend.interxName);
+    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgSend.interxName);
 
     emit(SendTokensDialogLoadedState(
       initialCoin: defaultCoinBalance,

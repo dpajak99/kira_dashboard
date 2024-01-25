@@ -1,12 +1,16 @@
 import 'package:kira_dashboard/infra/entities/account/account_entity.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
+import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/headers_wrapper.dart';
+import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 import 'package:kira_dashboard/infra/entities/transactions/out/broadcast_req.dart';
 import 'package:kira_dashboard/infra/entities/transactions/transaction_result_entity.dart';
 import 'package:kira_dashboard/infra/repository/accounts_repository.dart';
+import 'package:kira_dashboard/infra/repository/fees_repository.dart';
+import 'package:kira_dashboard/infra/repository/network_repository.dart';
 import 'package:kira_dashboard/infra/repository/transactions_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/block_transaction.dart';
@@ -18,12 +22,25 @@ import 'package:kira_dashboard/utils/custom_date_utils.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class TransactionsService {
+  final NetworkRepository networkRepository = NetworkRepository();
+  final FeesRepository feesRepository = FeesRepository();
   final AccountsRepository accountsRepository = AccountsRepository();
   final TransactionsRepository transactionsRepository = TransactionsRepository();
   final TokensService tokensService = TokensService();
 
   Future<void> broadcastTx(BroadcastReq broadcastReq) async {
     await transactionsRepository.broadcastTransaction(broadcastReq.toJson());
+  }
+
+  Future<Coin> getExecutionFeeForMessage(String message) async {
+    String defaultTokenDenom = await tokensService.getDefaultCoinDenom();
+    try {
+      FeeConfigEntity feeConfigEntity = await feesRepository.getFee(message);
+      return tokensService.buildCoin(SimpleCoin(amount: feeConfigEntity.executionFee, denom: defaultTokenDenom));
+    } catch (e) {
+      NetworkPropertiesEntity networkPropertiesEntity = await networkRepository.getNetworkProperties();
+      return tokensService.buildCoin(SimpleCoin(amount: networkPropertiesEntity.minTxFee, denom: defaultTokenDenom));
+    }
   }
 
   Future<TransactionRemoteData> getRemoteUserTransactionData(String address) async {

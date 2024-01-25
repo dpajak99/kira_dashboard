@@ -665,7 +665,6 @@ class MsgDeleteIdentityRecords extends TxMsg {
   }
 }
 
-
 class MsgRequestIdentityRecordsVerify extends TxMsg {
   static String get interxName => 'request-identity-records-verify';
 
@@ -748,11 +747,10 @@ class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
 
   @override
   Map<String, dynamic> toJson() {
-    final bool? yesJson = yes;
     return {
       'verifier': verifier,
       'verify_request_id': verifyRequestId,
-      'yes': yesJson,
+      if (yes == true) 'yes': yes,
     };
   }
 }

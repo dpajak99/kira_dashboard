@@ -106,14 +106,19 @@ class UserTransactions {
       toAddress: toAddress,
       amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount.toString(), denom: e.denom)).toList(),
     );
-    sendTransaction(msg: msgSend, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgSend,
+      txFeeName: MsgSend.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> delegateTokens({
     required String delegatorAddress,
     required String validatorAddress,
     required List<Coin> amounts,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgDelegate msgDelegate = MsgDelegate(
@@ -121,14 +126,19 @@ class UserTransactions {
       validatorAddress: validatorAddress,
       amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount.toString(), denom: e.denom)).toList(),
     );
-    sendTransaction(msg: msgDelegate, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgDelegate,
+      txFeeName: MsgDelegate.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> undelegateTokens({
     required String delegatorAddress,
     required String validatorAddress,
     required List<Coin> amounts,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgUndelegate msgUndelegate = MsgUndelegate(
@@ -136,57 +146,82 @@ class UserTransactions {
       validatorAddress: validatorAddress,
       amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount.toString(), denom: e.denom)).toList(),
     );
-    sendTransaction(msg: msgUndelegate, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgUndelegate,
+      txFeeName: MsgUndelegate.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> claimUndelegation({
     required String senderAddress,
     required String undelegationId,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgClaimUndelegation msgClaimUndelegation = MsgClaimUndelegation(
       sender: senderAddress,
       undelegationId: undelegationId,
     );
-    sendTransaction(msg: msgClaimUndelegation, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgClaimUndelegation,
+      txFeeName: MsgClaimUndelegation.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> claimRewards({
     required String senderAddress,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgClaimRewards msgClaimRewards = MsgClaimRewards(
       sender: senderAddress,
     );
-    sendTransaction(msg: msgClaimRewards, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgClaimRewards,
+      txFeeName: MsgClaimRewards.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> registerIdentityRecords({
     required String senderAddress,
     required List<IdentityInfoEntry> identityInfoEntries,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgRegisterIdentityRecords msgRegisterIdentityRecords = MsgRegisterIdentityRecords(
       address: senderAddress,
       infos: identityInfoEntries,
     );
-    sendTransaction(msg: msgRegisterIdentityRecords, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgRegisterIdentityRecords,
+      txFeeName: MsgRegisterIdentityRecords.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> deleteIdentityRecords({
     required String senderAddress,
     required List<String> keys,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgDeleteIdentityRecords msgDeleteIdentityRecords = MsgDeleteIdentityRecords(
       address: senderAddress,
       keys: keys,
     );
-    sendTransaction(msg: msgDeleteIdentityRecords, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgDeleteIdentityRecords,
+      txFeeName: MsgDeleteIdentityRecords.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> requestRecordsVerification({
@@ -194,7 +229,7 @@ class UserTransactions {
     required String verifierAddress,
     required List<String> recordIds,
     required Coin tip,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgRequestIdentityRecordsVerify msgRequestIdentityRecordsVerify = MsgRequestIdentityRecordsVerify(
@@ -203,27 +238,37 @@ class UserTransactions {
       recordIds: recordIds,
       tip: CoinEntity(amount: tip.amount.toString(), denom: tip.denom),
     );
-    sendTransaction(msg: msgRequestIdentityRecordsVerify, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgRequestIdentityRecordsVerify,
+      txFeeName: MsgRequestIdentityRecordsVerify.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> cancelRecordsVerificationRequest({
     required String senderAddress,
     required int verifyRequestId,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgCancelIdentityRecordsVerifyRequest msgCancelIdentityRecordsVerifyRequest = MsgCancelIdentityRecordsVerifyRequest(
       executor: senderAddress,
       verifyRequestId: verifyRequestId,
     );
-    sendTransaction(msg: msgCancelIdentityRecordsVerifyRequest, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgCancelIdentityRecordsVerifyRequest,
+      txFeeName: MsgCancelIdentityRecordsVerifyRequest.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> verifyRecords({
     required String senderAddress,
     required int verifyRequestId,
     required bool approved,
-    required Coin fee,
+    Coin? fee,
     String? memo,
   }) async {
     MsgHandleIdentityRecordsVerifyRequest msgHandleIdentityRecordsVerifyRequest = MsgHandleIdentityRecordsVerifyRequest(
@@ -231,18 +276,31 @@ class UserTransactions {
       verifyRequestId: verifyRequestId,
       yes: approved,
     );
-    sendTransaction(msg: msgHandleIdentityRecordsVerifyRequest, fee: fee, memo: memo);
+    sendTransaction(
+      msg: msgHandleIdentityRecordsVerifyRequest,
+      txFeeName: MsgHandleIdentityRecordsVerifyRequest.interxName,
+      fee: fee,
+      memo: memo,
+    );
   }
 
   Future<void> sendTransaction({
     required TxMsg msg,
-    required Coin fee,
+    required String txFeeName,
+    Coin? fee,
     String? memo,
   }) async {
     txProcessNotificator.notifyConfirmTransaction();
     TransactionRemoteData transactionRemoteData = await transactionsService.getRemoteUserTransactionData(signerAddress);
+    Coin finalFee = fee ?? await transactionsService.getExecutionFeeForMessage(msg.messageType);
 
-    String message = await prepareMessage(transactionRemoteData: transactionRemoteData, msg: msg, fee: fee, memo: memo);
+
+    String message = await prepareMessage(
+      transactionRemoteData: transactionRemoteData,
+      msg: msg,
+      fee: finalFee,
+      memo: memo,
+    );
 
     String? signature = await txSigner.sign(message);
     if (signature == null) {
@@ -268,7 +326,7 @@ class UserTransactions {
           signerInfos: <SignerInfo>[signerInfo],
           fee: TxFee(
             amount: <CoinEntity>[
-              CoinEntity(amount: fee.amount.toString(), denom: fee.denom),
+              CoinEntity(amount: finalFee.amount.toString(), denom: finalFee.denom),
             ],
           ),
         ),

@@ -125,7 +125,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                     fontSize: 14,
                                     color: Color(0xff4888f0),
                                   ),
-                                  onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
+                                  onTap: () => inboundCubit.approveVerificationRequest(int.parse(item.id)),
                                 ),
                                 const SizedBox(width: 16),
                                 IconTextButton(
@@ -135,7 +135,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                     fontSize: 14,
                                     color: Color(0xff4888f0),
                                   ),
-                                  onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
+                                  onTap: () => inboundCubit.rejectVerificationRequest(int.parse(item.id)),
                                 ),
                               ],
                             );
@@ -232,7 +232,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                     fontSize: 14,
                                     color: Color(0xff4888f0),
                                   ),
-                                  onTap: () {},
+                                  onTap: () => outboundCubit.cancelVerificationRequest(int.parse(item.id)),
                                 ),
                               ],
                             );

@@ -1,16 +1,15 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/multistaking.dart';
 import 'package:kira_dashboard/infra/services/balances_service.dart';
-import 'package:kira_dashboard/infra/services/tokens_service.dart';
+import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/undelegate_tokens_dialog/undelegate_tokens_dialog_state.dart';
 
 class UndelegateTokensDialogCubit extends TransactionCubit<UndelegateTokensDialogState> {
   final BalancesService balancesService = BalancesService();
-  final TokensService tokensService = TokensService();
+  final TransactionsService transactionsService = TransactionsService();
   final String validatorAddress;
 
   UndelegateTokensDialogCubit({
@@ -33,7 +32,7 @@ class UndelegateTokensDialogCubit extends TransactionCubit<UndelegateTokensDialo
 
   Future<void> _init() async {
     Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
-    Coin executionFee = await tokensService.getExecutionFeeForMessage(MsgDelegate.interxName);
+    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgDelegate.interxName);
 
     emit(UndelegateTokensDialogLoadedState(
       initialCoin: defaultCoinBalance,
