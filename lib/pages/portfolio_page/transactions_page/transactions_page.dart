@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/transaction.dart';
-import 'package:kira_dashboard/pages/portfolio_page/portfolio_page_state.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_list_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_list_state.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';

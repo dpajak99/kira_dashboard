@@ -30,15 +30,9 @@ class PortfolioPage extends StatefulWidget {
 }
 
 class _PortfolioPageState extends State<PortfolioPage> {
-  int selectedPage = 0;
-
   late final PortfolioPageCubit cubit;
 
-  @override
-  void initState() {
-    super.initState();
-    cubit = PortfolioPageCubit(address: widget.address)..init();
-  }
+  int selectedPage = 0;
 
   @override
   Widget build(BuildContext context) {

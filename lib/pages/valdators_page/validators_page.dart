@@ -21,13 +21,7 @@ class ValidatorsPage extends StatefulWidget {
 }
 
 class _ValidatorsPageState extends State<ValidatorsPage> {
-  late final ValidatorsPageCubit cubit;
-
-  @override
-  void initState() {
-    super.initState();
-    cubit = ValidatorsPageCubit()..init();
-  }
+  late final ValidatorsPageCubit cubit = ValidatorsPageCubit();
 
   @override
   Widget build(BuildContext context) {

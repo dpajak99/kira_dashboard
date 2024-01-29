@@ -25,12 +25,6 @@ class _BlocksPageState extends State<BlocksPage> {
   final BlocksPageCubit blocksPageCubit = BlocksPageCubit();
 
   @override
-  void initState() {
-    super.initState();
-    blocksPageCubit.init();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<BlocksPageCubit, BlocksPageState>(
       bloc: blocksPageCubit,

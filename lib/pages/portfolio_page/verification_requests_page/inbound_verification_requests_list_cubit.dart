@@ -2,9 +2,10 @@ import 'package:kira_dashboard/infra/services/verification_requests_service.dart
 import 'package:kira_dashboard/models/verification_request.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/inbound_verification_requests_list_state.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
-class InboundVerificationRequestsListCubit extends TransactionCubit<InboundVerificationRequestsListState> {
+class InboundVerificationRequestsListCubit extends ListCubit<InboundVerificationRequestsListState> with TransactionMixin {
   final VerificationRequestsService verificationRequestsService = VerificationRequestsService();
 
   final String address;
@@ -13,8 +14,16 @@ class InboundVerificationRequestsListCubit extends TransactionCubit<InboundVerif
   InboundVerificationRequestsListCubit({
     required this.address,
     required this.isMyWallet,
-  }) : super(const InboundVerificationRequestsListState(isLoading: true)) {
-    _init();
+  }) : super(const InboundVerificationRequestsListState(isLoading: true));
+
+  @override
+  Future<void> reload() async {
+    emit(const InboundVerificationRequestsListState(isLoading: true));
+
+    PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
+    List<VerificationRequest> requests = await verificationRequestsService.getInboundPage(address, paginatedRequest);
+
+    emit(state.copyWith(isLoading: false, requests: requests));
   }
 
   Future<void> approveVerificationRequest(int requestId) async {
@@ -31,12 +40,5 @@ class InboundVerificationRequestsListCubit extends TransactionCubit<InboundVerif
       verifyRequestId: requestId,
       approved: false,
     );
-  }
-
-  Future<void> _init() async {
-    PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
-    List<VerificationRequest> requests = await verificationRequestsService.getInboundPage(address, paginatedRequest);
-
-    emit(state.copyWith(isLoading: false, requests: requests));
   }
 }

@@ -1,10 +1,5 @@
-import 'package:kira_dashboard/models/coin.dart';
-import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
-import 'package:kira_dashboard/models/transaction.dart';
-import 'package:kira_dashboard/models/undelegation.dart';
 import 'package:kira_dashboard/models/validator.dart';
-import 'package:kira_dashboard/models/verification_request.dart';
 import 'package:kira_dashboard/pages/page_state.dart';
 
 class PortfolioPageState extends PageState {

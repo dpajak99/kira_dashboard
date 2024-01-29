@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
+import 'package:kira_dashboard/widgets/network_button.dart';
 import 'package:kira_dashboard/widgets/wallet_button.dart';
 
 @RoutePage()
@@ -74,29 +73,7 @@ class MenuWrapperPage extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                        decoration: const BoxDecoration(
-                          color: Color(0xff4888f0),
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.network_wifi_rounded,
-                              size: 18,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'localnet-1',
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      const NetworkButton(),
                       const SizedBox(width: 16),
                       const WalletButton(),
                       const SizedBox(width: 8),

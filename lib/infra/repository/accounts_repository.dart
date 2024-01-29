@@ -6,11 +6,10 @@ import 'package:kira_dashboard/infra/entities/account/account_entity.dart';
 import 'package:kira_dashboard/infra/entities/account/query_account_response.dart';
 import 'package:kira_dashboard/infra/entities/network/headers_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/network/interx_headers.dart';
+import 'package:kira_dashboard/infra/repository/api_repository.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
 
-class AccountsRepository {
-  final Dio httpClient = getIt<NetworkProvider>().httpClient;
-
+class AccountsRepository extends ApiRepository {
   Future<AccountEntity> get(String address) async {
     try {
       Response<Map<String, dynamic>> response = await httpClient.get('/api/kira/accounts/$address');

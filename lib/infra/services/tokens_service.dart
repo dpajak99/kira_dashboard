@@ -1,6 +1,4 @@
 import 'package:decimal/decimal.dart';
-import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
-import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/tokens/aliases/token_alias_entity.dart';
 import 'package:kira_dashboard/infra/entities/tokens/rates/token_rate_entity.dart';
 import 'package:kira_dashboard/infra/repository/token_aliases_repository.dart';

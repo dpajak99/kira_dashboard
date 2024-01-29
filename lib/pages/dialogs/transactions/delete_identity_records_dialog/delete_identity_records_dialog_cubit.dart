@@ -6,13 +6,24 @@ import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delete_identity_records_dialog/delete_identity_records_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.dart';
 
-class DeleteIdentityRecordsDialogCubit extends TransactionCubit<DeleteIdentityRecordsDialogState> {
+class DeleteIdentityRecordsDialogCubit extends RefreshablePageCubit<DeleteIdentityRecordsDialogState> with TransactionMixin {
   final BalancesService balancesService = BalancesService();
   final TransactionsService transactionsService = TransactionsService();
 
-  DeleteIdentityRecordsDialogCubit() : super(DeleteIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
-    _init();
+  DeleteIdentityRecordsDialogCubit() : super(DeleteIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+  @override
+  Future<void> reload() async {
+    emit((DeleteIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address)));
+
+    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgSend.interxName);
+
+    emit(DeleteIdentityRecordsDialogLoadedState(
+      executionFee: executionFee,
+      address: state.address,
+    ));
   }
 
   Future<void> sendTransaction({
@@ -24,14 +35,5 @@ class DeleteIdentityRecordsDialogCubit extends TransactionCubit<DeleteIdentityRe
       keys: keys,
       fee: (state as DeleteIdentityRecordsDialogLoadedState).executionFee,
     );
-  }
-
-  Future<void> _init() async {
-    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgSend.interxName);
-
-    emit(DeleteIdentityRecordsDialogLoadedState(
-      executionFee: executionFee,
-      address: state.address,
-    ));
   }
 }

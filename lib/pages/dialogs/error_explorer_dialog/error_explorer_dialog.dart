@@ -1,0 +1,121 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:json_view/json_view.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
+import 'package:kira_dashboard/widgets/custom_dialog.dart';
+
+class ErrorExplorerDialog extends DialogContentWidget {
+  final Response<dynamic> response;
+
+  const ErrorExplorerDialog({
+    super.key,
+    required this.response,
+  });
+
+  @override
+  State<StatefulWidget> createState() => _ErrorExplorerDialogState();
+}
+
+class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomDialog(
+      title: 'Error details',
+      width: 600,
+      scrollable: false,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              color: Color(0xff06070a),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
+            child: Row(
+              children: [
+                Text(widget.response.requestOptions.method),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    widget.response.requestOptions.uri.toString(),
+                    maxLines: 1,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                InkWell(
+                  onTap: () {},
+                  radius: 30,
+                  child: const Icon(
+                    Icons.copy,
+                    color: Color(0xff6c86ad),
+                    size: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 400,
+                  padding: const EdgeInsets.all(16),
+                  decoration: const BoxDecoration(
+                    color: Color(0xff06070a),
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Request',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xfffbfbfb),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: JsonView(
+                          json: widget.response.requestOptions.data,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Container(
+                  height: 400,
+                  padding: const EdgeInsets.all(16),
+                  decoration: const BoxDecoration(
+                    color: Color(0xff06070a),
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Response',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xfffbfbfb),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: JsonView(
+                          json: widget.response.data,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}

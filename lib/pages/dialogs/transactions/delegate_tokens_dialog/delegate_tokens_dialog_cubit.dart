@@ -6,8 +6,9 @@ import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.dart';
 
-class DelegateTokensDialogCubit extends TransactionCubit<DelegateTokensDialogState> {
+class DelegateTokensDialogCubit extends RefreshablePageCubit<DelegateTokensDialogState> with TransactionMixin {
   final BalancesService balancesService = BalancesService();
   final TransactionsService transactionsService = TransactionsService();
 
@@ -15,8 +16,20 @@ class DelegateTokensDialogCubit extends TransactionCubit<DelegateTokensDialogSta
 
   DelegateTokensDialogCubit({
     required this.validatorAddress,
-  }) : super(DelegateTokensDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
-    _init();
+  }) : super(DelegateTokensDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+  @override
+  Future<void> reload() async {
+    emit(DelegateTokensDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
+    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgDelegate.interxName);
+
+    emit(DelegateTokensDialogLoadedState(
+      initialCoin: defaultCoinBalance,
+      executionFee: executionFee,
+      address: state.address,
+    ));
   }
 
   Future<void> sendTransaction({
@@ -29,16 +42,5 @@ class DelegateTokensDialogCubit extends TransactionCubit<DelegateTokensDialogSta
       amounts: amounts,
       fee: (state as DelegateTokensDialogLoadedState).executionFee,
     );
-  }
-
-  Future<void> _init() async {
-    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
-    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgDelegate.interxName);
-
-    emit(DelegateTokensDialogLoadedState(
-      initialCoin: defaultCoinBalance,
-      executionFee: executionFee,
-      address: state.address,
-    ));
   }
 }

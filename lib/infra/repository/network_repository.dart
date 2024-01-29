@@ -6,10 +6,10 @@ import 'package:kira_dashboard/infra/entities/network/interx_headers.dart';
 import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/network_status_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/query_network_properties_response.dart';
+import 'package:kira_dashboard/infra/repository/api_repository.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
 
-class NetworkRepository {
-  final Dio httpClient = getIt<NetworkProvider>().httpClient;
+class NetworkRepository extends ApiRepository {
 
   Future<InterxHeaders> getStatus() async {
     try {

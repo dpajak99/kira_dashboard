@@ -5,7 +5,6 @@ import 'package:kira_dashboard/infra/entities/transactions/methods/governance.da
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transaction_result_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/edit_record_dialog/edit_record_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_state.dart';

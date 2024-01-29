@@ -1,14 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:kira_dashboard/config/get_it.dart';
-import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record_entity.dart';
 import 'package:kira_dashboard/infra/entities/identity_registrar/query_identity_record_response.dart';
 import 'package:kira_dashboard/infra/entities/identity_registrar/query_identity_records_response.dart';
+import 'package:kira_dashboard/infra/repository/api_repository.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
-class IdentityRegistrarRepository {
-  final Dio httpClient = getIt<NetworkProvider>().httpClient;
+class IdentityRegistrarRepository extends ApiRepository {
 
   Future<List<IdentityRecordEntity>> getPage(String address, PaginatedRequest paginatedRequest) async {
     try {

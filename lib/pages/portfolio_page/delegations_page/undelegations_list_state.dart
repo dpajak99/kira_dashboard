@@ -1,4 +1,3 @@
-import 'package:kira_dashboard/models/delegation.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
 import 'package:kira_dashboard/pages/page_state.dart';
 

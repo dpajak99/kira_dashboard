@@ -1,17 +1,8 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
-import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/select_identity_records_dialog/select_identity_records_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/select_token_dialog/select_token_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field_layout.dart';
-import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field_state.dart';
-import 'package:kira_dashboard/pages/dialogs/widgets/token_amount_text_field/token_amount_text_field_cubit.dart';
-import 'package:kira_dashboard/widgets/token_icon.dart';
 
 class IdentityRecordsPickerController extends ValueNotifier<List<IdentityRecord>> {
   IdentityRecordsPickerController() : super(<IdentityRecord>[]);

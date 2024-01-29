@@ -2,8 +2,10 @@ import 'package:dio/browser.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:kira_dashboard/config/predefined_networks.dart';
 
-class NetworkProvider {
+class NetworkProvider extends ValueNotifier<Uri> {
   final CacheOptions options = CacheOptions(
     store: HiveCacheStore(null),
 
@@ -29,14 +31,12 @@ class NetworkProvider {
     allowPostMethod: false,
   );
 
-  final Dio _baseHttpClient = DioForBrowser(BaseOptions(
-    baseUrl: 'http://89.128.117.28:11000/',
-  ));
-
-  NetworkProvider() {
-    // _baseHttpClient.interceptors.add(LogInterceptor());
-    _baseHttpClient.interceptors.add(DioCacheInterceptor(options: options));
+  Dio get httpClient {
+    print('Current value: $value');
+    Dio baseHttpClient = DioForBrowser(BaseOptions(baseUrl: value.toString()));
+    baseHttpClient.interceptors.add(DioCacheInterceptor(options: options));
+    return baseHttpClient;
   }
 
-  Dio get httpClient => _baseHttpClient;
+  NetworkProvider() : super(PredefinedNetworks.defaultNetwork.interxUrl);
 }

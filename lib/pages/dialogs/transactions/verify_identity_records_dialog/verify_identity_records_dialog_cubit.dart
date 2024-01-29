@@ -6,13 +6,26 @@ import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_records_dialog/verify_identity_records_dialog_state.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.dart';
 
-class VerifyIdentityRecordsDialogCubit extends TransactionCubit<VerifyIdentityRecordsDialogState> {
+class VerifyIdentityRecordsDialogCubit extends RefreshablePageCubit<VerifyIdentityRecordsDialogState> with TransactionMixin {
   final BalancesService balancesService = BalancesService();
   final TransactionsService transactionsService = TransactionsService();
 
-  VerifyIdentityRecordsDialogCubit() : super(VerifyIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
-    _init();
+  VerifyIdentityRecordsDialogCubit() : super(VerifyIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+  @override
+  Future<void> reload() async {
+    emit(VerifyIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
+    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgSend.interxName);
+
+    emit(VerifyIdentityRecordsDialogLoadedState(
+      initialCoin: defaultCoinBalance,
+      executionFee: executionFee,
+      address: state.address,
+    ));
   }
 
   Future<void> sendTransaction({
@@ -28,16 +41,5 @@ class VerifyIdentityRecordsDialogCubit extends TransactionCubit<VerifyIdentityRe
       recordIds: recordIds,
       fee: (state as VerifyIdentityRecordsDialogLoadedState).executionFee,
     );
-  }
-
-  Future<void> _init() async {
-    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
-    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgSend.interxName);
-
-    emit(VerifyIdentityRecordsDialogLoadedState(
-      initialCoin: defaultCoinBalance,
-      executionFee: executionFee,
-      address: state.address,
-    ));
   }
 }

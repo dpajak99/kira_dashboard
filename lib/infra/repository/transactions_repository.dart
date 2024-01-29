@@ -1,24 +1,31 @@
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:kira_dashboard/config/get_it.dart';
-import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
+import 'package:kira_dashboard/infra/entities/transactions/broadcast_response.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/query_transactions_response.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/query_block_transactions_response.dart';
 import 'package:kira_dashboard/infra/entities/transactions/transaction_result_entity.dart';
+import 'package:kira_dashboard/infra/repository/api_repository.dart';
+import 'package:kira_dashboard/utils/exceptions/internal_broadcast_exception.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
-class TransactionsRepository {
-  final Dio httpClient = getIt<NetworkProvider>().httpClient;
-
-  Future<void> broadcastTransaction(Map<String, dynamic> body) async {
+class TransactionsRepository extends ApiRepository {
+  Future<BroadcastResponse> broadcastTransaction(Map<String, dynamic> body) async {
     try {
-      await httpClient.post(
+      Response<Map<String, dynamic>> response = await httpClient.post(
         '/api/kira/txs',
         data: body,
       );
+      BroadcastResponse broadcastResponse = BroadcastResponse.fromJson(response.data!);
+      InternalBroadcastException? checkException = InternalBroadcastException.fromResponse(response, broadcastResponse.checkTx);
+      InternalBroadcastException? deliverException = InternalBroadcastException.fromResponse(response, broadcastResponse.checkTx);
+
+      if(checkException != null || deliverException != null) {
+        throw checkException ?? deliverException!;
+      }
+
+      return broadcastResponse;
     } catch (e) {
       AppLogger().log(message: 'TransactionsRepository');
       rethrow;

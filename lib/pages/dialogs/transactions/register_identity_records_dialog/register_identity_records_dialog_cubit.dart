@@ -7,13 +7,26 @@ import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_records_dialog/register_identity_records_state.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.dart';
 
-class RegisterIdentityRecordsDialogCubit extends TransactionCubit<RegisterIdentityRecordsDialogState> {
+class RegisterIdentityRecordsDialogCubit extends RefreshablePageCubit<RegisterIdentityRecordsDialogState> with TransactionMixin {
   final BalancesService balancesService = BalancesService();
   final TransactionsService transactionsService = TransactionsService();
 
-  RegisterIdentityRecordsDialogCubit() : super(RegisterIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
-    _init();
+  RegisterIdentityRecordsDialogCubit() : super(RegisterIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+  @override
+  Future<void> reload() async {
+    emit(RegisterIdentityRecordsDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
+    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgDelegate.interxName);
+
+    emit(RegisterIdentityRecordsDialogLoadedState(
+      initialCoin: defaultCoinBalance,
+      executionFee: executionFee,
+      address: state.address,
+    ));
   }
 
   Future<void> sendTransaction({
@@ -25,16 +38,5 @@ class RegisterIdentityRecordsDialogCubit extends TransactionCubit<RegisterIdenti
       identityInfoEntries: identityInfoEntries,
       fee: (state as RegisterIdentityRecordsDialogLoadedState).executionFee,
     );
-  }
-
-  Future<void> _init() async {
-    Coin defaultCoinBalance = await balancesService.getDefaultCoinBalance(state.address);
-    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgDelegate.interxName);
-
-    emit(RegisterIdentityRecordsDialogLoadedState(
-      initialCoin: defaultCoinBalance,
-      executionFee: executionFee,
-      address: state.address,
-    ));
   }
 }

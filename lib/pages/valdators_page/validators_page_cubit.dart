@@ -1,11 +1,11 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/services/validators_service.dart';
 import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_state.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
 
-class ValidatorsPageCubit extends Cubit<ValidatorsPageState> {
+class ValidatorsPageCubit extends ListCubit<ValidatorsPageState> {
   final WalletProvider walletProvider = getIt<WalletProvider>();
   final ValidatorsService validatorsService = ValidatorsService();
 
@@ -19,7 +19,10 @@ class ValidatorsPageCubit extends Cubit<ValidatorsPageState> {
     });
   }
 
-  Future<void> init() async {
+  @override
+  Future<void> reload() async {
+    emit(ValidatorsPageState(isLoading: true, isSignedIn: getIt<WalletProvider>().isSignedIn));
+
     List<Validator> validators = await validatorsService.getAll();
 
     emit(state.copyWith(

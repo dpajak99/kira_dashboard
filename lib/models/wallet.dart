@@ -1,10 +1,7 @@
-import 'package:blockchain_utils/bip/address/atom_addr.dart';
-import 'package:blockchain_utils/bip/bip/bip.dart';
 import 'package:blockchain_utils/bip/bip/conf/bip_coin_conf.dart';
 import 'package:blockchain_utils/bip/bip/conf/bip_coins.dart';
 import 'package:blockchain_utils/bip/bip/conf/bip_conf_const.dart';
 import 'package:blockchain_utils/bip/coin_conf/coins_name.dart';
-import 'package:blockchain_utils/bip/ecc/curve/elliptic_curve_types.dart';
 import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
 import 'package:blockchain_utils/bip/slip/slip44/slip44.dart';
 import 'package:blockchain_utils/blockchain_utils.dart';

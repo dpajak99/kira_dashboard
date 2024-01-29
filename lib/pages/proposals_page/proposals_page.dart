@@ -22,12 +22,6 @@ class _ProposalsPageState extends State<ProposalsPage> {
   final ProposalsPageCubit proposalsPageCubit = ProposalsPageCubit();
 
   @override
-  void initState() {
-    super.initState();
-    proposalsPageCubit.init();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProposalsPageCubit, ProposalsPageState>(
       bloc: proposalsPageCubit,

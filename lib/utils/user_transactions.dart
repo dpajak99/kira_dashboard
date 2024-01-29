@@ -1,9 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:crypto/crypto.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/cosmos.dart';
@@ -27,16 +22,17 @@ import 'package:kira_dashboard/pages/dialogs/confirm_transaction_drawer/confirm_
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_transaction_dialog/sign_transaction_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transaction_result_dialog.dart';
+import 'package:kira_dashboard/utils/exceptions/internal_broadcast_exception.dart';
 import 'package:kira_dashboard/utils/map_utils.dart';
 
 abstract class TxProcessNotificator {
   void notifyConfirmTransaction();
 
-  void notifyTransactionFailed();
+  void notifyTransactionFailed([InternalBroadcastException? internalBroadcastException]);
 
   void notifyBroadcastTransaction();
 
-  void notifyTransactionSucceeded();
+  void notifyTransactionSucceeded(String transactionHash);
 }
 
 class DialogTxProcessNotificator implements TxProcessNotificator {
@@ -51,13 +47,19 @@ class DialogTxProcessNotificator implements TxProcessNotificator {
   }
 
   @override
-  void notifyTransactionFailed() {
-    DialogRouter().replaceAll(const TransactionResultDialog(status: TransactionProcessStatus.failed));
+  void notifyTransactionFailed([InternalBroadcastException? internalBroadcastException]) {
+    DialogRouter().replaceAll(TransactionResultDialog(
+      status: TransactionProcessStatus.failed,
+      internalBroadcastException: internalBroadcastException,
+    ));
   }
 
   @override
-  void notifyTransactionSucceeded() {
-    DialogRouter().replaceAll(const TransactionResultDialog(status: TransactionProcessStatus.success));
+  void notifyTransactionSucceeded(String transactionHash) {
+    DialogRouter().replaceAll(TransactionResultDialog(
+      status: TransactionProcessStatus.success,
+      hash: transactionHash,
+    ));
   }
 }
 
@@ -294,7 +296,6 @@ class UserTransactions {
     TransactionRemoteData transactionRemoteData = await transactionsService.getRemoteUserTransactionData(signerAddress);
     Coin finalFee = fee ?? await transactionsService.getExecutionFeeForMessage(msg.messageType);
 
-
     String message = await prepareMessage(
       transactionRemoteData: transactionRemoteData,
       msg: msg,
@@ -335,9 +336,17 @@ class UserTransactions {
       mode: 'block',
     );
 
-    await transactionsService.broadcastTx(broadcastReq);
-
-    txProcessNotificator.notifyTransactionSucceeded();
+    String transactionHash;
+    try {
+      transactionHash = await transactionsService.broadcastTx(broadcastReq);
+    } on InternalBroadcastException catch(e) {
+      txProcessNotificator.notifyTransactionFailed(e);
+      return;
+    } catch(_) {
+      txProcessNotificator.notifyTransactionFailed();
+      return;
+    }
+    txProcessNotificator.notifyTransactionSucceeded(transactionHash);
   }
 
   Future<String> prepareMessage({

@@ -1,11 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:kira_dashboard/config/get_it.dart';
-import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
 import 'package:kira_dashboard/infra/entities/fees/query_execution_fee_response.dart';
+import 'package:kira_dashboard/infra/repository/api_repository.dart';
 
-class FeesRepository {
-  final Dio httpClient = getIt<NetworkProvider>().httpClient;
+class FeesRepository extends ApiRepository {
 
   Future<FeeConfigEntity> getFee(String message) async {
     try {

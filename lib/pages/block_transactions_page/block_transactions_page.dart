@@ -29,14 +29,8 @@ class BlockTransactionsPage extends StatefulWidget {
 }
 
 class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
-  final BlockTransactionsPageCubit blockTransactionsPageCubit = BlockTransactionsPageCubit();
-
-  @override
-  void initState() {
-    super.initState();
-    blockTransactionsPageCubit.init(widget.blockId);
-  }
-
+  late final BlockTransactionsPageCubit blockTransactionsPageCubit = BlockTransactionsPageCubit(blockId: widget.blockId);
+  
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BlockTransactionsPageCubit, BlockTransactionsPageState>(

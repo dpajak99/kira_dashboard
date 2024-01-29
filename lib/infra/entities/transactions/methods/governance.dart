@@ -749,7 +749,7 @@ class MsgHandleIdentityRecordsVerifyRequest extends TxMsg {
   Map<String, dynamic> toJson() {
     return {
       'verifier': verifier,
-      'verify_request_id': verifyRequestId,
+      'verify_request_id': verifyRequestId.toString(),
       if (yes == true) 'yes': yes,
     };
   }
@@ -789,7 +789,7 @@ class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
   Map<String, dynamic> toJson() {
     return {
       'executor': executor,
-      'verify_request_id': verifyRequestId,
+      'verify_request_id': verifyRequestId.toString(),
     };
   }
 }

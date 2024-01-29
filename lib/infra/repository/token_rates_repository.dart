@@ -1,13 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:kira_dashboard/config/get_it.dart';
-import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/tokens/rates/query_token_rates_response.dart';
 import 'package:kira_dashboard/infra/entities/tokens/rates/token_rate_entity.dart';
+import 'package:kira_dashboard/infra/repository/api_repository.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
 
-class TokenRatesRepository {
-  final Dio httpClient = getIt<NetworkProvider>().httpClient;
-
+class TokenRatesRepository extends ApiRepository {
   Future<Map<String, TokenRateEntity>> getAllAsMap() async {
     try {
     Map<String, TokenRateEntity> tokenRatesMap = <String, TokenRateEntity>{};

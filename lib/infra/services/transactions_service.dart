@@ -4,6 +4,7 @@ import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/headers_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
+import 'package:kira_dashboard/infra/entities/transactions/broadcast_response.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 import 'package:kira_dashboard/infra/entities/transactions/out/broadcast_req.dart';
@@ -28,8 +29,9 @@ class TransactionsService {
   final TransactionsRepository transactionsRepository = TransactionsRepository();
   final TokensService tokensService = TokensService();
 
-  Future<void> broadcastTx(BroadcastReq broadcastReq) async {
-    await transactionsRepository.broadcastTransaction(broadcastReq.toJson());
+  Future<String> broadcastTx(BroadcastReq broadcastReq) async {
+    BroadcastResponse response = await transactionsRepository.broadcastTransaction(broadcastReq.toJson());
+    return response.hash;
   }
 
   Future<Coin> getExecutionFeeForMessage(String message) async {

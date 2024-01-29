@@ -6,8 +6,9 @@ import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.dart';
 
-class SendTokensDialogCubit extends TransactionCubit<SendTokensDialogState> {
+class SendTokensDialogCubit extends RefreshablePageCubit<SendTokensDialogState> with TransactionMixin {
   final BalancesService balancesService = BalancesService();
   final TransactionsService transactionsService = TransactionsService();
 
@@ -15,8 +16,20 @@ class SendTokensDialogCubit extends TransactionCubit<SendTokensDialogState> {
 
   SendTokensDialogCubit({
     this.initialCoin,
-  }) : super(SendTokensDialogLoadingState(address: getIt<WalletProvider>().value!.address)) {
-    _init();
+  }) : super(SendTokensDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+  @override
+  Future<void> reload() async {
+    emit(SendTokensDialogLoadingState(address: getIt<WalletProvider>().value!.address));
+
+    Coin defaultCoinBalance = initialCoin ?? await balancesService.getDefaultCoinBalance(state.address);
+    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgSend.interxName);
+
+    emit(SendTokensDialogLoadedState(
+      initialCoin: defaultCoinBalance,
+      executionFee: executionFee,
+      address: state.address,
+    ));
   }
 
   Future<void> sendTransaction({
@@ -30,16 +43,5 @@ class SendTokensDialogCubit extends TransactionCubit<SendTokensDialogState> {
       amounts: amounts,
       fee: (state as SendTokensDialogLoadedState).executionFee,
     );
-  }
-
-  Future<void> _init() async {
-    Coin defaultCoinBalance = initialCoin ?? await balancesService.getDefaultCoinBalance(state.address);
-    Coin executionFee = await transactionsService.getExecutionFeeForMessage(MsgSend.interxName);
-
-    emit(SendTokensDialogLoadedState(
-      initialCoin: defaultCoinBalance,
-      executionFee: executionFee,
-      address: state.address,
-    ));
   }
 }
