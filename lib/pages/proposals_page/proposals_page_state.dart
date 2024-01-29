@@ -11,5 +11,5 @@ class ProposalsPageState extends PageState {
   });
 
   @override
-  List<Object?> get props => <Object?>[proposals];
+  List<Object?> get props => <Object?>[isLoading, proposals];
 }

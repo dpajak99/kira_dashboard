@@ -12,10 +12,6 @@ class TokensService {
   Map<String, TokenAliasEntity> tokenAliasesMap = <String, TokenAliasEntity>{};
   Map<String, TokenRateEntity> tokenRatesMap = <String, TokenRateEntity>{};
 
-  Future<String> getDefaultCoinDenom() async {
-    return tokenAliasesRepository.getDefaultCoinDenom();
-  }
-
   Future<List<Coin>> buildCoins(List<SimpleCoin> coins) async {
     return Future.wait(coins.map((SimpleCoin simpleCoin) => buildCoin(simpleCoin)));
   }

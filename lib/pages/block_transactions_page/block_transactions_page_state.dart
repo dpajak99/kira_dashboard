@@ -11,5 +11,5 @@ class BlockTransactionsPageState extends PageState {
   });
 
   @override
-  List<Object?> get props => <Object?>[transactions];
+  List<Object?> get props => <Object?>[isLoading, transactions];
 }

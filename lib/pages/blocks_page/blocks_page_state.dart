@@ -11,5 +11,5 @@ class BlocksPageState extends PageState {
   });
 
   @override
-  List<Object?> get props => <Object?>[blocks];
+  List<Object?> get props => <Object?>[isLoading, blocks];
 }

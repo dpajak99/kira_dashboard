@@ -33,8 +33,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   await Hive.initFlutter();
-  initLocator();
   await initHive();
+
+  initLocator();
 
   runApp(MyApp());
 }

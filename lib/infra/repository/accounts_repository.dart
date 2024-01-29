@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
-import 'package:kira_dashboard/config/get_it.dart';
-import 'package:kira_dashboard/config/network_provider.dart';
 import 'package:kira_dashboard/infra/entities/account/account_entity.dart';
 import 'package:kira_dashboard/infra/entities/account/query_account_response.dart';
 import 'package:kira_dashboard/infra/entities/network/headers_wrapper.dart';
@@ -26,7 +24,7 @@ class AccountsRepository extends ApiRepository {
     try {
       Response<Map<String, dynamic>> response = await httpClient.get(
         '/api/kira/accounts/$address',
-        options: getIt<NetworkProvider>().options.copyWith(policy: CachePolicy.refreshForceCache).toOptions(),
+        options: options.copyWith(policy: CachePolicy.refreshForceCache).toOptions(),
 
       );
       QueryAccountResponse queryAccountResponse = QueryAccountResponse.fromJson(response.data!);

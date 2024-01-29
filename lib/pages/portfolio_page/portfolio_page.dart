@@ -30,7 +30,7 @@ class PortfolioPage extends StatefulWidget {
 }
 
 class _PortfolioPageState extends State<PortfolioPage> {
-  late final PortfolioPageCubit cubit;
+  late final PortfolioPageCubit cubit = PortfolioPageCubit(address: widget.address);
 
   int selectedPage = 0;
 
