@@ -1,5 +1,4 @@
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +9,6 @@ import 'package:kira_dashboard/pages/proposal_details_page/proposal_details_page
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/linear_proportions.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
-import 'package:kira_dashboard/widgets/sliver_page_padding.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 
 @RoutePage()
@@ -48,175 +46,167 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
         }
         return PageScaffold(
           slivers: [
-            SliverPagePadding(
-              sliver: SliverToBoxAdapter(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Proposal #${widget.proposalId}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Color(0xff6c86ad),
-                            ),
+            SliverToBoxAdapter(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Proposal #${widget.proposalId}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff6c86ad),
                           ),
-                          Text(
-                            state.proposalDetails!.proposal.title,
-                            style: const TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xfffbfbfb),
-                            ),
+                        ),
+                        Text(
+                          state.proposalDetails!.proposal.title,
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xfffbfbfb),
                           ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              _StatusChip(voteResult: state.proposalDetails!.proposal.status),
-                              const SizedBox(width: 8),
-                              Text(
-                                switch (state.proposalDetails!.proposal.simpleStatus) {
-                                  VotingStatus.pending => 'Voting ends ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
-                                  VotingStatus.success => 'Voting ended ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
-                                  VotingStatus.failure => 'Voting ended ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            _StatusChip(voteResult: state.proposalDetails!.proposal.status),
+                            const SizedBox(width: 8),
+                            Text(
+                              switch (state.proposalDetails!.proposal.simpleStatus) {
+                                VotingStatus.pending => 'Voting ends ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
+                                VotingStatus.success => 'Voting ended ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
+                                VotingStatus.failure => 'Voting ended ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
+                              },
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: switch (state.proposalDetails!.proposal.simpleStatus) {
+                                  VotingStatus.pending => const Color(0xff6c86ad),
+                                  VotingStatus.success => const Color(0xff35b15f),
+                                  VotingStatus.failure => const Color(0xfff12e1f),
                                 },
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: switch (state.proposalDetails!.proposal.simpleStatus) {
-                                    VotingStatus.pending => const Color(0xff6c86ad),
-                                    VotingStatus.success => const Color(0xff35b15f),
-                                    VotingStatus.failure => const Color(0xfff12e1f),
-                                  },
-                                ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.share,
-                        size: 24,
-                      ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.share,
+                      size: 24,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 16)),
-            SliverPagePadding(
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 400),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: ListTile(
-                                  title: const Text(
-                                    'For',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Color(0xff6c86ad),
-                                    ),
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title: const Text(
+                                  'For',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xff6c86ad),
                                   ),
-                                  contentPadding: EdgeInsets.zero,
-                                  dense: true,
-                                  subtitle: Text(
-                                      '${state.proposalDetails!.yesVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.yesVotesPercentage * 100}%)'),
                                 ),
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                subtitle: Text(
+                                    '${state.proposalDetails!.yesVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.yesVotesPercentage * 100}%)'),
                               ),
-                              Expanded(
-                                child: ListTile(
-                                  title: const Text(
-                                    'Against',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Color(0xff6c86ad),
-                                    ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: const Text(
+                                  'Against',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xff6c86ad),
                                   ),
-                                  contentPadding: EdgeInsets.zero,
-                                  dense: true,
-                                  subtitle: Text(
-                                      '${state.proposalDetails!.noVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.noVotesPercentage * 100}%)'),
                                 ),
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                subtitle: Text(
+                                    '${state.proposalDetails!.noVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.noVotesPercentage * 100}%)'),
                               ),
-                              const Spacer(),
-                            ],
-                          ),
-                          LinearProportions(
-                            proportions: [
-                              ProportionValue(
-                                value: state.proposalDetails!.yesVotesPercentage,
-                                color: const Color(0xee35b15f),
-                              ),
-                              ProportionValue(
-                                value: state.proposalDetails!.noVotesPercentage,
-                                color: const Color(0xfff12e1f),
-                              ),
-                              ProportionValue(
-                                value: state.proposalDetails!.unknownVotePercentage,
-                                color: const Color(0xff6c86ad),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
+                        LinearProportions(
+                          proportions: [
+                            ProportionValue(
+                              value: state.proposalDetails!.yesVotesPercentage,
+                              color: const Color(0xee35b15f),
+                            ),
+                            ProportionValue(
+                              value: state.proposalDetails!.noVotesPercentage,
+                              color: const Color(0xfff12e1f),
+                            ),
+                            ProportionValue(
+                              value: state.proposalDetails!.unknownVotePercentage,
+                              color: const Color(0xff6c86ad),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 64)),
-            SliverPagePadding(
-              sliver: SliverToBoxAdapter(
-                child: CustomCard(
-                  title: 'Description',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        state.proposalDetails!.proposal.title,
-                        style: const TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xfffbfbfb),
-                        ),
+            SliverToBoxAdapter(
+              child: CustomCard(
+                title: 'Description',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      state.proposalDetails!.proposal.title,
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xfffbfbfb),
                       ),
-                      const SizedBox(height: 16),
-                      MarkdownWidget(
-                        data: state.proposalDetails!.proposal.description,
-                        shrinkWrap: true,
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 16),
+                    MarkdownWidget(
+                      data: state.proposalDetails!.proposal.description,
+                      shrinkWrap: true,
+                    ),
+                  ],
                 ),
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 32)),
-            SliverPagePadding(
-              sliver: SliverToBoxAdapter(
-                child: CustomCard(
-                  title: 'Details',
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: const Color(0xff06070a),
-                    ),
-                    child: JsonView(
-                      json: state.proposalDetails!.proposal.content,
-                      shrinkWrap: true,
-                    ),
+            SliverToBoxAdapter(
+              child: CustomCard(
+                title: 'Details',
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: const Color(0xff06070a),
+                  ),
+                  child: JsonView(
+                    json: state.proposalDetails!.proposal.content,
+                    shrinkWrap: true,
                   ),
                 ),
               ),

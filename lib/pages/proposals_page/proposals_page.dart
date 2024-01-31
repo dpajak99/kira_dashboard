@@ -9,7 +9,6 @@ import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
-import 'package:kira_dashboard/widgets/sliver_page_padding.dart';
 
 @RoutePage()
 class ProposalsPage extends StatefulWidget {
@@ -29,99 +28,97 @@ class _ProposalsPageState extends State<ProposalsPage> {
       builder: (BuildContext context, ProposalsPageState state) {
         return PageScaffold(
           slivers: [
-            SliverPagePadding(
-              sliver: SliverToBoxAdapter(
-                child: CustomCard(
-                  title: 'Proposals',
-                  childPadding: EdgeInsets.zero,
-                  child: CustomTable<Proposal>(
-                    pageSize: state.pageSize,
-                    loading: state.isLoading,
-                    onItemTap: (Proposal e) => AutoRouter.of(context).navigate(ProposalDetailsRoute(proposalId: e.id)),
-                    items: state.proposals,
-                    columns: [
-                      ColumnConfig(
-                        title: 'ID',
-                        width: 80,
-                        cellBuilder: (BuildContext context, Proposal item) {
-                          return Text(
-                            item.id,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Title',
-                        flex: 2,
-                        cellBuilder: (BuildContext context, Proposal item) {
-                          return Text(
-                            item.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Status',
-                        width: 150,
-                        cellBuilder: (BuildContext context, Proposal item) {
-                          return _StatusChip(voteResult: item.status);
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Voters',
-                        width: 100,
-                        cellBuilder: (BuildContext context, Proposal item) {
-                          return Text(
-                            item.voters.toString(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Age',
-                        cellBuilder: (BuildContext context, Proposal item) {
-                          return Text(
-                            item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'End time',
-                        cellBuilder: (BuildContext context, Proposal item) {
-                          return Text(
-                            DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+            SliverToBoxAdapter(
+              child: CustomCard(
+                title: 'Proposals',
+                childPadding: EdgeInsets.zero,
+                child: CustomTable<Proposal>(
+                  pageSize: state.pageSize,
+                  loading: state.isLoading,
+                  onItemTap: (Proposal e) => AutoRouter.of(context).navigate(ProposalDetailsRoute(proposalId: e.id)),
+                  items: state.proposals,
+                  columns: [
+                    ColumnConfig(
+                      title: 'ID',
+                      width: 80,
+                      cellBuilder: (BuildContext context, Proposal item) {
+                        return Text(
+                          item.id,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Title',
+                      flex: 2,
+                      cellBuilder: (BuildContext context, Proposal item) {
+                        return Text(
+                          item.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Status',
+                      width: 150,
+                      cellBuilder: (BuildContext context, Proposal item) {
+                        return _StatusChip(voteResult: item.status);
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Voters',
+                      width: 100,
+                      cellBuilder: (BuildContext context, Proposal item) {
+                        return Text(
+                          item.voters.toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Age',
+                      cellBuilder: (BuildContext context, Proposal item) {
+                        return Text(
+                          item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'End time',
+                      cellBuilder: (BuildContext context, Proposal item) {
+                        return Text(
+                          DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

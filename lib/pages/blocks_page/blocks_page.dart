@@ -11,7 +11,6 @@ import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
-import 'package:kira_dashboard/widgets/sliver_page_padding.dart';
 
 @RoutePage()
 class BlocksPage extends StatefulWidget {
@@ -31,87 +30,86 @@ class _BlocksPageState extends State<BlocksPage> {
       builder: (BuildContext context, BlocksPageState state) {
         return PageScaffold(
           slivers: [
-            SliverPagePadding(
-              sliver: SliverToBoxAdapter(
-                child: CustomCard(
-                  title: 'Blocks',
-                  child: CustomTable<Block>(
-                    pageSize: state.pageSize,
-                    loading: state.isLoading,
-                    items: state.blocks,
-                    columns: [
-                      ColumnConfig(
-                        title: 'Height',
-                        width: 120,
-                        cellBuilder: (BuildContext context, Block item) {
-                          return OpenableText(
-                            text: item.height,
-                            onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Proposer',
-                        width: 240,
-                        cellBuilder: (BuildContext context, Block item) {
-                          return Row(
-                            children: <Widget>[
-                              IdentityAvatar(size: 32, address: item.proposer),
-                              const SizedBox(width: 12),
-                              Expanded(child: OpenableAddressText(address: item.proposer, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
-                            ],
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Hash',
-                        cellBuilder: (BuildContext context, Block item) {
-                          return Text(
-                            item.hash,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Transactions',
-                        cellBuilder: (BuildContext context, Block item) {
-                          return OpenableText(
-                            text: item.numTxs,
-                            onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                      ColumnConfig(
-                        title: 'Age',
-                        cellBuilder: (BuildContext context, Block item) {
-                          return Text(
-                            item.time.difference(DateTime.now()).inSeconds > 0
-                                ? '${item.time.difference(DateTime.now()).inSeconds.abs()} seconds ago'
-                                : '${item.time.difference(DateTime.now()).inMinutes.abs()} minutes ago',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+            SliverToBoxAdapter(
+              child: CustomCard(
+                childPadding: EdgeInsets.zero,
+                title: 'Blocks',
+                child: CustomTable<Block>(
+                  onItemTap: (Block item) => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
+                  pageSize: state.pageSize,
+                  loading: state.isLoading,
+                  items: state.blocks,
+                  columns: [
+                    ColumnConfig(
+                      title: 'Height',
+                      width: 120,
+                      cellBuilder: (BuildContext context, Block item) {
+                        return Text(
+                          item.height,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Proposer',
+                      width: 240,
+                      cellBuilder: (BuildContext context, Block item) {
+                        return Row(
+                          children: <Widget>[
+                            IdentityAvatar(size: 32, address: item.proposer),
+                            const SizedBox(width: 12),
+                            Expanded(child: OpenableAddressText(address: item.proposer, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                          ],
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Hash',
+                      cellBuilder: (BuildContext context, Block item) {
+                        return Text(
+                          item.hash,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Transactions',
+                      cellBuilder: (BuildContext context, Block item) {
+                        return OpenableText(
+                          text: item.numTxs,
+                          onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                    ColumnConfig(
+                      title: 'Age',
+                      cellBuilder: (BuildContext context, Block item) {
+                        return Text(
+                          item.time.difference(DateTime.now()).inSeconds > 0
+                              ? '${item.time.difference(DateTime.now()).inSeconds.abs()} seconds ago'
+                              : '${item.time.difference(DateTime.now()).inMinutes.abs()} minutes ago',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xfffbfbfb),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

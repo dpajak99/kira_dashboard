@@ -248,6 +248,7 @@ class CircleIcon extends StatelessWidget {
             child: Center(
               child: Icon(
                 Icons.circle_outlined,
+                size: size,
                 color: color.withOpacity(0.5),
               ),
             ),
@@ -256,7 +257,7 @@ class CircleIcon extends StatelessWidget {
             child: Center(
               child: Icon(
                 Icons.circle,
-                size: size / 3,
+                size: size / 2,
                 color: color,
               ),
             ),

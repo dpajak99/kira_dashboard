@@ -8,6 +8,12 @@ class AppRouter extends $AppRouter {
   AppRouter({super.navigatorKey});
 
   @override
+  RouteType get defaultRouteType => const RouteType.custom(
+        durationInMilliseconds: 100,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+      );
+
+  @override
   List<AutoRoute> get routes {
     return [
       AutoRoute(

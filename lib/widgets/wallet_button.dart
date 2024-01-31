@@ -9,7 +9,12 @@ import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 
 class WalletButton extends StatelessWidget {
-  const WalletButton({super.key});
+  final bool small;
+
+  const WalletButton({
+    super.key,
+    this.small = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +22,9 @@ class WalletButton extends StatelessWidget {
       valueListenable: getIt<WalletProvider>(),
       builder: (BuildContext context, Wallet? wallet, _) {
         if (wallet == null) {
-          return const _ConnectWalletButton();
+          return _ConnectWalletButton(small: small);
         } else {
-          return _WalletButton(wallet: wallet);
+          return _WalletButton(wallet: wallet, small: small);
         }
       },
     );
@@ -27,10 +32,24 @@ class WalletButton extends StatelessWidget {
 }
 
 class _ConnectWalletButton extends StatelessWidget {
-  const _ConnectWalletButton();
+  final bool small;
+
+  const _ConnectWalletButton({
+    super.key,
+    this.small = false,
+  });
 
   @override
   Widget build(BuildContext context) {
+    if( small ) {
+      return IconButton(
+        onPressed: () => DialogRouter().navigate(const ConnectWalletDialog()),
+        icon: const Icon(
+          Icons.wallet,
+          color: Color(0xff4888f0),
+        ),
+      );
+    }
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () => DialogRouter().navigate(const ConnectWalletDialog()),
@@ -63,13 +82,22 @@ class _ConnectWalletButton extends StatelessWidget {
 
 class _WalletButton extends StatelessWidget {
   final Wallet wallet;
+  final bool small;
 
   const _WalletButton({
     required this.wallet,
+    super.key,
+    this.small = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    if( small ) {
+      return IconButton(
+        onPressed: () => AutoRouter.of(context).navigate(PortfolioRoute(address: wallet.address)),
+        icon: IdentityAvatar(size: 35, address: wallet.address),
+      );
+    }
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () => AutoRouter.of(context).navigate(PortfolioRoute(address: wallet.address)),

@@ -12,7 +12,6 @@ import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
-import 'package:kira_dashboard/widgets/sliver_page_padding.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
 
 @RoutePage()
@@ -30,7 +29,7 @@ class BlockTransactionsPage extends StatefulWidget {
 
 class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
   late final BlockTransactionsPageCubit blockTransactionsPageCubit = BlockTransactionsPageCubit(blockId: widget.blockId);
-  
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BlockTransactionsPageCubit, BlockTransactionsPageState>(
@@ -38,124 +37,122 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
       builder: (BuildContext context, BlockTransactionsPageState state) {
         return PageScaffold(
           slivers: [
-            SliverPagePadding(
-              sliver: SliverToBoxAdapter(
-                child: CustomCard(
-                  title: 'Transactions',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomTable<BlockTransaction>(
-                        items: state.transactions,
-                        pageSize: state.pageSize,
-                        loading: state.isLoading,
-                        columns: <ColumnConfig<BlockTransaction>>[
-                          ColumnConfig(
-                            title: 'Hash',
-                            width: 100,
-                            cellBuilder: (BuildContext context, BlockTransaction item) {
-                              return OpenableHash(
-                                hash: item.hash,
-                                onTap: () => AutoRouter.of(context).push(TransactionDetailsRoute(hash: item.hash)),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff2f8af5),
-                                ),
-                              );
-                            },
-                          ),
-                          ColumnConfig(
-                            title: 'Method',
-                            cellBuilder: (BuildContext context, BlockTransaction item) {
-                              return _MethodChip(item.method);
-                            },
-                          ),
-                          ColumnConfig(
-                            title: 'Date',
-                            width: 160,
-                            cellBuilder: (BuildContext context, BlockTransaction item) {
-                              return Text(
-                                DateFormat('d MMM y, HH:mm').format(item.time),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
-                              );
-                            },
-                          ),
-                          ColumnConfig(
-                            title: 'From',
-                            cellBuilder: (BuildContext context, BlockTransaction item) {
-                              return OpenableAddressText(
-                                address: item.from,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff2f8af5),
-                                ),
-                              );
-                            },
-                          ),
-                          ColumnConfig(
-                            title: ' ',
-                            width: 50,
-                            cellBuilder: (BuildContext context, BlockTransaction item) {
-                              return const Icon(
-                                Icons.arrow_forward,
-                                color: Color(0xff6c86ad),
-                              );
-                            },
-                          ),
-                          ColumnConfig(
-                            title: 'To',
-                            cellBuilder: (BuildContext context, BlockTransaction item) {
-                              return OpenableAddressText(
-                                address: item.to,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff2f8af5),
-                                ),
-                              );
-                            },
-                          ),
-                          ColumnConfig(
-                            title: 'Value',
-                            width: 180,
-                            textAlign: TextAlign.right,
-                            cellBuilder: (BuildContext context, BlockTransaction item) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  if (item.amounts.isNotEmpty) ...<Widget>[
-                                    Expanded(
-                                      child: CoinText(
-                                        coin: item.amounts.first,
-                                        textAlign: TextAlign.right,
-                                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                  ] else
-                                    const Padding(
-                                      padding: EdgeInsets.only(right: 32),
-                                      child: Text(
-                                        '---',
-                                        style: TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
-                                      ),
-                                    ),
-                                  TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
-                                  if (item.amounts.length > 1)
-                                    Text(
-                                      ' + ${item.amounts.length - 1}',
+            SliverToBoxAdapter(
+              child: CustomCard(
+                title: 'Transactions',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomTable<BlockTransaction>(
+                      items: state.transactions,
+                      pageSize: state.pageSize,
+                      loading: state.isLoading,
+                      columns: <ColumnConfig<BlockTransaction>>[
+                        ColumnConfig(
+                          title: 'Hash',
+                          width: 100,
+                          cellBuilder: (BuildContext context, BlockTransaction item) {
+                            return OpenableHash(
+                              hash: item.hash,
+                              onTap: () => AutoRouter.of(context).push(TransactionDetailsRoute(hash: item.hash)),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff2f8af5),
+                              ),
+                            );
+                          },
+                        ),
+                        ColumnConfig(
+                          title: 'Method',
+                          cellBuilder: (BuildContext context, BlockTransaction item) {
+                            return _MethodChip(item.method);
+                          },
+                        ),
+                        ColumnConfig(
+                          title: 'Date',
+                          width: 160,
+                          cellBuilder: (BuildContext context, BlockTransaction item) {
+                            return Text(
+                              DateFormat('d MMM y, HH:mm').format(item.time),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            );
+                          },
+                        ),
+                        ColumnConfig(
+                          title: 'From',
+                          cellBuilder: (BuildContext context, BlockTransaction item) {
+                            return OpenableAddressText(
+                              address: item.from,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff2f8af5),
+                              ),
+                            );
+                          },
+                        ),
+                        ColumnConfig(
+                          title: ' ',
+                          width: 50,
+                          cellBuilder: (BuildContext context, BlockTransaction item) {
+                            return const Icon(
+                              Icons.arrow_forward,
+                              color: Color(0xff6c86ad),
+                            );
+                          },
+                        ),
+                        ColumnConfig(
+                          title: 'To',
+                          cellBuilder: (BuildContext context, BlockTransaction item) {
+                            return OpenableAddressText(
+                              address: item.to,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff2f8af5),
+                              ),
+                            );
+                          },
+                        ),
+                        ColumnConfig(
+                          title: 'Value',
+                          width: 180,
+                          textAlign: TextAlign.right,
+                          cellBuilder: (BuildContext context, BlockTransaction item) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                if (item.amounts.isNotEmpty) ...<Widget>[
+                                  Expanded(
+                                    child: CoinText(
+                                      coin: item.amounts.first,
+                                      textAlign: TextAlign.right,
                                       style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                                     ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                ] else
+                                  const Padding(
+                                    padding: EdgeInsets.only(right: 32),
+                                    child: Text(
+                                      '---',
+                                      style: TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                    ),
+                                  ),
+                                TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
+                                if (item.amounts.length > 1)
+                                  Text(
+                                    ' + ${item.amounts.length - 1}',
+                                    style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                  ),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

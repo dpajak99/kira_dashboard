@@ -10,7 +10,6 @@ import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
-import 'package:kira_dashboard/widgets/sliver_page_padding.dart';
 
 @RoutePage()
 class ValidatorsPage extends StatefulWidget {
@@ -30,23 +29,18 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
         BlocBuilder<ValidatorsPageCubit, ValidatorsPageState>(
           bloc: cubit,
           builder: (BuildContext context, ValidatorsPageState state) {
-            return SliverPagePadding(
-              sliver: SliverGrid.builder(
-                itemCount: state.validators.length,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 350.0,
-                  mainAxisExtent: 420,
-                  crossAxisSpacing: 20.0,
-                  mainAxisSpacing: 20.0,
-                  childAspectRatio: 1,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  return _ValidatorTile(
-                    validator: state.validators[index],
-                    signedIn: state.isSignedIn,
-                  );
-                },
+            return SliverGrid.builder(
+              itemCount: state.validators.length,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: (MediaQuery.of(context).size.width > 550) ? 350 : 550,
+                mainAxisExtent: (MediaQuery.of(context).size.width > 550) ? 450 : 450,
               ),
+              itemBuilder: (BuildContext context, int index) {
+                return _ValidatorTile(
+                  validator: state.validators[index],
+                  signedIn: state.isSignedIn,
+                );
+              },
             );
           },
         ),
@@ -162,7 +156,9 @@ class _ValidatorTile extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: validator.valkey,)),
+                            onPressed: () => DialogRouter().navigate(DelegateTokensDialog(
+                              valoperAddress: validator.valkey,
+                            )),
                             child: const Text('Delegate'),
                           ),
                         ),
