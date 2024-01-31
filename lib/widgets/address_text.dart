@@ -122,6 +122,7 @@ class IconTextButton extends StatelessWidget {
   final double gap;
   final Color highlightColor;
   final double? rotateAngle;
+  final bool reversed;
 
   const IconTextButton({
     super.key,
@@ -132,6 +133,7 @@ class IconTextButton extends StatelessWidget {
     this.highlightColor = const Color(0xff4888f0),
     this.gap = 8,
     this.rotateAngle,
+    this.reversed = false,
   });
 
   @override
@@ -139,14 +141,40 @@ class IconTextButton extends StatelessWidget {
     return MouseStateListener(
       onTap: onTap,
       childBuilder: (Set<MaterialState> states) {
-        Widget? iconWidget = icon != null ?  Icon(
-          icon,
-          size: 16,
-          color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
-        ) : null;
+        Widget? iconWidget = icon != null
+            ? Icon(
+                icon,
+                size: 16,
+                color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+              )
+            : null;
 
         if (rotateAngle != null) {
           iconWidget = Transform.rotate(angle: rotateAngle!, child: iconWidget);
+        }
+
+        if (reversed) {
+          return RichText(
+            text: TextSpan(
+              text: '',
+              children: [
+                if (iconWidget != null)
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: gap),
+                      child: iconWidget,
+                    ),
+                  ),
+                TextSpan(
+                  text: text,
+                  style: style.copyWith(
+                    color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+                  ),
+                ),
+              ],
+            ),
+          );
         }
 
         return RichText(
@@ -156,14 +184,14 @@ class IconTextButton extends StatelessWidget {
               color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
             ),
             children: [
-              if(iconWidget != null)
-              WidgetSpan(
-                alignment: PlaceholderAlignment.middle,
-                child: Padding(
-                  padding: EdgeInsets.only(left: gap),
-                  child: iconWidget,
+              if (iconWidget != null)
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: gap),
+                    child: iconWidget,
+                  ),
                 ),
-              ),
             ],
           ),
         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
 class OpenableHash extends StatelessWidget {
@@ -32,6 +33,46 @@ class OpenableHash extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8),
               child: Icon(
                 Icons.open_in_new,
+                size: 16,
+                color: states.contains(MaterialState.hovered) ? const Color(0xfffbfbfb) : const Color(0xff2f8af5),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class CopyableHash extends StatelessWidget {
+  final String hash;
+  final TextStyle style;
+
+  const CopyableHash({
+    super.key,
+    required this.hash,
+    required this.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseStateListener(
+      onTap: () => Clipboard.setData(ClipboardData(text: hash)),
+      childBuilder: (Set<MaterialState> states) {
+        return Row(
+          children: [
+            Expanded(
+              child: Text(
+                hash,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: style,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Icon(
+                Icons.copy,
                 size: 16,
                 color: states.contains(MaterialState.hovered) ? const Color(0xfffbfbfb) : const Color(0xff2f8af5),
               ),

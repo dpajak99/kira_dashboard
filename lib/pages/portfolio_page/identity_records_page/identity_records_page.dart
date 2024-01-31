@@ -64,6 +64,9 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                 items: state.records,
                 pageSize: state.pageSize,
                 loading: state.isLoading,
+                mobileBuilder: (BuildContext context, IdentityRecord? item, bool loading) {
+                  return const Text('dupa');
+                },
                 columns: [
                   ColumnConfig(
                     title: 'Key',

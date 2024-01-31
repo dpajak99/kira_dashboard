@@ -13,4 +13,8 @@ class Undelegation {
     required this.amounts,
     required this.expiry,
   });
+
+  bool get isClaimable {
+    return expiry.difference(DateTime.now()).inSeconds <= 0;
+  }
 }

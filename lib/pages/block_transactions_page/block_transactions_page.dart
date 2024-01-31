@@ -12,6 +12,7 @@ import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
 
 @RoutePage()
@@ -48,6 +49,145 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                       items: state.transactions,
                       pageSize: state.pageSize,
                       loading: state.isLoading,
+                      mobileBuilder: (BuildContext context, BlockTransaction? item, bool loading) {
+                        if (item == null || loading) {
+                          return const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        SizedShimmer(width: double.infinity, height: 12),
+                                        SizedBox(height: 4),
+                                        SizedShimmer(width: double.infinity, height: 12),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        SizedShimmer(width: double.infinity, height: 20),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              SizedShimmer(width: double.infinity, height: 20),
+                              SizedBox(height: 8),
+                              SizedShimmer(width: double.infinity, height: 20),
+                            ],
+                          );
+                        }
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      _MethodChip(item.method),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        DateFormat('d MMM y, HH:mm').format(item.time),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      if (item.amounts.isNotEmpty) ...<Widget>[
+                                        Expanded(
+                                          child: CoinText(
+                                            coin: item.amounts.first,
+                                            textAlign: TextAlign.right,
+                                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
+                                      ],
+                                      if (item.amounts.length > 1)
+                                        Text(
+                                          ' + ${item.amounts.length - 1}',
+                                          style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Hash',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            OpenableHash(
+                              hash: item.hash,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff2f8af5),
+                              ),
+                              onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 4,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'From',
+                                        style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                      ),
+                                      OpenableAddressText(
+                                        address: item.from,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xff2f8af5),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  flex: 4,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      const Text(
+                                        'To',
+                                        style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                      ),
+                                      OpenableAddressText(
+                                        address: item.to,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xff2f8af5),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
                       columns: <ColumnConfig<BlockTransaction>>[
                         ColumnConfig(
                           title: 'Hash',

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/transaction.dart';
@@ -11,6 +11,7 @@ import 'package:kira_dashboard/widgets/coin_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
 
 class TransactionsPage extends StatefulWidget {
@@ -37,6 +38,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
       builder: (BuildContext context, TransactionsListState state) {
         return CustomCard(
           title: 'Transactions',
+          enableMobile: true,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,6 +47,150 @@ class _TransactionsPageState extends State<TransactionsPage> {
                 pageSize: state.pageSize,
                 loading: state.isLoading,
                 items: state.transactions,
+                mobileBuilder: (BuildContext context, Transaction? item, bool loading) {
+                  if (item == null || loading) {
+                    return const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  SizedShimmer(width: double.infinity, height: 12),
+                                  SizedBox(height: 4),
+                                  SizedShimmer(width: double.infinity, height: 12),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  SizedShimmer(width: double.infinity, height: 20),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                        SizedShimmer(width: double.infinity, height: 20),
+                        SizedBox(height: 8),
+                        SizedShimmer(width: double.infinity, height: 20),
+                      ],
+                    );
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _MethodChip(item.method),
+                                const SizedBox(height: 4),
+                                Text(
+                                  DateFormat('d MMM y, HH:mm').format(item.time),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                if (item.amounts.isNotEmpty) ...<Widget>[
+                                  Expanded(
+                                    child: CoinText(
+                                      coin: item.amounts.first,
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
+                                ],
+                                if (item.amounts.length > 1)
+                                  Text(
+                                    ' + ${item.amounts.length - 1}',
+                                    style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Hash',
+                        style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                      ),
+                      OpenableHash(
+                        hash: item.hash,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff2f8af5),
+                        ),
+                        onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'From',
+                                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                ),
+                                OpenableAddressText(
+                                  address: item.from,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff2f8af5),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 2,
+                            child: _DirectionChip(item.direction, alignment: Alignment.center),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                const Text(
+                                  'To',
+                                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                ),
+                                OpenableAddressText(
+                                  address: item.to,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff2f8af5),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
                 columns: <ColumnConfig<Transaction>>[
                   ColumnConfig(
                     title: 'Hash',
@@ -61,7 +207,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                   ),
                   ColumnConfig(
                     title: 'Method',
-                    width: 120,
+                    width: 110,
                     cellBuilder: (BuildContext context, Transaction item) {
                       return _MethodChip(item.method);
                     },
@@ -80,7 +226,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                   ),
                   ColumnConfig(
                     title: 'From',
-                    width: 170,
+                    width: 160,
                     cellBuilder: (BuildContext context, Transaction item) {
                       return OpenableAddressText(
                         address: item.from,
@@ -100,7 +246,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                   ),
                   ColumnConfig(
                     title: 'To',
-                    width: 170,
+                    width: 160,
                     cellBuilder: (BuildContext context, Transaction item) {
                       return OpenableAddressText(
                         address: item.to,
@@ -113,6 +259,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                   ),
                   ColumnConfig(
                     title: 'Value',
+                    flex: 2,
                     textAlign: TextAlign.right,
                     cellBuilder: (BuildContext context, Transaction item) {
                       return Row(
@@ -127,6 +274,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                               ),
                             ),
                             const SizedBox(width: 8),
+                            TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
                           ] else
                             const Padding(
                               padding: EdgeInsets.only(right: 32),
@@ -135,7 +283,6 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                 style: TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
                               ),
                             ),
-                          TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
                           if (item.amounts.length > 1)
                             Text(
                               ' + ${item.amounts.length - 1}',
@@ -157,13 +304,17 @@ class _TransactionsPageState extends State<TransactionsPage> {
 
 class _DirectionChip extends StatelessWidget {
   final String direction;
+  final Alignment alignment;
 
-  const _DirectionChip(this.direction);
+  const _DirectionChip(
+    this.direction, {
+    this.alignment = Alignment.centerLeft,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: alignment,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(

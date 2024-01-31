@@ -10,6 +10,7 @@ import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/coin_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
 
 class BalancesPage extends StatefulWidget {
@@ -39,6 +40,7 @@ class _BalancesPageState extends State<BalancesPage> {
       builder: (BuildContext context, BalancesListState state) {
         return CustomCard(
           title: 'Tokens',
+          enableMobile: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +49,80 @@ class _BalancesPageState extends State<BalancesPage> {
                 pageSize: state.pageSize,
                 loading: state.isLoading,
                 items: state.balances.length > 15 ? state.balances.sublist(0, 15) : state.balances,
+                mobileBuilder: (BuildContext context, Coin? item, bool loading) {
+                  if (item == null || loading) {
+                    return const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
+                            Spacer(),
+                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
+                            Spacer(),
+                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: <Widget>[
+                                    TokenIcon(size: 24, iconUrl: item.icon),
+                                    const SizedBox(width: 12),
+                                    Expanded(child: Text(item.name, maxLines: 1, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                _TokenTypeChip(item.type),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                CoinText(
+                                  coin: item,
+                                  style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                  textAlign: TextAlign.right,
+                                ),
+                                if (widget.isMyWallet) ...<Widget>[
+                                  const SizedBox(height: 4),
+                                  IconTextButton(
+                                    text: 'Send',
+                                    gap: 4,
+                                    reversed: true,
+                                    icon: AppIcons.arrow_up_right,
+                                    highlightColor: const Color(0xfffbfbfb),
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xff4888f0),
+                                    ),
+                                    onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: item)),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  );
+                },
                 columns: <ColumnConfig<Coin>>[
                   ColumnConfig(
                     title: 'Token',

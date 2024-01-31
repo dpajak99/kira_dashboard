@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 typedef CellBuilder<T> = Widget Function(BuildContext context, T item);
@@ -21,14 +22,100 @@ class ColumnConfig<T> {
   });
 }
 
+typedef ElementBuilder<T> = Widget Function(BuildContext context, T? item, bool loading);
+
 class CustomTable<T> extends StatelessWidget {
   final ValueChanged<T>? onItemTap;
   final int pageSize;
   final bool loading;
   final List<T> items;
   final List<ColumnConfig<T>> columns;
+  final ElementBuilder<T>? mobileBuilder;
 
   const CustomTable({
+    this.onItemTap,
+    super.key,
+    required this.items,
+    required this.columns,
+    required this.mobileBuilder,
+    this.pageSize = 10,
+    this.loading = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width < 900) {
+      return _MobileTable(
+        onItemTap: onItemTap,
+        items: items,
+        columns: columns,
+        mobileBuilder: mobileBuilder,
+        pageSize: pageSize,
+        loading: loading,
+      );
+    } else {
+      return _DesktopTable<T>(
+        onItemTap: onItemTap,
+        items: items,
+        columns: columns,
+        pageSize: pageSize,
+        loading: loading,
+      );
+    }
+  }
+}
+
+class _MobileTable<T> extends StatelessWidget {
+  final ValueChanged<T>? onItemTap;
+  final int pageSize;
+  final bool loading;
+  final List<T> items;
+  final List<ColumnConfig<T>> columns;
+  final ElementBuilder<T>? mobileBuilder;
+
+  const _MobileTable({
+    this.onItemTap,
+    super.key,
+    required this.items,
+    required this.columns,
+    required this.mobileBuilder,
+    this.pageSize = 10,
+    this.loading = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (loading == false && items.isEmpty)
+          const SizedBox(
+            height: 300,
+            child: Center(
+              child: Text('Nothing here :(', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Color(0xff6c86ad))),
+            ),
+          )
+        else ...<Widget>[
+          for (int y = 0; (y < (loading ? pageSize : items.length)); y++)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: CustomCard(
+                child: mobileBuilder!(context, items.elementAtOrNull(y), loading),
+              ),
+            ),
+        ],
+      ],
+    );
+  }
+}
+
+class _DesktopTable<T> extends StatelessWidget {
+  final ValueChanged<T>? onItemTap;
+  final int pageSize;
+  final bool loading;
+  final List<T> items;
+  final List<ColumnConfig<T>> columns;
+
+  const _DesktopTable({
     this.onItemTap,
     super.key,
     required this.items,
@@ -50,7 +137,7 @@ class CustomTable<T> extends StatelessWidget {
           )
         else ...<Widget>[
           Container(
-            padding:  onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24): EdgeInsets.zero,
+            padding: onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24) : EdgeInsets.zero,
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -96,7 +183,7 @@ class CustomTable<T> extends StatelessWidget {
                 splashColor: onItemTap != null ? const Color(0x294888f0) : null,
                 onTap: onItemTap != null ? () => onItemTap?.call(items[y]) : null,
                 child: Padding(
-                  padding:  onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24): EdgeInsets.zero,
+                  padding: onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24) : EdgeInsets.zero,
                   child: Row(
                     children: <Widget>[
                       for (int x = 0; x < columns.length; x++)
@@ -167,7 +254,12 @@ class _TableCellHeader extends StatelessWidget {
         left: (first ? 0 : 16) + (padding?.left ?? 0),
         right: (last ? 0 : 16) + (padding?.right ?? 0),
       ),
-      child: Text(text, textAlign: textAlign, style: const TextStyle(fontSize: 14, color: Color(0xff6c86ad))),
+      child: Text(
+        text,
+        textAlign: textAlign,
+        maxLines: 1,
+        style: const TextStyle(fontSize: 14, color: Color(0xff6c86ad)),
+      ),
     );
   }
 }

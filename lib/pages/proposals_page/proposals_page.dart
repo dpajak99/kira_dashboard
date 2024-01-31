@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/proposal.dart';
@@ -8,7 +9,9 @@ import 'package:kira_dashboard/pages/proposals_page/proposals_page_state.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 @RoutePage()
 class ProposalsPage extends StatefulWidget {
@@ -31,12 +34,98 @@ class _ProposalsPageState extends State<ProposalsPage> {
             SliverToBoxAdapter(
               child: CustomCard(
                 title: 'Proposals',
+                enableMobile: true,
                 childPadding: EdgeInsets.zero,
                 child: CustomTable<Proposal>(
                   pageSize: state.pageSize,
                   loading: state.isLoading,
                   onItemTap: (Proposal e) => AutoRouter.of(context).navigate(ProposalDetailsRoute(proposalId: e.id)),
                   items: state.proposals,
+                  mobileBuilder: (BuildContext context, Proposal? item, bool loading) {
+                    if (item == null || loading) {
+                      return const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedShimmer(width: 200, height: 16),
+                          SizedBox(height: 4),
+                          SizedShimmer(width: 200, height: 14),
+                          SizedBox(height: 16),
+                          SizedShimmer(width: double.infinity, height: 12),
+                          SizedBox(height: 8),
+                          SizedShimmer(width: double.infinity, height: 12),
+                          SizedBox(height: 8),
+                          SizedShimmer(width: double.infinity, height: 12),
+                          SizedBox(height: 8),
+                          SizedShimmer(width: double.infinity, height: 12),
+                        ],
+                      );
+                    }
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        OpenableText(
+                          text: 'Proposal #${item.id}',
+                          style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                          onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.id)),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          item.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                        ),
+                        const SizedBox(height: 16),
+                        _MobileRow(
+                          title: const Text(
+                            'Status',
+                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                          ),
+                          value: _StatusChip(voteResult: item.status),
+                        ),
+                        const SizedBox(height: 8),
+                        _MobileRow(
+                          title: const Text(
+                            'Voters',
+                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                          ),
+                          value: Text(
+                            item.voters.toString(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        _MobileRow(
+                          title: const Text(
+                            'Age',
+                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                          ),
+                          value: Text(
+                            item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        _MobileRow(
+                          title: const Text(
+                            'End time',
+                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                          ),
+                          value: Text(
+                            DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                   columns: [
                     ColumnConfig(
                       title: 'ID',
@@ -179,6 +268,29 @@ class _StatusChip extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _MobileRow extends StatelessWidget {
+  final Widget title;
+  final Widget value;
+
+  const _MobileRow({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: title,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          flex: 2,
+          child: value,
+        ),
+      ],
     );
   }
 }

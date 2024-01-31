@@ -30,11 +30,13 @@ class CoinText extends StatelessWidget {
           return Text(
             _buildShortString(size.maxWidth - 10),
             textAlign: textAlign,
+            maxLines: 1,
             style: style,
           );
         } else {
           return Text(
             prefixedTokenAmountString,
+            maxLines: 1,
             textAlign: textAlign,
             style: style,
           );

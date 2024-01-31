@@ -15,6 +15,7 @@ import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 class DelegationsPage extends StatefulWidget {
   final String address;
@@ -43,6 +44,7 @@ class DelegationsPageState extends State<DelegationsPage> {
           builder: (BuildContext context, UndelegationsListState state) {
             return CustomCard(
               title: 'Undelegations',
+              enableMobile: true,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,6 +53,84 @@ class DelegationsPageState extends State<DelegationsPage> {
                     pageSize: state.pageSize,
                     loading: state.isLoading,
                     items: state.undelegations,
+                    mobileBuilder: (BuildContext context, Undelegation? item, bool loading) {
+                      if (item == null || loading) {
+                        return const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedShimmer(width: 200, height: 23),
+                            SizedBox(height: 24),
+                            SizedShimmer(width: double.infinity, height: 12),
+                            SizedBox(height: 8),
+                            SizedShimmer(width: double.infinity, height: 12),
+                          ],
+                        );
+                      }
+                      return Column(
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              IdentityAvatar(size: 32, address: item.validatorInfo.address),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb))),
+                                    const SizedBox(height: 4),
+                                    OpenableAddressText(
+                                      address: item.validatorInfo.address,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff2f8af5),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (widget.isMyWallet && item.isClaimable)
+                                IconTextButton(
+                                  text: 'Claim',
+                                  highlightColor: const Color(0xfffbfbfb),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff4888f0),
+                                  ),
+                                  onTap: () => undelegationsListCubit.claimUndelegation(undelegationId: item.id.toString()),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          _MobileRow(
+                            title: const Text(
+                              'Amounts',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            ),
+                          ),
+                          if (item.isClaimable == false) ...<Widget>[
+                            const SizedBox(height: 8),
+                            _MobileRow(
+                              title: const Text(
+                                'Claim after',
+                                style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              ),
+                              value: Text(
+                                DateFormat('d MMM y, HH:mm').format(item.expiry),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              ),
+                            ),
+                          ]
+                        ],
+                      );
+                    },
                     columns: <ColumnConfig<Undelegation>>[
                       ColumnConfig(
                         title: 'Validator',
@@ -79,9 +159,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                         title: 'Claim',
                         textAlign: TextAlign.right,
                         cellBuilder: (BuildContext context, Undelegation item) {
-                          bool claimable = item.expiry.difference(DateTime.now()).inSeconds <= 0;
-
-                          if (claimable && widget.isMyWallet) {
+                          if (item.isClaimable && widget.isMyWallet) {
                             return Align(
                               alignment: Alignment.centerRight,
                               child: IconTextButton(
@@ -100,7 +178,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                             DateFormat('d MMM y, HH:mm').format(item.expiry),
                             style: TextStyle(
                               fontSize: 14,
-                              color: claimable ? const Color(0xff35b15f) : const Color(0xfff12e1f) ,
+                              color: item.isClaimable ? const Color(0xff35b15f) : const Color(0xfff12e1f),
                             ),
                             textAlign: TextAlign.right,
                           );
@@ -119,6 +197,7 @@ class DelegationsPageState extends State<DelegationsPage> {
           builder: (BuildContext context, DelegationsListState state) {
             return CustomCard(
               title: 'Delegations',
+              enableMobile: true,
               leading: Row(
                 children: [
                   if (widget.isMyWallet)
@@ -144,6 +223,93 @@ class DelegationsPageState extends State<DelegationsPage> {
                     pageSize: state.pageSize,
                     loading: state.isLoading,
                     items: state.delegations,
+                    mobileBuilder: (BuildContext context, Delegation? item, bool loading) {
+                      if (item == null || loading) {
+                        return const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedShimmer(width: double.infinity, height: 23),
+                            SizedBox(height: 24),
+                            SizedShimmer(width: double.infinity, height: 12),
+                            SizedBox(height: 8),
+                            SizedShimmer(width: double.infinity, height: 12),
+                          ],
+                        );
+                      }
+
+                      return Column(
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              IdentityAvatar(size: 32, address: item.validatorInfo.address),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.validatorInfo.moniker,
+                                      maxLines: 1,
+                                      style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    OpenableAddressText(
+                                      address: item.validatorInfo.address,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff2f8af5),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (widget.isMyWallet) ...<Widget>[
+                                IconTextButton(
+                                  text: 'Delegate',
+                                  highlightColor: const Color(0xfffbfbfb),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff4888f0),
+                                  ),
+                                  onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+                                ),
+                                const SizedBox(width: 8),
+                                IconTextButton(
+                                  text: 'Undelegate',
+                                  highlightColor: const Color(0xfffbfbfb),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff4888f0),
+                                  ),
+                                  onTap: () => DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+                                ),
+                              ],
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          _MobileRow(
+                            title: const Text(
+                              'Status',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: _StatusChip(stakingPoolStatus: item.poolInfo.status),
+                          ),
+                          const SizedBox(height: 8),
+                          _MobileRow(
+                            title: const Text(
+                              'Commision',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              '${item.poolInfo.commissionPercentage}%',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            )
+                          ),
+                        ],
+                      );
+                    },
                     columns: <ColumnConfig<Delegation>>[
                       ColumnConfig(
                         title: 'Validator',
@@ -252,6 +418,29 @@ class _StatusChip extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _MobileRow extends StatelessWidget {
+  final Widget title;
+  final Widget value;
+
+  const _MobileRow({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: title,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          flex: 2,
+          child: value,
+        ),
+      ],
     );
   }
 }

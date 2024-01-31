@@ -51,6 +51,9 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                     items: state.requests,
                     pageSize: state.pageSize,
                     loading: state.isLoading,
+                    mobileBuilder: (BuildContext context, VerificationRequest? item, bool loading) {
+                      return const Text('dupa');
+                    },
                     columns: <ColumnConfig<VerificationRequest>>[
                       ColumnConfig(
                         title: 'Requested from',
@@ -158,6 +161,9 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                     items: state.requests,
                     pageSize: state.pageSize,
                     loading: state.isLoading,
+                    mobileBuilder: (BuildContext context, VerificationRequest? item, bool loading) {
+                      return const Text('dupa');
+                    },
                     columns: <ColumnConfig<VerificationRequest>>[
                       ColumnConfig(
                         title: 'Requested to',

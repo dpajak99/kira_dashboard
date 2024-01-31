@@ -33,7 +33,7 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
               itemCount: state.validators.length,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: (MediaQuery.of(context).size.width > 550) ? 350 : 550,
-                mainAxisExtent: (MediaQuery.of(context).size.width > 550) ? 450 : 450,
+                mainAxisExtent: (MediaQuery.of(context).size.width > 550) ? state.isSignedIn ? 450 : 380 : state.isSignedIn ? 450 : 350,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return _ValidatorTile(
@@ -88,6 +88,9 @@ class _ValidatorTile extends StatelessWidget {
                       const SizedBox(height: 16),
                       Text(
                         validator.moniker,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: Color(0xfffbfbfb),
                           fontSize: 20,

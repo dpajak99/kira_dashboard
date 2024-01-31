@@ -6,6 +6,7 @@ class CustomCard extends StatelessWidget {
   final String? title;
   final EdgeInsets? padding;
   final EdgeInsets? childPadding;
+  final bool enableMobile;
 
   const CustomCard({
     super.key,
@@ -14,10 +15,49 @@ class CustomCard extends StatelessWidget {
     this.title,
     this.padding,
     this.childPadding,
+    this.enableMobile = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    Widget titleWidget = Row(
+      children: [
+        if (title != null) ...<Widget>[
+          Text(title!, style: const TextStyle(fontSize: 24, color: Color(0xfffbfbfb))),
+        ],
+        if (leading != null) ...<Widget>[
+          Expanded(child: leading!),
+        ],
+      ],
+    );
+
+    Widget childWidget = child;
+
+    if (!enableMobile || (enableMobile && MediaQuery.of(context).size.width >= 900)) {
+      titleWidget = Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: titleWidget,
+      );
+
+      childWidget = Container(
+        width: double.infinity,
+        padding: childPadding ?? const EdgeInsets.symmetric(horizontal: 24),
+        child: child,
+      );
+    }
+
+    Widget content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        titleWidget,
+        if (title != null || leading != null) const SizedBox(height: 24),
+        childWidget,
+      ],
+    );
+
+    if (enableMobile && MediaQuery.of(context).size.width < 900) {
+      return content;
+    }
     return Container(
       padding: padding ?? const EdgeInsets.symmetric(vertical: 24),
       width: double.infinity,
@@ -25,30 +65,7 @@ class CustomCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: const Color(0xff141924),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              children: [
-                if (title != null) ...<Widget>[
-                  Text(title!, style: const TextStyle(fontSize: 24, color: Color(0xfffbfbfb))),
-                ],
-                if (leading != null) ...<Widget>[
-                  Expanded(child: leading!),
-                ],
-              ],
-            ),
-          ),
-          if (title != null || leading != null) const SizedBox(height: 24),
-          Container(
-            width: double.infinity,
-            padding: childPadding ?? const EdgeInsets.symmetric(horizontal: 24),
-            child: child,
-          ),
-        ],
-      ),
+      child: content,
     );
   }
 }
