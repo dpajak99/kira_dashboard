@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:kira_dashboard/infra/entities/proposals/proposal_details_entity.dart';
 import 'package:kira_dashboard/infra/entities/proposals/proposal_entity.dart';
 import 'package:kira_dashboard/infra/entities/proposals/query_proposals_response.dart';
 import 'package:kira_dashboard/infra/repository/api_repository.dart';
@@ -15,6 +16,19 @@ class ProposalsRepository extends ApiRepository {
       QueryProposalsResponse queryProposalsResponse = QueryProposalsResponse.fromJson(response.data!);
 
       return queryProposalsResponse.proposals;
+    } catch (e) {
+      AppLogger().log(message: 'ProposalsRepository');
+      rethrow;
+    }
+  }
+
+  Future<ProposalDetailsEntity> getProposalDetails(String proposalId) async {
+    try {
+      Response<Map<String, dynamic>> response = await httpClient.get(
+        '/api/kira/gov/proposals/$proposalId',
+      );
+      ProposalDetailsEntity proposalDetailsEntity = ProposalDetailsEntity.fromJson(response.data!);
+      return proposalDetailsEntity;
     } catch (e) {
       AppLogger().log(message: 'ProposalsRepository');
       rethrow;

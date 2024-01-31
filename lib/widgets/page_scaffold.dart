@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PageScaffold extends StatelessWidget {
   final List<Widget> slivers;
@@ -15,7 +16,7 @@ class PageScaffold extends StatelessWidget {
         const SliverPadding(padding: EdgeInsets.only(top: 64)),
         ...slivers,
         const SliverPadding(padding: EdgeInsets.only(bottom: 32)),
-      ]
+      ],
     );
   }
 }

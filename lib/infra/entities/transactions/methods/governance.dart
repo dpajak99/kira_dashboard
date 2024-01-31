@@ -51,6 +51,10 @@ enum VoteOption {
   final String name;
 
   const VoteOption(this.name);
+
+  factory VoteOption.fromString(String str) {
+    return VoteOption.values.firstWhere((e) => e.name == str);
+  }
 }
 
 class MsgVoteProposal extends TxMsg {

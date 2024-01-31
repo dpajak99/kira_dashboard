@@ -1,10 +1,11 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:kira_dashboard/models/proposal.dart';
 import 'package:kira_dashboard/pages/proposals_page/proposals_page_cubit.dart';
 import 'package:kira_dashboard/pages/proposals_page/proposals_page_state.dart';
+import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';
@@ -32,9 +33,11 @@ class _ProposalsPageState extends State<ProposalsPage> {
               sliver: SliverToBoxAdapter(
                 child: CustomCard(
                   title: 'Proposals',
+                  childPadding: EdgeInsets.zero,
                   child: CustomTable<Proposal>(
                     pageSize: state.pageSize,
                     loading: state.isLoading,
+                    onItemTap: (Proposal e) => AutoRouter.of(context).navigate(ProposalDetailsRoute(proposalId: e.id)),
                     items: state.proposals,
                     columns: [
                       ColumnConfig(

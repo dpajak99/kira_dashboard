@@ -22,12 +22,14 @@ class ColumnConfig<T> {
 }
 
 class CustomTable<T> extends StatelessWidget {
+  final ValueChanged<T>? onItemTap;
   final int pageSize;
   final bool loading;
   final List<T> items;
   final List<ColumnConfig<T>> columns;
 
   const CustomTable({
+    this.onItemTap,
     super.key,
     required this.items,
     required this.columns,
@@ -48,6 +50,7 @@ class CustomTable<T> extends StatelessWidget {
           )
         else ...<Widget>[
           Container(
+            padding:  onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24): EdgeInsets.zero,
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -85,48 +88,60 @@ class CustomTable<T> extends StatelessWidget {
             ),
           ),
           for (int y = 0; (y < (loading ? pageSize : items.length)); y++)
-            Row(
-              children: <Widget>[
-                for (int x = 0; x < columns.length; x++)
-                  if (columns[x].width != null)
-                    SizedBox(
-                      width: columns[x].width,
-                      child: _TableCell(
-                        loading
-                            ? Align(
-                                alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
-                                child: SizedShimmer(
-                                  height: 18,
-                                  width: 200,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              )
-                            : columns[x].cellBuilder(context, items[y]),
-                        first: x == 0,
-                        last: x == columns.length - 1,
-                        textAlign: columns[x].textAlign,
-                      ),
-                    )
-                  else
-                    Expanded(
-                      flex: columns[x].flex,
-                      child: _TableCell(
-                        loading
-                            ? Align(
-                                alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
-                                child: SizedShimmer(
-                                  height: 18,
-                                  width: 200,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              )
-                            : columns[x].cellBuilder(context, items[y]),
-                        first: x == 0,
-                        last: x == columns.length - 1,
-                        textAlign: columns[x].textAlign,
-                      ),
-                    ),
-              ],
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                splashFactory: InkRipple.splashFactory,
+                overlayColor: onItemTap != null ? MaterialStateProperty.all(const Color(0x296c86ad)) : null,
+                splashColor: onItemTap != null ? const Color(0x294888f0) : null,
+                onTap: onItemTap != null ? () => onItemTap?.call(items[y]) : null,
+                child: Padding(
+                  padding:  onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24): EdgeInsets.zero,
+                  child: Row(
+                    children: <Widget>[
+                      for (int x = 0; x < columns.length; x++)
+                        if (columns[x].width != null)
+                          SizedBox(
+                            width: columns[x].width,
+                            child: _TableCell(
+                              loading
+                                  ? Align(
+                                      alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                                      child: SizedShimmer(
+                                        height: 18,
+                                        width: 200,
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                    )
+                                  : columns[x].cellBuilder(context, items[y]),
+                              first: x == 0,
+                              last: x == columns.length - 1,
+                              textAlign: columns[x].textAlign,
+                            ),
+                          )
+                        else
+                          Expanded(
+                            flex: columns[x].flex,
+                            child: _TableCell(
+                              loading
+                                  ? Align(
+                                      alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                                      child: SizedShimmer(
+                                        height: 18,
+                                        width: 200,
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                    )
+                                  : columns[x].cellBuilder(context, items[y]),
+                              first: x == 0,
+                              last: x == columns.length - 1,
+                              textAlign: columns[x].textAlign,
+                            ),
+                          ),
+                    ],
+                  ),
+                ),
+              ),
             ),
         ],
       ],

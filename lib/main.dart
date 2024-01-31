@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData baseTheme = ThemeData(brightness: Brightness.dark);
+    ThemeData baseTheme = ThemeData.dark();
     ThemeData theme = baseTheme.copyWith(
       textTheme: GoogleFonts.robotoTextTheme(baseTheme.textTheme),
     );

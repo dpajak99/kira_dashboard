@@ -37,7 +37,12 @@ class AppRouter extends $AppRouter {
           ),
           AutoRoute(
             page: ProposalsRoute.page,
-            path: 'address',
+            path: 'proposals',
+          ),
+          AutoRoute(
+            page: ProposalDetailsRoute.page,
+            path: 'proposal/:proposalId',
+            usesPathAsKey: true,
           ),
           AutoRoute(
             page: BlockTransactionsRoute.page,

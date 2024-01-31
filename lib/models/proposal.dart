@@ -19,31 +19,60 @@ enum VoteResult {
   }
 }
 
+enum VotingStatus {
+  pending,
+  success,
+  failure,
+}
+
 class Proposal {
   final String id;
   final String title;
+  final String description;
   final VoteResult status;
+  final dynamic content;
   final int voters;
   final Duration timePassed;
+  final DateTime votingStartTime;
   final DateTime votingEndTime;
 
   Proposal({
     required this.id,
     required this.title,
+    required this.description,
     required this.status,
+    required this.content,
     required this.voters,
     required this.timePassed,
+    required this.votingStartTime,
     required this.votingEndTime,
   });
 
   factory Proposal.fromEntity(ProposalEntity entity) {
     return Proposal(
       id: entity.proposalId,
+      description: entity.description,
+      content: entity.content,
       title: entity.title,
       status: VoteResult.fromString(entity.result),
       voters: entity.votersCount,
       timePassed: DateTime.now().difference(DateTime.parse(entity.submitTime)),
+      votingStartTime: DateTime.parse(entity.submitTime),
       votingEndTime: DateTime.parse(entity.votingEndTime),
     );
+  }
+
+  VotingStatus get simpleStatus {
+    switch (status) {
+      case VoteResult.passed:
+        return VotingStatus.success;
+      case VoteResult.rejected:
+      case VoteResult.rejectedWithVeto:
+      case VoteResult.quorumNotReached:
+      case VoteResult.passedWithExecFail:
+        return VotingStatus.failure;
+      default:
+        return VotingStatus.pending;
+    }
   }
 }

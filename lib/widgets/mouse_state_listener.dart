@@ -22,6 +22,7 @@ class _MouseStateListener extends State<MouseStateListener> {
     return InkWell(
       onTap: widget.onTap ?? () {},
       highlightColor: Colors.transparent,
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       onHover: (bool hovered) {
