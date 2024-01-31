@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_state.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
+import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
@@ -219,6 +221,19 @@ class _NetworkDialog extends State<NetworkDialog> {
                   ],
                 ),
               ),
+              const SizedBox(height: 16),
+              IconTextButton(
+                text: 'or open Network Visualiser',
+                highlightColor: const Color(0xfffbfbfb),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xff4888f0),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  AutoRouter.of(context).navigate(const NetworkVisualiserRoute());
+                },
+              )
             ],
           ),
         );

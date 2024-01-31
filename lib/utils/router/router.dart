@@ -44,6 +44,10 @@ class AppRouter extends $AppRouter {
             path: 'transactions',
           ),
           AutoRoute(
+            page: NetworkVisualiserRoute.page,
+            path: 'visualiser',
+          ),
+          AutoRoute(
             page: TransactionDetailsRoute.page,
             path: 'transaction/:hash',
             usesPathAsKey: true,
