@@ -18,6 +18,7 @@ class UnsafeWalletHiveEntityAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UnsafeWalletHiveEntity(
+      index: fields[2] as int,
       masterPrivateKey: (fields[0] as List).cast<int>(),
       childMasterKey: (fields[1] as List).cast<int>(),
     );
@@ -26,11 +27,13 @@ class UnsafeWalletHiveEntityAdapter
   @override
   void write(BinaryWriter writer, UnsafeWalletHiveEntity obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.masterPrivateKey)
       ..writeByte(1)
-      ..write(obj.childMasterKey);
+      ..write(obj.childMasterKey)
+      ..writeByte(2)
+      ..write(obj.index);
   }
 
   @override

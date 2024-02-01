@@ -29,6 +29,10 @@ ButtonStyle lightElevatedButton = ElevatedButton.styleFrom(
   minimumSize: const Size(100, 50),
 );
 
+ButtonStyle filledIconButton = IconButton.styleFrom(
+  backgroundColor: const Color(0xff4888f0),
+);
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {

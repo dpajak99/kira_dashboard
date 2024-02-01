@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
+import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/connect_wallet_dialog/connect_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
@@ -94,13 +95,13 @@ class _WalletButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if( small ) {
       return IconButton(
-        onPressed: () => AutoRouter.of(context).navigate(PortfolioRoute(address: wallet.address)),
+        onPressed: () => DialogRouter().navigate(const AccountDialog()),
         icon: IdentityAvatar(size: 35, address: wallet.address),
       );
     }
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      onTap: () => AutoRouter.of(context).navigate(PortfolioRoute(address: wallet.address)),
+      onTap: () => DialogRouter().navigate(const AccountDialog()),
       child: Container(
         decoration: const BoxDecoration(
           color: Color(0xff324054),

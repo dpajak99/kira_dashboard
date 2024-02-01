@@ -9,7 +9,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i11;
-import 'package:flutter/cupertino.dart' as _i13;
 import 'package:flutter/material.dart' as _i12;
 import 'package:kira_dashboard/pages/block_details_page/block_details_page.dart'
     as _i1;
@@ -290,7 +289,7 @@ class ProposalDetailsRoute
     extends _i11.PageRouteInfo<ProposalDetailsRouteArgs> {
   ProposalDetailsRoute({
     required String proposalId,
-    _i13.Key? key,
+    _i12.Key? key,
     List<_i11.PageRouteInfo>? children,
   }) : super(
           ProposalDetailsRoute.name,
@@ -316,7 +315,7 @@ class ProposalDetailsRouteArgs {
 
   final String proposalId;
 
-  final _i13.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {

@@ -24,9 +24,7 @@ class KiraBip44Coin implements Bip44Coins {
         wifNetVer: null,
         type: EllipticCurveTypes.secp256k1,
         addressEncoder: ([dynamic kwargs]) => AtomAddrEncoder(),
-        addrParams: {
-          "hrp": 'kira'
-        },
+        addrParams: {"hrp": 'kira'},
       );
 
   @override
@@ -37,15 +35,23 @@ class KiraBip44Coin implements Bip44Coins {
 }
 
 class Wallet {
+  final int index;
   final Bip44 bip44;
   final Bip44 derivedBip44;
 
-  Wallet.deriveDefaultPath(this.bip44) : derivedBip44 = bip44.deriveDefaultPath;
+  Wallet.deriveDefaultPath(this.bip44)
+      : derivedBip44 = bip44.deriveDefaultPath,
+        index = 0;
 
   Wallet({
+    required this.index,
     required this.bip44,
     required this.derivedBip44,
   });
+
+  Bip44 nextAccount() {
+    return bip44.purpose.coin.account(0).change(Bip44Changes.chainExt).addressIndex(index + 1);
+  }
 
   factory Wallet.fromMnemonic({
     required Mnemonic mnemonic,

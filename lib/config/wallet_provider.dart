@@ -5,6 +5,8 @@ import 'package:kira_dashboard/models/wallet.dart';
 class WalletProvider extends ValueNotifier<Wallet?> {
   final UnsafeWalletService unsafeWalletService = UnsafeWalletService();
 
+  List<Wallet> availableWallets = [];
+
   WalletProvider({
     Wallet? wallet,
   }) : super(wallet) {
@@ -12,17 +14,43 @@ class WalletProvider extends ValueNotifier<Wallet?> {
   }
 
   void init() async {
-    Wallet? wallet = await unsafeWalletService.getWallet();
-    if( wallet != null ) {
-      value = wallet;
-      notifyListeners();
+    List<Wallet> wallets = await unsafeWalletService.getAvailableWallets();
+    if (wallets.isEmpty) {
+      return;
     }
+    value = wallets.first;
+    availableWallets = wallets;
+    notifyListeners();
   }
 
   void signIn(Wallet wallet) {
     value = wallet;
     unsafeWalletService.saveWallet(wallet);
   }
-  
+
+  void signOut() {
+    value = null;
+    availableWallets = [];
+    unsafeWalletService.deleteAllWallets();
+  }
+
+  void changeWallet(Wallet wallet) {
+    value = wallet;
+    notifyListeners();
+  }
+
+  void deriveNextWallet() {
+    availableWallets.sort((a, b) => b.index.compareTo(a.index));
+    Wallet latestWallet = availableWallets.first;
+    Wallet newWallet = Wallet(
+      index: latestWallet.index + 1,
+      bip44: latestWallet.bip44,
+      derivedBip44: latestWallet.nextAccount(),
+    );
+    unsafeWalletService.saveWallet(newWallet);
+    availableWallets.add(newWallet);
+    notifyListeners();
+  }
+
   bool get isSignedIn => value != null;
 }

@@ -10,7 +10,11 @@ class UnsafeWalletHiveEntity extends HiveObject {
   @HiveField(1)
   final List<int> childMasterKey;
 
+  @HiveField(2)
+  final int index;
+
   UnsafeWalletHiveEntity({
+    required this.index,
     required this.masterPrivateKey,
     required this.childMasterKey,
   });
