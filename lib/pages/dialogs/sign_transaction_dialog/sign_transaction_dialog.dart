@@ -24,7 +24,6 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
     return CustomDialog(
       title: 'Sign transaction',
       width: 420,
-      scrollable: false,
       child: Column(
         children: [
           Container(

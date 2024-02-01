@@ -32,7 +32,6 @@ class _SelectIdentityRecordsDialogState extends State<SelectIdentityRecordsDialo
       title: 'Select Identity Records',
       width: 420,
       contentPadding: EdgeInsets.zero,
-      scrollable: false,
       child: BlocBuilder<SelectIdentityRecordsDialogCubit, SelectIdentityRecordsDialogState>(
         bloc: cubit,
         builder: (BuildContext context, SelectIdentityRecordsDialogState state) {
@@ -73,8 +72,9 @@ class _SelectIdentityRecordsDialogState extends State<SelectIdentityRecordsDialo
                 ),
               ),
               const SizedBox(height: 48),
-              SizedBox(
+              Container(
                 width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: ElevatedButton(
                   style: darkElevatedButton,
                   onPressed: () => DialogRouter().navigateBack(selectedRecords.toList()),

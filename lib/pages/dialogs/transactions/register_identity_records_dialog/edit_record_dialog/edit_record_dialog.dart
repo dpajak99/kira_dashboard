@@ -27,7 +27,6 @@ class _EditRecordDialogState extends State<EditRecordDialog> {
     return CustomDialog(
       title: 'Edit record',
       width: 420,
-      scrollable: false,
       child: Column(
         children: [
           IdentityRecordInput(

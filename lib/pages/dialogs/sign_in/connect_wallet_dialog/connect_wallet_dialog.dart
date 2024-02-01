@@ -19,7 +19,6 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
     return CustomDialog(
       title: 'Connect Wallet',
       width: 550,
-      scrollable: false,
       child: Column(
         children: [
           Row(

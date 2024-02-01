@@ -11,6 +11,8 @@ import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identi
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/openable_text.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 class IdentityRecordsPage extends StatefulWidget {
   final String address;
@@ -41,6 +43,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
           children: [
             CustomCard(
               title: 'Identity records',
+              enableMobile: true,
               leading: Row(
                 children: [
                   if (widget.isMyWallet)
@@ -65,7 +68,92 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                 pageSize: state.pageSize,
                 loading: state.isLoading,
                 mobileBuilder: (BuildContext context, IdentityRecord? item, bool loading) {
-                  return const Text('dupa');
+                  if (item == null || loading) {
+                    return const SizedShimmer(width: double.infinity, height: 200);
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Key',
+                                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                ),
+                                Text(
+                                  item.key,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xfffbfbfb),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          _VerificationChip(verified: item.verifiers.isNotEmpty),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Value',
+                        style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                      ),
+                      Text(
+                        item.value,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xfffbfbfb),
+                        ),
+                      ),
+                      if (widget.isMyWallet) ...<Widget>[
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            IconTextButton(
+                              text: 'Edit',
+                              highlightColor: const Color(0xfffbfbfb),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff4888f0),
+                              ),
+                              onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
+                            ),
+                            const SizedBox(width: 16),
+                            IconTextButton(
+                              text: 'Verify',
+                              highlightColor: const Color(0xfffbfbfb),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff4888f0),
+                              ),
+                              onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(
+                                records: [item],
+                              )),
+                            ),
+                            const SizedBox(width: 16),
+                            IconTextButton(
+                              text: 'Delete',
+                              highlightColor: const Color(0xfffbfbfb),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff4888f0),
+                              ),
+                              onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ],
+                  );
                 },
                 columns: [
                   ColumnConfig(

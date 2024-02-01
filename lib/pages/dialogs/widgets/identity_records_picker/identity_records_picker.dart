@@ -58,7 +58,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                     const Spacer(),
                     InkWell(
                       onTap: () async {
-                        List<IdentityRecord>? newRecords = await DialogRouter().navigate(SelectIdentityRecordsDialog(
+                        List<IdentityRecord>? newRecords = await DialogRouter().navigate<List<IdentityRecord>?>(SelectIdentityRecordsDialog(
                           address: widget.address,
                           selectedRecords: records,
                         ));

@@ -55,16 +55,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                     items: state.undelegations,
                     mobileBuilder: (BuildContext context, Undelegation? item, bool loading) {
                       if (item == null || loading) {
-                        return const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedShimmer(width: 200, height: 23),
-                            SizedBox(height: 24),
-                            SizedShimmer(width: double.infinity, height: 12),
-                            SizedBox(height: 8),
-                            SizedShimmer(width: double.infinity, height: 12),
-                          ],
-                        );
+                        return const SizedShimmer(width: double.infinity, height: 200);
                       }
                       return Column(
                         children: [
@@ -225,16 +216,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                     items: state.delegations,
                     mobileBuilder: (BuildContext context, Delegation? item, bool loading) {
                       if (item == null || loading) {
-                        return const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedShimmer(width: double.infinity, height: 23),
-                            SizedBox(height: 24),
-                            SizedShimmer(width: double.infinity, height: 12),
-                            SizedBox(height: 8),
-                            SizedShimmer(width: double.infinity, height: 12),
-                          ],
-                        );
+                        return const SizedShimmer(width: double.infinity, height: 200);
                       }
 
                       return Column(
@@ -296,17 +278,16 @@ class DelegationsPageState extends State<DelegationsPage> {
                           ),
                           const SizedBox(height: 8),
                           _MobileRow(
-                            title: const Text(
-                              'Commision',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
-                            ),
-                            value: Text(
-                              '${item.poolInfo.commissionPercentage}%',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
-                            )
-                          ),
+                              title: const Text(
+                                'Commision',
+                                style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              ),
+                              value: Text(
+                                '${item.poolInfo.commissionPercentage}%',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              )),
                         ],
                       );
                     },

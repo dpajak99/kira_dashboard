@@ -50,8 +50,6 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
     return CustomDialog(
       title: 'Undelegate tokens',
       width: 420,
-      height: 540,
-      scrollable: true,
       child: BlocBuilder<UndelegateTokensDialogCubit, UndelegateTokensDialogState>(
         bloc: cubit,
         builder: (BuildContext context, UndelegateTokensDialogState state) {

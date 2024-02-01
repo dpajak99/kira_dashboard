@@ -49,7 +49,6 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
     return CustomDialog(
       title: 'Send tokens',
       width: 420,
-      scrollable: false,
       child: BlocBuilder<SendTokensDialogCubit, SendTokensDialogState>(
         bloc: cubit,
         builder: (BuildContext context, SendTokensDialogState state) {

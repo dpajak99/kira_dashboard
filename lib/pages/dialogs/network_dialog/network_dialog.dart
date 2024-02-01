@@ -29,7 +29,6 @@ class _NetworkDialog extends State<NetworkDialog> {
         return CustomDialog(
           title: 'Select network',
           width: 420,
-          scrollable: false,
           child: Column(
             children: [
               if (state.currentNetwork != null) ...<Widget>[
@@ -47,7 +46,7 @@ class _NetworkDialog extends State<NetworkDialog> {
                         contentPadding: EdgeInsets.zero,
                         dense: true,
                         leading: CircleIcon(
-                          size: 30,
+                          size: 20,
                           color: switch (state.currentNetwork!.status) {
                             NetworkStatusType.online => Colors.green,
                             NetworkStatusType.unhealthy => Colors.yellow,
@@ -57,6 +56,8 @@ class _NetworkDialog extends State<NetworkDialog> {
                         ),
                         title: Text(
                           state.currentNetwork!.name ?? 'unknown',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 16,
                             color: Color(0xfffbfbfb),
@@ -64,6 +65,8 @@ class _NetworkDialog extends State<NetworkDialog> {
                         ),
                         subtitle: Text(
                           state.currentNetwork!.interxUrl.toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 13,
                             color: Color(0xff6c86ad),
@@ -136,7 +139,7 @@ class _NetworkDialog extends State<NetworkDialog> {
                         contentPadding: EdgeInsets.zero,
                         dense: true,
                         leading: CircleIcon(
-                          size: 30,
+                          size: 20,
                           color: switch (e.status) {
                             NetworkStatusType.online => Colors.green,
                             NetworkStatusType.unhealthy => Colors.yellow,
@@ -146,6 +149,8 @@ class _NetworkDialog extends State<NetworkDialog> {
                         ),
                         title: Text(
                           e.name ?? 'unknown',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 16,
                             color: Color(0xfffbfbfb),
@@ -153,6 +158,8 @@ class _NetworkDialog extends State<NetworkDialog> {
                         ),
                         subtitle: Text(
                           e.interxUrl.toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 13,
                             color: Color(0xff6c86ad),

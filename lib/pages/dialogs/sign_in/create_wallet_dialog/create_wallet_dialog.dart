@@ -33,7 +33,6 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
     return CustomDialog(
       title: 'Create Wallet',
       width: 550,
-      scrollable: false,
       child: Column(
         children: [
           Container(

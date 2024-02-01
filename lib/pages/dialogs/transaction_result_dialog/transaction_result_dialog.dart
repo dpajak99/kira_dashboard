@@ -40,7 +40,6 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
         TransactionProcessStatus.failed => 'Transaction failed',
       },
       width: 420,
-      scrollable: false,
       child: Column(
         children: [
           const SizedBox(height: 48),

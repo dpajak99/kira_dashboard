@@ -53,7 +53,6 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
     return CustomDialog(
       title: 'Request verification',
       width: 420,
-      scrollable: false,
       child: BlocBuilder<VerifyIdentityRecordsDialogCubit, VerifyIdentityRecordsDialogState>(
         bloc: cubit,
         builder: (BuildContext context, VerifyIdentityRecordsDialogState state) {

@@ -51,26 +51,7 @@ class _BalancesPageState extends State<BalancesPage> {
                 items: state.balances.length > 15 ? state.balances.sublist(0, 15) : state.balances,
                 mobileBuilder: (BuildContext context, Coin? item, bool loading) {
                   if (item == null || loading) {
-                    return const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
-                            Spacer(),
-                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
-                            Spacer(),
-                            Expanded(child: SizedShimmer(width: double.infinity, height: 14)),
-                          ],
-                        ),
-                      ],
-                    );
+                    return const SizedShimmer(width: double.infinity, height: 200);
                   }
                   return Column(
                     children: [

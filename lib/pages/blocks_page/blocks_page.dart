@@ -46,20 +46,7 @@ class _BlocksPageState extends State<BlocksPage> {
                   items: state.blocks,
                   mobileBuilder: (BuildContext context, Block? item, bool loading) {
                     if (item == null || loading) {
-                      return const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedShimmer(width: 200, height: 16),
-                          SizedBox(height: 4),
-                          SizedShimmer(width: 200, height: 12),
-                          SizedBox(height: 8),
-                          SizedShimmer(width: double.infinity, height: 12),
-                          SizedBox(height: 8),
-                          SizedShimmer(width: double.infinity, height: 12),
-                          SizedBox(height: 8),
-                          SizedShimmer(width: double.infinity, height: 12),
-                        ],
-                      );
+                      return const SizedShimmer(width: double.infinity, height: 200);
                     }
                     String hrTime = item.time.difference(DateTime.now()).inSeconds > 0
                         ? '${item.time.difference(DateTime.now()).inSeconds.abs()} sec ago'

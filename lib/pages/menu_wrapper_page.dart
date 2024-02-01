@@ -33,43 +33,44 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
       drawer: _Drawer(notifierRouteObserver: notifierRouteObserver),
       body: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: LateValueListenableBuilder(
-              valueListenable: notifierRouteObserver.currentRoute,
-              builder: (BuildContext context, String currentRouteName, _) {
-                return Column(
-                  children: [
-                    IconButton(
-                      onPressed: () => scaffoldKey.currentState?.openDrawer(),
-                      icon: const Icon(Icons.menu),
-                    ),
-                    const SizedBox(height: 24),
-                    _SmallNavigationButton(
-                      route: const ValidatorsRoute(),
-                      current: currentRouteName == ValidatorsRoute.name,
-                      icon: AppIcons.shield,
-                    ),
-                    _SmallNavigationButton(
-                      route: const BlocksRoute(),
-                      current: currentRouteName == BlocksRoute.name,
-                      icon: AppIcons.block,
-                    ),
-                    _SmallNavigationButton(
-                      route: BlockTransactionsRoute(),
-                      current: currentRouteName == BlockTransactionsRoute.name,
-                      icon: AppIcons.transactions,
-                    ),
-                    _SmallNavigationButton(
-                      route: const ProposalsRoute(),
-                      current: currentRouteName == ProposalsRoute.name,
-                      icon: AppIcons.proposals,
-                    ),
-                  ],
-                );
-              },
+          if (MediaQuery.of(context).size.width > 900)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: LateValueListenableBuilder(
+                valueListenable: notifierRouteObserver.currentRoute,
+                builder: (BuildContext context, String currentRouteName, _) {
+                  return Column(
+                    children: [
+                      IconButton(
+                        onPressed: () => scaffoldKey.currentState?.openDrawer(),
+                        icon: const Icon(Icons.menu),
+                      ),
+                      const SizedBox(height: 24),
+                      _SmallNavigationButton(
+                        route: const ValidatorsRoute(),
+                        current: currentRouteName == ValidatorsRoute.name,
+                        icon: AppIcons.shield,
+                      ),
+                      _SmallNavigationButton(
+                        route: const BlocksRoute(),
+                        current: currentRouteName == BlocksRoute.name,
+                        icon: AppIcons.block,
+                      ),
+                      _SmallNavigationButton(
+                        route: BlockTransactionsRoute(),
+                        current: currentRouteName == BlockTransactionsRoute.name,
+                        icon: AppIcons.transactions,
+                      ),
+                      _SmallNavigationButton(
+                        route: const ProposalsRoute(),
+                        current: currentRouteName == ProposalsRoute.name,
+                        icon: AppIcons.proposals,
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
           Expanded(
             child: Column(
               children: [
@@ -83,9 +84,17 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          if (MediaQuery.of(context).size.width <= 900)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 24),
+                              child: IconButton(
+                                onPressed: () => scaffoldKey.currentState?.openDrawer(),
+                                icon: const Icon(Icons.menu),
+                              ),
+                            ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: SvgPicture.asset('logo_light.svg', height: 40),
+                            child: SvgPicture.asset('logo_light.svg', height: MediaQuery.of(context).size.width > 900 ? 30 : 24),
                           ),
                           const SizedBox(width: 40),
                           if (MediaQuery.of(context).size.width > 900) ...<Widget>[
@@ -119,16 +128,12 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
                             const WalletButton(),
                           ] else ...<Widget>[
                             const Spacer(),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                AppIcons.search,
-                                color: Color(0xff47546d),
-                              ),
+                            const Row(
+                              children: [
+                                NetworkButton(),
+                                WalletButton(small: true),
+                              ],
                             ),
-                            const SizedBox(width: 8),
-                            const NetworkButton(),
-                            const WalletButton(small: true),
                           ],
                         ],
                       ),

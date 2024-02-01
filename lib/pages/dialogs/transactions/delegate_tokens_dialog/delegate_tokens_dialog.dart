@@ -50,8 +50,6 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
     return CustomDialog(
       title: 'Delegate tokens',
       width: 420,
-      height: 540,
-      scrollable: true,
       child: BlocBuilder<DelegateTokensDialogCubit, DelegateTokensDialogState>(
         bloc: cubit,
         builder: (BuildContext context, DelegateTokensDialogState state) {

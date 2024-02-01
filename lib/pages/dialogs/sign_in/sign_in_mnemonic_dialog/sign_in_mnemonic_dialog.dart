@@ -45,7 +45,6 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
     return CustomDialog(
       title: 'Sign in using Mnemonic',
       width: 550,
-      scrollable: false,
       child: BlocBuilder<SignInMnemonicDialogCubit, SignInMnemonicDialogState>(
         bloc: cubit,
         builder: (BuildContext context, SignInMnemonicDialogState state) {
@@ -98,7 +97,7 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
   }
 
   List<Widget> _buildCells(SignInMnemonicDialogState state) {
-    int columnsCount = 3;
+    int columnsCount = MediaQuery.of(context).size.width < 900 ? 2 : 3;
     int rowsCount = state.wordsCount ~/ columnsCount;
 
     List<MnemonicTextField> cells = [];

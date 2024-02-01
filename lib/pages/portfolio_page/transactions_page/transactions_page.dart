@@ -49,36 +49,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                 items: state.transactions,
                 mobileBuilder: (BuildContext context, Transaction? item, bool loading) {
                   if (item == null || loading) {
-                    return const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  SizedShimmer(width: double.infinity, height: 12),
-                                  SizedBox(height: 4),
-                                  SizedShimmer(width: double.infinity, height: 12),
-                                ],
-                              ),
-                            ),
-                            Spacer(),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  SizedShimmer(width: double.infinity, height: 20),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        SizedShimmer(width: double.infinity, height: 20),
-                        SizedBox(height: 8),
-                        SizedShimmer(width: double.infinity, height: 20),
-                      ],
-                    );
+                    return const SizedShimmer(width: double.infinity, height: 200);
                   }
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

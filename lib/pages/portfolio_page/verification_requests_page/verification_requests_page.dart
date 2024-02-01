@@ -9,6 +9,7 @@ import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 class VerificationRequestsPage extends StatefulWidget {
   final String address;
@@ -44,6 +45,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
           builder: (BuildContext context, InboundVerificationRequestsListState state) {
             return CustomCard(
               title: 'Inbound',
+              enableMobile: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -52,18 +54,105 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                     pageSize: state.pageSize,
                     loading: state.isLoading,
                     mobileBuilder: (BuildContext context, VerificationRequest? item, bool loading) {
-                      return const Text('dupa');
+                      if (item == null || loading) {
+                        return const SizedShimmer(width: double.infinity, height: 200);
+                      }
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    IdentityAvatar(size: 32, address: item.address),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: OpenableAddressText(
+                                        address: item.address,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xff2f8af5),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (widget.isMyWallet)
+                                IconTextButton(
+                                  text: 'Approve',
+                                  highlightColor: const Color(0xfffbfbfb),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff4888f0),
+                                  ),
+                                  onTap: () => inboundCubit.approveVerificationRequest(int.parse(item.id)),
+                                ),
+                              const SizedBox(width: 8),
+                              IconTextButton(
+                                text: 'Reject',
+                                highlightColor: const Color(0xfffbfbfb),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xff4888f0),
+                                ),
+                                onTap: () => inboundCubit.rejectVerificationRequest(int.parse(item.id)),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          _MobileRow(
+                            title: const Text(
+                              'Records',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              item.records.map((e) => e.key).join(', '),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          _MobileRow(
+                            title: const Text(
+                              'Edited',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          _MobileRow(
+                            title: const Text(
+                              'Tip',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              item.tip.toNetworkDenominationString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            ),
+                          ),
+                        ],
+                      );
                     },
                     columns: <ColumnConfig<VerificationRequest>>[
                       ColumnConfig(
                         title: 'Requested from',
+                        width: 200,
                         cellBuilder: (BuildContext context, VerificationRequest item) {
                           return Row(
                             children: <Widget>[
                               IdentityAvatar(size: 32, address: item.address),
                               const SizedBox(width: 12),
                               Expanded(
-                                child: OpenableAddressText(
+                                child: CopyableAddressText(
                                   address: item.address,
                                   style: const TextStyle(
                                     fontSize: 14,
@@ -154,6 +243,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
           builder: (BuildContext context, InboundVerificationRequestsListState state) {
             return CustomCard(
               title: 'Outbound',
+              enableMobile: true,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -162,18 +252,95 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                     pageSize: state.pageSize,
                     loading: state.isLoading,
                     mobileBuilder: (BuildContext context, VerificationRequest? item, bool loading) {
-                      return const Text('dupa');
+                      if (item == null || loading) {
+                        return const SizedShimmer(width: double.infinity, height: 200);
+                      }
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    IdentityAvatar(size: 32, address: item.address),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: OpenableAddressText(
+                                        address: item.address,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color(0xff2f8af5),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (widget.isMyWallet)
+                                IconTextButton(
+                                  text: 'Cancel',
+                                  highlightColor: const Color(0xfffbfbfb),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff4888f0),
+                                  ),
+                                  onTap: () => outboundCubit.cancelVerificationRequest(int.parse(item.id)),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          _MobileRow(
+                            title: const Text(
+                              'Records',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              item.records.map((e) => e.key).join(', '),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          _MobileRow(
+                            title: const Text(
+                              'Edited',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          _MobileRow(
+                            title: const Text(
+                              'Tip',
+                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            ),
+                            value: Text(
+                              item.tip.toNetworkDenominationString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            ),
+                          ),
+                        ],
+                      );
                     },
                     columns: <ColumnConfig<VerificationRequest>>[
                       ColumnConfig(
                         title: 'Requested to',
+                        width: 200,
                         cellBuilder: (BuildContext context, VerificationRequest item) {
                           return Row(
                             children: <Widget>[
                               IdentityAvatar(size: 32, address: item.verifier),
                               const SizedBox(width: 12),
                               Expanded(
-                                child: OpenableAddressText(
+                                child: CopyableAddressText(
                                   address: item.verifier,
                                   style: const TextStyle(
                                     fontSize: 14,
@@ -247,6 +414,29 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
               ),
             );
           },
+        ),
+      ],
+    );
+  }
+}
+
+class _MobileRow extends StatelessWidget {
+  final Widget title;
+  final Widget value;
+
+  const _MobileRow({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: title,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          flex: 2,
+          child: value,
         ),
       ],
     );

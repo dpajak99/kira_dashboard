@@ -50,7 +50,7 @@ class CustomTable<T> extends StatelessWidget {
         items: items,
         columns: columns,
         mobileBuilder: mobileBuilder,
-        pageSize: pageSize,
+        pageSize: loading ? 3 : pageSize,
         loading: loading,
       );
     } else {

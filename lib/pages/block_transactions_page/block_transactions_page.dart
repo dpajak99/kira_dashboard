@@ -41,6 +41,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
             SliverToBoxAdapter(
               child: CustomCard(
                 title: 'Transactions',
+                enableMobile: true,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -51,36 +52,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                       loading: state.isLoading,
                       mobileBuilder: (BuildContext context, BlockTransaction? item, bool loading) {
                         if (item == null || loading) {
-                          return const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        SizedShimmer(width: double.infinity, height: 12),
-                                        SizedBox(height: 4),
-                                        SizedShimmer(width: double.infinity, height: 12),
-                                      ],
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        SizedShimmer(width: double.infinity, height: 20),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 8),
-                              SizedShimmer(width: double.infinity, height: 20),
-                              SizedBox(height: 8),
-                              SizedShimmer(width: double.infinity, height: 20),
-                            ],
-                          );
+                          return const SizedShimmer(width: double.infinity, height: 200);
                         }
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -22,7 +22,6 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
     return CustomDialog(
       title: 'Error details',
       width: 600,
-      scrollable: false,
       child: Column(
         children: [
           Container(

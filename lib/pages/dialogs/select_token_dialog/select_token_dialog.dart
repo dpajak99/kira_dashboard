@@ -25,7 +25,6 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
     return CustomDialog(
       title: 'Select token',
       width: 420,
-      scrollable: false,
       child: BlocBuilder<SelectTokenDialogCubit, SelectTokenDialogState>(
         bloc: cubit,
         builder: (BuildContext context, SelectTokenDialogState state) {

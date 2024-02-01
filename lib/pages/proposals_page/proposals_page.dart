@@ -43,22 +43,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                   items: state.proposals,
                   mobileBuilder: (BuildContext context, Proposal? item, bool loading) {
                     if (item == null || loading) {
-                      return const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedShimmer(width: 200, height: 16),
-                          SizedBox(height: 4),
-                          SizedShimmer(width: 200, height: 14),
-                          SizedBox(height: 16),
-                          SizedShimmer(width: double.infinity, height: 12),
-                          SizedBox(height: 8),
-                          SizedShimmer(width: double.infinity, height: 12),
-                          SizedBox(height: 8),
-                          SizedShimmer(width: double.infinity, height: 12),
-                          SizedBox(height: 8),
-                          SizedShimmer(width: double.infinity, height: 12),
-                        ],
-                      );
+                      return const SizedShimmer(width: double.infinity, height: 200);
                     }
 
                     return Column(

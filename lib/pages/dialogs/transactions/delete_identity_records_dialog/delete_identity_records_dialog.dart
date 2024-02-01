@@ -44,7 +44,6 @@ class _DeleteIdentityRecordsDialogState extends State<DeleteIdentityRecordsDialo
     return CustomDialog(
       title: 'Delete records',
       width: 420,
-      scrollable: false,
       child: BlocBuilder<DeleteIdentityRecordsDialogCubit, DeleteIdentityRecordsDialogState>(
         bloc: cubit,
         builder: (BuildContext context, DeleteIdentityRecordsDialogState state) {

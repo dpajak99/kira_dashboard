@@ -64,7 +64,6 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
         (_) => 'Edit records',
       },
       width: 420,
-      scrollable: true,
       child: BlocBuilder<RegisterIdentityRecordsDialogCubit, RegisterIdentityRecordsDialogState>(
         bloc: cubit,
         builder: (BuildContext context, RegisterIdentityRecordsDialogState state) {

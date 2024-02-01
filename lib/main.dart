@@ -52,9 +52,13 @@ class MyApp extends StatelessWidget {
       textTheme: GoogleFonts.robotoTextTheme(baseTheme.textTheme),
     );
 
+    double densityAmt = false ? 0.0 : -1.0;
+    VisualDensity density = VisualDensity(horizontal: densityAmt, vertical: densityAmt);
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: theme.copyWith(
+        visualDensity: density,
         scaffoldBackgroundColor: const Color(0xff06070a),
         colorScheme: const ColorScheme.dark(
           primary: Color(0xff06070a),

@@ -19,7 +19,6 @@ class _ConfirmTransactionDialog extends State<ConfirmTransactionDialog> {
     return CustomDialog(
       title: 'Confirm transaction',
       width: 420,
-      scrollable: false,
       child: Column(
         children: [
           const SizedBox(height: 48),

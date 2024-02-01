@@ -27,131 +27,61 @@ class CustomDialog extends StatelessWidget {
   final String title;
   final Widget child;
   final double width;
-  final double? height;
-  final bool scrollable;
   final EdgeInsets? contentPadding;
 
   const CustomDialog({
     required this.title,
     required this.child,
     required this.width,
-    required this.scrollable,
     this.contentPadding,
-    this.height,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget childWidget;
-
-    if (scrollable) {
-      childWidget = CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: ScrollableAppBar(
-              child: Container(
-                color: const Color(0xff131823),
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                height: 72,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (DialogRouter().showBackButton)
-                      Positioned(
-                        left: 0,
-                        bottom: 0,
-                        child: Center(
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.chevron_left,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            onPressed: () => DialogRouter().navigateBack(),
-                          ),
-                        ),
-                      ),
-                    Positioned.fill(
-                      child: Center(
-                        child: Text(
-                          title,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Center(
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 24,
-                          ),
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+    return Dialog(
+      insetPadding: const EdgeInsets.all(16),
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 100),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(24)),
+          child: Container(
+            width: MediaQuery.of(context).size.width < 600 ? double.maxFinite : width,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            decoration: const BoxDecoration(
+              color: Color(0xff131823),
+              borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: contentPadding ?? const EdgeInsets.only(top: 0, left: 16, right: 16, bottom: 16),
-              child: child,
-            ),
-          ),
-        ],
-      );
-    } else {
-      childWidget = Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              height: 40,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  if (DialogRouter().showBackButton)
-                    Positioned(
-                      left: 0,
-                      bottom: 0,
-                      child: Center(
-                        child: IconButton(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  height: 40,
+                  child: Row(
+                    children: [
+                      if (DialogRouter().showBackButton)
+                        IconButton(
                           icon: const Icon(
                             Icons.chevron_left,
                             color: Colors.white,
                             size: 24,
                           ),
                           onPressed: () => DialogRouter().navigateBack(),
+                        )
+                      else
+                        const SizedBox(width: 32),
+                      Expanded(
+                        child: Text(
+                          title,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ),
-                    ),
-                  Positioned.fill(
-                    child: Center(
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Center(
-                      child: IconButton(
+                      IconButton(
                         icon: const Icon(
                           Icons.close,
                           color: Colors.white,
@@ -159,35 +89,20 @@ class CustomDialog extends StatelessWidget {
                         ),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+                      child: child,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
-              child: child,
-            ),
-          ],
-        ),
-      );
-    }
-
-    return Dialog(
-      insetPadding: EdgeInsets.zero,
-      child: AnimatedSize(
-        duration: const Duration(milliseconds: 100),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(24)),
-          child: Container(
-            width: width,
-            constraints: scrollable ? BoxConstraints(maxHeight: height ?? 500) : null,
-            decoration: const BoxDecoration(
-              color: Color(0xff131823),
-              borderRadius: BorderRadius.all(Radius.circular(24)),
-            ),
-            child: childWidget,
           ),
         ),
       ),
