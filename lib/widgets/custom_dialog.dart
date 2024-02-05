@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 
@@ -23,7 +25,7 @@ class ScrollableAppBar extends SliverPersistentHeaderDelegate {
   }
 }
 
-class CustomDialog extends StatelessWidget {
+class CustomDialog extends StatefulWidget {
   final String title;
   final Widget child;
   final double width;
@@ -38,15 +40,44 @@ class CustomDialog extends StatelessWidget {
   });
 
   @override
+  State<StatefulWidget> createState() => _CustomDialogRoute();
+}
+
+class _CustomDialogRoute extends State<CustomDialog> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+    _controller.forward();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant CustomDialog oldWidget) {
+    _controller.forward();
+    super.didUpdateWidget(oldWidget);
+
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: const EdgeInsets.all(16),
-      child: AnimatedSize(
-        duration: const Duration(milliseconds: 100),
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      child: Dialog(
+        shadowColor: Colors.black,
+        elevation: 10,
+        insetPadding: const EdgeInsets.all(16),
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(24)),
           child: Container(
-            width: MediaQuery.of(context).size.width < 600 ? double.maxFinite : width,
+            width: MediaQuery.of(context).size.width < 600 ? double.maxFinite : widget.width,
             padding: const EdgeInsets.symmetric(vertical: 16),
             decoration: const BoxDecoration(
               color: Color(0xff131823),
@@ -74,7 +105,7 @@ class CustomDialog extends StatelessWidget {
                         const SizedBox(width: 32),
                       Expanded(
                         child: Text(
-                          title,
+                          widget.title,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -96,8 +127,15 @@ class CustomDialog extends StatelessWidget {
                 Flexible(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
-                      child: child,
+                      padding: widget.contentPadding ?? const EdgeInsets.symmetric(horizontal: 16),
+                      child: AnimatedOpacity(
+                        opacity: 1,
+                        duration: const Duration(milliseconds: 300),
+                        child: FadeTransition(
+                          opacity: _animation,
+                          child: widget.child,
+                        ),
+                      ),
                     ),
                   ),
                 ),

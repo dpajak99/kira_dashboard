@@ -26,14 +26,42 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
       slivers: [
+        const SliverToBoxAdapter(
+          child: Text(
+            'Validators',
+            style: TextStyle(
+              fontSize: 32,
+              color: Color(0xfffbfbfb),
+            ),
+          ),
+        ),
+        const SliverPadding(padding: EdgeInsets.only(top: 4)),
+        const SliverToBoxAdapter(
+          child: Text(
+            "Choose a validator to delegate your tokens and start earning rewards. Validators play a vital role in maintaining the network, and by staking with them, you contribute to the network's stability and earn a share of the rewards. Detailed information about each validator's performance, such as uptime and streak records, helps guide your decision. Your stake supports the validator's reliability while entitling you to rewards generated from block creation and transaction fees.",
+            style: TextStyle(
+              fontSize: 16,
+              color: Color(0xff6c86ad),
+            ),
+          ),
+        ),
+        const SliverPadding(padding: EdgeInsets.only(top: 32)),
         BlocBuilder<ValidatorsPageCubit, ValidatorsPageState>(
           bloc: cubit,
           builder: (BuildContext context, ValidatorsPageState state) {
             return SliverGrid.builder(
               itemCount: state.validators.length,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: (MediaQuery.of(context).size.width > 550) ? 350 : 550,
-                mainAxisExtent: (MediaQuery.of(context).size.width > 550) ? state.isSignedIn ? 450 : 380 : state.isSignedIn ? 450 : 350,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+                maxCrossAxisExtent: (MediaQuery.of(context).size.width > 800) ? 350 : 550,
+                mainAxisExtent: (MediaQuery.of(context).size.width > 800)
+                    ? state.isSignedIn
+                        ? 400
+                        : 340
+                    : state.isSignedIn
+                        ? 400
+                        : 350,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return _ValidatorTile(
@@ -97,12 +125,15 @@ class _ValidatorTile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          _ValidatorStatusChip(validator.status),
-                          _PoolStatusChip(validator.stakingPoolStatus),
-                        ],
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _ValidatorStatusChip(validator.status),
+                            _PoolStatusChip(validator.stakingPoolStatus),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 4),
                       OpenableAddressText(

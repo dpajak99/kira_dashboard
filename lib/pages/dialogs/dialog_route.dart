@@ -123,16 +123,14 @@ class _CustomDialogRouteState extends State<_CustomDialogRoute> {
     for (int i = 0; i < pages.length; i++) {
       bool pageVisible = i == pages.length - 1;
 
-      pagesVisibility.add(Visibility(
-        maintainState: true,
-        maintainAnimation: true,
-        visible: pageVisible,
-        child: AnimatedOpacity(
-          opacity: pageVisible ? 1 : 0,
-          duration: const Duration(milliseconds: 300),
+      pagesVisibility.add(
+        Visibility(
+          maintainState: true,
+          maintainAnimation: true,
+          visible: pageVisible,
           child: pages[i],
         ),
-      ));
+      );
     }
 
     return Stack(
