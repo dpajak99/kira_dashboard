@@ -93,7 +93,7 @@ class _ValidatorTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: Color(0xfffbfbfb),
-                          fontSize: 20,
+                          fontSize: 16,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -109,7 +109,7 @@ class _ValidatorTile extends StatelessWidget {
                         address: validator.address,
                         style: const TextStyle(
                           color: Color(0xff6c86ad),
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -121,7 +121,7 @@ class _ValidatorTile extends StatelessWidget {
                             'Uptime',
                             style: TextStyle(
                               color: Color(0xff6c86ad),
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           ),
                           const Spacer(),
@@ -129,7 +129,7 @@ class _ValidatorTile extends StatelessWidget {
                             '${validator.uptime}%',
                             style: const TextStyle(
                               color: Color(0xfffbfbfb),
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           ),
                         ],
@@ -141,7 +141,7 @@ class _ValidatorTile extends StatelessWidget {
                             'Streak',
                             style: TextStyle(
                               color: Color(0xff6c86ad),
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           ),
                           const Spacer(),
@@ -149,7 +149,7 @@ class _ValidatorTile extends StatelessWidget {
                             validator.streak,
                             style: const TextStyle(
                               color: Color(0xfffbfbfb),
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           ),
                         ],
@@ -197,7 +197,7 @@ class _RankBookmark extends StatelessWidget {
           'Rank #$rank',
           style: const TextStyle(
             color: Color(0xfffbfbfb),
-            fontSize: 13,
+            fontSize: 12,
           ),
         ),
       ),

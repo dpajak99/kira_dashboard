@@ -47,6 +47,11 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
                       ),
                       const SizedBox(height: 24),
                       _SmallNavigationButton(
+                        route: const DashboardRoute(),
+                        current: currentRouteName == DashboardRoute.name,
+                        icon: AppIcons.dashboard,
+                      ),
+                      _SmallNavigationButton(
                         route: const ValidatorsRoute(),
                         current: currentRouteName == ValidatorsRoute.name,
                         icon: AppIcons.shield,
@@ -205,6 +210,12 @@ class _Drawer extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
+                _LargeNavigationButton(
+                  title: 'Dashboard',
+                  route: const DashboardRoute(),
+                  current: currentRouteName == DashboardRoute.name,
+                  icon: AppIcons.dashboard,
+                ),
                 _LargeNavigationButton(
                   route: const ValidatorsRoute(),
                   title: 'Validators',

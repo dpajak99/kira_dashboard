@@ -28,13 +28,17 @@ class AppRouter extends $AppRouter {
         guards: [ConnectionGuard()],
         children: [
           AutoRoute(
+            page: DashboardRoute.page,
+            initial: true,
+            path: 'dashboard',
+          ),
+          AutoRoute(
             page: PortfolioRoute.page,
             path: 'address/:address',
             usesPathAsKey: true,
           ),
           AutoRoute(
             page: ValidatorsRoute.page,
-            initial: true,
             path: 'validators',
           ),
           AutoRoute(
