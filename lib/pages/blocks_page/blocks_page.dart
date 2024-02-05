@@ -133,8 +133,8 @@ class _BlocksPageState extends State<BlocksPage> {
                       cellBuilder: (BuildContext context, Block item) {
                         return Row(
                           children: <Widget>[
-                            IdentityAvatar(size: 32, address: item.proposer),
-                            const SizedBox(width: 12),
+                            IdentityAvatar(size: 20, address: item.proposer),
+                            const SizedBox(width: 8),
                             Expanded(child: OpenableAddressText(address: item.proposer, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
                           ],
                         );
@@ -144,7 +144,7 @@ class _BlocksPageState extends State<BlocksPage> {
                       title: 'Hash',
                       cellBuilder: (BuildContext context, Block item) {
                         return Text(
-                          item.hash,
+                          '0x${item.hash}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

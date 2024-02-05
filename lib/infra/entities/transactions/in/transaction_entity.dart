@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
+import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
 class TransactionEntity extends Equatable {
   final int time;
@@ -8,7 +9,7 @@ class TransactionEntity extends Equatable {
   final String direction;
   final String memo;
   final List<CoinEntity> fee;
-  final List<dynamic> txs;
+  final List<TxMsg> txs;
 
   const TransactionEntity({
     required this.time,
@@ -31,8 +32,15 @@ class TransactionEntity extends Equatable {
       direction: json['direction'] as String,
       memo: json['memo'] as String,
       fee: feeList.map((dynamic e) => CoinEntity.fromJson(e as Map<String, dynamic>)).toList(),
-      txs: txsList,
+      txs: txsList.map((dynamic e) => TxMsg.fromJsonByName(e['type'], e)).toList()
     );
+  }
+
+  Set<String> get allDenominations {
+    List<String> txsDenominations = txs.expand((TxMsg tx) => tx.txAmounts.map((CoinEntity coin) => coin.denom)).toList();
+    List<String> feeDenominations = fee.map((CoinEntity coin) => coin.denom).toList();
+
+    return {...txsDenominations, ...feeDenominations};
   }
 
   @override

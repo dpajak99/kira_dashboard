@@ -150,15 +150,15 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                         LinearProportions(
                           proportions: [
                             ProportionValue(
-                              value: state.proposalDetails!.yesVotesPercentage,
+                              value: state.proposalDetails?.yesVotesPercentage ?? 0,
                               color: const Color(0xee35b15f),
                             ),
                             ProportionValue(
-                              value: state.proposalDetails!.noVotesPercentage,
+                              value: state.proposalDetails?.noVotesPercentage ?? 0,
                               color: const Color(0xfff12e1f),
                             ),
                             ProportionValue(
-                              value: state.proposalDetails!.unknownVotePercentage,
+                              value: state.proposalDetails?.unknownVotePercentage ?? 0,
                               color: const Color(0xff6c86ad),
                             ),
                           ],
@@ -170,9 +170,20 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 64)),
+            const SliverToBoxAdapter(
+              child:  Text(
+                'Description',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Color(0xfffbfbfb),
+                ),
+              ),
+            ),
+            const SliverPadding(padding: EdgeInsets.only(top: 20)),
             SliverToBoxAdapter(
               child: CustomCard(
-                title: 'Description',
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -238,7 +249,7 @@ class _StatusChip extends StatelessWidget {
             VoteResult.rejectedWithVeto => const Color(0x29f12e1f),
             VoteResult.pending => const Color(0x296c86ad),
             VoteResult.quorumNotReached => const Color(0x29f12e1f),
-            VoteResult.enactment => const Color(0x29f12e1f),
+            VoteResult.enactment => const Color(0x2989ffb0),
             VoteResult.passedWithExecFail => const Color(0x29f12e1f),
           },
         ),
@@ -262,7 +273,7 @@ class _StatusChip extends StatelessWidget {
               VoteResult.rejectedWithVeto => const Color(0xfff12e1f),
               VoteResult.pending => const Color(0xff6c86ad),
               VoteResult.quorumNotReached => const Color(0xfff12e1f),
-              VoteResult.enactment => const Color(0xfff12e1f),
+              VoteResult.enactment => const Color(0xff89ffb0),
               VoteResult.passedWithExecFail => const Color(0xfff12e1f),
             },
           ),

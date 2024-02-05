@@ -16,11 +16,11 @@ class TokenAliasesRepository extends ApiRepository {
     }
   }
 
-  Future<Map<String, TokenAliasEntity>> getAllAsMap() async {
+  Future<Map<String, TokenAliasEntity>> getByTokensNameAsMap(List<String> names) async {
     try {
       Map<String, TokenAliasEntity> tokenAliasesMap = <String, TokenAliasEntity>{};
 
-      List<TokenAliasEntity> tokenAliases = await getAll();
+      List<TokenAliasEntity> tokenAliases = await getByTokensName(names);
       for (TokenAliasEntity tokenAlias in tokenAliases) {
         tokenAliasesMap[tokenAlias.denoms.first] = tokenAlias;
       }
@@ -31,9 +31,12 @@ class TokenAliasesRepository extends ApiRepository {
     }
   }
 
-  Future<List<TokenAliasEntity>> getAll() async {
+  Future<List<TokenAliasEntity>> getByTokensName(List<String> names) async {
     try {
-      Response<Map<String, dynamic>> response = await httpClient.get('/api/kira/tokens/aliases');
+      Response<Map<String, dynamic>> response = await httpClient.get(
+        '/api/kira/tokens/aliases',
+        queryParameters: {'tokens': names.join(',')},
+      );
       QueryTokenAliasesResponse queryTokenAliasesResponse = QueryTokenAliasesResponse.fromJson(response.data!);
 
       return queryTokenAliasesResponse.tokenAliasesData;

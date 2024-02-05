@@ -4,6 +4,7 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/headers_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
+import 'package:kira_dashboard/infra/entities/tokens/aliases/token_alias_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/broadcast_response.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/transaction_entity.dart';
@@ -13,6 +14,7 @@ import 'package:kira_dashboard/infra/entities/transactions/transaction_result_en
 import 'package:kira_dashboard/infra/repository/accounts_repository.dart';
 import 'package:kira_dashboard/infra/repository/fees_repository.dart';
 import 'package:kira_dashboard/infra/repository/network_repository.dart';
+import 'package:kira_dashboard/infra/repository/token_aliases_repository.dart';
 import 'package:kira_dashboard/infra/repository/transactions_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/block_transaction.dart';
@@ -30,6 +32,7 @@ class TransactionsService {
   final FeesRepository feesRepository = FeesRepository();
   final AccountsRepository accountsRepository = AccountsRepository();
   final TransactionsRepository transactionsRepository = TransactionsRepository();
+  final TokenAliasesRepository tokenAliasesRepository = TokenAliasesRepository();
   final TokensService tokensService = TokensService();
 
   Future<String> broadcastTx(BroadcastReq broadcastReq) async {
@@ -61,21 +64,26 @@ class TransactionsService {
 
   Future<List<Transaction>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
     List<TransactionEntity> transactionEntities = await transactionsRepository.getUserTransactionsPage(address, paginatedRequest);
+    Set<String> allDenominations = transactionEntities.expand((TransactionEntity tx) => tx.allDenominations).toSet();
+    Map<String, TokenAliasEntity> tokenAliases = await tokenAliasesRepository.getByTokensNameAsMap(allDenominations.toList());
 
     List<Transaction> transactions = await Future.wait<Transaction>(transactionEntities.map((TransactionEntity entity) async {
-      Map<String, dynamic>? msgJson = entity.txs.firstOrNull;
-      TxMsg? txMsg = msgJson != null ? TxMsg.fromJsonByName(msgJson['type'], msgJson) : null;
+      TxMsg? txMsg = entity.txs.firstOrNull;
 
-      List<CoinEntity> amounts = <CoinEntity>[...(txMsg?.txAmounts ?? <CoinEntity>[])];
-      List<SimpleCoin> coins = amounts.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
+      List<CoinEntity> amountEntities = <CoinEntity>[...(txMsg?.txAmounts ?? <CoinEntity>[])];
+      List<SimpleCoin> amountSimpleCoins = amountEntities.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
+
+      List<SimpleCoin> feeSimpleCoins = entity.fee.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
+      List<Coin> fees = feeSimpleCoins.map((e) => tokensService.buildCoinWithAlias(e, tokenAliases[e.denom])).toList();
+      List<Coin> amounts = amountSimpleCoins.map((e) => tokensService.buildCoinWithAlias(e, tokenAliases[e.denom])).toList();
 
       return Transaction(
         time: CustomDateUtils.buildDateFromSecondsSinceEpoch(entity.time),
         hash: entity.hash,
         status: entity.status,
         direction: entity.direction,
-        fee: await tokensService.buildCoins(entity.fee.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList()),
-        amounts: await tokensService.buildCoins(coins),
+        fee: fees,
+        amounts: amounts,
         from: txMsg?.from,
         to: txMsg?.to,
         method: txMsg.runtimeType.toString(),

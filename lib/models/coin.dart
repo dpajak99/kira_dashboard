@@ -60,6 +60,9 @@ class Coin {
       amount: amount ?? this.amount,
       name: name,
       symbol: symbol,
+      rate: rate,
+      decimals: decimals,
+      icon: icon,
     );
   }
 

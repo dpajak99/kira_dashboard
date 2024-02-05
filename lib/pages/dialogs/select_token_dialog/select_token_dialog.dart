@@ -38,7 +38,7 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
                   onTap: () => DialogRouter().navigateBack(balance),
                   contentPadding: EdgeInsets.zero,
                   dense: true,
-                  leading: TokenIcon(size: 40, iconUrl: balance.icon),
+                  leading: TokenIcon(size: 24, iconUrl: balance.icon),
                   title: Text(
                     balance.name,
                     style: const TextStyle(

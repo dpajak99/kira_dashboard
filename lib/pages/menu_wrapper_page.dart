@@ -31,131 +31,146 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
     return Scaffold(
       key: scaffoldKey,
       drawer: _Drawer(notifierRouteObserver: notifierRouteObserver),
-      body: Row(
-        children: [
-          if (MediaQuery.of(context).size.width > 900)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: LateValueListenableBuilder(
-                valueListenable: notifierRouteObserver.currentRoute,
-                builder: (BuildContext context, String currentRouteName, _) {
-                  return Column(
-                    children: [
-                      IconButton(
-                        onPressed: () => scaffoldKey.currentState?.openDrawer(),
-                        icon: const Icon(Icons.menu),
-                      ),
-                      const SizedBox(height: 24),
-                      _SmallNavigationButton(
-                        route: const DashboardRoute(),
-                        current: currentRouteName == DashboardRoute.name,
-                        icon: AppIcons.dashboard,
-                      ),
-                      _SmallNavigationButton(
-                        route: const ValidatorsRoute(),
-                        current: currentRouteName == ValidatorsRoute.name,
-                        icon: AppIcons.shield,
-                      ),
-                      _SmallNavigationButton(
-                        route: const BlocksRoute(),
-                        current: currentRouteName == BlocksRoute.name,
-                        icon: AppIcons.block,
-                      ),
-                      _SmallNavigationButton(
-                        route: BlockTransactionsRoute(),
-                        current: currentRouteName == BlockTransactionsRoute.name,
-                        icon: AppIcons.transactions,
-                      ),
-                      _SmallNavigationButton(
-                        route: const ProposalsRoute(),
-                        current: currentRouteName == ProposalsRoute.name,
-                        icon: AppIcons.proposals,
-                      ),
-                    ],
-                  );
-                },
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: <double>[0.0, 0.3, 0.6, 1],
+            colors: <Color>[
+              Color(0xff0e121a),
+              Color(0xff06070a),
+              Color(0xff06070a),
+              Color(0xff0e121a),
+            ],
+          ),
+        ),
+        child: Row(
+          children: [
+            if (MediaQuery.of(context).size.width > 900)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: LateValueListenableBuilder(
+                  valueListenable: notifierRouteObserver.currentRoute,
+                  builder: (BuildContext context, String currentRouteName, _) {
+                    return Column(
+                      children: [
+                        IconButton(
+                          onPressed: () => scaffoldKey.currentState?.openDrawer(),
+                          icon: const Icon(Icons.menu),
+                        ),
+                        const SizedBox(height: 24),
+                        _SmallNavigationButton(
+                          route: const DashboardRoute(),
+                          current: currentRouteName == DashboardRoute.name,
+                          icon: AppIcons.dashboard,
+                        ),
+                        _SmallNavigationButton(
+                          route: const ValidatorsRoute(),
+                          current: currentRouteName == ValidatorsRoute.name,
+                          icon: AppIcons.shield,
+                        ),
+                        _SmallNavigationButton(
+                          route: const BlocksRoute(),
+                          current: currentRouteName == BlocksRoute.name,
+                          icon: AppIcons.block,
+                        ),
+                        _SmallNavigationButton(
+                          route: BlockTransactionsRoute(),
+                          current: currentRouteName == BlockTransactionsRoute.name,
+                          icon: AppIcons.transactions,
+                        ),
+                        _SmallNavigationButton(
+                          route: const ProposalsRoute(),
+                          current: currentRouteName == ProposalsRoute.name,
+                          icon: AppIcons.proposals,
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-            ),
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  constraints: const BoxConstraints(minWidth: 450),
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 1300),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (MediaQuery.of(context).size.width <= 900)
+            Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    constraints: const BoxConstraints(minWidth: 450),
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1300),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            if (MediaQuery.of(context).size.width <= 900)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 24),
+                                child: IconButton(
+                                  onPressed: () => scaffoldKey.currentState?.openDrawer(),
+                                  icon: const Icon(Icons.menu),
+                                ),
+                              ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 24),
-                              child: IconButton(
-                                onPressed: () => scaffoldKey.currentState?.openDrawer(),
-                                icon: const Icon(Icons.menu),
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: SvgPicture.asset('logo_light.svg', height: MediaQuery.of(context).size.width > 900 ? 30 : 24),
                             ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: SvgPicture.asset('logo_light.svg', height: MediaQuery.of(context).size.width > 900 ? 30 : 24),
-                          ),
-                          const SizedBox(width: 40),
-                          if (MediaQuery.of(context).size.width > 900) ...<Widget>[
-                            Container(
-                              constraints: const BoxConstraints(maxWidth: 300, minWidth: 100),
-                              decoration: const BoxDecoration(
-                                color: Color(0xff11141c),
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              child: const Row(
-                                children: [
-                                  Icon(
-                                    Icons.search,
-                                    color: Color(0xff47546d),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    "Search for address",
-                                    style: TextStyle(
-                                      fontSize: 16,
+                            const SizedBox(width: 40),
+                            if (MediaQuery.of(context).size.width > 900) ...<Widget>[
+                              Container(
+                                constraints: const BoxConstraints(maxWidth: 300, minWidth: 100),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xff151923),
+                                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      Icons.search,
                                       color: Color(0xff47546d),
                                     ),
-                                  ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      "Search for address",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xff47546d),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
+                              const NetworkButton(),
+                              const SizedBox(width: 16),
+                              const WalletButton(),
+                            ] else ...<Widget>[
+                              const Spacer(),
+                              const Row(
+                                children: [
+                                  NetworkButton(),
+                                  WalletButton(small: true),
                                 ],
                               ),
-                            ),
-                            const Spacer(),
-                            const NetworkButton(),
-                            const SizedBox(width: 16),
-                            const WalletButton(),
-                          ] else ...<Widget>[
-                            const Spacer(),
-                            const Row(
-                              children: [
-                                NetworkButton(),
-                                WalletButton(small: true),
-                              ],
-                            ),
+                            ],
                           ],
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: AutoRouter(
-                    navigatorObservers: () => <NavigatorObserver>[
-                      notifierRouteObserver,
-                    ],
+                  Expanded(
+                    child: AutoRouter(
+                      navigatorObservers: () => <NavigatorObserver>[
+                        notifierRouteObserver,
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
