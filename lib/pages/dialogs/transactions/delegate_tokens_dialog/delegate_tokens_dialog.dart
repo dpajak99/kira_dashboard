@@ -39,7 +39,7 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
   @override
   void dispose() {
     cubit.close();
-    for(TokenAmountTextFieldController controller in delegations) {
+    for (TokenAmountTextFieldController controller in delegations) {
       controller.dispose();
     }
     super.dispose();
@@ -47,6 +47,8 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Delegate tokens',
       width: 420,
@@ -77,7 +79,10 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                   child: TextButton.icon(
                     style: TextButton.styleFrom(padding: EdgeInsets.zero),
                     onPressed: _addDelegation,
-                    label: const Text('Add delegation', style: TextStyle(fontSize: 14)),
+                    label: Text(
+                      'Add delegation',
+                      style: textTheme.bodyMedium,
+                    ),
                     icon: const Icon(Icons.add, size: 14),
                   ),
                 ),
@@ -90,21 +95,15 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Text(
+                  Text(
                     'Fee:',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xfffbfbfb),
-                    ),
+                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                   ),
                   const Spacer(),
                   if (state is DelegateTokensDialogLoadedState)
                     Text(
                       state.executionFee.toNetworkDenominationString(),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xff6c86ad),
-                      ),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                     )
                   else
                     const SizedShimmer(width: 60, height: 14, reversed: true),
@@ -117,11 +116,13 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                   return SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: error == null ? () {
-                        cubit.sendTransaction(
-                          amounts: delegations.map((e) => e.value!).toList(),
-                        );
-                      } : null,
+                      onPressed: error == null
+                          ? () {
+                              cubit.sendTransaction(
+                                amounts: delegations.map((e) => e.value!).toList(),
+                              );
+                            }
+                          : null,
                       child: Text(error ?? 'Delegate'),
                     ),
                   );
@@ -154,7 +155,7 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
   void _validateForm() {
     bool delegationsValid = true;
 
-    for(TokenAmountTextFieldController controller in delegations) {
+    for (TokenAmountTextFieldController controller in delegations) {
       if (controller.value == null) {
         delegationsValid = false;
         break;

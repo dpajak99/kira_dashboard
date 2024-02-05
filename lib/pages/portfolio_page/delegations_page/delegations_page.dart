@@ -37,6 +37,8 @@ class DelegationsPageState extends State<DelegationsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         BlocBuilder<UndelegationsListCubit, UndelegationsListState>(
@@ -67,7 +69,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb))),
+                                    Text(item.validatorInfo.moniker, style: textTheme.bodyMedium?.copyWith(color: const Color(0xfffbfbfb))),
                                     const SizedBox(height: 4),
                                     OpenableAddressText(
                                       address: item.validatorInfo.address,
@@ -83,10 +85,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                                 IconTextButton(
                                   text: 'Claim',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => undelegationsListCubit.claimUndelegation(undelegationId: item.id.toString()),
                                 ),
                             ],
@@ -130,7 +129,12 @@ class DelegationsPageState extends State<DelegationsPage> {
                             children: <Widget>[
                               IdentityAvatar(size: 32, address: item.validatorInfo.address),
                               const SizedBox(width: 12),
-                              Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                              Expanded(
+                                child: Text(
+                                  item.validatorInfo.moniker,
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                                ),
+                              ),
                             ],
                           );
                         },
@@ -142,7 +146,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                             item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           );
                         },
                       ),
@@ -156,10 +160,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                               child: IconTextButton(
                                 text: 'Claim',
                                 highlightColor: const Color(0xfffbfbfb),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff4888f0),
-                                ),
+                                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                 onTap: () => undelegationsListCubit.claimUndelegation(undelegationId: item.id.toString()),
                               ),
                             );
@@ -167,10 +168,7 @@ class DelegationsPageState extends State<DelegationsPage> {
 
                           return Text(
                             DateFormat('d MMM y, HH:mm').format(item.expiry),
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: item.isClaimable ? const Color(0xff35b15f) : const Color(0xfff12e1f),
-                            ),
+                            style: textTheme.bodyMedium!.copyWith(color: item.isClaimable ? const Color(0xff35b15f) : const Color(0xfff12e1f)),
                             textAlign: TextAlign.right,
                           );
                         },
@@ -232,7 +230,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                                     Text(
                                       item.validatorInfo.moniker,
                                       maxLines: 1,
-                                      style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                     ),
                                     const SizedBox(height: 4),
                                     OpenableAddressText(
@@ -249,20 +247,14 @@ class DelegationsPageState extends State<DelegationsPage> {
                                 IconTextButton(
                                   text: 'Delegate',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
                                 ),
                                 const SizedBox(width: 8),
                                 IconTextButton(
                                   text: 'Undelegate',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
                                 ),
                               ],
@@ -299,7 +291,12 @@ class DelegationsPageState extends State<DelegationsPage> {
                             children: <Widget>[
                               IdentityAvatar(size: 32, address: item.validatorInfo.address),
                               const SizedBox(width: 12),
-                              Expanded(child: Text(item.validatorInfo.moniker, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                              Expanded(
+                                child: Text(
+                                  item.validatorInfo.moniker,
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                                ),
+                              ),
                             ],
                           );
                         },
@@ -316,7 +313,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                         cellBuilder: (BuildContext context, Delegation item) {
                           return Text(
                             '${item.poolInfo.commissionPercentage}%',
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             textAlign: TextAlign.right,
                           );
                         },
@@ -332,20 +329,14 @@ class DelegationsPageState extends State<DelegationsPage> {
                                 IconTextButton(
                                   text: 'Undelegate',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
                                 ),
                                 const SizedBox(width: 16),
                                 IconTextButton(
                                   text: 'Delegate',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
                                 ),
                               ],

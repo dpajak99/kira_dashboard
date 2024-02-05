@@ -1,13 +1,11 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
-import 'package:kira_dashboard/main.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
@@ -29,6 +27,8 @@ class _AccountDialog extends State<AccountDialog> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return ValueListenableBuilder<Wallet?>(
       valueListenable: walletProvider,
       builder: (BuildContext context, Wallet? wallet, _) {
@@ -142,12 +142,9 @@ class _AccountDialog extends State<AccountDialog> {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Text(
+                        Text(
                           'Available accounts',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
                         ),
                         const Spacer(),
                         IconTextButton(
@@ -155,10 +152,7 @@ class _AccountDialog extends State<AccountDialog> {
                           gap: 4,
                           reversed: true,
                           icon: Icons.add,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xff4888f0),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                           onTap: () => walletProvider.deriveNextWallet(),
                         ),
                       ],
@@ -175,10 +169,7 @@ class _AccountDialog extends State<AccountDialog> {
                           leading: IdentityAvatar(size: 40, address: wallet.address),
                           title: Text(
                             'Account ${wallet.index}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xfffbfbfb),
-                            ),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           ),
                           subtitle: CopyableAddressText(
                             address: wallet.address,
@@ -187,17 +178,15 @@ class _AccountDialog extends State<AccountDialog> {
                               color: Color(0xff6c86ad),
                             ),
                           ),
-                          trailing: wallet != walletProvider.value ? IconTextButton(
-                            text: 'Switch',
-                            gap: 4,
-                            reversed: true,
-                            icon: Icons.login,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xff4888f0),
-                            ),
-                            onTap: () => walletProvider.changeWallet(wallet)
-                          ) : null,
+                          trailing: wallet != walletProvider.value
+                              ? IconTextButton(
+                                  text: 'Switch',
+                                  gap: 4,
+                                  reversed: true,
+                                  icon: Icons.login,
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                                  onTap: () => walletProvider.changeWallet(wallet))
+                              : null,
                         );
                       },
                     ),

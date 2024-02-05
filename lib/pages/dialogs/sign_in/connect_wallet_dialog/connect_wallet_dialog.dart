@@ -16,6 +16,8 @@ class ConnectWalletDialog extends DialogContentWidget {
 class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Connect Wallet',
       width: 550,
@@ -62,13 +64,10 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           ),
           const SizedBox(height: 24),
           RichText(
-            text: const TextSpan(
+            text: TextSpan(
               text: 'By connecting your wallet, you agree to\nour ',
-              style: TextStyle(
-                fontSize: 13,
-                color: Color(0xff6c86ad),
-              ),
-              children: [
+              style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+              children: const [
                 TextSpan(
                   text: 'Terms of Service',
                   style: TextStyle(

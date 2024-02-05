@@ -36,6 +36,8 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<IdentityRecordsListCubit, IdentityRecordsListState>(
       bloc: cubit,
       builder: (BuildContext context, IdentityRecordsListState state) {
@@ -89,10 +91,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                                   item.key,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xfffbfbfb),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                 ),
                               ],
                             ),
@@ -109,10 +108,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                         item.value,
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xfffbfbfb),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                       ),
                       if (widget.isMyWallet) ...<Widget>[
                         const SizedBox(height: 16),
@@ -121,20 +117,14 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                             IconTextButton(
                               text: 'Edit',
                               highlightColor: const Color(0xfffbfbfb),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff4888f0),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                               onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
                             ),
                             const SizedBox(width: 16),
                             IconTextButton(
                               text: 'Verify',
                               highlightColor: const Color(0xfffbfbfb),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff4888f0),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                               onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(
                                 records: [item],
                               )),
@@ -143,10 +133,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                             IconTextButton(
                               text: 'Delete',
                               highlightColor: const Color(0xfffbfbfb),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff4888f0),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                               onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
                             ),
                           ],
@@ -164,7 +151,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                         item.key,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -176,7 +163,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                         item.value,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                       );
                     },
                   ),
@@ -197,20 +184,14 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                             IconTextButton(
                               text: 'Edit',
                               highlightColor: const Color(0xfffbfbfb),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff4888f0),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                               onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
                             ),
                             const SizedBox(width: 16),
                             IconTextButton(
                               text: 'Verify',
                               highlightColor: const Color(0xfffbfbfb),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff4888f0),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                               onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(
                                 records: [item],
                               )),
@@ -219,10 +200,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                             IconTextButton(
                               text: 'Delete',
                               highlightColor: const Color(0xfffbfbfb),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff4888f0),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                               onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
                             ),
                           ],

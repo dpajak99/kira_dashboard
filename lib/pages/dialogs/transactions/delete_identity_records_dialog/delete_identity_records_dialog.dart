@@ -41,6 +41,8 @@ class _DeleteIdentityRecordsDialogState extends State<DeleteIdentityRecordsDialo
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Delete records',
       width: 420,
@@ -60,21 +62,15 @@ class _DeleteIdentityRecordsDialogState extends State<DeleteIdentityRecordsDialo
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       'Fee:',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xfffbfbfb),
-                      ),
+                      style: textTheme.bodyMedium!.copyWith(color:  const Color(0xfffbfbfb)),
                     ),
                     const Spacer(),
                     if (state is DeleteIdentityRecordsDialogLoadedState)
                       Text(
                         state.executionFee.toNetworkDenominationString(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xff6c86ad),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff6c86ad)),
                       )
                     else
                       const SizedShimmer(width: 60, height: 14, reversed: true),

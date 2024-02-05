@@ -85,13 +85,19 @@ class _MobileTable<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         if (loading == false && items.isEmpty)
-          const SizedBox(
+          SizedBox(
             height: 300,
             child: Center(
-              child: Text('Nothing here :(', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Color(0xff6c86ad))),
+              child: Text(
+                'Nothing here :(',
+                textAlign: TextAlign.center,
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+              ),
             ),
           )
         else ...<Widget>[
@@ -126,13 +132,19 @@ class _DesktopTable<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         if (loading == false && items.isEmpty)
-          const SizedBox(
+          SizedBox(
             height: 300,
             child: Center(
-              child: Text('Nothing here :(', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Color(0xff6c86ad))),
+              child: Text(
+                'Nothing here :(',
+                textAlign: TextAlign.center,
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+              ),
             ),
           )
         else ...<Widget>[
@@ -247,6 +259,8 @@ class _TableCellHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: EdgeInsets.only(
         top: 8 + (padding?.top ?? 0),
@@ -258,7 +272,7 @@ class _TableCellHeader extends StatelessWidget {
         text,
         textAlign: textAlign,
         maxLines: 1,
-        style: const TextStyle(fontSize: 14, color: Color(0xff6c86ad)),
+        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
       ),
     );
   }

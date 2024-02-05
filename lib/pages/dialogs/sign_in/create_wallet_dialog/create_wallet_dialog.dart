@@ -143,6 +143,8 @@ class _MnemonicItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xff131823),
@@ -155,16 +157,13 @@ class _MnemonicItem extends StatelessWidget {
             width: 24,
             child: Text(
               '$index.',
-              style: const TextStyle(fontSize: 14, color: Color(0xff6c86ad)),
+              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
             ),
           ),
           const SizedBox(width: 4),
           Text(
             word,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xfffbfbfb),
-            ),
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
           ),
         ],
       ),

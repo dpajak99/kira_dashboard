@@ -29,6 +29,8 @@ class _BlocksPageState extends State<BlocksPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<BlocksPageCubit, BlocksPageState>(
       bloc: blocksPageCubit,
       builder: (BuildContext context, BlocksPageState state) {
@@ -120,10 +122,7 @@ class _BlocksPageState extends State<BlocksPage> {
                       cellBuilder: (BuildContext context, Block item) {
                         return Text(
                           item.height,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),
@@ -135,7 +134,12 @@ class _BlocksPageState extends State<BlocksPage> {
                           children: <Widget>[
                             IdentityAvatar(size: 20, address: item.proposer),
                             const SizedBox(width: 8),
-                            Expanded(child: OpenableAddressText(address: item.proposer, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                            Expanded(
+                              child: OpenableAddressText(
+                                address: item.proposer,
+                                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                              ),
+                            ),
                           ],
                         );
                       },
@@ -147,10 +151,7 @@ class _BlocksPageState extends State<BlocksPage> {
                           '0x${item.hash}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),
@@ -160,10 +161,7 @@ class _BlocksPageState extends State<BlocksPage> {
                         return OpenableText(
                           text: item.numTxs,
                           onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),
@@ -176,10 +174,7 @@ class _BlocksPageState extends State<BlocksPage> {
                               : '${item.time.difference(DateTime.now()).inMinutes.abs()} minutes ago',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),

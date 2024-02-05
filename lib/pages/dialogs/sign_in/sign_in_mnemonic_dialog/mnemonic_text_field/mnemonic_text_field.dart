@@ -1,5 +1,6 @@
 import 'package:blockchain_utils/bip/bip/bip.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field_cubit.dart';
@@ -42,6 +43,8 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xff131823),
@@ -66,10 +69,7 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
                 width: 24,
                 child: Text(
                   '${widget.index}.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: color,
-                  ),
+                  style: textTheme.bodyMedium!.copyWith(color: color),
                 ),
               );
             },
@@ -79,9 +79,8 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
             child: TypeaheadTextField(
               controller: widget.controller,
               focusNode: focusNode,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color(0xfffbfbfb),
+              style: textTheme.bodyMedium!.copyWith(
+                color: const Color(0xfffbfbfb),
                 letterSpacing: 1,
               ),
               inputFormatters: [

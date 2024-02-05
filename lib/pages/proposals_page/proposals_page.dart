@@ -26,6 +26,8 @@ class _ProposalsPageState extends State<ProposalsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<ProposalsPageCubit, ProposalsPageState>(
       bloc: proposalsPageCubit,
       builder: (BuildContext context, ProposalsPageState state) {
@@ -59,7 +61,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                           item.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         ),
                         const SizedBox(height: 16),
                         _MobileRow(
@@ -120,10 +122,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                           item.id,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),
@@ -135,10 +134,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                           item.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),
@@ -157,10 +153,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                           item.voters.toString(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),
@@ -171,10 +164,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                           item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),
@@ -185,10 +175,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                           DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         );
                       },
                     ),

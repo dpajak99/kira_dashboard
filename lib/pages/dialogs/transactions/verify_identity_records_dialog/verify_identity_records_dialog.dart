@@ -50,6 +50,8 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Request verification',
       width: 420,
@@ -83,21 +85,15 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       'Fee:',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xfffbfbfb),
-                      ),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                     ),
                     const Spacer(),
                     if (state is VerifyIdentityRecordsDialogLoadedState)
                       Text(
                         state.executionFee.toNetworkDenominationString(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xff6c86ad),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff6c86ad)),
                       )
                     else
                       const SizedShimmer(width: 60, height: 14, reversed: true),
@@ -133,7 +129,7 @@ class _VerifyIdentityRecordsDialogState extends State<VerifyIdentityRecordsDialo
   }
 
   void _validateForm() {
-    if(identityRecordsPickerController.value.isEmpty) {
+    if (identityRecordsPickerController.value.isEmpty) {
       errorNotifier.value = 'Select records';
     } else if (verifierAddressController.text.isEmpty) {
       errorNotifier.value = 'Enter address';

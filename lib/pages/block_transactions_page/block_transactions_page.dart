@@ -33,6 +33,8 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<BlockTransactionsPageCubit, BlockTransactionsPageState>(
       bloc: blockTransactionsPageCubit,
       builder: (BuildContext context, BlockTransactionsPageState state) {
@@ -84,7 +86,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                           child: CoinText(
                                             coin: item.amounts.first,
                                             textAlign: TextAlign.right,
-                                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                           ),
                                         ),
                                         const SizedBox(width: 8),
@@ -93,7 +95,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                       if (item.amounts.length > 1)
                                         Text(
                                           ' + ${item.amounts.length - 1}',
-                                          style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                         ),
                                     ],
                                   ),
@@ -107,10 +109,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                             ),
                             OpenableHash(
                               hash: item.hash,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff2f8af5),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                               onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
                             ),
                             const SizedBox(height: 16),
@@ -127,10 +126,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                       ),
                                       OpenableAddressText(
                                         address: item.from,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff2f8af5),
-                                        ),
+                                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                       ),
                                     ],
                                   ),
@@ -147,10 +143,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                       ),
                                       OpenableAddressText(
                                         address: item.to,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff2f8af5),
-                                        ),
+                                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                       ),
                                     ],
                                   ),
@@ -168,10 +161,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                             return OpenableHash(
                               hash: item.hash,
                               onTap: () => AutoRouter.of(context).push(TransactionDetailsRoute(hash: item.hash)),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff2f8af5),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                             );
                           },
                         ),
@@ -189,7 +179,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                               DateFormat('d MMM y, HH:mm').format(item.time),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             );
                           },
                         ),
@@ -198,10 +188,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                           cellBuilder: (BuildContext context, BlockTransaction item) {
                             return OpenableAddressText(
                               address: item.from,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff2f8af5),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                             );
                           },
                         ),
@@ -220,10 +207,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                           cellBuilder: (BuildContext context, BlockTransaction item) {
                             return OpenableAddressText(
                               address: item.to,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff2f8af5),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                             );
                           },
                         ),
@@ -240,23 +224,23 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                     child: CoinText(
                                       coin: item.amounts.first,
                                       textAlign: TextAlign.right,
-                                      style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                 ] else
-                                  const Padding(
-                                    padding: EdgeInsets.only(right: 32),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 32),
                                     child: Text(
                                       '---',
-                                      style: TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                     ),
                                   ),
                                 TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
                                 if (item.amounts.length > 1)
                                   Text(
                                     ' + ${item.amounts.length - 1}',
-                                    style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                   ),
                               ],
                             );

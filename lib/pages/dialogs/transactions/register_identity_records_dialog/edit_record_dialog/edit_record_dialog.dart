@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kira_dashboard/main.dart';
+import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/widgets/identity_record_input.dart';

@@ -39,7 +39,7 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
   @override
   void dispose() {
     cubit.close();
-    for(TokenAmountTextFieldController controller in undelegations) {
+    for (TokenAmountTextFieldController controller in undelegations) {
       controller.dispose();
     }
     super.dispose();
@@ -47,6 +47,8 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Undelegate tokens',
       width: 420,
@@ -77,7 +79,10 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
                   child: TextButton.icon(
                     style: TextButton.styleFrom(padding: EdgeInsets.zero),
                     onPressed: _addUndelegation,
-                    label: const Text('Add undelegation', style: TextStyle(fontSize: 14)),
+                    label: Text(
+                      'Add undelegation',
+                      style: textTheme.bodyMedium,
+                    ),
                     icon: const Icon(Icons.add, size: 14),
                   ),
                 ),
@@ -90,21 +95,15 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Text(
+                  Text(
                     'Fee:',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xfffbfbfb),
-                    ),
+                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                   ),
                   const Spacer(),
                   if (state is UndelegateTokensDialogLoadedState)
                     Text(
                       state.executionFee.toNetworkDenominationString(),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xff6c86ad),
-                      ),
+                      style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff6c86ad)),
                     )
                   else
                     const SizedShimmer(width: 60, height: 14, reversed: true),
@@ -117,11 +116,13 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
                   return SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: error == null ? () {
-                        cubit.sendTransaction(
-                          amounts: undelegations.map((e) => e.value!).toList(),
-                        );
-                      } : null,
+                      onPressed: error == null
+                          ? () {
+                              cubit.sendTransaction(
+                                amounts: undelegations.map((e) => e.value!).toList(),
+                              );
+                            }
+                          : null,
                       child: Text(error ?? 'Undelegate'),
                     ),
                   );
@@ -154,7 +155,7 @@ class _UndelegateTokensDialogState extends State<UndelegateTokensDialog> {
   void _validateForm() {
     bool undelegationsValid = true;
 
-    for(TokenAmountTextFieldController controller in undelegations) {
+    for (TokenAmountTextFieldController controller in undelegations) {
       if (controller.value == null) {
         undelegationsValid = false;
         break;

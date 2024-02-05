@@ -46,6 +46,8 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Send tokens',
       width: 420,
@@ -73,21 +75,15 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       'Fee:',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xfffbfbfb),
-                      ),
+                      style: textTheme.bodyMedium?.copyWith(color: const Color(0xfffbfbfb)),
                     ),
                     const Spacer(),
                     if (state is SendTokensDialogLoadedState)
                       Text(
                         state.executionFee.toNetworkDenominationString(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xff6c86ad),
-                        ),
+                        style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
                       )
                     else
                       const SizedShimmer(width: 60, height: 14, reversed: true),
@@ -100,12 +96,14 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                     return SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: error == null ? () {
-                          cubit.sendTransaction(
-                            toAddress: toAddressController.text,
-                            amounts: [tokenAmountTextFieldController.value!],
-                          );
-                        } : null,
+                        onPressed: error == null
+                            ? () {
+                                cubit.sendTransaction(
+                                  toAddress: toAddressController.text,
+                                  amounts: [tokenAmountTextFieldController.value!],
+                                );
+                              }
+                            : null,
                         child: Text(error ?? 'Send'),
                       ),
                     );

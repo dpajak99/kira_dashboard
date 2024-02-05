@@ -35,6 +35,8 @@ class _BalancesPageState extends State<BalancesPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder(
       bloc: cubit,
       builder: (BuildContext context, BalancesListState state) {
@@ -64,7 +66,13 @@ class _BalancesPageState extends State<BalancesPage> {
                                   children: <Widget>[
                                     TokenIcon(size: 24, iconUrl: item.icon),
                                     const SizedBox(width: 12),
-                                    Expanded(child: Text(item.name, maxLines: 1, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                                    Expanded(
+                                      child: Text(
+                                        item.name,
+                                        maxLines: 1,
+                                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(height: 8),
@@ -78,7 +86,7 @@ class _BalancesPageState extends State<BalancesPage> {
                               children: [
                                 CoinText(
                                   coin: item,
-                                  style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                                   textAlign: TextAlign.right,
                                 ),
                                 if (widget.isMyWallet) ...<Widget>[
@@ -89,10 +97,7 @@ class _BalancesPageState extends State<BalancesPage> {
                                     reversed: true,
                                     icon: AppIcons.arrow_up_right,
                                     highlightColor: const Color(0xfffbfbfb),
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xff4888f0),
-                                    ),
+                                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                     onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: item)),
                                   ),
                                 ],
@@ -112,7 +117,13 @@ class _BalancesPageState extends State<BalancesPage> {
                         children: <Widget>[
                           TokenIcon(size: 24, iconUrl: item.icon),
                           const SizedBox(width: 12),
-                          Expanded(child: Text(item.name, maxLines: 1, style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)))),
+                          Expanded(
+                            child: Text(
+                              item.name,
+                              maxLines: 1,
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                            ),
+                          ),
                         ],
                       );
                     },
@@ -130,7 +141,7 @@ class _BalancesPageState extends State<BalancesPage> {
                     cellBuilder: (BuildContext context, Coin item) {
                       return CoinText(
                         coin: item,
-                        style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         textAlign: TextAlign.right,
                       );
                     },
@@ -148,10 +159,7 @@ class _BalancesPageState extends State<BalancesPage> {
                               gap: 4,
                               icon: AppIcons.arrow_up_right,
                               highlightColor: const Color(0xfffbfbfb),
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xff4888f0),
-                              ),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                               onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: item)),
                             ),
                           ],

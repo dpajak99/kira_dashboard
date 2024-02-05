@@ -308,6 +308,8 @@ class _DashboardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -321,7 +323,7 @@ class _DashboardTile extends StatelessWidget {
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 14, color: Color(0xff6c86ad)),
+          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
         ),
       ],
     );

@@ -38,6 +38,8 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         BlocBuilder<InboundVerificationRequestsListCubit, InboundVerificationRequestsListState>(
@@ -69,10 +71,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                     Expanded(
                                       child: OpenableAddressText(
                                         address: item.address,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff2f8af5),
-                                        ),
+                                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                       ),
                                     ),
                                   ],
@@ -82,20 +81,14 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                 IconTextButton(
                                   text: 'Approve',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => inboundCubit.approveVerificationRequest(int.parse(item.id)),
                                 ),
                               const SizedBox(width: 8),
                               IconTextButton(
                                 text: 'Reject',
                                 highlightColor: const Color(0xfffbfbfb),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff4888f0),
-                                ),
+                                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                 onTap: () => inboundCubit.rejectVerificationRequest(int.parse(item.id)),
                               ),
                             ],
@@ -154,10 +147,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                               Expanded(
                                 child: CopyableAddressText(
                                   address: item.address,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff2f8af5),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                 ),
                               ),
                             ],
@@ -171,7 +161,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                             DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           );
                         },
                       ),
@@ -182,7 +172,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                             item.records.map((e) => e.key).join(', '),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           );
                         },
                       ),
@@ -195,7 +185,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                             maxLines: 1,
                             textAlign: TextAlign.right,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           );
                         },
                       ),
@@ -210,20 +200,14 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                 IconTextButton(
                                   text: 'Approve',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => inboundCubit.approveVerificationRequest(int.parse(item.id)),
                                 ),
                                 const SizedBox(width: 16),
                                 IconTextButton(
                                   text: 'Reject',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => inboundCubit.rejectVerificationRequest(int.parse(item.id)),
                                 ),
                               ],
@@ -267,10 +251,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                     Expanded(
                                       child: OpenableAddressText(
                                         address: item.address,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0xff2f8af5),
-                                        ),
+                                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                       ),
                                     ),
                                   ],
@@ -280,10 +261,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                 IconTextButton(
                                   text: 'Cancel',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => outboundCubit.cancelVerificationRequest(int.parse(item.id)),
                                 ),
                             ],
@@ -342,10 +320,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                               Expanded(
                                 child: CopyableAddressText(
                                   address: item.verifier,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff2f8af5),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff2f8af5)),
                                 ),
                               ),
                             ],
@@ -359,7 +334,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                             DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           );
                         },
                       ),
@@ -370,7 +345,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                             item.records.map((e) => e.key).join(', '),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           );
                         },
                       ),
@@ -383,7 +358,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                             maxLines: 1,
                             textAlign: TextAlign.right,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           );
                         },
                       ),
@@ -398,10 +373,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                                 IconTextButton(
                                   text: 'Cancel',
                                   highlightColor: const Color(0xfffbfbfb),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff4888f0),
-                                  ),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                   onTap: () => outboundCubit.cancelVerificationRequest(int.parse(item.id)),
                                 ),
                               ],

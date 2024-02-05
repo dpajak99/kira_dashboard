@@ -88,6 +88,8 @@ class _ValidatorTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return MouseStateListener(
       childBuilder: (Set<MaterialState> states) {
         return ClipRRect(
@@ -138,50 +140,35 @@ class _ValidatorTile extends StatelessWidget {
                       const SizedBox(height: 4),
                       OpenableAddressText(
                         address: validator.address,
-                        style: const TextStyle(
-                          color: Color(0xff6c86ad),
-                          fontSize: 14,
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                       ),
                       const SizedBox(height: 16),
                       const Divider(color: Color(0xff222b3a)),
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'Uptime',
-                            style: TextStyle(
-                              color: Color(0xff6c86ad),
-                              fontSize: 14,
-                            ),
+                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           const Spacer(),
                           Text(
                             '${validator.uptime}%',
-                            style: const TextStyle(
-                              color: Color(0xfffbfbfb),
-                              fontSize: 14,
-                            ),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'Streak',
-                            style: TextStyle(
-                              color: Color(0xff6c86ad),
-                              fontSize: 14,
-                            ),
+                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           const Spacer(),
                           Text(
                             validator.streak,
-                            style: const TextStyle(
-                              color: Color(0xfffbfbfb),
-                              fontSize: 14,
-                            ),
+                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xfffbfbfb)),
                           ),
                         ],
                       ),

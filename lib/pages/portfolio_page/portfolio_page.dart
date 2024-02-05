@@ -35,6 +35,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<PortfolioPageCubit, PortfolioPageState>(
       bloc: cubit,
       builder: (BuildContext context, PortfolioPageState state) {
@@ -108,10 +110,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       ),
                       CopyableAddressText(
                         address: widget.address,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xff6c86ad),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                       ),
                       const SizedBox(height: 16),
                       Wrap(

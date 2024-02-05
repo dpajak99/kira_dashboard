@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
-import 'package:kira_dashboard/main.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/utils/signature_utils.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
@@ -21,6 +21,8 @@ class SignTransactionDialog extends DialogContentWidget {
 class _SignTransactionDialog extends State<SignTransactionDialog> {
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Sign transaction',
       width: 420,
@@ -36,7 +38,7 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
               children: [
                 Text(
                   widget.message,
-                  style: const TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                 ),
               ],
             ),

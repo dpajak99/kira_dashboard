@@ -25,15 +25,9 @@ class _BlockDetailsPageState extends State<BlockDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle titleStyle = const TextStyle(
-      fontSize: 14,
-      color: Color(0xff6c86ad),
-    );
-
-    TextStyle valueStyle = const TextStyle(
-      fontSize: 14,
-      color: Color(0xfffbfbfb),
-    );
+    TextTheme textTheme = Theme.of(context).textTheme;
+    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad));
+    TextStyle valueStyle =  textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb));
 
     return BlocBuilder<BlockDetailsCubit, BlockDetailsState>(
       bloc: blockDetailsCubit,

@@ -22,6 +22,8 @@ class _NetworkDialog extends State<NetworkDialog> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<NetworkListCubit, NetworkListState>(
       bloc: getIt<NetworkListCubit>(),
       builder: (BuildContext context, NetworkListState state) {
@@ -74,8 +76,7 @@ class _NetworkDialog extends State<NetworkDialog> {
                         ),
                         trailing: Text(
                           'Connected',
-                          style: TextStyle(
-                            fontSize: 14,
+                          style: textTheme.bodyMedium!.copyWith(
                             color: switch (state.currentNetwork!.status) {
                               NetworkStatusType.online => Colors.green,
                               NetworkStatusType.unhealthy => Colors.yellow,
@@ -169,10 +170,7 @@ class _NetworkDialog extends State<NetworkDialog> {
                             ? IconTextButton(
                                 text: 'Connect',
                                 highlightColor: const Color(0xfffbfbfb),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff4888f0),
-                                ),
+                                style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff4888f0)),
                                 onTap: () {
                                   getIt<NetworkListCubit>().updateConnectedNetwork(e.interxUrl);
                                 },
@@ -211,10 +209,7 @@ class _NetworkDialog extends State<NetworkDialog> {
                     IconTextButton(
                       text: 'Add',
                       highlightColor: const Color(0xfffbfbfb),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xff4888f0),
-                      ),
+                      style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff4888f0)),
                       onTap: () {
                         getIt<NetworkListCubit>().addCustomNetwork(NetworkTemplate(
                           name: 'Custom',

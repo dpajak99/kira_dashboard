@@ -57,6 +57,8 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: switch (widget.records.length) {
         0 => 'Register record',
@@ -84,7 +86,7 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
                 child: TextButton.icon(
                   style: TextButton.styleFrom(padding: EdgeInsets.zero),
                   onPressed: _addRecord,
-                  label: const Text('Add record', style: TextStyle(fontSize: 14)),
+                  label: Text('Add record', style: textTheme.bodyMedium),
                   icon: const Icon(Icons.add, size: 14),
                 ),
               ),
@@ -93,21 +95,15 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Text(
+                  Text(
                     'Fee:',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xfffbfbfb),
-                    ),
+                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                   ),
                   const Spacer(),
                   if (state is RegisterIdentityRecordsDialogLoadedState)
                     Text(
                       state.executionFee.toNetworkDenominationString(),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xff6c86ad),
-                      ),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                     )
                   else
                     const SizedShimmer(width: 60, height: 14, reversed: true),
@@ -120,11 +116,13 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
                   return SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: error == null ? () {
-                        cubit.sendTransaction(
-                          identityInfoEntries: controllers.map((e) => IdentityInfoEntry(key: e.irKey, info: e.irValue)).toList(),
-                        );
-                      } : null,
+                      onPressed: error == null
+                          ? () {
+                              cubit.sendTransaction(
+                                identityInfoEntries: controllers.map((e) => IdentityInfoEntry(key: e.irKey, info: e.irValue)).toList(),
+                              );
+                            }
+                          : null,
                       child: Text(error ?? 'Register'),
                     ),
                   );
@@ -185,6 +183,8 @@ class _RecordPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return ValueListenableBuilder(
       valueListenable: controller,
       builder: (BuildContext context, IdentityRecordInputModel record, _) {
@@ -208,7 +208,7 @@ class _RecordPreview extends StatelessWidget {
                     Text(
                       controller.hasKey ? controller.irKey : '---',
                       maxLines: 1,
-                      style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                     ),
                   ],
                 ),
@@ -226,7 +226,7 @@ class _RecordPreview extends StatelessWidget {
                     Text(
                       controller.hasValue ? controller.irValue : '---',
                       maxLines: 1,
-                      style: const TextStyle(fontSize: 14, color: Color(0xfffbfbfb)),
+                      style: textTheme.bodyMedium!.copyWith(color:  const Color(0xfffbfbfb)),
                     ),
                   ],
                 ),
