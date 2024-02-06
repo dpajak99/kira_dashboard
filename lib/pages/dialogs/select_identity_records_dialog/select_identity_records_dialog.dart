@@ -28,6 +28,8 @@ class _SelectIdentityRecordsDialogState extends State<SelectIdentityRecordsDialo
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Select Identity Records',
       width: 420,
@@ -54,18 +56,12 @@ class _SelectIdentityRecordsDialogState extends State<SelectIdentityRecordsDialo
                       title: Text(
                         record.key,
                         maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xfffbfbfb),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith( color: const Color(0xfffbfbfb)),
                       ),
                       subtitle: Text(
                         record.value,
                         maxLines: 1,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: Color(0xff6c86ad),
-                        ),
+                        style: textTheme.labelMedium!.copyWith( color: const Color(0xff6c86ad)),
                       ),
                     );
                   },

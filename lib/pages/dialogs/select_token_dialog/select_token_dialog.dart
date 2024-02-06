@@ -22,6 +22,8 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Select token',
       width: 420,
@@ -41,17 +43,11 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
                   leading: TokenIcon(size: 24, iconUrl: balance.icon),
                   title: Text(
                     balance.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xfffbfbfb),
-                    ),
+                    style: textTheme.titleLarge!.copyWith(color: const Color(0xfffbfbfb)),
                   ),
                   subtitle: Text(
                     balance.toNetworkDenominationString(),
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Color(0xff6c86ad),
-                    ),
+                    style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                   ),
                 );
               },

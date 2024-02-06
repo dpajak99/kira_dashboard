@@ -166,6 +166,8 @@ class _TextFieldState extends State<_TextField> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
@@ -178,7 +180,7 @@ class _TextFieldState extends State<_TextField> {
             children: [
               Text(
                 widget.title,
-                style: const TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
               ),
               const Spacer(),
               const Spacer(),
@@ -206,14 +208,14 @@ class _TextFieldState extends State<_TextField> {
                       maxLines: widget.maxLines,
                       focusNode: focusNode,
                       controller: widget.controller,
-                      style: const TextStyle(fontSize: 20, color: Color(0xfffbfbfb)),
+                      style: textTheme.bodyLarge!.copyWith(color: const Color(0xfffbfbfb)),
                       cursorColor: const Color(0xfffbfbfb),
                       cursorWidth: 1,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         isDense: true,
                         hintText: 'Enter value',
-                        hintStyle: TextStyle(fontSize: 20, color: Color(0xff3e4c63)),
+                        hintStyle: textTheme.bodyLarge!.copyWith(color: const Color(0xff3e4c63)),
                         border: InputBorder.none,
                       ),
                     ),
@@ -233,7 +235,7 @@ class _TextFieldState extends State<_TextField> {
                   if (errorMessage != null) {
                     return Text(
                       errorMessage,
-                      style: const TextStyle(fontSize: 13, color: Color(0xfff12e1f)),
+                      style: textTheme.labelLarge!.copyWith(color: const Color(0xfff12e1f)),
                     );
                   } else {
                     return const SizedBox();

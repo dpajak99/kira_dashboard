@@ -35,6 +35,8 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return ValueListenableBuilder(
       valueListenable: widget.controller,
       builder: (BuildContext context, List<IdentityRecord> records, _) {
@@ -51,9 +53,9 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Records',
-                      style: TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                      style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                     ),
                     const Spacer(),
                     InkWell(
@@ -91,7 +93,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                             child: Text(
                               record.key,
                               maxLines: 1,
-                              style: const TextStyle(fontSize: 13, color: Color(0xfffbfbfb)),
+                              style: textTheme.titleLarge!.copyWith(color:  const Color(0xfffbfbfb)),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -99,7 +101,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                             child: Text(
                               record.value,
                               maxLines: 1,
-                              style: const TextStyle(fontSize: 13, color: Color(0xfffbfbfb)),
+                              style: textTheme.labelLarge!.copyWith(color:  const Color(0xfffbfbfb)),
                             ),
                           ),
                         ],
@@ -108,14 +110,14 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                 ),
               ),
               if (records.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         'Records cannot be empty',
-                        style: TextStyle(fontSize: 13, color: Color(0xfff12e1f)),
+                        style: textTheme.labelLarge!.copyWith(color: const Color(0xfff12e1f)),
                       ),
                     ],
                   ),

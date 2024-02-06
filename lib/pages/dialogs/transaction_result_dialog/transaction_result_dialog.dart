@@ -33,6 +33,8 @@ class TransactionResultDialog extends DialogContentWidget {
 class _TransactionResultDialogState extends State<TransactionResultDialog> {
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: switch (widget.status) {
         TransactionProcessStatus.broadcast => 'Broadcasting transaction',
@@ -64,24 +66,16 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
             },
           ),
           const SizedBox(height: 40),
-          if(widget.internalBroadcastException != null) ...<Widget>[
+          if (widget.internalBroadcastException != null) ...<Widget>[
             Text(
               widget.internalBroadcastException!.code,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                color: Color(0xffe74c3c),
-              ),
+              style: textTheme.headlineLarge!.copyWith(color: const Color(0xffe74c3c)),
             ),
             const SizedBox(height: 8),
             Text(
               widget.internalBroadcastException!.message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff6c86ad),
-              ),
+              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
             ),
             const SizedBox(height: 40),
             SizedBox(
@@ -94,8 +88,7 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
             ),
             const SizedBox(height: 16),
           ],
-
-          if( widget.hash != null ) ...<Widget>[
+          if (widget.hash != null) ...<Widget>[
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

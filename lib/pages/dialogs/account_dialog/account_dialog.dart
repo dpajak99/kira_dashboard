@@ -62,12 +62,9 @@ class _AccountDialog extends State<AccountDialog> {
                             size: 20,
                             color: Color(0xff6c86ad),
                           ),
-                          label: const Text(
+                          label: Text(
                             'Open portfolio',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Color(0xff6c86ad),
-                            ),
+                            style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                           ),
                         ),
                         Row(
@@ -103,10 +100,7 @@ class _AccountDialog extends State<AccountDialog> {
                           const SizedBox(height: 16),
                           CopyableAddressText(
                             address: wallet.address,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Color(0xfffbfbfb),
-                            ),
+                            style: textTheme.titleSmall!.copyWith(color: const Color(0xfffbfbfb)),
                           ),
                         ],
                       ),
@@ -173,10 +167,7 @@ class _AccountDialog extends State<AccountDialog> {
                           ),
                           subtitle: CopyableAddressText(
                             address: wallet.address,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color(0xff6c86ad),
-                            ),
+                            style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           trailing: wallet != walletProvider.value
                               ? IconTextButton(

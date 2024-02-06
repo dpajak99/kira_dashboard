@@ -71,7 +71,7 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                         DateFormat('d MMM y, HH:mm').format(item.time),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
                                       ),
                                     ],
                                   ),
@@ -103,9 +103,9 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                               ],
                             ),
                             const SizedBox(height: 16),
-                            const Text(
+                            Text(
                               'Hash',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             OpenableHash(
                               hash: item.hash,
@@ -120,9 +120,9 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
+                                      Text(
                                         'From',
-                                        style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
                                       ),
                                       OpenableAddressText(
                                         address: item.from,
@@ -137,9 +137,9 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      const Text(
+                                      Text(
                                         'To',
-                                        style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
                                       ),
                                       OpenableAddressText(
                                         address: item.to,
@@ -266,6 +266,8 @@ class _MethodChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -278,10 +280,7 @@ class _MethodChip extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Color(0xff6c86ad),
-          ),
+          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
         ),
       ),
     );

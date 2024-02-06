@@ -42,6 +42,8 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Sign in using Mnemonic',
       width: 550,
@@ -57,9 +59,9 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Select mnemonic size',
-                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                  style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -72,9 +74,9 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
                   ],
                 ),
                 const SizedBox(height: 24),
-                const Text(
+                Text(
                   'Enter mnemonic passphrase',
-                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                  style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
                 ),
                 const SizedBox(height: 8),
                 ..._buildCells(state),

@@ -60,19 +60,13 @@ class _NetworkDialog extends State<NetworkDialog> {
                           state.currentNetwork!.name ?? 'unknown',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         ),
                         subtitle: Text(
                           state.currentNetwork!.interxUrl.toString(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
                         ),
                         trailing: Text(
                           'Connected',
@@ -95,25 +89,25 @@ class _NetworkDialog extends State<NetworkDialog> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text('Chain', style: TextStyle(fontSize: 12, color: Color(0xff6c86ad))),
-                                Text(details?.chainId ?? '---', style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb))),
+                                Text('Chain', style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad))),
+                                Text(details?.chainId ?? '---', style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb))),
                               ],
                             ),
                             const SizedBox(width: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text('Block time', style: TextStyle(fontSize: 12, color: Color(0xff6c86ad))),
+                                Text('Block time', style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad))),
                                 Text(details?.blockDateTime != null ? DateFormat('d MMM y, HH:mm').format(details!.blockDateTime) : '---',
-                                    style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb))),
+                                    style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb))),
                               ],
                             ),
                             const SizedBox(width: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text('Block height', style: TextStyle(fontSize: 12, color: Color(0xff6c86ad))),
-                                Text(details?.block.toString() ?? '---', style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb))),
+                                Text('Block height', style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad))),
+                                Text(details?.block.toString() ?? '---', style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb))),
                               ],
                             ),
                           ],
@@ -152,25 +146,19 @@ class _NetworkDialog extends State<NetworkDialog> {
                           e.name ?? 'unknown',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         ),
                         subtitle: Text(
                           e.interxUrl.toString(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
                         ),
                         trailing: e.status == NetworkStatusType.online
                             ? IconTextButton(
                                 text: 'Connect',
                                 highlightColor: const Color(0xfffbfbfb),
-                                style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff4888f0)),
+                                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                 onTap: () {
                                   getIt<NetworkListCubit>().updateConnectedNetwork(e.interxUrl);
                                 },
@@ -193,14 +181,14 @@ class _NetworkDialog extends State<NetworkDialog> {
                     Expanded(
                       child: TextField(
                         controller: controller,
-                        style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                         cursorColor: const Color(0xfffbfbfb),
                         cursorWidth: 1,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           isDense: true,
                           hintText: 'Custom address',
-                          hintStyle: TextStyle(fontSize: 16, color: Color(0xff3e4c63)),
+                          hintStyle: textTheme.bodyMedium!.copyWith(color: const Color(0xff3e4c63)),
                           border: InputBorder.none,
                         ),
                       ),
@@ -209,7 +197,7 @@ class _NetworkDialog extends State<NetworkDialog> {
                     IconTextButton(
                       text: 'Add',
                       highlightColor: const Color(0xfffbfbfb),
-                      style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff4888f0)),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                       onTap: () {
                         getIt<NetworkListCubit>().addCustomNetwork(NetworkTemplate(
                           name: 'Custom',

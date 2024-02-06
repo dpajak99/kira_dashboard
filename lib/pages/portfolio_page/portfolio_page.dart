@@ -52,20 +52,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Address overview',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
                         ),
                         CopyableText(
                           text: widget.address,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
                         )
                       ],
                     ),
@@ -106,11 +99,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       const SizedBox(height: 4),
                       Text(
                         state.identityRecords.getName(state.validator != null) ?? '---',
-                        style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                        style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
                       ),
                       CopyableAddressText(
                         address: widget.address,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                        style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
                       ),
                       const SizedBox(height: 16),
                       Wrap(

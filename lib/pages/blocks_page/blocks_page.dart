@@ -59,35 +59,32 @@ class _BlocksPageState extends State<BlocksPage> {
                       children: [
                         OpenableText(
                           text: 'Block #${item.height}',
-                          style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
                         ),
                         const SizedBox(height: 4),
                         CopyableHash(
                           hash: '0x${item.hash}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 16),
                         _MobileRow(
-                          title: const Text(
+                          title: Text(
                             'Block time:',
-                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           value: RichText(
                             text: TextSpan(
                               text: '${DateFormat('d MMM y, HH:mm').format(item.time)} ($hrTime)',
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                         ),
                         const SizedBox(height: 8),
                         _MobileRow(
-                          title: const Text(
+                          title: Text(
                             'Proposed by:',
-                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           value: Row(
                             children: [
@@ -95,21 +92,21 @@ class _BlocksPageState extends State<BlocksPage> {
                               const SizedBox(width: 4),
                               OpenableAddressText(
                                 address: item.proposer,
-                                style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                               ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 8),
                         _MobileRow(
-                          title: const Text(
+                          title: Text(
                             'Transactions:',
-                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           value: OpenableText(
                             text: item.numTxs,
                             onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-                            style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           ),
                         ),
                       ],

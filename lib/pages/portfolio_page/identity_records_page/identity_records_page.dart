@@ -56,10 +56,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                         icon: AppIcons.add,
                         gap: 4,
                         highlightColor: const Color(0xfffbfbfb),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xff4888f0),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                         onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
                       ),
                     ),
@@ -83,9 +80,9 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Key',
-                                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                                 ),
                                 Text(
                                   item.key,
@@ -100,9 +97,9 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      const Text(
+                      Text(
                         'Value',
-                        style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                       ),
                       Text(
                         item.value,
@@ -224,6 +221,8 @@ class _VerificationChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -237,8 +236,7 @@ class _VerificationChip extends StatelessWidget {
         ),
         child: Text(
           verified ? 'Verified' : 'Unverified',
-          style: TextStyle(
-            fontSize: 12,
+          style: textTheme.labelMedium!.copyWith(
             color: switch (verified) {
               true => const Color(0xff35b15f),
               false => const Color(0xfff12e1f),

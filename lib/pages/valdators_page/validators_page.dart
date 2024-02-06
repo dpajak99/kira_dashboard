@@ -24,25 +24,21 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return PageScaffold(
       slivers: [
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Text(
             'Validators',
-            style: TextStyle(
-              fontSize: 32,
-              color: Color(0xfffbfbfb),
-            ),
+            style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
           ),
         ),
         const SliverPadding(padding: EdgeInsets.only(top: 4)),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Text(
             "Choose a validator to delegate your tokens and start earning rewards. Validators play a vital role in maintaining the network, and by staking with them, you contribute to the network's stability and earn a share of the rewards. Detailed information about each validator's performance, such as uptime and streak records, helps guide your decision. Your stake supports the validator's reliability while entitling you to rewards generated from block creation and transaction fees.",
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xff6c86ad),
-            ),
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
           ),
         ),
         const SliverPadding(padding: EdgeInsets.only(top: 32)),
@@ -121,10 +117,7 @@ class _ValidatorTile extends StatelessWidget {
                         maxLines: 1,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Color(0xfffbfbfb),
-                          fontSize: 16,
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                       ),
                       const SizedBox(height: 4),
                       FittedBox(
@@ -203,6 +196,8 @@ class _RankBookmark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: 72,
       height: 32,
@@ -213,10 +208,7 @@ class _RankBookmark extends StatelessWidget {
       child: Center(
         child: Text(
           'Rank #$rank',
-          style: const TextStyle(
-            color: Color(0xfffbfbfb),
-            fontSize: 12,
-          ),
+          style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb)),
         ),
       ),
     );
@@ -230,6 +222,8 @@ class _ValidatorStatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       margin: const EdgeInsets.all(4),
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -249,9 +243,7 @@ class _ValidatorStatusChip extends StatelessWidget {
           ValidatorStatus.jailed => 'Jailed validator',
           ValidatorStatus.paused => 'Paused validator',
         },
-        style: TextStyle(
-          fontSize: 12,
-          color: switch (status) {
+        style: textTheme.labelMedium!.copyWith(color: switch (status) {
             ValidatorStatus.active => const Color(0xff59b987),
             ValidatorStatus.inactive => const Color(0xffffa500),
             ValidatorStatus.jailed => const Color(0xfff12e1f),
@@ -270,6 +262,8 @@ class _PoolStatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       margin: const EdgeInsets.all(4),
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -287,9 +281,7 @@ class _PoolStatusChip extends StatelessWidget {
           StakingPoolStatus.disabled => 'Staking disabled',
           StakingPoolStatus.enabled => 'Staking enabled',
         },
-        style: TextStyle(
-          fontSize: 12,
-          color: switch (status) {
+        style: textTheme.labelMedium!.copyWith(color: switch (status) {
             StakingPoolStatus.withdraw => const Color(0xffffa500),
             StakingPoolStatus.disabled => const Color(0xfff12e1f),
             StakingPoolStatus.enabled => const Color(0xff59b987),

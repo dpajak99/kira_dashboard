@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -53,7 +52,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
                       children: [
                         OpenableText(
                           text: 'Proposal #${item.id}',
-                          style: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.id)),
                         ),
                         const SizedBox(height: 4),
@@ -65,49 +64,49 @@ class _ProposalsPageState extends State<ProposalsPage> {
                         ),
                         const SizedBox(height: 16),
                         _MobileRow(
-                          title: const Text(
+                          title: Text(
                             'Status',
-                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           value: _StatusChip(voteResult: item.status),
                         ),
                         const SizedBox(height: 8),
                         _MobileRow(
-                          title: const Text(
+                          title: Text(
                             'Voters',
-                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff6c86ad)),
                           ),
                           value: Text(
                             item.voters.toString(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color:  const Color(0xfffbfbfb)),
                           ),
                         ),
                         const SizedBox(height: 8),
                         _MobileRow(
-                          title: const Text(
+                          title: Text(
                             'Age',
-                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff6c86ad)),
                           ),
                           value: Text(
                             item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           ),
                         ),
                         const SizedBox(height: 8),
                         _MobileRow(
-                          title: const Text(
+                          title: Text(
                             'End time',
-                            style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff6c86ad)),
                           ),
                           value: Text(
                             DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           ),
                         ),
                       ],
@@ -197,6 +196,8 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -225,9 +226,7 @@ class _StatusChip extends StatelessWidget {
             VoteResult.enactment => 'Enactment',
             VoteResult.passedWithExecFail => 'Passed with exec fail',
           },
-          style: TextStyle(
-            fontSize: 12,
-            color: switch (voteResult) {
+          style: textTheme.labelMedium!.copyWith(color: switch (voteResult) {
               VoteResult.unknown => const Color(0xfff12e1f),
               VoteResult.passed => const Color(0xff35b15f),
               VoteResult.rejected => const Color(0xfff12e1f),

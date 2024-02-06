@@ -18,9 +18,8 @@ class WalletProvider extends ValueNotifier<Wallet?> {
     if (wallets.isEmpty) {
       return;
     }
-    value = wallets.first;
+    signIn(wallets.first);
     availableWallets = wallets;
-    notifyListeners();
   }
 
   void signIn(Wallet wallet) {

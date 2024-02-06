@@ -272,7 +272,7 @@ class _TableCellHeader extends StatelessWidget {
         text,
         textAlign: textAlign,
         maxLines: 1,
-        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+        style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
       ),
     );
   }

@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 
-ButtonStyle textButtonStyle = TextButton.styleFrom(
+ButtonStyle darkTextButtonStyle = TextButton.styleFrom(
   foregroundColor: const Color(0xff6c86ad),
-  textStyle: const TextStyle(fontSize: 16),
+  textStyle: const TextStyle(fontSize: 16, color: Color(0xff6c86ad)),
+);
+
+ButtonStyle lightTextButtonStyle = TextButton.styleFrom(
+  foregroundColor: const Color(0xff2f8af5),
+  textStyle: const TextStyle(fontSize: 16, color: Color(0xff2f8af5)),
+);
+
+ButtonStyle signupButtonStyle = ButtonStyle(
+  alignment: Alignment.centerLeft,
+  animationDuration: Duration.zero,
+  overlayColor: MaterialStateProperty.all(Colors.transparent),
+  backgroundColor: MaterialStateProperty.all(const Color(0xff06070a)),
+  foregroundColor: MaterialStateProperty.resolveWith(
+      (Set<MaterialState> states) => states.contains(MaterialState.hovered) ? const Color(0xff2f8af5) : const Color(0xfffbfbfb)),
+  shape: MaterialStateProperty.resolveWith(
+    (Set<MaterialState> states) => RoundedRectangleBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(12)),
+      side: BorderSide(
+        color: states.contains(MaterialState.hovered) ? const Color(0xff2f3b4d) : const Color(0xff06070a),
+      ),
+    ),
+  ),
 );
 
 ButtonStyle outlinedElevatedButton = OutlinedButton.styleFrom(

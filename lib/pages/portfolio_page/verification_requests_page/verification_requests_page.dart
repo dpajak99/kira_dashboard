@@ -95,41 +95,41 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                           ),
                           const SizedBox(height: 24),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Records',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             value: Text(
                               item.records.map((e) => e.key).join(', '),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                           const SizedBox(height: 8),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Edited',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             value: Text(
                               DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                           const SizedBox(height: 8),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Tip',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             value: Text(
                               item.tip.toNetworkDenominationString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                         ],
@@ -268,41 +268,41 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                           ),
                           const SizedBox(height: 24),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Records',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             value: Text(
                               item.records.map((e) => e.key).join(', '),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                           const SizedBox(height: 8),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Edited',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             value: Text(
                               DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                           const SizedBox(height: 8),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Tip',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             value: Text(
                               item.tip.toNetworkDenominationString(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                         ],
@@ -320,7 +320,7 @@ class _VerificationRequestsPageState extends State<VerificationRequestsPage> {
                               Expanded(
                                 child: CopyableAddressText(
                                   address: item.verifier,
-                                  style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff2f8af5)),
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                 ),
                               ),
                             ],

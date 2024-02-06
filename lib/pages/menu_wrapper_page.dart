@@ -28,6 +28,8 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       key: scaffoldKey,
       drawer: _Drawer(notifierRouteObserver: notifierRouteObserver),
@@ -124,19 +126,16 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
                                   borderRadius: BorderRadius.all(Radius.circular(12)),
                                 ),
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                child: const Row(
+                                child: Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.search,
                                       color: Color(0xff47546d),
                                     ),
-                                    SizedBox(width: 8),
+                                    const SizedBox(width: 8),
                                     Text(
                                       "Search for address",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0xff47546d),
-                                      ),
+                                      style: textTheme.titleLarge!.copyWith(color:  const Color(0xff47546d)),
                                     ),
                                   ],
                                 ),
@@ -279,6 +278,8 @@ class _LargeNavigationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: ElevatedButton(
@@ -302,10 +303,7 @@ class _LargeNavigationButton extends StatelessWidget {
               const SizedBox(width: 16),
               Text(
                 title,
-                style: TextStyle(
-                  color: current ? const Color(0xff4888f0) : Colors.white.withOpacity(0.5),
-                  fontSize: 16,
-                ),
+                style: textTheme.bodyMedium!.copyWith(color:  current ? const Color(0xff4888f0) : Colors.white.withOpacity(0.5)),
               ),
             ],
           ),

@@ -13,9 +13,10 @@ class ConfirmTransactionDialog extends DialogContentWidget {
 }
 
 class _ConfirmTransactionDialog extends State<ConfirmTransactionDialog> {
-
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Confirm transaction',
       width: 420,
@@ -31,12 +32,9 @@ class _ConfirmTransactionDialog extends State<ConfirmTransactionDialog> {
             ),
           ),
           const SizedBox(height: 48),
-          const Text(
+          Text(
             'Please, confirm transaction in your wallet',
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xff6c86ad),
-            ),
+            style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
           ),
           const SizedBox(height: 48),
           SizedBox(

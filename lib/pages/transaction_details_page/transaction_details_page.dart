@@ -47,20 +47,13 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Transaction Details',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
                         ),
                         CopyableText(
                           text: widget.hash,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
                         )
                       ],
                     ),
@@ -218,6 +211,8 @@ class _MethodChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -230,10 +225,7 @@ class _MethodChip extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Color(0xff6c86ad),
-          ),
+          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
         ),
       ),
     );
@@ -247,6 +239,8 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -265,8 +259,7 @@ class _StatusChip extends StatelessWidget {
             TxStatusType.pending => 'Pending',
             TxStatusType.failed => 'Failed',
           },
-          style: TextStyle(
-            fontSize: 12,
+          style: textTheme.labelMedium!.copyWith(
             color: switch (status) {
               TxStatusType.confirmed => const Color(0xff35b15f),
               TxStatusType.pending => const Color(0xffffa500),

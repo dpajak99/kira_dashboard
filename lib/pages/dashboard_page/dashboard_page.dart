@@ -254,6 +254,8 @@ class _DashboardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -263,10 +265,7 @@ class _DashboardCard extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 24,
-              color: Color(0xfffbfbfb),
-            ),
+            style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb)),
           ),
           const SizedBox(height: 20),
           CustomCard(
@@ -317,7 +316,7 @@ class _DashboardTile extends StatelessWidget {
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 20, color: Color(0xfffbfbfb)),
+          style: textTheme.titleMedium!.copyWith(color: const Color(0xfffbfbfb)),
         ),
         Text(
           title,

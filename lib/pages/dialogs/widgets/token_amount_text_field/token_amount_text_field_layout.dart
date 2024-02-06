@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class TokenAmountTextFieldLayout extends StatelessWidget {
   final Widget balanceWidget;
@@ -16,8 +17,9 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
-      height: 110,
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: const BoxDecoration(
         color: Color(0xff06070a),
@@ -30,9 +32,9 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Asset',
-                  style: TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                  style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                 ),
                 const Spacer(),
                 balanceWidget,
@@ -54,11 +56,11 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
               ),
             ],
           ),
-          if( footerWidget != null )
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: footerWidget,
-          ),
+          if (footerWidget != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: footerWidget,
+            ),
         ],
       ),
     );

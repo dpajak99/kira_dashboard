@@ -43,6 +43,8 @@ class _AddressTextFieldState extends State<AddressTextField> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
@@ -55,7 +57,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
             children: [
               Text(
                 widget.title,
-                style: const TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
               ),
               const Spacer(),
               InkWell(
@@ -87,14 +89,14 @@ class _AddressTextFieldState extends State<AddressTextField> {
                       enabled: !widget.locked,
                       focusNode: focusNode,
                       controller: controller,
-                      style: const TextStyle(fontSize: 20, color: Color(0xfffbfbfb)),
+                      style: textTheme.bodyLarge!.copyWith(color: const Color(0xfffbfbfb)),
                       cursorColor: const Color(0xfffbfbfb),
                       cursorWidth: 1,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         isDense: true,
                         hintText: 'kira...',
-                        hintStyle: TextStyle(fontSize: 20, color: Color(0xff3e4c63)),
+                        hintStyle: textTheme.bodyLarge!.copyWith(color: const Color(0xff3e4c63)),
                         border: InputBorder.none,
                       ),
                     ),
@@ -114,7 +116,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
                   if (errorMessage != null) {
                     return Text(
                       errorMessage,
-                      style: const TextStyle(fontSize: 13, color: Color(0xfff12e1f)),
+                      style: textTheme.labelLarge!.copyWith(color: const Color(0xfff12e1f)),
                     );
                   } else {
                     return const SizedBox();

@@ -53,6 +53,8 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<TokenAmountTextFieldCubit, TokenAmountTextFieldState>(
       bloc: cubit,
       builder: (BuildContext context, TokenAmountTextFieldState state) {
@@ -62,7 +64,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
             children: [
               Text(
                 'Balance: ${state.maxTokenAmount.networkDenominationAmount}',
-                style: const TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
               ),
               const SizedBox(width: 4),
               InkWell(
@@ -70,13 +72,9 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   color: const Color(0xff131823),
-                  child: const Text(
+                  child: Text(
                     'MAX',
-                    style: TextStyle(
-                      fontSize: 11,
-                      height: 1,
-                      color: Color(0xff2f8af5),
-                    ),
+                    style: textTheme.labelSmall!.copyWith(height: 1, color: const Color(0xff2f8af5)),
                   ),
                 ),
               ),
@@ -105,7 +103,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
                       const SizedBox(width: 8),
                       Text(
                         state.selectedTokenAmount.symbol,
-                        style: const TextStyle(fontSize: 20, color: Color(0xfffbfbfb), height: 1),
+                        style: textTheme.bodyLarge!.copyWith(color: const Color(0xfffbfbfb)),
                       ),
                       const SizedBox(width: 8),
                       const Icon(
@@ -122,7 +120,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
           amountWidget: TextField(
             controller: amountTextController,
             textAlign: TextAlign.right,
-            style: const TextStyle(fontSize: 20, color: Color(0xfffbfbfb)),
+            style: textTheme.bodyLarge!.copyWith(color: const Color(0xfffbfbfb)),
             cursorColor: const Color(0xfffbfbfb),
             cursorWidth: 1,
             keyboardType: TextInputType.number,
@@ -143,7 +141,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
             children: [
               Text(
                 state.selectedTokenAmount.name,
-                style: const TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
               ),
               const Spacer(),
               ValueListenableBuilder(
@@ -152,7 +150,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
                   if (errorMessage != null) {
                     return Text(
                       errorMessage,
-                      style: const TextStyle(fontSize: 13, color: Color(0xfff12e1f)),
+                      style: textTheme.labelLarge!.copyWith(color: const Color(0xfff12e1f)),
                     );
                   } else {
                     return const SizedBox();

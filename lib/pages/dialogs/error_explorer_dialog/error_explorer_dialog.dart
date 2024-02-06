@@ -19,6 +19,8 @@ class ErrorExplorerDialog extends DialogContentWidget {
 class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return CustomDialog(
       title: 'Error details',
       width: 600,
@@ -66,12 +68,9 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                   ),
                   child: Column(
                     children: [
-                      const Text(
+                      Text(
                         'Request',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xfffbfbfb),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                       ),
                       const SizedBox(height: 16),
                       Expanded(
@@ -94,12 +93,9 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                   ),
                   child: Column(
                     children: [
-                      const Text(
+                      Text(
                         'Response',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color(0xfffbfbfb),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                       ),
                       const SizedBox(height: 16),
                       Expanded(

@@ -19,7 +19,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final AppRouter _appRouter = AppRouter(navigatorKey: navigatorKey);
+  final AppTheme appTheme = AppTheme();
+  final AppRouter appRouter = AppRouter(navigatorKey: navigatorKey);
 
   MyApp({super.key});
 
@@ -27,8 +28,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme().theme,
-      routerConfig: _appRouter.config(),
+      theme: appTheme.getTheme(context),
+      routerConfig: appRouter.config(),
     );
   }
 }

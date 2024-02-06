@@ -41,20 +41,13 @@ class _BlockDetailsPageState extends State<BlockDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Block Details',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
                         ),
                         Text(
                           '#${widget.height}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
                         )
                       ],
                     ),

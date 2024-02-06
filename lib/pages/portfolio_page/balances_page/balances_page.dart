@@ -62,6 +62,8 @@ class _BalancesPageState extends State<BalancesPage> {
                           Expanded(
                             child: Column(
                               children: [
+                                _TokenTypeChip(item.type),
+                                const SizedBox(height: 8),
                                 Row(
                                   children: <Widget>[
                                     TokenIcon(size: 24, iconUrl: item.icon),
@@ -75,8 +77,6 @@ class _BalancesPageState extends State<BalancesPage> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 8),
-                                _TokenTypeChip(item.type),
                               ],
                             ),
                           ),
@@ -183,6 +183,8 @@ class _TokenTypeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -197,8 +199,7 @@ class _TokenTypeChip extends StatelessWidget {
         ),
         child: Text(
           '${type.name[0].toUpperCase()}${type.name.substring(1)}',
-          style: TextStyle(
-            fontSize: 12,
+          style: textTheme.labelMedium!.copyWith(
             color: switch (type) {
               CoinType.token => const Color(0xff6c86ad),
               CoinType.native => const Color(0xff2f8af5),

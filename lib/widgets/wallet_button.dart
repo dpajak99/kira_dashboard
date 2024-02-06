@@ -42,7 +42,9 @@ class _ConnectWalletButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if( small ) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    if (small) {
       return IconButton(
         onPressed: () => DialogRouter().navigate(const ConnectWalletDialog()),
         icon: const Icon(
@@ -60,19 +62,16 @@ class _ConnectWalletButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-        child: const Row(
+        child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.wallet,
               color: Color(0xff4888f0),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               "Connect Wallet",
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xff4888f0),
-              ),
+              style: textTheme.titleLarge!.copyWith(color: const Color(0xff4888f0)),
             ),
           ],
         ),
@@ -93,7 +92,9 @@ class _WalletButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if( small ) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    if (small) {
       return IconButton(
         onPressed: () => DialogRouter().navigate(const AccountDialog()),
         icon: IdentityAvatar(size: 35, address: wallet.address),
@@ -112,7 +113,10 @@ class _WalletButton extends StatelessWidget {
           children: [
             IdentityAvatar(size: 20, address: wallet.address),
             const SizedBox(width: 12),
-            Text('${wallet.address.substring(0, 8)}...${wallet.address.substring(wallet.address.length - 4)}'),
+            Text(
+              '${wallet.address.substring(0, 8)}...${wallet.address.substring(wallet.address.length - 4)}',
+              style: textTheme.bodyMedium,
+            ),
           ],
         ),
       ),

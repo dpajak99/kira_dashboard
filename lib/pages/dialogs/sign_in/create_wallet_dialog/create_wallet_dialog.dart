@@ -26,6 +26,8 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     int columnsCount = 3;
     List<String> mnemonicWords = mnemonic.toList();
     int rowsCount = mnemonicWords.length ~/ columnsCount;
@@ -44,14 +46,14 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Write down your Secret Recovery Phrase',
-                  style: TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
+                  style: textTheme.titleSmall!.copyWith(color: const Color(0xfffbfbfb)),
                 ),
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   'Write down this 24-word Secret Recovery Phrase and save it in a place that you trust and only you can access.',
-                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                  style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
                 ),
                 const SizedBox(height: 24),
                 for (int row = 0; row < rowsCount; row++)
@@ -98,10 +100,10 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
                 side: const BorderSide(color: Color(0xff2f8af5), width: 2),
               ),
               const SizedBox(width: 8),
-              const Expanded(
+              Expanded(
                 child: Text(
                   'I have written down all 24 recovery words in their correct order and understand if I lose any one of them, or even unknowingly reveal, ALL my assets and data secured by this wallet might be stolen or irrecoverable.',
-                  style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                  style: textTheme.labelSmall!.copyWith(color: const Color(0xff6c86ad)),
                 ),
               ),
             ],

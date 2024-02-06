@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
@@ -20,10 +21,12 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     Widget titleWidget = Row(
       children: [
         if (title != null) ...<Widget>[
-          Text(title!, style: const TextStyle(fontSize: 24, color: Color(0xfffbfbfb))),
+          Text(title!, style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb))),
         ],
         if (leading != null) ...<Widget>[
           Expanded(child: leading!),

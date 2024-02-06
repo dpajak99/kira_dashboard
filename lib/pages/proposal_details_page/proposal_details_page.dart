@@ -29,6 +29,8 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocBuilder<ProposalDetailsPageCubit, ProposalDetailsPageState>(
       bloc: proposalDetailsPageCubit,
       builder: (BuildContext context, ProposalDetailsPageState state) {
@@ -55,18 +57,11 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                       children: [
                         Text(
                           'Proposal #${widget.proposalId}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xff6c86ad),
-                          ),
+                          style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
                         ),
                         Text(
                           state.proposalDetails!.proposal.title,
-                          style: const TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xfffbfbfb),
-                          ),
+                          style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -79,8 +74,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                                 VotingStatus.success => 'Voting ended ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
                                 VotingStatus.failure => 'Voting ended ${DateFormat('d MMM y, HH:mm').format(state.proposalDetails!.proposal.votingEndTime)}',
                               },
-                              style: TextStyle(
-                                fontSize: 12,
+                              style: textTheme.labelLarge!.copyWith(
                                 color: switch (state.proposalDetails!.proposal.simpleStatus) {
                                   VotingStatus.pending => const Color(0xff6c86ad),
                                   VotingStatus.success => const Color(0xff35b15f),
@@ -116,32 +110,30 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                           children: [
                             Expanded(
                               child: ListTile(
-                                title: const Text(
+                                title: Text(
                                   'For',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Color(0xff6c86ad),
-                                  ),
+                                  style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                                 ),
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
                                 subtitle: Text(
-                                    '${state.proposalDetails!.yesVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.yesVotesPercentage * 100}%)'),
+                                  '${state.proposalDetails!.yesVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.yesVotesPercentage * 100}%)',
+                                  style: textTheme.labelLarge!,
+                                ),
                               ),
                             ),
                             Expanded(
                               child: ListTile(
-                                title: const Text(
+                                title: Text(
                                   'Against',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Color(0xff6c86ad),
-                                  ),
+                                  style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                                 ),
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
                                 subtitle: Text(
-                                    '${state.proposalDetails!.noVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.noVotesPercentage * 100}%)'),
+                                  '${state.proposalDetails!.noVotes.length} / ${state.proposalDetails!.totalVoters} (${state.proposalDetails!.noVotesPercentage * 100}%)',
+                                  style: textTheme.labelLarge!,
+                                ),
                               ),
                             ),
                             const Spacer(),
@@ -170,15 +162,12 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 64)),
-            const SliverToBoxAdapter(
-              child:  Text(
+            SliverToBoxAdapter(
+              child: Text(
                 'Description',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Color(0xfffbfbfb),
-                ),
+                style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb)),
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 20)),
@@ -189,10 +178,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   children: [
                     Text(
                       state.proposalDetails!.proposal.title,
-                      style: const TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xfffbfbfb),
+                      style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -236,6 +222,8 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -264,8 +252,7 @@ class _StatusChip extends StatelessWidget {
             VoteResult.enactment => 'Enactment',
             VoteResult.passedWithExecFail => 'Passed with exec fail',
           },
-          style: TextStyle(
-            fontSize: 12,
+          style: textTheme.labelLarge!.copyWith(
             color: switch (voteResult) {
               VoteResult.unknown => const Color(0xfff12e1f),
               VoteResult.passed => const Color(0xff35b15f),

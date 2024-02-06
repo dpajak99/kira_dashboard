@@ -73,10 +73,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                                     const SizedBox(height: 4),
                                     OpenableAddressText(
                                       address: item.validatorInfo.address,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff2f8af5),
-                                      ),
+                                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                     ),
                                   ],
                                 ),
@@ -92,29 +89,29 @@ class DelegationsPageState extends State<DelegationsPage> {
                           ),
                           const SizedBox(height: 24),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Amounts',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                             ),
                             value: Text(
                               item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                             ),
                           ),
                           if (item.isClaimable == false) ...<Widget>[
                             const SizedBox(height: 8),
                             _MobileRow(
-                              title: const Text(
+                              title: Text(
                                 'Claim after',
-                                style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                               ),
                               value: Text(
                                 DateFormat('d MMM y, HH:mm').format(item.expiry),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                               ),
                             ),
                           ]
@@ -195,10 +192,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                       child: IconTextButton(
                         text: 'Claim rewards',
                         highlightColor: const Color(0xfffbfbfb),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xff4888f0),
-                        ),
+                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                         onTap: () {},
                       ),
                     ),
@@ -235,10 +229,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                                     const SizedBox(height: 4),
                                     OpenableAddressText(
                                       address: item.validatorInfo.address,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Color(0xff2f8af5),
-                                      ),
+                                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
                                     ),
                                   ],
                                 ),
@@ -262,23 +253,23 @@ class DelegationsPageState extends State<DelegationsPage> {
                           ),
                           const SizedBox(height: 24),
                           _MobileRow(
-                            title: const Text(
+                            title: Text(
                               'Status',
-                              style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                              style: textTheme.bodyMedium!.copyWith(color: Color(0xff6c86ad)),
                             ),
                             value: _StatusChip(stakingPoolStatus: item.poolInfo.status),
                           ),
                           const SizedBox(height: 8),
                           _MobileRow(
-                              title: const Text(
+                              title: Text(
                                 'Commision',
-                                style: TextStyle(fontSize: 12, color: Color(0xff6c86ad)),
+                                style: textTheme.bodyMedium!.copyWith(color: Color(0xff6c86ad)),
                               ),
                               value: Text(
                                 '${item.poolInfo.commissionPercentage}%',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontSize: 12, color: Color(0xfffbfbfb)),
+                                style: textTheme.bodyMedium!.copyWith(color: Color(0xfffbfbfb)),
                               )),
                         ],
                       );
@@ -362,6 +353,8 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -380,8 +373,7 @@ class _StatusChip extends StatelessWidget {
             StakingPoolStatus.enabled => 'Enabled',
             StakingPoolStatus.withdraw => 'Withdraw only'
           },
-          style: TextStyle(
-            fontSize: 12,
+          style: textTheme.labelMedium!.copyWith(
             color: switch (stakingPoolStatus) {
               StakingPoolStatus.disabled => const Color(0xfff12e1f),
               StakingPoolStatus.enabled => const Color(0xff35b15f),

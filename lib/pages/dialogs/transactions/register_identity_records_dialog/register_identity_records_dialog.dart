@@ -201,9 +201,9 @@ class _RecordPreview extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Key',
-                      style: TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                      style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                     ),
                     Text(
                       controller.hasKey ? controller.irKey : '---',
@@ -219,14 +219,14 @@ class _RecordPreview extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Value',
-                      style: TextStyle(fontSize: 13, color: Color(0xff6c86ad)),
+                      style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
                     ),
                     Text(
                       controller.hasValue ? controller.irValue : '---',
                       maxLines: 1,
-                      style: textTheme.bodyMedium!.copyWith(color:  const Color(0xfffbfbfb)),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                     ),
                   ],
                 ),

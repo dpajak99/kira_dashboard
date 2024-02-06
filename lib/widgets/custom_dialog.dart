@@ -68,6 +68,8 @@ class _CustomDialogRoute extends State<CustomDialog> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
       child: Dialog(
@@ -109,7 +111,7 @@ class _CustomDialogRoute extends State<CustomDialog> with SingleTickerProviderSt
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 20, color: Colors.white),
+                          style: textTheme.headlineSmall!.copyWith(color: Colors.white),
                         ),
                       ),
                       IconButton(
