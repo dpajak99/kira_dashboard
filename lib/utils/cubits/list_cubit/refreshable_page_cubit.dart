@@ -11,4 +11,10 @@ abstract class RefreshablePageCubit<T> extends Cubit<T> {
   }
 
   Future<void> reload();
+
+  @override
+  void emit(T state) {
+    if( isClosed ) return;
+    super.emit(state);
+  }
 }

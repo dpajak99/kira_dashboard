@@ -2,11 +2,15 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
+import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog_state.dart';
+import 'package:kira_dashboard/pages/dialogs/account_dialog/wallet_info.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog.dart';
@@ -14,6 +18,7 @@ import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 class AccountDialog extends DialogContentWidget {
   const AccountDialog({super.key});
@@ -23,162 +28,193 @@ class AccountDialog extends DialogContentWidget {
 }
 
 class _AccountDialog extends State<AccountDialog> {
-  final WalletProvider walletProvider = getIt<WalletProvider>();
+  final AccountDialogCubit cubit = getIt<AccountDialogCubit>();
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return ValueListenableBuilder<Wallet?>(
-      valueListenable: walletProvider,
-      builder: (BuildContext context, Wallet? wallet, _) {
-        if (wallet == null) {
-          return const SizedBox();
-        }
+    return BlocBuilder<AccountDialogCubit, AccountDialogState>(
+      bloc: cubit,
+      builder: (BuildContext context, AccountDialogState state) {
         return CustomDialog(
           title: 'Account',
           width: 420,
           child: Column(
             children: [
               Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 decoration: const BoxDecoration(
                   color: Color(0xff06070a),
                   borderRadius: BorderRadius.all(Radius.circular(24)),
                 ),
-                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            AutoRouter.of(context).push(PortfolioRoute(address: wallet.address));
-                          },
-                          icon: const Icon(
-                            Icons.open_in_new,
-                            size: 20,
-                            color: Color(0xff6c86ad),
-                          ),
-                          label: Text(
-                            'Open portfolio',
-                            style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.settings,
-                                color: Color(0xff6c86ad),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                walletProvider.signOut();
-                                AutoRouter.of(context).navigate(const MenuWrapperRoute());
-                              },
-                              icon: const Icon(
-                                Icons.logout_outlined,
-                                color: Color(0xff6c86ad),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IdentityAvatar(size: 90, address: wallet.address),
-                          const SizedBox(height: 16),
-                          CopyableAddressText(
-                            address: wallet.address,
-                            style: textTheme.titleSmall!.copyWith(color: const Color(0xfffbfbfb)),
+                          TextButton.icon(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              AutoRouter.of(context).push(PortfolioRoute(address: state.selectedWallet!.address));
+                            },
+                            icon: const Icon(
+                              Icons.open_in_new,
+                              size: 20,
+                              color: Color(0xff6c86ad),
+                            ),
+                            label: Text(
+                              'Open portfolio',
+                              style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.settings,
+                                  color: Color(0xff6c86ad),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  cubit.signOut();
+                                  AutoRouter.of(context).navigate(const MenuWrapperRoute());
+                                },
+                                icon: const Icon(
+                                  Icons.logout_outlined,
+                                  color: Color(0xff6c86ad),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        LabeledIconButton(
-                          onPressed: () {
-                            DialogRouter().navigate(const SendTokensDialog());
-                          },
-                          icon: const Icon(AppIcons.arrow_up_right),
-                          label: 'Send',
-                        ),
-                        LabeledIconButton(
-                          onPressed: () {},
-                          icon: Transform.rotate(
-                            angle: pi,
-                            child: const Icon(AppIcons.arrow_up_right),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          LabeledIconButton(
+                            onPressed: () {
+                              DialogRouter().navigate(const SendTokensDialog());
+                            },
+                            icon: const Icon(AppIcons.arrow_up_right),
+                            label: 'Send',
                           ),
-                          label: 'Receive',
-                        ),
-                        const LabeledIconButton(
-                          onPressed: null,
-                          icon: Icon(Icons.swap_horiz),
-                          label: 'Swap',
-                        ),
-                      ],
+                          LabeledIconButton(
+                            onPressed: () {},
+                            icon: Transform.rotate(
+                              angle: pi,
+                              child: const Icon(AppIcons.arrow_up_right),
+                            ),
+                            label: 'Receive',
+                          ),
+                          const LabeledIconButton(
+                            onPressed: null,
+                            icon: Icon(Icons.swap_horiz),
+                            label: 'Swap',
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 24),
-                    const Divider(color: Color(0xff222b3a)),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Divider(color: Color(0xff222b3a)),
+                    ),
                     const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text(
-                          'Available accounts',
-                          style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
-                        ),
-                        const Spacer(),
-                        IconTextButton(
-                          text: 'Add',
-                          gap: 4,
-                          reversed: true,
-                          icon: Icons.add,
-                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                          onTap: () => walletProvider.deriveNextWallet(),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Available accounts',
+                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
+                          ),
+                          const Spacer(),
+                          IconTextButton(
+                            text: 'Add',
+                            gap: 4,
+                            reversed: true,
+                            icon: Icons.add,
+                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                            onTap: () => cubit.deriveNextWallet(),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 24),
                     ListView.builder(
                       shrinkWrap: true,
-                      itemCount: walletProvider.availableWallets.length,
+                      itemCount: state.walletInfos.length,
                       itemBuilder: (context, index) {
-                        Wallet wallet = walletProvider.availableWallets[index];
-                        return ListTile(
+                        WalletInfo walletInfo = state.walletInfos[index];
+                        bool isSelected = walletInfo.wallet.address == state.selectedWallet?.address;
+
+                        Widget item = ListTile(
                           dense: true,
-                          contentPadding: EdgeInsets.zero,
-                          leading: IdentityAvatar(size: 40, address: wallet.address),
+                          mouseCursor: MaterialStateMouseCursor.clickable,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          onTap: () {
+                            cubit.signIn(walletInfo.wallet);
+                          },
+                          contentPadding: const EdgeInsets.all(8),
+                          leading: IdentityAvatar(size: 40, address: walletInfo.wallet.address),
                           title: Text(
-                            'Account ${wallet.index}',
+                            'Account ${walletInfo.wallet.index}',
                             style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                           ),
-                          subtitle: CopyableAddressText(
-                            address: wallet.address,
+                          subtitle: AddressText(
+                            address: walletInfo.wallet.address,
                             style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
                           ),
-                          trailing: wallet != walletProvider.value
-                              ? IconTextButton(
-                                  text: 'Switch',
-                                  gap: 4,
-                                  reversed: true,
-                                  icon: Icons.login,
-                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                                  onTap: () => walletProvider.changeWallet(wallet))
-                              : null,
+                          trailing: state.isLoading
+                              ? const SizedShimmer(width: 40, height: 14)
+                              : Text(
+                                  walletInfo.coin?.toNetworkDenominationString() ?? '---',
+                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                                ),
                         );
+
+                        if (isSelected) {
+                          item = Container(
+                            margin: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
+                            decoration: BoxDecoration(
+                              color: const Color(0xff222b3a),
+                              borderRadius: BorderRadius.circular(8),
+                              border: const Border(
+                                left: BorderSide(
+                                  color: Color(0xff4888f0),
+                                  width: 4,
+                                ),
+                              ),
+                            ),
+                            child: item,
+                          );
+                        } else {
+                          item = Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 4),
+                                child: item,
+                              ),
+                            ),
+                          );
+                        }
+
+                        return item;
                       },
                     ),
                   ],

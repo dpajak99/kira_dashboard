@@ -22,10 +22,7 @@ class UrlAvatarWidget extends StatelessWidget {
 
     Widget primaryAvatarWidget = ClipRRect(
       borderRadius: BorderRadius.circular(15),
-      child: CachedNetworkImage(
-        imageUrl: url,
-        fit: BoxFit.cover,
-      ),
+      child: NetworkImage(imageUrl: url),
     );
 
     Widget secondaryAvatarWidget = ClipOval(
@@ -62,5 +59,39 @@ class UrlAvatarWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class NetworkImage extends StatelessWidget {
+  final String? imageUrl;
+
+  const NetworkImage({
+    this.imageUrl,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Widget placeholderWidget = const CircleAvatar(backgroundColor: Color(0xff263042));
+
+    if (imageUrl == null || imageUrl!.isEmpty) {
+      return placeholderWidget;
+    }
+
+    bool isSvg = imageUrl!.endsWith('.svg');
+
+    if (isSvg) {
+      return SvgPicture.network(
+        imageUrl!,
+        fit: BoxFit.cover,
+        placeholderBuilder: (_) => placeholderWidget,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: imageUrl!,
+        fit: BoxFit.cover,
+        errorWidget: (_, __, ___) => placeholderWidget,
+      );
+    }
   }
 }

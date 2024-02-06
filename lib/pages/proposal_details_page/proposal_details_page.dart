@@ -173,27 +173,70 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
             const SliverPadding(padding: EdgeInsets.only(top: 20)),
             SliverToBoxAdapter(
               child: CustomCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      state.proposalDetails!.proposal.title,
-                      style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb),
+                child: MarkdownWidget(
+                  data: state.proposalDetails!.proposal.description,
+                  shrinkWrap: true,
+                  config: MarkdownConfig(
+                    configs: [
+                      const HrConfig(
+                        color: Color(0xff222b3a),
+                        height: 1,
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    MarkdownWidget(
-                      data: state.proposalDetails!.proposal.description,
-                      shrinkWrap: true,
-                    ),
-                  ],
+                      CustomH1Config(
+                        style: textTheme.headlineMedium!.copyWith(
+                          color: const Color(0xfffbfbfb),
+                        ),
+                      ),
+                      CustomH2Config(
+                        style: textTheme.titleMedium!.copyWith(
+                          color: const Color(0xfffbfbfb),
+                        ),
+                      ),
+                      H3Config(
+                        style: textTheme.titleMedium!.copyWith(
+                          color: const Color(0xfffbfbfb),
+                        ),
+                      ),
+                      H4Config(
+                        style: textTheme.titleMedium!.copyWith(
+                          color: const Color(0xfffbfbfb),
+                        ),
+                      ),
+                      H5Config(
+                        style: textTheme.titleMedium!.copyWith(
+                          color: const Color(0xfffbfbfb),
+                        ),
+                      ),
+                      H6Config(
+                        style: textTheme.titleMedium!.copyWith(
+                          color: const Color(0xfffbfbfb),
+                        ),
+                      ),
+                      PreConfig.darkConfig,
+                      PConfig(
+                        textStyle: textTheme.bodyMedium!.copyWith(
+                          color: const Color(0xfffbfbfb),
+                        ),
+                      ),
+                      CodeConfig.darkConfig,
+                      BlockquoteConfig.darkConfig,
+                    ],
+                  ),
                 ),
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 32)),
             SliverToBoxAdapter(
+              child: Text(
+                'Details',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              ),
+            ),
+            const SliverPadding(padding: EdgeInsets.only(top: 20)),
+            SliverToBoxAdapter(
               child: CustomCard(
-                title: 'Details',
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
@@ -213,6 +256,28 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
       },
     );
   }
+}
+
+class CustomH1Config extends H1Config {
+  CustomH1Config({required super.style});
+
+  @override
+  HeadingDivider? get divider => HeadingDivider(
+        space: 3.6,
+        color: Colors.transparent,
+        height: 1,
+      );
+}
+
+class CustomH2Config extends H2Config {
+  CustomH2Config({required super.style});
+
+  @override
+  HeadingDivider? get divider => HeadingDivider(
+        space: 2.4,
+        color: Colors.transparent,
+        height: 1,
+      );
 }
 
 class _StatusChip extends StatelessWidget {

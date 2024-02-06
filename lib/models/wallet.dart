@@ -5,6 +5,7 @@ import 'package:blockchain_utils/bip/coin_conf/coins_name.dart';
 import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
 import 'package:blockchain_utils/bip/slip/slip44/slip44.dart';
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:equatable/equatable.dart';
 import 'package:pointycastle/export.dart';
 
 class KiraBip44Coin implements Bip44Coins {
@@ -34,7 +35,7 @@ class KiraBip44Coin implements Bip44Coins {
   Bip44Coins get value => this;
 }
 
-class Wallet {
+class Wallet extends Equatable {
   final int index;
   final Bip44 bip44;
   final Bip44 derivedBip44;
@@ -43,7 +44,7 @@ class Wallet {
       : derivedBip44 = bip44.deriveDefaultPath,
         index = 0;
 
-  Wallet({
+  const Wallet({
     required this.index,
     required this.bip44,
     required this.derivedBip44,
@@ -67,4 +68,7 @@ class Wallet {
   }
 
   String get address => derivedBip44.publicKey.toAddress;
+
+  @override
+  List<Object?> get props => [address];
 }

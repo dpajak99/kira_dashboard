@@ -20,7 +20,7 @@ class _MouseStateListener extends State<MouseStateListener> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.onTap ?? () {},
+      onTap: widget.onTap,
       highlightColor: Colors.transparent,
       overlayColor: MaterialStateProperty.all(Colors.transparent),
       splashColor: Colors.transparent,

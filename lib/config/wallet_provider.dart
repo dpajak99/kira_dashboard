@@ -38,7 +38,7 @@ class WalletProvider extends ValueNotifier<Wallet?> {
     notifyListeners();
   }
 
-  void deriveNextWallet() {
+  Wallet deriveNextWallet() {
     availableWallets.sort((a, b) => b.index.compareTo(a.index));
     Wallet latestWallet = availableWallets.first;
     Wallet newWallet = Wallet(
@@ -49,6 +49,7 @@ class WalletProvider extends ValueNotifier<Wallet?> {
     unsafeWalletService.saveWallet(newWallet);
     availableWallets.add(newWallet);
     notifyListeners();
+    return newWallet;
   }
 
   bool get isSignedIn => value != null;

@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TokenIcon extends StatelessWidget {
   final double size;
@@ -12,32 +14,35 @@ class TokenIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = SizedBox(width: size, height: size);
+    Widget placeholderWidget = SizedBox(
+      width: size,
+      height: size,
+      child: const CircleAvatar(backgroundColor: Color(0xff263042)),
+    );
 
-    if (iconUrl != null) {
-      child = Image.network(
-        iconUrl!,
-        width: size,
-        height: size,
-        fit: BoxFit.fitHeight,
-        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-          return SizedBox(width: size, height: size);
-        },
-      );
+    if (iconUrl == null || iconUrl!.isEmpty) {
+      return placeholderWidget;
     }
 
-    if (iconUrl == null) {
-      return SizedBox(
-        width: size,
-        height: size,
-        child: const CircleAvatar(backgroundColor: Color(0xff263042)),
+    Widget imageWidget;
+    bool isSvg = iconUrl!.endsWith('.svg');
+
+    if (isSvg) {
+      imageWidget = SvgPicture.network(
+        iconUrl!,
+        placeholderBuilder: (_) => placeholderWidget,
       );
     } else {
-      return SizedBox(
-        width: size,
-        height: size,
-        child: child,
+      imageWidget = CachedNetworkImage(
+        imageUrl: iconUrl!,
+        errorWidget: (_, __, ___) => placeholderWidget,
       );
     }
+
+    return SizedBox(
+      width: size,
+      height: size,
+      child: imageWidget,
+    );
   }
 }

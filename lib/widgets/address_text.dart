@@ -16,7 +16,7 @@ class CopyableAddressText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _AddressText(
+    return AddressText(
       address: address,
       style: style,
       icon: Icons.copy,
@@ -68,7 +68,7 @@ class OpenableAddressText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _AddressText(
+    return AddressText(
       address: address,
       style: style,
       full: full,
@@ -82,18 +82,19 @@ class OpenableAddressText extends StatelessWidget {
   }
 }
 
-class _AddressText extends StatelessWidget {
+class AddressText extends StatelessWidget {
   final String? address;
   final TextStyle style;
-  final IconData icon;
-  final VoidCallback onTap;
+  final IconData? icon;
+  final VoidCallback? onTap;
   final bool full;
 
-  const _AddressText({
+  const AddressText({
+    super.key,
     required this.address,
     required this.style,
-    required this.icon,
-    required this.onTap,
+    this.icon,
+    this.onTap,
     this.full = false,
   });
 
@@ -118,7 +119,7 @@ class IconTextButton extends StatelessWidget {
   final String text;
   final TextStyle style;
   final IconData? icon;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final double gap;
   final Color highlightColor;
   final double? rotateAngle;
@@ -169,7 +170,7 @@ class IconTextButton extends StatelessWidget {
                 TextSpan(
                   text: text,
                   style: style.copyWith(
-                    color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+                    color: states.contains(MaterialState.hovered) && onTap != null ? highlightColor : style.color,
                   ),
                 ),
               ],
@@ -181,7 +182,7 @@ class IconTextButton extends StatelessWidget {
           text: TextSpan(
             text: text,
             style: style.copyWith(
-              color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+              color: states.contains(MaterialState.hovered) && onTap != null ? highlightColor : style.color,
             ),
             children: [
               if (iconWidget != null)
