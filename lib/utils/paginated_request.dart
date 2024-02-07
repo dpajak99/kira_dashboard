@@ -9,10 +9,11 @@ class PaginatedRequest extends Equatable {
     required this.offset,
   });
 
-  Map<String, int> toJson() {
-    return <String, int>{
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
       'limit': limit,
       'offset': offset,
+      'count_total': true,
     };
   }
 

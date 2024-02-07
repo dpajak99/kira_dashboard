@@ -5,7 +5,6 @@ import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
-import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
 class ConnectWalletDialog extends DialogContentWidget {
   const ConnectWalletDialog({super.key});

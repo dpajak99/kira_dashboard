@@ -36,7 +36,6 @@ abstract class ApiRepository {
   Dio get httpClient {
     NetworkListCubit networkListCubit = getIt<NetworkListCubit>();
     Dio baseHttpClient = DioForBrowser(BaseOptions(baseUrl: networkListCubit.state.currentNetwork!.interxUrl.toString()));
-    print('reload using ${networkListCubit.state.currentNetwork!.interxUrl.toString()}');
     baseHttpClient.interceptors.add(DioCacheInterceptor(options: options));
     return baseHttpClient;
   }

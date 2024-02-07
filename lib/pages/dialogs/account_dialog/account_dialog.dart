@@ -6,8 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
-import 'package:kira_dashboard/config/wallet_provider.dart';
-import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog_state.dart';
 import 'package:kira_dashboard/pages/dialogs/account_dialog/wallet_info.dart';

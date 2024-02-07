@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/models/dashboard_model.dart';
-import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/dashboard_page/dashboard_page_cubit.dart';
 import 'package:kira_dashboard/pages/dashboard_page/dashboard_page_state.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
@@ -246,7 +245,6 @@ class _DashboardCard extends StatelessWidget {
   final List<Widget> values;
 
   const _DashboardCard({
-    super.key,
     required this.title,
     required this.columns,
     required this.values,
@@ -299,7 +297,6 @@ class _DashboardTile extends StatelessWidget {
   final Icon? icon;
 
   const _DashboardTile({
-    super.key,
     required this.title,
     required this.value,
     this.icon,

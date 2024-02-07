@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
@@ -6,7 +5,6 @@ import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/connect_wallet_dialog/connect_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
-import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 
 class WalletButton extends StatelessWidget {
@@ -36,7 +34,6 @@ class _ConnectWalletButton extends StatelessWidget {
   final bool small;
 
   const _ConnectWalletButton({
-    super.key,
     this.small = false,
   });
 
@@ -86,7 +83,6 @@ class _WalletButton extends StatelessWidget {
 
   const _WalletButton({
     required this.wallet,
-    super.key,
     this.small = false,
   });
 

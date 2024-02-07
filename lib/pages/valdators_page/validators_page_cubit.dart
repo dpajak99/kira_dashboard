@@ -3,9 +3,9 @@ import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/services/validators_service.dart';
 import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_state.dart';
-import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.dart';
 
-class ValidatorsPageCubit extends ListCubit<ValidatorsPageState> {
+class ValidatorsPageCubit extends RefreshablePageCubit<ValidatorsPageState> {
   final WalletProvider walletProvider = getIt<WalletProvider>();
   final ValidatorsService validatorsService = ValidatorsService();
 
