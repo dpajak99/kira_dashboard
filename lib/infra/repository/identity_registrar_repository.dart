@@ -8,11 +8,10 @@ import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class IdentityRegistrarRepository extends ApiRepository {
 
-  Future<List<IdentityRecordEntity>> getPage(String address, PaginatedRequest paginatedRequest) async {
+  Future<List<IdentityRecordEntity>> getAll(String address) async {
     try {
       Response<Map<String, dynamic>> response = await httpClient.get(
         '/api/kira/gov/identity_records/$address',
-        queryParameters: paginatedRequest.toJson(),
       );
       QueryIdentityRecordsResponse queryIdentityRecordsResponse = QueryIdentityRecordsResponse.fromJson(response.data!);
 

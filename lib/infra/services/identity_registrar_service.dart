@@ -7,9 +7,7 @@ class IdentityRegistrarService {
   final IdentityRegistrarRepository identityRegistrarRepository = IdentityRegistrarRepository();
 
   Future<IdentityRecords> getUserProfile(String address) async {
-    PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
-
-    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getPage(address, paginatedRequest);
+    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getAll(address);
     Map<String, IdentityRecordEntity> identityRecordsMap = <String, IdentityRecordEntity>{};
     for (IdentityRecordEntity identityRecord in identityRecords) {
       identityRecordsMap[identityRecord.key] = identityRecord;
@@ -25,8 +23,8 @@ class IdentityRegistrarService {
     );
   }
 
-  Future<List<IdentityRecord>> getPage(String address, PaginatedRequest paginatedRequest) async {
-    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getPage(address, paginatedRequest);
+  Future<List<IdentityRecord>> getAll(String address) async {
+    List<IdentityRecordEntity> identityRecords = await identityRegistrarRepository.getAll(address);
     return identityRecords.map((IdentityRecordEntity e) => IdentityRecord.fromEntity(e)).toList();
   }
 

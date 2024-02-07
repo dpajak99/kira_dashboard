@@ -1,5 +1,6 @@
 import 'package:kira_dashboard/infra/services/delegations_service.dart';
 import 'package:kira_dashboard/models/delegation.dart';
+import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
@@ -16,7 +17,7 @@ class DelegationsListCubit extends PaginatedListCubit<Delegation> with Transacti
   }) : super(const PaginatedListState.loading());
 
   @override
-  Future<List<Delegation>> getPage(PaginatedRequest paginatedRequest) {
+  Future<PaginatedListWrapper<Delegation>> getPage(PaginatedRequest paginatedRequest) {
     return delegationsService.getPage(address, paginatedRequest);
   }
 

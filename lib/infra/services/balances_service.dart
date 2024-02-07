@@ -1,8 +1,10 @@
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
+import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/repository/balances_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
+import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
@@ -11,19 +13,17 @@ class BalancesService {
   final BalancesRepository balancesRepository = BalancesRepository();
   final TokensService tokensService = TokensService();
 
-  Future<List<Coin>> getPage(String address, PaginatedRequest paginatedRequest) async {
-    List<CoinEntity> balanceEntities = await balancesRepository.getPage(address, paginatedRequest);
-    List<Coin> balance = await tokensService.buildCoins(balanceEntities.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList());
-    return balance;
+  Future<PaginatedListWrapper<Coin>> getPage(String address, PaginatedRequest paginatedRequest) async {
+    PaginatedResponseWrapper<CoinEntity> response = await balancesRepository.getPage(address, paginatedRequest);
+    List<Coin> balance = await tokensService.buildCoins(response.items.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList());
+    return PaginatedListWrapper<Coin>(items: balance, total: response.total);
   }
 
   Future<Coin> getByDenom(String address, String denom) async {
-    // TODO: temporary solution
-    List<CoinEntity> balanceEntities = await balancesRepository.getPage(address, const PaginatedRequest(limit: 50, offset: 0));
-    CoinEntity? denomCoin = balanceEntities.where((CoinEntity e) => e.denom == denom).firstOrNull;
+    CoinEntity? coinEntity = await balancesRepository.getByDenom(address, denom);
 
-    if( denomCoin != null ) {
-      return tokensService.buildCoin(SimpleCoin(amount: denomCoin.amount, denom: denomCoin.denom));
+    if( coinEntity != null ) {
+      return tokensService.buildCoin(SimpleCoin(amount: coinEntity.amount, denom: coinEntity.denom));
     } else {
       return tokensService.buildCoin(SimpleCoin(amount: '0', denom: denom));
     }

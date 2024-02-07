@@ -1,6 +1,8 @@
+import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/proposals/proposal_details_entity.dart';
 import 'package:kira_dashboard/infra/entities/proposals/proposal_entity.dart';
 import 'package:kira_dashboard/infra/repository/proposals_repository.dart';
+import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/models/proposal.dart';
 import 'package:kira_dashboard/models/proposal_details.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
@@ -8,11 +10,12 @@ import 'package:kira_dashboard/utils/paginated_request.dart';
 class ProposalsService {
   final ProposalsRepository proposalsRepository = ProposalsRepository();
 
-  Future<List<Proposal>> getPage(PaginatedRequest paginatedRequest) async {
-    List<ProposalEntity> proposalEntities = await proposalsRepository.getPage(paginatedRequest);
-    List<Proposal> proposalsList = proposalEntities.map(Proposal.fromEntity).toList();
+  Future<PaginatedListWrapper<Proposal>> getPage(PaginatedRequest paginatedRequest) async {
+    PaginatedResponseWrapper<ProposalEntity> response = await proposalsRepository.getPage(paginatedRequest);
 
-    return proposalsList;
+    List<Proposal> proposalsList = response.items.map((ProposalEntity e) => Proposal.fromEntity(e)).toList();
+
+    return PaginatedListWrapper<Proposal>(items: proposalsList, total: response.total);
   }
 
   Future<ProposalDetails> getProposalDetails(String proposalId) async {

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/staking/query_undelegations_response.dart';
 import 'package:kira_dashboard/infra/entities/staking/undelegation_entity.dart';
 import 'package:kira_dashboard/infra/repository/api_repository.dart';
@@ -7,7 +8,7 @@ import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class UndelegationsRepository extends ApiRepository {
 
-  Future<List<UndelegationEntity>> getPage(String address, PaginatedRequest paginatedRequest) async {
+  Future<PaginatedResponseWrapper<UndelegationEntity>> getPage(String address, PaginatedRequest paginatedRequest) async {
     try {
       Response<Map<String, dynamic>> response = await httpClient.get(
         '/api/kira/undelegations',
@@ -18,7 +19,10 @@ class UndelegationsRepository extends ApiRepository {
       );
       QueryUndelegationsResponse queryUndelegationsResponse = QueryUndelegationsResponse.fromJson(response.data!);
 
-      return queryUndelegationsResponse.undelegations;
+      return PaginatedResponseWrapper<UndelegationEntity>(
+        total: int.parse(response.data!['pagination']!['total']),
+        items: queryUndelegationsResponse.undelegations,
+      );
     } catch (e) {
       AppLogger().log(message: 'UndelegationsRepository');
       rethrow;

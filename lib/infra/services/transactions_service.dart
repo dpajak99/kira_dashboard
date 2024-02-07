@@ -4,6 +4,7 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/fees/fee_config_entity.dart';
 import 'package:kira_dashboard/infra/entities/network/headers_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/network/network_properties_entity.dart';
+import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/tokens/aliases/token_alias_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/broadcast_response.dart';
@@ -19,6 +20,7 @@ import 'package:kira_dashboard/infra/repository/transactions_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/block_transaction.dart';
 import 'package:kira_dashboard/models/coin.dart';
+import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/models/transaction_remote_data.dart';
 import 'package:kira_dashboard/models/transaction_result.dart';
@@ -62,12 +64,13 @@ class TransactionsService {
     );
   }
 
-  Future<List<Transaction>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
-    List<TransactionEntity> transactionEntities = await transactionsRepository.getUserTransactionsPage(address, paginatedRequest);
-    Set<String> allDenominations = transactionEntities.expand((TransactionEntity tx) => tx.allDenominations).toSet();
+  Future<PaginatedListWrapper<Transaction>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
+    PaginatedResponseWrapper<TransactionEntity> response = await transactionsRepository.getUserTransactionsPage(address, paginatedRequest);
+
+    Set<String> allDenominations = response.items.expand((TransactionEntity tx) => tx.allDenominations).toSet();
     Map<String, TokenAliasEntity> tokenAliases = await tokenAliasesRepository.getByTokensNameAsMap(allDenominations.toList());
 
-    List<Transaction> transactions = await Future.wait<Transaction>(transactionEntities.map((TransactionEntity entity) async {
+    List<Transaction> transactions = await Future.wait<Transaction>(response.items.map((TransactionEntity entity) async {
       TxMsg? txMsg = entity.txs.firstOrNull;
 
       List<CoinEntity> amountEntities = <CoinEntity>[...(txMsg?.txAmounts ?? <CoinEntity>[])];
@@ -90,13 +93,13 @@ class TransactionsService {
       );
     }));
 
-    return transactions;
+    return PaginatedListWrapper<Transaction>(items: transactions, total: response.total);
   }
 
-  Future<List<BlockTransaction>> getBlockTransactionsPage(String blockId, PaginatedRequest paginatedRequest) async {
-    List<BlockTransactionEntity> blockTransactionEntities = await transactionsRepository.getBlockTransactions(blockId, paginatedRequest);
+  Future<PaginatedListWrapper<BlockTransaction>> getBlockTransactionsPage(String blockId, PaginatedRequest paginatedRequest) async {
+    PaginatedResponseWrapper<BlockTransactionEntity> response = await transactionsRepository.getBlockTransactions(blockId, paginatedRequest);
 
-    List<BlockTransaction> transactions = await Future.wait<BlockTransaction>(blockTransactionEntities.map((BlockTransactionEntity entity) async {
+    List<BlockTransaction> transactions = await Future.wait<BlockTransaction>(response.items.map((BlockTransactionEntity entity) async {
       TypedMsg? typedMsg = entity.msgs.firstOrNull;
 
       List<CoinEntity> amounts = <CoinEntity>[...(typedMsg?.data.txAmounts ?? <CoinEntity>[])];
@@ -114,7 +117,7 @@ class TransactionsService {
       );
     }));
 
-    return transactions;
+    return PaginatedListWrapper<BlockTransaction>(items: transactions, total: response.total);
   }
 
   Future<TransactionResult> getTransactionResult(String hash) async {

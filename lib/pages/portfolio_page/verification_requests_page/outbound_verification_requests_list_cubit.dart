@@ -1,4 +1,5 @@
 import 'package:kira_dashboard/infra/services/verification_requests_service.dart';
+import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/models/verification_request.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
@@ -13,7 +14,7 @@ class OutboundVerificationRequestsListCubit extends PaginatedListCubit<Verificat
   }) : super(const PaginatedListState.loading());
 
   @override
-  Future<List<VerificationRequest>> getPage(PaginatedRequest paginatedRequest) {
+  Future<PaginatedListWrapper<VerificationRequest>> getPage(PaginatedRequest paginatedRequest) {
     return verificationRequestsService.getOutboundPage(address, paginatedRequest);
   }
 

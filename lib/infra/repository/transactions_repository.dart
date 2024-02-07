@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/transactions/block_transaction_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/broadcast_response.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/query_transactions_response.dart';
@@ -32,7 +33,7 @@ class TransactionsRepository extends ApiRepository {
     }
   }
 
-  Future<List<TransactionEntity>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
+  Future<PaginatedResponseWrapper<TransactionEntity>> getUserTransactionsPage(String address, PaginatedRequest paginatedRequest) async {
     try {
       Response<Map<String, dynamic>> response = await httpClient.get(
         '/api/transactions',
@@ -43,14 +44,17 @@ class TransactionsRepository extends ApiRepository {
       );
       QueryTransactionsResponse queryTransactionsResponse = QueryTransactionsResponse.fromJson(response.data!);
 
-      return queryTransactionsResponse.transactions;
+      return PaginatedResponseWrapper<TransactionEntity>(
+        total: response.data!['total_count'] as int,
+        items: queryTransactionsResponse.transactions,
+      );
     } catch (e) {
       AppLogger().log(message: 'TransactionsRepository');
       rethrow;
     }
   }
 
-  Future<List<BlockTransactionEntity>> getBlockTransactions(String blockId, PaginatedRequest paginatedRequest) async {
+  Future<PaginatedResponseWrapper<BlockTransactionEntity>> getBlockTransactions(String blockId, PaginatedRequest paginatedRequest) async {
     try {
       Response<Map<String, dynamic>> response = await httpClient.get(
         '/api/blocks/$blockId/transactions',
@@ -58,7 +62,10 @@ class TransactionsRepository extends ApiRepository {
       );
       QueryBlockTransactionsResponse queryBlockTransactionsResponse = QueryBlockTransactionsResponse.fromJson(response.data!);
 
-      return queryBlockTransactionsResponse.transactions;
+      return PaginatedResponseWrapper<BlockTransactionEntity>(
+        total: int.parse(response.data!['pagination']!['total']),
+        items: queryBlockTransactionsResponse.transactions,
+      );
     } catch (e) {
       AppLogger().log(message: 'TransactionsRepository');
       rethrow;

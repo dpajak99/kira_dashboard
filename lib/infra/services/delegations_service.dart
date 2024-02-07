@@ -1,6 +1,8 @@
+import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/staking/delegation_entity.dart';
 import 'package:kira_dashboard/infra/repository/delegations_repository.dart';
 import 'package:kira_dashboard/models/delegation.dart';
+import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/models/pool_info.dart';
 import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/models/validator_info.dart';
@@ -11,9 +13,10 @@ class DelegationsService {
 
   DelegationsService();
 
-  Future<List<Delegation>> getPage(String address, PaginatedRequest paginatedRequest) async {
-    List<DelegationEntity> delegationEntities = await delegationsRepository.getAll(address, paginatedRequest);
-    List<Delegation> delegations = delegationEntities.map((e) => Delegation(
+  Future<PaginatedListWrapper<Delegation>> getPage(String address, PaginatedRequest paginatedRequest) async {
+    PaginatedResponseWrapper<DelegationEntity> response = await delegationsRepository.getPage(address, paginatedRequest);
+    
+    List<Delegation> delegations = response.items.map((e) => Delegation(
       validatorInfo: ValidatorInfo(
         moniker: e.validatorInfo.moniker,
         address: e.validatorInfo.address,
@@ -29,6 +32,6 @@ class DelegationsService {
       ),
     )).toList();
 
-    return delegations;
+    return PaginatedListWrapper<Delegation>(items: delegations, total: response.total);
   }
 }

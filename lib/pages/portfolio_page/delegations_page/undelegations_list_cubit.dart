@@ -1,4 +1,5 @@
 import 'package:kira_dashboard/infra/services/undelegations_service.dart';
+import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/transaction_cubit.dart';
 import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
@@ -16,7 +17,7 @@ class UndelegationsListCubit extends PaginatedListCubit<Undelegation> with Trans
   }) : super(const PaginatedListState.loading());
 
   @override
-  Future<List<Undelegation>> getPage(PaginatedRequest paginatedRequest) {
+  Future<PaginatedListWrapper<Undelegation>> getPage(PaginatedRequest paginatedRequest) {
     return undelegationsService.getPage(address, paginatedRequest);
   }
 
