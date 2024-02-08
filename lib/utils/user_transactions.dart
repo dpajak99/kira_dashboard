@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:decimal/decimal.dart';
+import 'package:kira_dashboard/infra/entities/amino_sign_response.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/cosmos.dart';
@@ -23,6 +25,7 @@ import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_transaction_dialog/sign_transaction_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transaction_result_dialog.dart';
 import 'package:kira_dashboard/utils/exceptions/internal_broadcast_exception.dart';
+import 'package:kira_dashboard/utils/keplr.dart';
 import 'package:kira_dashboard/utils/map_utils.dart';
 
 abstract class TxProcessNotificator {
@@ -64,20 +67,40 @@ class DialogTxProcessNotificator implements TxProcessNotificator {
 }
 
 abstract class TxSigner {
-  Future<String?> sign(String message);
+  Future<AminoSignResponse?> sign(String message, StdSignDoc stdSignDoc);
 }
 
 class UnsafeWalletSigner extends TxSigner {
   UnsafeWalletSigner();
 
   @override
-  Future<String?> sign(String message) async {
-    return _getSignature(message);
+  Future<AminoSignResponse?> sign(String message, StdSignDoc stdSignDoc) async {
+    return _getSignature(message, stdSignDoc);
   }
 
-  Future<String?> _getSignature(String message) async {
+  Future<AminoSignResponse?> _getSignature(String message, StdSignDoc stdSignDoc) async {
     String? signature = await DialogRouter.seperated().navigate<String?>(SignTransactionDialog(message: message));
-    return signature;
+    AminoSignResponse aminoSignResponse = AminoSignResponse(
+      signed: stdSignDoc,
+      signature: Signature(signature: signature!),
+    );
+    return aminoSignResponse;
+  }
+}
+
+class KeplrWalletSigner extends TxSigner {
+  KeplrWalletSigner();
+
+  @override
+  Future<AminoSignResponse?> sign(String message, StdSignDoc stdSignDoc) async {
+    print('Sign using keplr');
+    return _getSignature(stdSignDoc);
+  }
+
+  Future<AminoSignResponse?> _getSignature(StdSignDoc stdSignDoc) async {
+    KeplrImpl keplr = KeplrImpl();
+    AminoSignResponse? aminoSignResponse = await keplr.signAmino(stdSignDoc);
+    return aminoSignResponse;
   }
 }
 
@@ -296,15 +319,15 @@ class UserTransactions {
     TransactionRemoteData transactionRemoteData = await transactionsService.getRemoteUserTransactionData(signerAddress);
     Coin finalFee = fee ?? await transactionsService.getExecutionFeeForMessage(msg.messageType);
 
-    String message = await prepareMessage(
+    (String, StdSignDoc) message = await prepareMessage(
       transactionRemoteData: transactionRemoteData,
       msg: msg,
       fee: finalFee,
       memo: memo,
     );
 
-    String? signature = await txSigner.sign(message);
-    if (signature == null) {
+    AminoSignResponse? aminoSignResponse = await txSigner.sign(message.$1, message.$2);
+    if (aminoSignResponse == null) {
       txProcessNotificator.notifyTransactionFailed();
       return;
     }
@@ -321,17 +344,13 @@ class UserTransactions {
       tx: Tx(
         body: TxBody(
           messages: <TxMsg>[msg],
-          memo: memo ?? '',
+          memo: aminoSignResponse.signed.memo,
         ),
         authInfo: AuthInfo(
           signerInfos: <SignerInfo>[signerInfo],
-          fee: TxFee(
-            amount: <CoinEntity>[
-              CoinEntity(amount: finalFee.amount.toString(), denom: finalFee.denom),
-            ],
-          ),
+          fee: aminoSignResponse.signed.fee,
         ),
-        signatures: <String>[signature],
+        signatures: <String>[aminoSignResponse.signature.signature],
       ),
       mode: 'block',
     );
@@ -339,17 +358,17 @@ class UserTransactions {
     String transactionHash;
     try {
       transactionHash = await transactionsService.broadcastTx(broadcastReq);
-    } on InternalBroadcastException catch(e) {
+    } on InternalBroadcastException catch (e) {
       txProcessNotificator.notifyTransactionFailed(e);
       return;
-    } catch(_) {
+    } catch (_) {
       txProcessNotificator.notifyTransactionFailed();
       return;
     }
     txProcessNotificator.notifyTransactionSucceeded(transactionHash);
   }
 
-  Future<String> prepareMessage({
+  Future<(String, StdSignDoc)> prepareMessage({
     required TransactionRemoteData transactionRemoteData,
     required TxMsg msg,
     required Coin fee,
@@ -370,7 +389,8 @@ class UserTransactions {
 
     Map<String, dynamic> signatureDataJson = MapUtils.sort(stdSignDoc.toSignatureJson());
     String signatureDataString = json.encode(signatureDataJson);
+    print('Must sign exactly: $signatureDataString');
 
-    return signatureDataString;
+    return (signatureDataString, stdSignDoc);
   }
 }

@@ -36,6 +36,17 @@ class StdSignDoc extends Equatable {
     required this.messages,
   });
 
+  factory StdSignDoc.fromJson(Map<String, dynamic> json) {
+    return StdSignDoc(
+      accountNumber: json['account_number'],
+      sequence: json['sequence'],
+      chainId: json['chain_id'],
+      memo: json['memo'],
+      fee: TxFee.fromJson(json['fee']),
+      messages: (json['msgs'] as List<dynamic>).map((dynamic e) => TxMsg.fromJsonByName(e['type'], e['value'])).toList(),
+    );
+  }
+
   Map<String, dynamic> toSignatureJson() {
     return <String, dynamic>{
       'account_number': accountNumber,

@@ -52,12 +52,12 @@ class Coin {
   });
 
   Coin copyWith({
-    Decimal? amount,
+    Decimal? networkAmount,
   }) {
     return Coin(
       type: type,
       denom: denom,
-      amount: amount ?? this.amount,
+      amount: networkAmount?.shift(decimals) ?? amount,
       name: name,
       symbol: symbol,
       rate: rate,
@@ -84,7 +84,7 @@ class Coin {
 
   Decimal get networkDenominationAmount {
     Decimal lowestDenomination = amount;
-    Decimal networkDenomination = lowestDenomination.shift(decimals);
+    Decimal networkDenomination = lowestDenomination.shift(-decimals);
 
     return networkDenomination;
   }

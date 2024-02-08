@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
@@ -17,9 +18,9 @@ class WalletButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Wallet?>(
+    return ValueListenableBuilder<IWallet?>(
       valueListenable: getIt<WalletProvider>(),
-      builder: (BuildContext context, Wallet? wallet, _) {
+      builder: (BuildContext context, IWallet? wallet, _) {
         if (wallet == null) {
           return _ConnectWalletButton(small: small);
         } else {
@@ -78,7 +79,7 @@ class _ConnectWalletButton extends StatelessWidget {
 }
 
 class _WalletButton extends StatelessWidget {
-  final Wallet wallet;
+  final IWallet wallet;
   final bool small;
 
   const _WalletButton({
@@ -107,6 +108,14 @@ class _WalletButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Row(
           children: [
+            if(wallet is KeplrWallet) ...<Widget>[
+              SvgPicture.asset(
+                'icons/keplr.svg',
+                width: 20,
+                height: 20,
+              ),
+              const SizedBox(width: 8),
+            ],
             IdentityAvatar(size: 20, address: wallet.address),
             const SizedBox(width: 12),
             Text(

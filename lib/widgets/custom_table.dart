@@ -92,12 +92,25 @@ class _MobileTable<T> extends StatelessWidget {
         if (loading == false && items.isEmpty)
           SizedBox(
             height: 300,
-            child: Center(
-              child: Text(
-                'Nothing here :(',
-                textAlign: TextAlign.center,
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-              ),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Opacity(
+                  opacity: 0.7,
+                  child: Image.asset(
+                    'empty_placeholder_2.png',
+                    width: 150,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Nothing here',
+                  textAlign: TextAlign.center,
+                  style: textTheme.bodyMedium!.copyWith(color: const Color(0x996c86ad)),
+                ),
+              ],
             ),
           )
         else ...<Widget>[
@@ -139,12 +152,24 @@ class _DesktopTable<T> extends StatelessWidget {
         if (loading == false && items.isEmpty)
           SizedBox(
             height: 300,
-            child: Center(
-              child: Text(
-                'Nothing here :(',
-                textAlign: TextAlign.center,
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Opacity(
+                  opacity: 0.7,
+                  child: Image.asset(
+                    'empty_placeholder_2.png',
+                    width: 150,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Nothing here',
+                  textAlign: TextAlign.center,
+                  style: textTheme.bodyMedium!.copyWith(color: const Color(0x996c86ad)),
+                ),
+              ],
             ),
           )
         else ...<Widget>[

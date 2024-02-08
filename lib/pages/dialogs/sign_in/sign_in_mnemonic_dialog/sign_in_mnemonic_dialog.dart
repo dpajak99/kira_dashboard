@@ -52,7 +52,7 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
         builder: (BuildContext context, SignInMnemonicDialogState state) {
           return Container(
             decoration: const BoxDecoration(
-              color: Color(0xff10141C),
+              color: Color(0xff090d15),
               borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
             padding: const EdgeInsets.all(16),

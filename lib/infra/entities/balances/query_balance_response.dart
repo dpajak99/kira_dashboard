@@ -3,7 +3,7 @@ import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 
 class QueryBalanceResponse extends Equatable {
   final List<CoinEntity> balances;
-  final Pagination pagination;
+  final Pagination? pagination;
 
   const QueryBalanceResponse({
     required this.balances,
@@ -15,7 +15,7 @@ class QueryBalanceResponse extends Equatable {
 
     return QueryBalanceResponse(
       balances: balancesList.map((dynamic e) => CoinEntity.fromJson(e as Map<String, dynamic>)).toList(),
-      pagination: Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+      pagination: json['pagination'] != null ? Pagination.fromJson(json['pagination'] as Map<String, dynamic>) : null,
     );
   }
 

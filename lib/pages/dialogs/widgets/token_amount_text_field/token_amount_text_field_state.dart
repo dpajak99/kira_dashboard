@@ -12,7 +12,7 @@ class TokenAmountTextFieldState extends Equatable {
   });
 
   TokenAmountTextFieldState.fromBalance(Coin balance) :
-        selectedTokenAmount= balance.copyWith(amount: Decimal.parse('0')),
+        selectedTokenAmount= balance.copyWith(networkAmount: Decimal.parse('0')),
         maxTokenAmount = balance;
 
   @override

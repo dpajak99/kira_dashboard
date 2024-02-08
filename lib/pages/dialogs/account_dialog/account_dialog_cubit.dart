@@ -28,14 +28,14 @@ class AccountDialogCubit extends RefreshablePageCubit<AccountDialogState> {
     emit(state.copyWith(walletInfos: emptyWalletInfos, selectedWallet: walletProvider.value, isLoading: true));
     List<WalletInfo> walletInfos = [];
 
-    for (Wallet wallet in walletProvider.availableWallets) {
+    for (IWallet wallet in walletProvider.availableWallets) {
       Coin coin = await balancesService.getDefaultCoinBalance(wallet.address);
       walletInfos.add(WalletInfo(wallet: wallet, coin: coin));
     }
     emit(state.copyWith(walletInfos: List.from(walletInfos), selectedWallet: walletProvider.value, isLoading: false));
   }
 
-  void signIn(Wallet wallet) {
+  void signIn(IWallet wallet) {
     walletProvider.signIn(wallet);
   }
 

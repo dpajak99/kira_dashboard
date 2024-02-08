@@ -183,7 +183,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
       widget.controller.value = null;
       errorNotifier.value = 'Insufficient balance';
     } else {
-      widget.controller.value = cubit.state.selectedTokenAmount.copyWith(amount: selectedAmount);
+      widget.controller.value = cubit.state.selectedTokenAmount.copyWith(networkAmount: selectedAmount);
       errorNotifier.value = null;
     }
   }

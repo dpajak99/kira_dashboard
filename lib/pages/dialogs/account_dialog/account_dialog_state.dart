@@ -3,7 +3,7 @@ import 'package:kira_dashboard/pages/dialogs/account_dialog/wallet_info.dart';
 import 'package:kira_dashboard/pages/page_state.dart';
 
 class AccountDialogState extends PageState {
-  final Wallet? selectedWallet;
+  final IWallet? selectedWallet;
   final List<WalletInfo> walletInfos;
 
   const AccountDialogState({
@@ -13,7 +13,7 @@ class AccountDialogState extends PageState {
   });
 
   AccountDialogState copyWith({
-    Wallet? selectedWallet,
+    IWallet? selectedWallet,
     List<WalletInfo>? walletInfos,
     bool? isLoading,
   }) {

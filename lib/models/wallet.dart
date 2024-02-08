@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:blockchain_utils/bip/bip/conf/bip_coin_conf.dart';
 import 'package:blockchain_utils/bip/bip/conf/bip_coins.dart';
 import 'package:blockchain_utils/bip/bip/conf/bip_conf_const.dart';
@@ -35,7 +37,16 @@ class KiraBip44Coin implements Bip44Coins {
   Bip44Coins get value => this;
 }
 
-class Wallet extends Equatable {
+abstract class IWallet extends Equatable {
+  String get address;
+  int get index;
+  Uint8List get publicKey;
+
+  const IWallet();
+}
+
+class Wallet extends IWallet {
+  @override
   final int index;
   final Bip44 bip44;
   final Bip44 derivedBip44;
@@ -54,6 +65,9 @@ class Wallet extends Equatable {
     return bip44.purpose.coin.account(0).change(Bip44Changes.chainExt).addressIndex(index + 1);
   }
 
+  @override
+  Uint8List get publicKey => Uint8List.fromList(derivedBip44.publicKey.compressed);
+
   factory Wallet.fromMnemonic({
     required Mnemonic mnemonic,
   }) {
@@ -67,8 +81,38 @@ class Wallet extends Equatable {
     return ECPrivateKey(privateKeyInt, ECCurve_secp256k1());
   }
 
+  @override
   String get address => derivedBip44.publicKey.toAddress;
 
   @override
   List<Object?> get props => [address];
+}
+
+
+class KeplrWallet extends IWallet {
+  @override
+  final String address;
+  final String algo;
+  @override
+  final Uint8List publicKey;
+
+  const KeplrWallet({
+    required this.address,
+    required this.algo,
+    required this.publicKey,
+  });
+
+  factory KeplrWallet.fromJson(Map<String, dynamic> json) {
+    return KeplrWallet(
+      address: json['address'],
+      algo: json['algo'],
+      publicKey: Uint8List.fromList((json['pubkey'] as Map<String, dynamic>).values.cast<int>().toList()),
+    );
+  }
+
+  @override
+  int get index => 0;
+
+  @override
+  List<Object?> get props => [address, algo, publicKey];
 }

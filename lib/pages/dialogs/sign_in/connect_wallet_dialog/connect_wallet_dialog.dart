@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
+import 'package:kira_dashboard/config/wallet_provider.dart';
+import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/create_wallet_dialog/create_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog.dart';
+import 'package:kira_dashboard/utils/keplr.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
 class ConnectWalletDialog extends DialogContentWidget {
@@ -23,12 +28,53 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
       width: 550,
       child: Column(
         children: [
+          Text(
+            'Connect your wallet to access your account',
+            style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
+          ),
+          const SizedBox(height: 16),
           Row(
             children: [
               Expanded(
                 child: ElevatedButton.icon(
                   style: signupButtonStyle,
-                  icon: const Icon(Icons.abc),
+                  icon: SizedBox(
+                    width: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: SvgPicture.asset(
+                        'icons/keplr.svg',
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                  ),
+                  onPressed: _openKeplr,
+                  label: const Text('Keplr'),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Spacer(),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Unsafe options',
+            style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  style: signupButtonStyle,
+                  icon: const SizedBox(
+                    width: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Icon(Icons.abc),
+                    ),
+                  ),
                   onPressed: () => DialogRouter().navigate(const SignInMnemonicDialog()),
                   label: const Text('Mnemonic'),
                 ),
@@ -36,9 +82,15 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
               const SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton.icon(
-                  icon: const Icon(Icons.file_upload_outlined),
+                  icon: const SizedBox(
+                    width: 30,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Icon(Icons.file_upload_outlined),
+                    ),
+                  ),
                   style: signupButtonStyle,
-                  onPressed: (){},
+                  onPressed: () {},
                   label: const Text('Keyfile'),
                 ),
               ),
@@ -78,5 +130,18 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
         ],
       ),
     );
+  }
+
+  Future<void> _openKeplr() async {
+    KeplrImpl keplr = KeplrImpl();
+    List<KeplrWallet> wallets = await keplr.getAccount();
+    if (wallets.isNotEmpty) {
+      getIt<WalletProvider>().signIn(wallets.first);
+      _closeDialog();
+    }
+  }
+
+  void _closeDialog() {
+    Navigator.of(context).pop();
   }
 }

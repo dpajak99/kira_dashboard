@@ -778,7 +778,7 @@ class MsgCancelIdentityRecordsVerifyRequest extends TxMsg {
 
   MsgCancelIdentityRecordsVerifyRequest.fromJson(Map<String, dynamic> json)
       : executor = json['executor'] as String,
-        verifyRequestId = json['verify_request_id'] as int;
+        verifyRequestId = int.tryParse(json['verify_request_id']) ?? json['verify_request_id'] as int;
 
   @override
   String? get from => executor;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
+import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/utils/signature_utils.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
@@ -49,7 +50,7 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
             child: ElevatedButton(
               style: darkElevatedButton,
               onPressed: () {
-                String sig = SignatureUtils.generateSignature(wallet: getIt<WalletProvider>().value!, message: widget.message);
+                String sig = SignatureUtils.generateSignature(wallet: getIt<WalletProvider>().value as Wallet, message: widget.message);
                 Navigator.of(context).pop(sig);
               },
               child: const Text('Approve'),

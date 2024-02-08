@@ -18,6 +18,13 @@ class TxFee extends Equatable {
     this.gasLimit = '999999',
   });
 
+  factory TxFee.fromJson(Map<String, dynamic> json) {
+    return TxFee(
+      amount: (json['amount'] as List<dynamic>).map((dynamic e) => CoinEntity.fromJson(e)).toList(),
+      gasLimit: json['gas'],
+    );
+  }
+
   Map<String, dynamic> toJson() => <String, dynamic>{
         'amount': amount.map((CoinEntity e) => e.toJson()).toList(),
         'gas_limit': gasLimit,

@@ -63,7 +63,7 @@ class TransactionsRepository extends ApiRepository {
       QueryBlockTransactionsResponse queryBlockTransactionsResponse = QueryBlockTransactionsResponse.fromJson(response.data!);
 
       return PaginatedResponseWrapper<BlockTransactionEntity>(
-        total: int.parse(response.data!['pagination']!['total']),
+        total: response.data!['total_count'] as int,
         items: queryBlockTransactionsResponse.transactions,
       );
     } catch (e) {
