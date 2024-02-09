@@ -11,6 +11,7 @@ import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog_state
 import 'package:kira_dashboard/pages/dialogs/account_dialog/wallet_info.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/receive_tokens_dialog/receive_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
@@ -108,7 +109,9 @@ class _AccountDialog extends State<AccountDialog> {
                             label: 'Send',
                           ),
                           LabeledIconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              DialogRouter().navigate(const ReceiveTokensDialog());
+                            },
                             icon: Transform.rotate(
                               angle: pi,
                               child: const Icon(AppIcons.arrow_up_right),

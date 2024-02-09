@@ -25,7 +25,7 @@ class _PageScaffold extends State<PageScaffold> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1000),
+            constraints: const BoxConstraints(maxWidth: 1180),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: CustomScrollView(

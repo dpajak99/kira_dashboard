@@ -19,6 +19,8 @@ class ConnectWalletDialog extends DialogContentWidget {
 }
 
 class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
+  final KeplrImpl keplr = KeplrImpl();
+
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -36,21 +38,33 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           Row(
             children: [
               Expanded(
-                child: ElevatedButton.icon(
-                  style: signupButtonStyle,
-                  icon: SizedBox(
-                    width: 30,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: SvgPicture.asset(
-                        'icons/keplr.svg',
-                        width: 20,
-                        height: 20,
+                child: IgnorePointer(
+                  ignoring: keplr.isExtensionInstalled == false,
+                  child: Opacity(
+                    opacity: keplr.isExtensionInstalled == false ? 0.5 : 1,
+                    child: ElevatedButton.icon(
+                      style: signupButtonStyle,
+                      icon: SizedBox(
+                        width: 30,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SvgPicture.asset(
+                            'icons/keplr.svg',
+                            width: 20,
+                            height: 20,
+                          ),
+                        ),
+                      ),
+                      onPressed: _openKeplr,
+                      label: Row(
+                        children: [
+                          const Text('Keplr'),
+                          const Spacer(),
+                          if (keplr.isExtensionInstalled == false) const Icon(Icons.lock_outline_rounded, size: 15)
+                        ],
                       ),
                     ),
                   ),
-                  onPressed: _openKeplr,
-                  label: const Text('Keplr'),
                 ),
               ),
               const SizedBox(width: 8),

@@ -38,7 +38,8 @@ class UserTypeChip extends StatelessWidget {
             UserType.validator => 'Validator',
             UserType.yourAccount => 'Your account',
           },
-          style: textTheme.labelLarge!.copyWith(color: switch (userType) {
+          style: textTheme.labelLarge!.copyWith(
+            color: switch (userType) {
               UserType.user => const Color(0xff6c86ad),
               UserType.validator => const Color(0xff2f8af5),
               UserType.yourAccount => const Color(0xff59b987),

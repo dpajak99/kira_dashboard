@@ -7,11 +7,13 @@ import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 class CopyableAddressText extends StatelessWidget {
   final String address;
   final TextStyle style;
+  final bool full;
 
   const CopyableAddressText({
     super.key,
     required this.address,
     required this.style,
+    this.full = false,
   });
 
   @override
@@ -20,6 +22,7 @@ class CopyableAddressText extends StatelessWidget {
       address: address,
       style: style,
       icon: Icons.copy,
+      full: full,
       onTap: () => _copyAddress(context),
     );
   }

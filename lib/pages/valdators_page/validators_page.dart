@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/models/validator.dart';
@@ -6,6 +7,7 @@ import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_cubit.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_page_state.dart';
+import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
@@ -29,31 +31,42 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
     return PageScaffold(
       slivers: [
         SliverToBoxAdapter(
-          child: Text(
-            'Validators',
-            style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Validators',
+                      style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Choose a validator to delegate your tokens and start earning rewards. Validators play a vital role in maintaining the network, and by staking with them, you contribute to the network's stability and earn a share of the rewards. Detailed information about each validator's performance, such as uptime and streak records, helps guide your decision. Your stake supports the validator's reliability while entitling you to rewards generated from block creation and transaction fees.",
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        const SliverPadding(padding: EdgeInsets.only(top: 4)),
-        SliverToBoxAdapter(
-          child: Text(
-            "Choose a validator to delegate your tokens and start earning rewards. Validators play a vital role in maintaining the network, and by staking with them, you contribute to the network's stability and earn a share of the rewards. Detailed information about each validator's performance, such as uptime and streak records, helps guide your decision. Your stake supports the validator's reliability while entitling you to rewards generated from block creation and transaction fees.",
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-          ),
-        ),
-        const SliverPadding(padding: EdgeInsets.only(top: 32)),
         BlocBuilder<ValidatorsPageCubit, ValidatorsPageState>(
           bloc: cubit,
           builder: (BuildContext context, ValidatorsPageState state) {
             return SliverGrid.builder(
               itemCount: state.validators.length,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                mainAxisSpacing: 16,
-                crossAxisSpacing: 16,
-                maxCrossAxisExtent: (MediaQuery.of(context).size.width > 800) ? 350 : 550,
+                mainAxisSpacing: 26,
+                crossAxisSpacing: 26,
+                maxCrossAxisExtent: (MediaQuery.of(context).size.width > 800) ? 275 : 550,
                 mainAxisExtent: (MediaQuery.of(context).size.width > 800)
                     ? state.isSignedIn
-                        ? 400
+                        ? 360
                         : 340
                     : state.isSignedIn
                         ? 400
@@ -87,13 +100,17 @@ class _ValidatorTile extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return MouseStateListener(
+      onTap: () => AutoRouter.of(context).navigate(PortfolioRoute(address: validator.address)),
       childBuilder: (Set<MaterialState> states) {
         return ClipRRect(
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xff141822),
-              border: Border.all(color: states.contains(MaterialState.hovered) ? const Color(0xff6c86ad) : const Color(0xff141822), width: 2),
+              color: const Color(0x88141924),
+              border: Border.all(
+                color: states.contains(MaterialState.hovered) ? const Color(0xff222b3a) : const Color(0xff141822),
+                width: 2,
+              ),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -131,12 +148,10 @@ class _ValidatorTile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      OpenableAddressText(
+                      CopyableAddressText(
                         address: validator.address,
                         style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                       ),
-                      const SizedBox(height: 16),
-                      const Divider(color: Color(0xff222b3a)),
                       const SizedBox(height: 16),
                       Row(
                         children: [
@@ -243,7 +258,8 @@ class _ValidatorStatusChip extends StatelessWidget {
           ValidatorStatus.jailed => 'Jailed validator',
           ValidatorStatus.paused => 'Paused validator',
         },
-        style: textTheme.labelMedium!.copyWith(color: switch (status) {
+        style: textTheme.labelMedium!.copyWith(
+          color: switch (status) {
             ValidatorStatus.active => const Color(0xff59b987),
             ValidatorStatus.inactive => const Color(0xffffa500),
             ValidatorStatus.jailed => const Color(0xfff12e1f),
@@ -281,7 +297,8 @@ class _PoolStatusChip extends StatelessWidget {
           StakingPoolStatus.disabled => 'Staking disabled',
           StakingPoolStatus.enabled => 'Staking enabled',
         },
-        style: textTheme.labelMedium!.copyWith(color: switch (status) {
+        style: textTheme.labelMedium!.copyWith(
+          color: switch (status) {
             StakingPoolStatus.withdraw => const Color(0xffffa500),
             StakingPoolStatus.disabled => const Color(0xfff12e1f),
             StakingPoolStatus.enabled => const Color(0xff59b987),

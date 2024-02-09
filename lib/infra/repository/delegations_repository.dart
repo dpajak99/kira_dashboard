@@ -18,7 +18,7 @@ class DelegationsRepository extends ApiRepository {
       );
       QueryDelegationsResponse queryDelegationsResponse = QueryDelegationsResponse.fromJson(response.data!);
       return PaginatedResponseWrapper<DelegationEntity>(
-        total: int.parse(response.data!['pagination']!['total']),
+        total: int.parse(response.data?['pagination']?['total'] ?? '0'),
         items: queryDelegationsResponse.delegations,
       );
     } catch (e) {

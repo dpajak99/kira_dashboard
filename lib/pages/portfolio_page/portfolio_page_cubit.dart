@@ -1,5 +1,6 @@
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
+import 'package:kira_dashboard/infra/services/favourite_addresses_service.dart';
 import 'package:kira_dashboard/infra/services/identity_registrar_service.dart';
 import 'package:kira_dashboard/infra/services/validators_service.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
@@ -10,6 +11,7 @@ import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.da
 class PortfolioPageCubit extends RefreshablePageCubit<PortfolioPageState> {
   final IdentityRegistrarService identityRegistrarService = IdentityRegistrarService();
   final ValidatorsService validatorsService = ValidatorsService();
+  final FavouriteAddressesService favouriteAddressesService = FavouriteAddressesService();
 
   final String address;
 
@@ -27,11 +29,23 @@ class PortfolioPageCubit extends RefreshablePageCubit<PortfolioPageState> {
 
     IdentityRecords identityRecords = await identityRegistrarService.getUserProfile(address);
     Validator? validator = await validatorsService.getById(address);
+    bool favourite = await favouriteAddressesService.isFavourite(address);
 
     emit(state.copyWith(
       isLoading: false,
       identityRecords: identityRecords,
       validator: validator,
+      isFavourite: favourite,
     ));
+  }
+
+  Future<void> addFavourite() async {
+    await favouriteAddressesService.add(address);
+    emit(state.copyWith(isFavourite: true));
+  }
+
+  Future<void> removeFavourite() async {
+    await favouriteAddressesService.remove(address);
+    emit(state.copyWith(isFavourite: false));
   }
 }

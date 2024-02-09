@@ -20,7 +20,7 @@ class UndelegationsRepository extends ApiRepository {
       QueryUndelegationsResponse queryUndelegationsResponse = QueryUndelegationsResponse.fromJson(response.data!);
 
       return PaginatedResponseWrapper<UndelegationEntity>(
-        total: int.parse(response.data!['pagination']!['total']),
+        total: int.parse(response.data?['pagination']?['total'] ?? '0'),
         items: queryUndelegationsResponse.undelegations,
       );
     } catch (e) {

@@ -1,0 +1,239 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/wallet_provider.dart';
+import 'package:kira_dashboard/models/coin.dart';
+import 'package:kira_dashboard/models/validator.dart';
+import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog.dart';
+import 'package:kira_dashboard/pages/portfolio_page/validator_info_page/validator_info_page_cubit.dart';
+import 'package:kira_dashboard/pages/portfolio_page/validator_info_page/validator_info_page_state.dart';
+import 'package:kira_dashboard/widgets/address_text.dart';
+import 'package:kira_dashboard/widgets/custom_card.dart';
+import 'package:kira_dashboard/widgets/openable_text.dart';
+import 'package:kira_dashboard/widgets/sized_shimmer.dart';
+import 'package:kira_dashboard/widgets/token_icon.dart';
+
+import '../../../utils/router/router.gr.dart';
+
+class ValidatorInfoPage extends StatefulWidget {
+  final Validator validator;
+
+  const ValidatorInfoPage({
+    super.key,
+    required this.validator,
+  });
+
+  @override
+  State<StatefulWidget> createState() => _ValidatorInfoPageState();
+}
+
+class _ValidatorInfoPageState extends State<ValidatorInfoPage> {
+  late final ValidatorInfoPageCubit cubit = ValidatorInfoPageCubit(validator: widget.validator);
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    return BlocBuilder<ValidatorInfoPageCubit, ValidatorInfoPageState>(
+      bloc: cubit,
+      builder: (BuildContext context, ValidatorInfoPageState state) {
+        Widget stakingPoolWidget = CustomCard(
+          title: 'Staking pool',
+          titleSpacing: 8,
+          titleStyle: textTheme.titleMedium!.copyWith(
+            color: const Color(0xfffbfbfb),
+          ),
+          leading: Row(
+            children: [
+              if (getIt<WalletProvider>().isSignedIn) ...<Widget>[
+                const SizedBox(width: 16),
+                IconTextButton(
+                  text: 'Delegate',
+                  highlightColor: const Color(0xfffbfbfb),
+                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                  onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: widget.validator.valkey)),
+                ),
+              ],
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Divider(color: Color(0xff222b3a)),
+              const SizedBox(height: 8),
+              _ListTile(
+                title: 'Staking pool',
+                value: state.isLoading ? const SizedShimmer(width: 80, height: 16) : widget.validator.stakingPoolStatus.name,
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Commission',
+                value: state.isLoading ? const SizedShimmer(width: 80, height: 16) : state.stakingPool!.commissionPercentage,
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Slashed',
+                value: state.isLoading ? const SizedShimmer(width: 80, height: 16) : state.stakingPool!.slashedPercentage,
+              ),
+              const SizedBox(height: 8),
+              const Divider(color: Color(0xff222b3a)),
+              const SizedBox(height: 8),
+              Text(
+                'Staked voting powers',
+                style: textTheme.bodyMedium!.copyWith(
+                  color: const Color(0xff6c86ad),
+                ),
+              ),
+              if (state.isLoading) ...<Widget>[
+                const SizedBox(height: 8),
+                const SizedShimmer(width: 100, height: 30),
+              ] else
+                for (Coin coin in state.stakingPool!.votingPower)
+                  ListTile(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                    dense: true,
+                    leading: TokenIcon(size: 24, iconUrl: coin.icon),
+                    title: Text(
+                      coin.name,
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                    ),
+                    trailing: Text(
+                      coin.toNetworkDenominationString(),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                    ),
+                  ),
+            ],
+          ),
+        );
+
+        Widget statsWidget = CustomCard(
+          title: 'Stats',
+          titleSpacing: 8,
+          titleStyle: textTheme.titleMedium!.copyWith(
+            color: const Color(0xfffbfbfb),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Divider(color: Color(0xff222b3a)),
+              const SizedBox(height: 8),
+              _ListTile(
+                title: 'First present block',
+                value: OpenableText(
+                  text: widget.validator.startHeight.toString(),
+                  style: textTheme.bodyMedium!.copyWith(
+                    color: const Color(0xfffbfbfb),
+                  ),
+                  onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: widget.validator.startHeight.toString())),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Last present block',
+                value: OpenableText(
+                  text: widget.validator.lastPresentBlock.toString(),
+                  style: textTheme.bodyMedium!.copyWith(
+                    color: const Color(0xfffbfbfb),
+                  ),
+                  onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: widget.validator.lastPresentBlock.toString())),
+                ),
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Status',
+                value: widget.validator.status.name,
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Total produced blocks',
+                value: widget.validator.producedBlocksCounter.toString(),
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Produced blocks streak',
+                value: widget.validator.streak.toString(),
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Missed blocks',
+                value: widget.validator.mischanceConfidence.toString(),
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Mischance',
+                value: widget.validator.mischance.toString(),
+              ),
+              const SizedBox(height: 12),
+              _ListTile(
+                title: 'Mischance confidence',
+                value: widget.validator.mischanceConfidence.toString(),
+              ),
+            ],
+          ),
+        );
+
+        if(MediaQuery.of(context).size.width < 900) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              stakingPoolWidget,
+              const SizedBox(height: 32),
+              statsWidget,
+            ],
+          );
+        }
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: stakingPoolWidget,
+            ),
+            const SizedBox(width: 32),
+            Expanded(
+              child: statsWidget,
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _ListTile extends StatelessWidget {
+  final String title;
+  final dynamic value;
+
+  const _ListTile({
+    super.key,
+    required this.title,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: textTheme.bodyMedium!.copyWith(
+            color: const Color(0xff6c86ad),
+          ),
+        ),
+        if (value is String)
+          Text(
+            value,
+            style: textTheme.bodyMedium!.copyWith(
+              color: const Color(0xfffbfbfb),
+            ),
+          )
+        else
+          value
+      ],
+    );
+  }
+}

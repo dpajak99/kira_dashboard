@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_state.dart';
@@ -14,6 +15,8 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return BlocConsumer<NetworkListCubit, NetworkListState>(
       bloc: getIt<NetworkListCubit>(),
       listener: (BuildContext context, NetworkListState state) {
@@ -25,14 +28,41 @@ class SplashPage extends StatelessWidget {
       },
       builder: (BuildContext context, NetworkListState state) {
         return Scaffold(
-          body: SizedBox(
+          body: Container(
             width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: <double>[0.0, 0.3, 0.6, 1],
+                colors: <Color>[
+                  Color(0xff0e121a),
+                  Color(0xff06070a),
+                  Color(0xff06070a),
+                  Color(0xff0e121a),
+                ],
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  'MIRO 看 (見る)',
+                  style: GoogleFonts.notoSans(color: const Color(0xfffbfbfb), fontSize: 32),
+                ),
+                const SizedBox(height: 16),
+                Image.asset(
+                  'logo_loading.gif',
+                  height: 200,
+                  cacheHeight: 200,
+                ),
+                const SizedBox(height: 16),
                 if (state.isConnecting)
-                  Text('Connecting to: ${state.currentNetwork?.name} (${state.currentNetwork?.interxUrl.toString()})'),
+                  Text(
+                    'Connecting to: ${state.currentNetwork?.name} (${state.currentNetwork?.interxUrl.toString()})',
+                    style: GoogleFonts.notoSans(color: const Color(0xfffbfbfb), fontSize: 15),
+                  ),
               ],
             ),
           ),

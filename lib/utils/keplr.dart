@@ -38,4 +38,6 @@ class KeplrImpl {
     AminoSignResponse aminoSignResponse = AminoSignResponse.fromJson(responseMap);
     return aminoSignResponse;
   }
+
+  bool get isExtensionInstalled => _keplr.isExtensionInstalled();
 }

@@ -7,12 +7,16 @@ class CustomCard extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? childPadding;
   final bool enableMobile;
+  final double titleSpacing;
+  final TextStyle? titleStyle;
 
   const CustomCard({
     super.key,
     required this.child,
     this.leading,
     this.title,
+    this.titleStyle,
+    this.titleSpacing = 24,
     this.padding,
     this.childPadding,
     this.enableMobile = false,
@@ -25,7 +29,7 @@ class CustomCard extends StatelessWidget {
     Widget titleWidget = Row(
       children: [
         if (title != null) ...<Widget>[
-          Text(title!, style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb))),
+          Text(title!, style: titleStyle ?? textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb))),
         ],
         if (leading != null) ...<Widget>[
           Expanded(child: leading!),
@@ -52,7 +56,7 @@ class CustomCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         titleWidget,
-        if (title != null || leading != null) const SizedBox(height: 24),
+        if (title != null || leading != null) SizedBox(height: titleSpacing),
         childWidget,
       ],
     );
@@ -65,7 +69,7 @@ class CustomCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: const Color(0xff141924),
+        color: const Color(0x88141924),
       ),
       child: content,
     );
