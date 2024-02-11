@@ -57,7 +57,6 @@ flutter:
   assets:
     - assets/
     - assets/fonts/
-    - assets/fonts/google_fonts/noto_sans/
     - assets/icons/
 
   fonts:

@@ -5,7 +5,6 @@ import 'package:kira_dashboard/models/block.dart';
 import 'package:kira_dashboard/models/block_details.dart';
 import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/utils/blocks_paginated_request.dart';
-import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class BlocksService {
   final BlocksRepository blocksRepository = BlocksRepository();

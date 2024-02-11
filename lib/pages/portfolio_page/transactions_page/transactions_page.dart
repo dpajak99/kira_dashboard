@@ -25,9 +25,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
     return CustomCard(
       title: 'Transactions',
       enableMobile: true,
-      child: TransactionsList(
-        cubit: cubit,
-      ),
+      child: TransactionsList(cubit: cubit),
     );
   }
 }

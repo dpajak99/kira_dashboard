@@ -3,7 +3,6 @@ import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record
 import 'package:kira_dashboard/infra/repository/identity_registrar_repository.dart';
 import 'package:kira_dashboard/infra/services/favourite_addresses_service.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
-import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class IdentityRegistrarService {
   final IdentityRegistrarRepository identityRegistrarRepository = IdentityRegistrarRepository();

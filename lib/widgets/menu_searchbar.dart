@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:bech32/bech32.dart';
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';

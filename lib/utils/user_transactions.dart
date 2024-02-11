@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:decimal/decimal.dart';
 import 'package:kira_dashboard/infra/entities/amino_sign_response.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
@@ -93,7 +92,6 @@ class KeplrWalletSigner extends TxSigner {
 
   @override
   Future<AminoSignResponse?> sign(String message, StdSignDoc stdSignDoc) async {
-    print('Sign using keplr');
     return _getSignature(stdSignDoc);
   }
 
@@ -389,7 +387,6 @@ class UserTransactions {
 
     Map<String, dynamic> signatureDataJson = MapUtils.sort(stdSignDoc.toSignatureJson());
     String signatureDataString = json.encode(signatureDataJson);
-    print('Must sign exactly: $signatureDataString');
 
     return (signatureDataString, stdSignDoc);
   }

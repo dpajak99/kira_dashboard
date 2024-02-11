@@ -32,7 +32,9 @@ class CustomCard extends StatelessWidget {
           Text(title!, style: titleStyle ?? textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb))),
         ],
         if (leading != null) ...<Widget>[
-          Expanded(child: leading!),
+          Expanded(
+            child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20), child: leading!),
+          ),
         ],
       ],
     );

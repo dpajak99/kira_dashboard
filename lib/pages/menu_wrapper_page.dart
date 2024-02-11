@@ -29,8 +29,6 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       key: scaffoldKey,
       drawer: _Drawer(notifierRouteObserver: notifierRouteObserver),

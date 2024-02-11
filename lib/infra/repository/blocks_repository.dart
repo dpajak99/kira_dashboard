@@ -5,7 +5,6 @@ import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/repository/api_repository.dart';
 import 'package:kira_dashboard/utils/blocks_paginated_request.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
-import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class BlocksRepository extends ApiRepository {
   Future<PaginatedResponseWrapper<BlockEntity>> getPage(BlocksPaginatedRequest paginatedRequest) async {

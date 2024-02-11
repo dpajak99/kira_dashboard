@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:kira_dashboard/infra/entities/identity_registrar/identity_record_entity.dart';
 
 class IdentityRecords {
   final IdentityRecord? username;

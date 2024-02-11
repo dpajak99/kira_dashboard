@@ -4,7 +4,6 @@ import 'package:kira_dashboard/infra/entities/identity_registrar/query_identity_
 import 'package:kira_dashboard/infra/entities/identity_registrar/query_identity_records_response.dart';
 import 'package:kira_dashboard/infra/repository/api_repository.dart';
 import 'package:kira_dashboard/utils/logger/app_logger.dart';
-import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class IdentityRegistrarRepository extends ApiRepository {
 

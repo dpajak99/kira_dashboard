@@ -5,12 +5,12 @@ import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_list_cubit.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
-import 'package:kira_dashboard/widgets/coin_text.dart';
+import 'package:kira_dashboard/widgets/custom_chip.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/custom_table_paginated.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
-import 'package:kira_dashboard/widgets/token_icon.dart';
+import 'package:kira_dashboard/widgets/token_tile.dart';
 
 class TransactionsList extends StatelessWidget {
   final TransactionsListCubit cubit;
@@ -27,107 +27,7 @@ class TransactionsList extends StatelessWidget {
         if (item == null || loading) {
           return const SizedShimmer(width: double.infinity, height: 200);
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _MethodChip(item.method),
-                      const SizedBox(height: 4),
-                      Text(
-                        DateFormat('d MMM y, HH:mm').format(item.time),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      if (item.amounts.isNotEmpty) ...<Widget>[
-                        Expanded(
-                          child: CoinText(
-                            coin: item.amounts.first,
-                            textAlign: TextAlign.right,
-                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
-                      ],
-                      if (item.amounts.length > 1)
-                        Text(
-                          ' + ${item.amounts.length - 1}',
-                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Hash',
-              style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
-            ),
-            OpenableHash(
-              hash: item.hash,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-              onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  flex: 4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'From',
-                        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
-                      ),
-                      OpenableAddressText(
-                        address: item.from,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  flex: 2,
-                  child: _DirectionChip(item.direction, alignment: Alignment.center),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  flex: 4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'To',
-                        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
-                      ),
-                      OpenableAddressText(
-                        address: item.to,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
+        return _MobileListTile(item: item);
       },
       columns: <ColumnConfig<Transaction>>[
         ColumnConfig(
@@ -194,22 +94,12 @@ class TransactionsList extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (item.amounts.isNotEmpty) ...<Widget>[
+                if (item.amounts.isNotEmpty)
                   Expanded(
-                    child: CoinText(
-                      coin: item.amounts.first,
-                      textAlign: TextAlign.right,
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
-                ] else
-                  Padding(
-                    padding: const EdgeInsets.only(right: 32),
-                    child: Text(
-                      '---',
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                    child: TokenTile(
+                      coin: item.amounts.firstOrNull,
+                      reversed: true,
+                      showAmount: true,
                     ),
                   ),
                 if (item.amounts.length > 1)
@@ -226,39 +116,138 @@ class TransactionsList extends StatelessWidget {
   }
 }
 
-class _DirectionChip extends StatelessWidget {
-  final String direction;
-  final Alignment alignment;
+class _MobileListTile extends StatelessWidget {
+  final Transaction item;
 
-  const _DirectionChip(
-      this.direction, {
-        this.alignment = Alignment.centerLeft,
-      });
+  const _MobileListTile({required this.item});
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Align(
-      alignment: alignment,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: switch (direction) {
-            'inbound' => const Color(0x2935b15f),
-            'outbound' => const Color(0x29ffa500),
-            (_) => const Color(0x2935b15f),
-          },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _MethodChip(item.method),
+                  const SizedBox(height: 4),
+                  Text(
+                    DateFormat('d MMM y, HH:mm').format(item.time),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (item.amounts.isNotEmpty)
+                    Expanded(
+                      child: TokenTile(
+                        coin: item.amounts.firstOrNull,
+                        reversed: true,
+                        showAmount: true,
+                      ),
+                    ),
+                  if (item.amounts.length > 1)
+                    Text(
+                      ' + ${item.amounts.length - 1}',
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                    ),
+                ],
+              ),
+            ),
+          ],
         ),
-        child: Text(
-          direction == 'outbound' ? 'OUT' : 'IN',
-          style: textTheme.labelMedium!.copyWith(color: switch (direction) {
+        const SizedBox(height: 16),
+        Text(
+          'Hash',
+          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+        ),
+        OpenableHash(
+          hash: item.hash,
+          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
+          onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'From',
+                    style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+                  ),
+                  OpenableAddressText(
+                    address: item.from,
+                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: _DirectionChip(item.direction, alignment: Alignment.center),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'To',
+                    style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+                  ),
+                  OpenableAddressText(
+                    address: item.to,
+                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _DirectionChip extends StatelessWidget {
+  final String direction;
+  final Alignment alignment;
+
+  const _DirectionChip(
+    this.direction, {
+    this.alignment = Alignment.centerLeft,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    return CustomChip(
+      child: Text(
+        direction == 'outbound' ? 'OUT' : 'IN',
+        style: textTheme.labelMedium!.copyWith(
+          color: switch (direction) {
             'inbound' => const Color(0xff35b15f),
             'outbound' => const Color(0xffffa500),
             (_) => const Color(0x2935b15f),
           },
-          ),
         ),
       ),
     );
@@ -274,20 +263,12 @@ class _MethodChip extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: const Color(0xff263042),
-        ),
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
-        ),
+    return CustomChip(
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
       ),
     );
   }

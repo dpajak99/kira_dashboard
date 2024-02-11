@@ -7,10 +7,12 @@ import 'package:kira_dashboard/pages/dialogs/transactions/undelegate_tokens_dial
 import 'package:kira_dashboard/pages/portfolio_page/delegations_page/delegations_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
+import 'package:kira_dashboard/widgets/custom_chip.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/custom_table_paginated.dart';
 import 'package:kira_dashboard/widgets/mobile_row.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
+import 'package:kira_dashboard/widgets/validator_tile.dart';
 
 class DelegationList extends StatelessWidget {
   final bool isMyWallet;
@@ -32,68 +34,11 @@ class DelegationList extends StatelessWidget {
         if (item == null || loading) {
           return const SizedShimmer(width: double.infinity, height: 200);
         }
-
-        return Column(
-          children: [
-            Row(
-              children: <Widget>[
-                IdentityAvatar(size: 32, address: item.validatorInfo.address),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.validatorInfo.moniker,
-                        maxLines: 1,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                      ),
-                      const SizedBox(height: 4),
-                      OpenableAddressText(
-                        address: item.validatorInfo.address,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-                      ),
-                    ],
-                  ),
-                ),
-                if (isMyWallet) ...<Widget>[
-                  IconTextButton(
-                    text: 'Delegate',
-                    highlightColor: const Color(0xfffbfbfb),
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                    onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
-                  ),
-                  const SizedBox(width: 8),
-                  IconTextButton(
-                    text: 'Undelegate',
-                    highlightColor: const Color(0xfffbfbfb),
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                    onTap: () => DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
-                  ),
-                ],
-              ],
-            ),
-            const SizedBox(height: 24),
-            MobileRow(
-              title: Text(
-                'Status',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-              ),
-              value: _StatusChip(stakingPoolStatus: item.poolInfo.status),
-            ),
-            const SizedBox(height: 8),
-            MobileRow(
-                title: Text(
-                  'Commision',
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-                ),
-                value: Text(
-                  '${item.poolInfo.commissionPercentage}%',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                )),
-          ],
+        return _MobileListTile(
+          item: item,
+          isMyWallet: isMyWallet,
+          onDelegate: () => _handleDelegate(item),
+          onUndelegate: () => _handleUndelegate(item),
         );
       },
       columns: <ColumnConfig<Delegation>>[
@@ -143,19 +88,96 @@ class DelegationList extends StatelessWidget {
                     text: 'Undelegate',
                     highlightColor: const Color(0xfffbfbfb),
                     style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                    onTap: () => DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+                    onTap: () => _handleUndelegate(item),
                   ),
                   const SizedBox(width: 16),
                   IconTextButton(
                     text: 'Delegate',
                     highlightColor: const Color(0xfffbfbfb),
                     style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                    onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+                    onTap: () => _handleDelegate(item),
                   ),
                 ],
               );
             },
           ),
+      ],
+    );
+  }
+
+  void _handleUndelegate(Delegation item) {
+    DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey));
+  }
+
+  void _handleDelegate(Delegation item) {
+    DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey));
+  }
+}
+
+class _MobileListTile extends StatelessWidget {
+  final Delegation item;
+  final bool isMyWallet;
+  final VoidCallback onDelegate;
+  final VoidCallback onUndelegate;
+
+  const _MobileListTile({
+    required this.item,
+    required this.isMyWallet,
+    required this.onDelegate,
+    required this.onUndelegate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      children: [
+        ValidatorTile(
+          moniker: item.validatorInfo.moniker,
+          address: item.validatorInfo.address,
+        ),
+        const SizedBox(height: 24),
+        MobileRow(
+          title: Text(
+            'Status',
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+          ),
+          value: _StatusChip(stakingPoolStatus: item.poolInfo.status),
+        ),
+        const SizedBox(height: 8),
+        MobileRow(
+          title: Text(
+            'Commision',
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+          ),
+          value: Text(
+            '${item.poolInfo.commissionPercentage}%',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          ),
+        ),
+        if (isMyWallet) ...<Widget>[
+          const SizedBox(height: 32),
+          Row(
+            children: [
+              IconTextButton(
+                text: 'Delegate',
+                highlightColor: const Color(0xfffbfbfb),
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+              ),
+              const SizedBox(width: 8),
+              IconTextButton(
+                text: 'Undelegate',
+                highlightColor: const Color(0xfffbfbfb),
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                onTap: () => DialogRouter().navigate(UndelegateTokensDialog(valoperAddress: item.validatorInfo.valkey)),
+              ),
+            ],
+          ),
+        ],
       ],
     );
   }
@@ -170,31 +192,19 @@ class _StatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+    return CustomChip(
+      child: Text(
+        switch (stakingPoolStatus) {
+          StakingPoolStatus.disabled => 'Disabled',
+          StakingPoolStatus.enabled => 'Enabled',
+          StakingPoolStatus.withdraw => 'Withdraw only'
+        },
+        style: textTheme.labelMedium!.copyWith(
           color: switch (stakingPoolStatus) {
-            StakingPoolStatus.disabled => const Color(0x29f12e1f),
-            StakingPoolStatus.enabled => const Color(0x2935b15f),
-            StakingPoolStatus.withdraw => const Color(0x29ffa500),
+            StakingPoolStatus.disabled => const Color(0xfff12e1f),
+            StakingPoolStatus.enabled => const Color(0xff35b15f),
+            StakingPoolStatus.withdraw => const Color(0xffffa500),
           },
-        ),
-        child: Text(
-          switch (stakingPoolStatus) {
-            StakingPoolStatus.disabled => 'Disabled',
-            StakingPoolStatus.enabled => 'Enabled',
-            StakingPoolStatus.withdraw => 'Withdraw only'
-          },
-          style: textTheme.labelMedium!.copyWith(
-            color: switch (stakingPoolStatus) {
-              StakingPoolStatus.disabled => const Color(0xfff12e1f),
-              StakingPoolStatus.enabled => const Color(0xff35b15f),
-              StakingPoolStatus.withdraw => const Color(0xffffa500),
-            },
-          ),
         ),
       ),
     );

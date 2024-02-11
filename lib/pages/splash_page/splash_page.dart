@@ -15,8 +15,6 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-
     return BlocConsumer<NetworkListCubit, NetworkListState>(
       bloc: getIt<NetworkListCubit>(),
       listener: (BuildContext context, NetworkListState state) {

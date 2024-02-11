@@ -6,10 +6,11 @@ import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/sen
 import 'package:kira_dashboard/pages/portfolio_page/balances_page/balances_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/coin_text.dart';
+import 'package:kira_dashboard/widgets/custom_chip.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/custom_table_paginated.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
-import 'package:kira_dashboard/widgets/token_icon.dart';
+import 'package:kira_dashboard/widgets/token_tile.dart';
 
 class BalancesList extends StatelessWidget {
   final bool isMyWallet;
@@ -31,77 +32,17 @@ class BalancesList extends StatelessWidget {
         if (item == null || loading) {
           return const SizedShimmer(width: double.infinity, height: 200);
         }
-        return Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      _TokenTypeChip(item.type),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: <Widget>[
-                          TokenIcon(size: 24, iconUrl: item.icon),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              item.name,
-                              maxLines: 1,
-                              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      CoinText(
-                        coin: item,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                        textAlign: TextAlign.right,
-                      ),
-                      if (isMyWallet) ...<Widget>[
-                        const SizedBox(height: 4),
-                        IconTextButton(
-                          text: 'Send',
-                          gap: 4,
-                          reversed: true,
-                          icon: AppIcons.arrow_up_right,
-                          highlightColor: const Color(0xfffbfbfb),
-                          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                          onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: item)),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              ],
-            )
-          ],
+        return _MobileListTile(
+          coin: item,
+          isMyWallet: isMyWallet,
+          onSend: () => _handleSend(item),
         );
       },
       columns: <ColumnConfig<Coin>>[
         ColumnConfig(
           title: 'Token',
           cellBuilder: (BuildContext context, Coin item) {
-            return Row(
-              children: <Widget>[
-                TokenIcon(size: 24, iconUrl: item.icon),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    item.name,
-                    maxLines: 1,
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                  ),
-                ),
-              ],
-            );
+            return TokenTile(coin: item);
           },
         ),
         ColumnConfig(
@@ -127,21 +68,82 @@ class BalancesList extends StatelessWidget {
             title: 'Actions',
             textAlign: TextAlign.right,
             cellBuilder: (BuildContext context, Coin item) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconTextButton(
-                    text: 'Send',
-                    gap: 4,
-                    icon: AppIcons.arrow_up_right,
-                    highlightColor: const Color(0xfffbfbfb),
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                    onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: item)),
-                  ),
-                ],
+              return Align(
+                alignment: Alignment.centerRight,
+                child: IconTextButton(
+                  text: 'Send',
+                  gap: 4,
+                  icon: AppIcons.arrow_up_right,
+                  highlightColor: const Color(0xfffbfbfb),
+                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                  onTap: () => _handleSend(item),
+                ),
               );
             },
           ),
+      ],
+    );
+  }
+
+  void _handleSend(Coin item) {
+    DialogRouter().navigate(SendTokensDialog(initialCoin: item));
+  }
+}
+
+class _MobileListTile extends StatelessWidget {
+  final Coin coin;
+  final bool isMyWallet;
+  final VoidCallback onSend;
+
+  const _MobileListTile({
+    required this.coin,
+    required this.isMyWallet,
+    required this.onSend,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  _TokenTypeChip(coin.type),
+                  const SizedBox(height: 8),
+                  TokenTile(coin: coin),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CoinText(
+                    coin: coin,
+                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                    textAlign: TextAlign.right,
+                  ),
+                  if (isMyWallet) ...<Widget>[
+                    const SizedBox(height: 4),
+                    IconTextButton(
+                      text: 'Send',
+                      gap: 4,
+                      reversed: true,
+                      icon: AppIcons.arrow_up_right,
+                      highlightColor: const Color(0xfffbfbfb),
+                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                      onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: coin)),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
@@ -156,27 +158,15 @@ class _TokenTypeChip extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+    return CustomChip(
+      child: Text(
+        '${type.name[0].toUpperCase()}${type.name.substring(1)}',
+        style: textTheme.labelMedium!.copyWith(
           color: switch (type) {
-            CoinType.token => const Color(0xff263042),
-            CoinType.native => const Color(0x292f8af5),
-            CoinType.derivative => const Color(0x292f8af5),
+            CoinType.token => const Color(0xff6c86ad),
+            CoinType.native => const Color(0xff2f8af5),
+            CoinType.derivative => const Color(0xff2f8af5),
           },
-        ),
-        child: Text(
-          '${type.name[0].toUpperCase()}${type.name.substring(1)}',
-          style: textTheme.labelMedium!.copyWith(
-            color: switch (type) {
-              CoinType.token => const Color(0xff6c86ad),
-              CoinType.native => const Color(0xff2f8af5),
-              CoinType.derivative => const Color(0xff2f8af5),
-            },
-          ),
         ),
       ),
     );

@@ -8,8 +8,9 @@ import 'package:kira_dashboard/pages/dialogs/transactions/verify_identity_record
 import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identity_records_list_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identity_records_list_state.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
+import 'package:kira_dashboard/widgets/custom_chip.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
-import 'package:kira_dashboard/widgets/custom_table_paginated.dart';
+import 'package:kira_dashboard/widgets/labeled_text.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
 class IdentityRecordsList extends StatelessWidget {
@@ -36,76 +37,12 @@ class IdentityRecordsList extends StatelessWidget {
             if (item == null || loading) {
               return const SizedShimmer(width: double.infinity, height: 200);
             }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Key',
-                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-                          ),
-                          Text(
-                            item.key,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    _VerificationChip(
-                      verifiers: item.verifiers,
-                      trustedVerifiers: item.trustedVerifiers,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Value',
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-                ),
-                Text(
-                  item.value,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                ),
-                if (isMyWallet) ...<Widget>[
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      IconTextButton(
-                        text: 'Edit',
-                        highlightColor: const Color(0xfffbfbfb),
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                        onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
-                      ),
-                      const SizedBox(width: 16),
-                      IconTextButton(
-                        text: 'Verify',
-                        highlightColor: const Color(0xfffbfbfb),
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                        onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(
-                          records: [item],
-                        )),
-                      ),
-                      const SizedBox(width: 16),
-                      IconTextButton(
-                        text: 'Delete',
-                        highlightColor: const Color(0xfffbfbfb),
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                        onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
-                      ),
-                    ],
-                  ),
-                ],
-              ],
+            return _MobileListTile(
+              item: item,
+              isMyWallet: isMyWallet,
+              onEdit: () => _handleEdit(item),
+              onVerify: () => _handleVerify(item),
+              onDelete: () => _handleDelete(item),
             );
           },
           columns: [
@@ -154,23 +91,21 @@ class IdentityRecordsList extends StatelessWidget {
                         text: 'Edit',
                         highlightColor: const Color(0xfffbfbfb),
                         style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                        onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
+                        onTap: () => _handleEdit(item),
                       ),
                       const SizedBox(width: 16),
                       IconTextButton(
                         text: 'Verify',
                         highlightColor: const Color(0xfffbfbfb),
                         style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                        onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(
-                          records: [item],
-                        )),
+                        onTap: () => _handleVerify(item),
                       ),
                       const SizedBox(width: 16),
                       IconTextButton(
                         text: 'Delete',
                         highlightColor: const Color(0xfffbfbfb),
                         style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                        onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
+                        onTap: () => _handleDelete(item),
                       ),
                     ],
                   );
@@ -179,6 +114,94 @@ class IdentityRecordsList extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  void _handleEdit(IdentityRecord item) {
+    DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item]));
+  }
+
+  void _handleVerify(IdentityRecord item) {
+    DialogRouter().navigate(VerifyIdentityRecordsDialog(records: [item]));
+  }
+
+  void _handleDelete(IdentityRecord item) {
+    DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item]));
+  }
+}
+
+class _MobileListTile extends StatelessWidget {
+  final IdentityRecord item;
+  final bool isMyWallet;
+  final VoidCallback onEdit;
+  final VoidCallback onVerify;
+  final VoidCallback onDelete;
+
+  const _MobileListTile({
+    required this.item,
+    required this.isMyWallet,
+    required this.onEdit,
+    required this.onVerify,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: LabeledText(
+                label: 'Key',
+                text: item.key,
+              ),
+            ),
+            _VerificationChip(
+              verifiers: item.verifiers,
+              trustedVerifiers: item.trustedVerifiers,
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        LabeledText(
+          label: 'Value',
+          text: item.value,
+        ),
+        if (isMyWallet) ...<Widget>[
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              IconTextButton(
+                text: 'Edit',
+                highlightColor: const Color(0xfffbfbfb),
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
+              ),
+              const SizedBox(width: 16),
+              IconTextButton(
+                text: 'Verify',
+                highlightColor: const Color(0xfffbfbfb),
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(
+                  records: [item],
+                )),
+              ),
+              const SizedBox(width: 16),
+              IconTextButton(
+                text: 'Delete',
+                highlightColor: const Color(0xfffbfbfb),
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
+              ),
+            ],
+          ),
+        ],
+      ],
     );
   }
 }
@@ -196,55 +219,28 @@ class _VerificationChip extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    Color backgroundColor;
     Color textColor;
     String label;
 
-    if( trustedVerifiers.isNotEmpty) {
-      backgroundColor = const Color(0x2935b15f);
+    if (trustedVerifiers.isNotEmpty) {
       textColor = const Color(0xff35b15f);
       label = 'Trusted by ${trustedVerifiers.length}';
     } else if (verifiers.isNotEmpty) {
-      backgroundColor = const Color(0x2959b987);
       textColor = const Color(0xff59b987);
       label = 'Verified by ${verifiers.length}';
     } else {
-      backgroundColor = const Color(0x29f12e1f);
       textColor = const Color(0xfff12e1f);
       label = 'Unverified';
     }
 
-    Widget child = Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: backgroundColor,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if(trustedVerifiers.isNotEmpty) ...<Widget>[
-              Icon(
-                Icons.verified,
-                size: 16,
-                color: textColor,
-              ),
-              const SizedBox(width: 4),
-            ],
-            Text(
-              label,
-              style: textTheme.labelMedium!.copyWith(
-                color: textColor,
-              ),
-            ),
-          ],
-        ),
+    Widget child = CustomChip(
+      child: Text(
+        label,
+        style: textTheme.labelMedium!.copyWith(color: textColor),
       ),
     );
 
-    if(trustedVerifiers.isNotEmpty) {
+    if (trustedVerifiers.isNotEmpty) {
       return Tooltip(
         message: 'Verified by your trusted addresses:\n- ${trustedVerifiers.join('\n- ')}',
         child: child,
