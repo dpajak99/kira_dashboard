@@ -36,6 +36,7 @@ dependencies:
   qr_flutter: ^4.1.0
   just_the_tooltip: ^0.0.12
 #  flutter_web3: ^2.1.9
+  sliver_tools: ^0.2.12
   js: ^0.7.0
   cryptography_utils:
     git:

@@ -36,16 +36,13 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
           leading: Row(
             children: [
               if (widget.isMyWallet)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: IconTextButton(
-                    text: 'Add',
-                    icon: AppIcons.add,
-                    gap: 4,
-                    highlightColor: const Color(0xfffbfbfb),
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-                    onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
-                  ),
+                IconTextButton(
+                  text: 'Add',
+                  icon: AppIcons.add,
+                  gap: 4,
+                  highlightColor: const Color(0xfffbfbfb),
+                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                  onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
                 ),
             ],
           ),

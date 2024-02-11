@@ -172,7 +172,6 @@ class _StakingPoolWidget extends StatelessWidget {
       leading: Row(
         children: [
           if (getIt<WalletProvider>().isSignedIn) ...<Widget>[
-            const SizedBox(width: 16),
             IconTextButton(
               text: 'Delegate',
               highlightColor: const Color(0xfffbfbfb),
