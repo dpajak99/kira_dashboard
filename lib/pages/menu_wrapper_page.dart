@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/late_value_listenable_builder.dart';
+import 'package:kira_dashboard/widgets/menu_searchbar.dart';
 import 'package:kira_dashboard/widgets/network_button.dart';
 import 'package:kira_dashboard/widgets/wallet_button.dart';
 
@@ -119,27 +120,7 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
                             ),
                             const SizedBox(width: 40),
                             if (MediaQuery.of(context).size.width > 900) ...<Widget>[
-                              Container(
-                                constraints: const BoxConstraints(maxWidth: 300, minWidth: 100),
-                                decoration: const BoxDecoration(
-                                  color: Color(0xff151923),
-                                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                                ),
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.search,
-                                      color: Color(0xff47546d),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      "Search for address",
-                                      style: textTheme.titleLarge!.copyWith(color:  const Color(0xff47546d)),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              const MenuSearchbar(),
                               const Spacer(),
                               const NetworkButton(),
                               const SizedBox(width: 16),
