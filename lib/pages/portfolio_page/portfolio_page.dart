@@ -128,9 +128,25 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ],
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        state.identityRecords.getName(state.validator != null) ?? '---',
-                        style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            state.identityRecords.getName(state.validator != null) ?? '---',
+                            style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                          ),
+                          if (state.identityRecords.isUsernameTrusted()) ...<Widget>[
+                            const SizedBox(width: 8),
+                            Tooltip(
+                              message: 'Verified by your trusted addresses:\n- ${state.identityRecords.username!.trustedVerifiers.join('\n- ')}',
+                              child: const Icon(
+                                Icons.verified,
+                                color: Color(0xff2f8af5),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                       CopyableAddressText(
                         address: widget.address,
@@ -253,7 +269,6 @@ class RankChip extends StatelessWidget {
     );
   }
 }
-
 
 class TrustAddressStar extends StatefulWidget {
   final bool isFavourite;

@@ -26,6 +26,10 @@ class IdentityRecords {
     }
   }
 
+  bool isUsernameTrusted() {
+    return username?.trustedVerifiers.isNotEmpty ?? false;
+  }
+
   List<IdentityRecord> get all => <IdentityRecord>[
         if (username != null) username!,
         if (moniker != null) moniker!,
@@ -41,23 +45,16 @@ class IdentityRecord extends Equatable {
   final String key;
   final String value;
   final List<String> verifiers;
+  final List<String> trustedVerifiers;
 
   const IdentityRecord({
     required this.id,
     required this.key,
     required this.value,
     required this.verifiers,
+    required this.trustedVerifiers,
   });
 
-  factory IdentityRecord.fromEntity(IdentityRecordEntity entity) {
-    return IdentityRecord(
-      id: entity.id,
-      key: entity.key,
-      value: entity.value,
-      verifiers: entity.verifiers,
-    );
-  }
-
   @override
-  List<Object?> get props => [id, key, value, verifiers];
+  List<Object?> get props => [id, key, value, verifiers, trustedVerifiers];
 }

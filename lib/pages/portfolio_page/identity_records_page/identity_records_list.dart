@@ -59,7 +59,10 @@ class IdentityRecordsList extends StatelessWidget {
                         ],
                       ),
                     ),
-                    _VerificationChip(verified: item.verifiers.isNotEmpty),
+                    _VerificationChip(
+                      verifiers: item.verifiers,
+                      trustedVerifiers: item.trustedVerifiers,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -133,7 +136,10 @@ class IdentityRecordsList extends StatelessWidget {
             ColumnConfig(
               title: 'Status',
               cellBuilder: (BuildContext context, IdentityRecord item) {
-                return _VerificationChip(verified: item.verifiers.isNotEmpty);
+                return _VerificationChip(
+                  verifiers: item.verifiers,
+                  trustedVerifiers: item.trustedVerifiers,
+                );
               },
             ),
             if (isMyWallet)
@@ -178,35 +184,78 @@ class IdentityRecordsList extends StatelessWidget {
 }
 
 class _VerificationChip extends StatelessWidget {
-  final bool verified;
+  final List<String> verifiers;
+  final List<String> trustedVerifiers;
 
-  const _VerificationChip({required this.verified});
+  const _VerificationChip({
+    required this.verifiers,
+    required this.trustedVerifiers,
+  });
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Align(
+    Color backgroundColor;
+    Color textColor;
+    String label;
+
+    if( trustedVerifiers.isNotEmpty) {
+      backgroundColor = const Color(0x2935b15f);
+      textColor = const Color(0xff35b15f);
+      label = 'Trusted by ${trustedVerifiers.length}';
+    } else if (verifiers.isNotEmpty) {
+      backgroundColor = const Color(0x2959b987);
+      textColor = const Color(0xff59b987);
+      label = 'Verified by ${verifiers.length}';
+    } else {
+      backgroundColor = const Color(0x29f12e1f);
+      textColor = const Color(0xfff12e1f);
+      label = 'Unverified';
+    }
+
+    Widget child = Align(
       alignment: Alignment.centerLeft,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: switch (verified) {
-            true => const Color(0x2935b15f),
-            false => const Color(0x29f12e1f),
-          },
+          color: backgroundColor,
         ),
-        child: Text(
-          verified ? 'Verified' : 'Unverified',
-          style: textTheme.labelMedium!.copyWith(
-            color: switch (verified) {
-              true => const Color(0xff35b15f),
-              false => const Color(0xfff12e1f),
-            },
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if(trustedVerifiers.isNotEmpty) ...<Widget>[
+              Icon(
+                Icons.verified,
+                size: 16,
+                color: textColor,
+              ),
+              const SizedBox(width: 4),
+            ],
+            Text(
+              label,
+              style: textTheme.labelMedium!.copyWith(
+                color: textColor,
+              ),
+            ),
+          ],
         ),
       ),
     );
+
+    if(trustedVerifiers.isNotEmpty) {
+      return Tooltip(
+        message: 'Verified by your trusted addresses:\n- ${trustedVerifiers.join('\n- ')}',
+        child: child,
+      );
+    } else if (verifiers.isNotEmpty) {
+      return Tooltip(
+        message: 'Verified by:\n- ${verifiers.join('\n- ')}',
+        child: child,
+      );
+    } else {
+      return child;
+    }
   }
 }
