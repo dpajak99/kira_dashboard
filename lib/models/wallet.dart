@@ -39,7 +39,9 @@ class KiraBip44Coin implements Bip44Coins {
 
 abstract class IWallet extends Equatable {
   String get address;
+
   int get index;
+
   Uint8List get publicKey;
 
   const IWallet();
@@ -53,6 +55,12 @@ class Wallet extends IWallet {
 
   Wallet.deriveDefaultPath(this.bip44)
       : derivedBip44 = bip44.deriveDefaultPath,
+        index = 0;
+
+  Wallet.fromPrivateKey({
+    required Uint8List privateKey,
+  })  : bip44 = Bip44.fromPrivateKey(privateKey, KiraBip44Coin()),
+        derivedBip44 = Bip44.fromPrivateKey(privateKey, KiraBip44Coin()),
         index = 0;
 
   const Wallet({
@@ -87,7 +95,6 @@ class Wallet extends IWallet {
   @override
   List<Object?> get props => [address];
 }
-
 
 class KeplrWallet extends IWallet {
   @override

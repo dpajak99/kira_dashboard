@@ -171,7 +171,7 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 32),
+          padding: const EdgeInsets.only(bottom: 16, top: 32),
           sliver: SliverToBoxAdapter(
             child: TabBar(
               tabController: tabController,
@@ -214,13 +214,29 @@ class TabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CustomTabBar(
-          tabController: tabController,
-          tabs: tabs.map((e) => Tab(text: e)).toList(),
-        ),
-      ],
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    return ListenableBuilder(
+      listenable: tabController,
+      builder: (BuildContext context, _) {
+        return Wrap(
+          children: [
+            for (int i = 0; i < tabs.length; i++) ...<Widget>[
+              TextButton(
+                onPressed: () => tabController.animateTo(i),
+                style: TextButton.styleFrom(
+                  textStyle: textTheme.bodyMedium!,
+                  foregroundColor: tabController.index == i ? const Color(0xfffbfbfb) : const Color(0xff6c86ad),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(tabs[i]),
+              )
+            ],
+          ],
+        );
+      },
     );
   }
 }

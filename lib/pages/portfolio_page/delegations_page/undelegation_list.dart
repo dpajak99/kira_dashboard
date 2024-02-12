@@ -38,6 +38,7 @@ class UndelegationList extends StatelessWidget {
       columns: <ColumnConfig<Undelegation>>[
         ColumnConfig(
           title: 'Validator',
+          flex: 2,
           cellBuilder: (BuildContext context, Undelegation item) {
             return ValidatorTile(
               moniker: item.validatorInfo.moniker,
@@ -47,6 +48,7 @@ class UndelegationList extends StatelessWidget {
         ),
         ColumnConfig(
           title: 'Amount',
+          flex: 2,
           cellBuilder: (BuildContext context, Undelegation item) {
             return Text(
               item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),

@@ -37,7 +37,11 @@ dependencies:
   just_the_tooltip: ^0.0.12
 #  flutter_web3: ^2.1.9
   sliver_tools: ^0.2.12
-  js: ^0.7.0
+  flutter_dropzone: ^3.0.7
+  js: ^0.6.7
+  dotted_border: ^2.1.0
+  file_picker: ^6.1.1
+
   cryptography_utils:
     git:
       url: git@github.com:snggle/cryptography_utils.git

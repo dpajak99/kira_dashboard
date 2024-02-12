@@ -39,7 +39,7 @@ class _NetworkDialog extends State<NetworkDialog> {
                 Container(
                   padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
                   decoration: const BoxDecoration(
-                    color: Color(0xff06070a),
+                    color: Color(0xff0a0d15),
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
                   child: Column(
@@ -123,7 +123,7 @@ class _NetworkDialog extends State<NetworkDialog> {
               Container(
                 padding: const EdgeInsets.only(left: 8, right: 16, top: 8, bottom: 8),
                 decoration: const BoxDecoration(
-                  color: Color(0xff06070a),
+                  color: Color(0xff0a0d15),
                   borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
                 child: Column(
@@ -173,7 +173,7 @@ class _NetworkDialog extends State<NetworkDialog> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
-                  color: Color(0xff06070a),
+                  color: Color(0xff0a0d15),
                   borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
                 child: Row(

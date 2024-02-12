@@ -44,18 +44,11 @@ class DelegationList extends StatelessWidget {
       columns: <ColumnConfig<Delegation>>[
         ColumnConfig(
           title: 'Validator',
+          flex: 2,
           cellBuilder: (BuildContext context, Delegation item) {
-            return Row(
-              children: <Widget>[
-                IdentityAvatar(size: 32, address: item.validatorInfo.address),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    item.validatorInfo.moniker,
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                  ),
-                ),
-              ],
+            return ValidatorTile(
+              moniker: item.validatorInfo.moniker,
+              address: item.validatorInfo.address,
             );
           },
         ),

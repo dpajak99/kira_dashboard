@@ -7,6 +7,7 @@ import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/create_wallet_dialog/create_wallet_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
+import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_keyfile_dialog/sign_in_keyfile_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/sign_in_mnemonic_dialog.dart';
 import 'package:kira_dashboard/utils/keplr.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
@@ -104,7 +105,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
                     ),
                   ),
                   style: signupButtonStyle,
-                  onPressed: () {},
+                  onPressed: () => DialogRouter().navigate(const SignInKeyfileDialog()),
                   label: const Text('Keyfile'),
                 ),
               ),
