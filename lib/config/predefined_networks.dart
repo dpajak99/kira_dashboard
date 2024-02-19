@@ -16,17 +16,24 @@ class PredefinedNetworks {
     interxUrl: Uri.parse('http://localhost:11000'),
   );
 
-  static NetworkTemplate get defaultNetwork => devnet;
+  static NetworkTemplate private = NetworkTemplate(
+    name: 'Private',
+    interxUrl: Uri.parse('http://192.168.88.177:11000'),
+  );
 
-  static List<NetworkTemplate> networks = [chaosnet, devnet,  ];
+  static NetworkTemplate get defaultNetwork => private;
+
+  static List<NetworkTemplate> networks = [chaosnet, devnet, private];
 }
 
 class NetworkTemplate extends Equatable {
   final String? name;
+  final bool custom;
   final Uri interxUrl;
 
   const NetworkTemplate({
     required this.interxUrl,
+    this.custom = false,
     this.name,
   });
 

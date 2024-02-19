@@ -4,8 +4,12 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
+import 'package:kira_dashboard/utils/network_utils.dart';
 
 abstract class ApiRepository {
+  static const String proxyUrl = "https://cors.kira.network/";
+
   final CacheOptions options = CacheOptions(
     store: HiveCacheStore(null),
 
@@ -31,11 +35,26 @@ abstract class ApiRepository {
     allowPostMethod: false,
   );
 
-  Dio getCustomHttpClient(Uri uri) => DioForBrowser(BaseOptions(baseUrl: uri.toString()));
+  Dio getCustomHttpClient(Uri uri) {
+    String networkUrl = uri.toString();
+    bool useProxy = NetworkUtils.shouldUseProxy(Uri.base, uri);
+    if (useProxy) {
+      networkUrl = proxyUrl + networkUrl;
+    }
+
+    return DioForBrowser(BaseOptions(baseUrl: networkUrl));
+  }
 
   Dio get httpClient {
     NetworkListCubit networkListCubit = getIt<NetworkListCubit>();
-    Dio baseHttpClient = DioForBrowser(BaseOptions(baseUrl: networkListCubit.state.currentNetwork!.interxUrl.toString()));
+    NetworkStatus currentNetwork = networkListCubit.state.currentNetwork!;
+
+    String networkUrl = currentNetwork.interxUrl.toString();
+    if (currentNetwork.proxyEnabled) {
+      networkUrl = proxyUrl + networkUrl;
+    }
+
+    Dio baseHttpClient = DioForBrowser(BaseOptions(baseUrl: networkUrl));
     baseHttpClient.interceptors.add(DioCacheInterceptor(options: options));
     return baseHttpClient;
   }

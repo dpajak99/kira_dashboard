@@ -18,12 +18,16 @@ class NetworkStatus extends Equatable {
   final List<NetworkWarnings> warnings;
   final NetworkStatusType status;
   final NetworkDetails? details;
+  final bool proxyEnabled;
+  final bool custom;
 
   const NetworkStatus({
     required this.interxUrl,
     required this.status,
     this.name,
     this.details,
+    this.proxyEnabled = false,
+    this.custom = false,
     this.warnings = const [],
   });
 
@@ -32,6 +36,10 @@ class NetworkStatus extends Equatable {
   bool compareUri(Uri? uri) {
     if (uri == null) return false;
     return networkTemplate.interxUrl == uri;
+  }
+
+  bool get isOnline {
+    return status == NetworkStatusType.online || status == NetworkStatusType.unhealthy;
   }
 
   @override

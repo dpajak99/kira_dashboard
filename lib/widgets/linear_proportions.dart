@@ -20,7 +20,7 @@ class LinearProportions extends StatelessWidget {
       child: Row(
         children: visibleProportions.map((ProportionValue proportion) {
           return Expanded(
-            flex: (proportion.value * 100).toInt(),
+            flex: proportion.value > 0 ? (proportion.value * 100).toInt() : 0,
             child: Container(
               height: 8,
               color: proportion.color,

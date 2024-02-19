@@ -51,6 +51,7 @@ class NetworkButton extends StatelessWidget {
               children: [
                 CircleIcon(
                   size: 20,
+                  proxyEnabled: currentNetwork.proxyEnabled,
                   color: switch (currentNetwork.status) {
                     NetworkStatusType.online => Colors.green,
                     NetworkStatusType.unhealthy => Colors.yellow,

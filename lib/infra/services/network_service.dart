@@ -4,6 +4,7 @@ import 'package:kira_dashboard/infra/entities/tokens/aliases/token_info_dto.dart
 import 'package:kira_dashboard/infra/repository/network_repository.dart';
 import 'package:kira_dashboard/infra/repository/token_aliases_repository.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
+import 'package:kira_dashboard/utils/network_utils.dart';
 
 class NetworkService {
   final NetworkRepository networkRepository = NetworkRepository();
@@ -31,14 +32,17 @@ class NetworkService {
       }
 
       return NetworkStatus(
+        custom: networkTemplate.custom,
         name: networkTemplate.name ?? networkDetails.chainId,
         interxUrl: networkTemplate.interxUrl,
         warnings: warnings,
+        proxyEnabled: NetworkUtils.shouldUseProxy(Uri.base, networkTemplate.interxUrl),
         status: warnings.isEmpty ? NetworkStatusType.online : NetworkStatusType.unhealthy,
         details: networkDetails,
       );
     } catch (e) {
       return NetworkStatus(
+        custom: networkTemplate.custom,
         name: networkTemplate.name ?? 'unknown',
         interxUrl: networkTemplate.interxUrl,
         status: NetworkStatusType.offline,

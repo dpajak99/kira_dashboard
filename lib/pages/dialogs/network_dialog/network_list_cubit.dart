@@ -82,9 +82,15 @@ class NetworkListCubit extends Cubit<NetworkListState> {
       name: networkTemplate.name,
       interxUrl: networkTemplate.interxUrl,
       status: NetworkStatusType.connecting,
+      custom: networkTemplate.custom,
     );
     emit(state.copyWith(availableNetworks: [...state.availableNetworks, networkStatus]));
     updateNetworkStatus(networkStatus);
+  }
+
+  Future<void> removeCustomNetwork(Uri uri) async {
+    List<NetworkStatus> availableNetworks = state.availableNetworks.where((e) => !e.compareUri(uri)).toList();
+    emit(state.copyWith(availableNetworks: availableNetworks));
   }
 
   Future<void> updateConnectedNetwork(Uri newUri) async {
