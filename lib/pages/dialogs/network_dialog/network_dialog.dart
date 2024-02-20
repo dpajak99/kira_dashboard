@@ -8,6 +8,7 @@ import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_state.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
+import 'package:kira_dashboard/utils/network_utils.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/notification_box.dart';
@@ -86,12 +87,15 @@ class _NetworkDialog extends State<NetworkDialog> {
                       highlightColor: const Color(0xfffbfbfb),
                       style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                       onTap: () {
-                        getIt<NetworkListCubit>().addCustomNetwork(NetworkTemplate(
-                          name: 'Custom',
-                          custom: true,
-                          interxUrl: Uri.parse(controller.text),
-                        ));
-                        controller.clear();
+                        try {
+                          getIt<NetworkListCubit>().addCustomNetwork(NetworkTemplate(
+                            name: 'Custom',
+                            custom: true,
+                            interxUrl: NetworkUtils.formatUrl(Uri.parse(controller.text)),
+                          ));
+                        } finally {
+                          controller.clear();
+                        }
                       },
                     ),
                   ],

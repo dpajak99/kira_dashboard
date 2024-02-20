@@ -7,17 +7,19 @@ import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class BlocksListCubit extends PaginatedListCubit<Block> {
   final BlocksService blocksService = BlocksService();
-  int? blockId;
 
   BlocksListCubit() : super(const PaginatedListState.loading());
 
   @override
   Future<PaginatedListWrapper<Block>> getPage(PaginatedRequest paginatedRequest) {
-    blockId ??= networkListCubit.state.currentNetwork?.details?.block;
+    int total = networkListCubit.state.currentNetwork!.details!.block;
+    if( state.total != -1) {
+      total = state.total;
+    }
 
     BlocksPaginatedRequest blocksPaginatedRequest = BlocksPaginatedRequest(
-      minHeight: blockId! - paginatedRequest.offset - paginatedRequest.limit,
-      maxHeight: blockId! - paginatedRequest.offset,
+      minHeight: total - paginatedRequest.offset - paginatedRequest.limit,
+      maxHeight: total - paginatedRequest.offset,
     );
     return blocksService.getPage(blocksPaginatedRequest);
   }

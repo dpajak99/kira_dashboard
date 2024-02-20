@@ -1,4 +1,42 @@
 class NetworkUtils {
+  /// Formats a given URI to ensure it follows certain rules regarding scheme,
+  /// trailing slashes, port, and host formatting, especially for IPv6 addresses.
+  ///
+  /// - If no scheme is present, `https` is used as the default.
+  /// - Trailing slashes are removed from the path.
+  /// - If the URI is not a localhost or an IPv4 address and does not specify a port,
+  ///   a default port of 11000 is added.
+  /// - IPv6 addresses are properly bracketed if not already.
+  ///
+  /// @param parsedUrl The original URI to be formatted.
+  /// @return A new URI instance with the applied formatting rules.
+  static  Uri formatUrl(Uri parsedUrl) {
+    // Default to https if no scheme is present
+    String scheme = parsedUrl.scheme.isNotEmpty ? parsedUrl.scheme : 'https';
+
+    // Remove trailing slash if present
+    String path = parsedUrl.path.endsWith('/') ? parsedUrl.path.substring(0, parsedUrl.path.length - 1) : parsedUrl.path;
+
+    // Adjust host for IPv6 addresses to ensure it's wrapped in brackets
+    String host = parsedUrl.host;
+    if (isIPv6(parsedUrl) && !host.startsWith('[')) {
+      host = '[$host]';
+    }
+
+    // Handle port logic
+    int? port;
+    if (!parsedUrl.hasPort && !isLocalhost(parsedUrl) && !isIPv4(parsedUrl)) {
+      // Add default port only if it's not localhost, not an IPv4, and no port is specified
+      port = 11000;
+    } else {
+      // Use the specified port or null to keep the URI's original port
+      port = parsedUrl.hasPort ? parsedUrl.port : null;
+    }
+
+    // Reconstruct the URI with the adjustments
+    return Uri(scheme: scheme, host: host, port: port, path: path);
+  }
+
   /// Determines whether a proxy should be used based on the application's
   /// and the backend's URI schemes and whether the application URI is a
   /// localhost or private network address.
@@ -55,44 +93,6 @@ class NetworkUtils {
   /// otherwise `false`.
   static bool isPrivateNetworkAddress(Uri uri) {
     return uri.host.startsWith('192.168.');
-  }
-
-  /// Formats a given URI to ensure it follows certain rules regarding scheme,
-  /// trailing slashes, port, and host formatting, especially for IPv6 addresses.
-  ///
-  /// - If no scheme is present, `https` is used as the default.
-  /// - Trailing slashes are removed from the path.
-  /// - If the URI is not a localhost or an IPv4 address and does not specify a port,
-  ///   a default port of 11000 is added.
-  /// - IPv6 addresses are properly bracketed if not already.
-  ///
-  /// @param parsedUrl The original URI to be formatted.
-  /// @return A new URI instance with the applied formatting rules.
-  static  Uri formatUrl(Uri parsedUrl) {
-    // Default to https if no scheme is present
-    String scheme = parsedUrl.scheme.isNotEmpty ? parsedUrl.scheme : 'https';
-
-    // Remove trailing slash if present
-    String path = parsedUrl.path.endsWith('/') ? parsedUrl.path.substring(0, parsedUrl.path.length - 1) : parsedUrl.path;
-
-    // Adjust host for IPv6 addresses to ensure it's wrapped in brackets
-    String host = parsedUrl.host;
-    if (isIPv6(parsedUrl) && !host.startsWith('[')) {
-      host = '[$host]';
-    }
-
-    // Handle port logic
-    int? port;
-    if (!parsedUrl.hasPort && !isLocalhost(parsedUrl) && !isIPv4(parsedUrl)) {
-      // Add default port only if it's not localhost, not an IPv4, and no port is specified
-      port = 11000;
-    } else {
-      // Use the specified port or null to keep the URI's original port
-      port = parsedUrl.hasPort ? parsedUrl.port : null;
-    }
-
-    // Reconstruct the URI with the adjustments
-    return Uri(scheme: scheme, host: host, port: port, path: path);
   }
 
   /// Checks if the given URI's host is an IPv4 address.

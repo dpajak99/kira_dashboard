@@ -12,7 +12,7 @@ class BlocksPaginatedRequest extends Equatable {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'maxHeight': maxHeight,
-      'minHeight': minHeight,
+      'minHeight': minHeight < 0 ? 0 : minHeight,
     };
   }
 

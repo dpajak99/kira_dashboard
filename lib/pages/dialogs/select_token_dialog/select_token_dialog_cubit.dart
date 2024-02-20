@@ -1,24 +1,21 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:kira_dashboard/infra/services/balances_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
-import 'package:kira_dashboard/pages/dialogs/select_token_dialog/select_token_dialog_state.dart';
+import 'package:kira_dashboard/utils/cubits/list_cubit/infinity_list_cubit.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
-class SelectTokenDialogCubit extends Cubit<SelectTokenDialogState> {
+class SelectTokenDialogCubit extends InfinityListCubit<Coin> {
   final String address;
   final BalancesService balancesService = BalancesService();
 
   SelectTokenDialogCubit({
+    required super.scrollController,
     required this.address,
-  }) : super(const SelectTokenDialogState(balances: [])) {
-    init();
-  }
+  }) : super(const InfinityListState.loading());
 
-  Future<void> init() async {
-    PaginatedRequest paginatedRequest = const PaginatedRequest(limit: 20, offset: 0);
-
-    PaginatedListWrapper<Coin> balances = await balancesService.getPage(address, paginatedRequest);
-    emit(SelectTokenDialogState(balances: balances.items));
+  @override
+  Future<PaginatedListWrapper<Coin>> getPage(PaginatedRequest paginatedRequest) {
+    return balancesService.getPage(address, paginatedRequest);
   }
 }

@@ -21,7 +21,7 @@ class PredefinedNetworks {
     interxUrl: Uri.parse('http://192.168.88.177:11000'),
   );
 
-  static NetworkTemplate get defaultNetwork => private;
+  static NetworkTemplate get defaultNetwork => devnet;
 
   static List<NetworkTemplate> networks = [chaosnet, devnet, private];
 }

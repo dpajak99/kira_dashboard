@@ -1,45 +1,56 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
-class PaginatedListState<T> extends Equatable {
+class InfinityListState<T> extends Equatable {
   final int pageSize = 10;
   final bool isLoading;
   final int pageIndex;
   final int total;
   final List<T> items;
 
-  const PaginatedListState({
+  const InfinityListState({
     required this.items,
     required this.isLoading,
     required this.pageIndex,
     required this.total,
   });
 
-  const PaginatedListState.loading()
+  const InfinityListState.loading()
       : items = const [],
         isLoading = true,
         pageIndex = -1,
         total = -1;
 
-  const PaginatedListState.loaded({
+  const InfinityListState.loaded({
     required this.items,
     required this.pageIndex,
     required this.total,
   }) : isLoading = false;
 
-  PaginatedListState<T> copyWith({
+  InfinityListState<T> copyWith({
     List<T>? items,
     int? pageIndex,
     int? total,
     bool? isLoading,
   }) {
-    return PaginatedListState<T>(
+    return InfinityListState<T>(
       items: items ?? this.items,
       pageIndex: pageIndex ?? this.pageIndex,
       total: total ?? this.total,
       isLoading: isLoading ?? this.isLoading,
+    );
+  }
+
+  InfinityListState<T> add({
+    required List<T> items,
+    required int pageIndex,
+  }) {
+    return copyWith(
+      items: this.items + items,
+      pageIndex: pageIndex,
     );
   }
 
@@ -57,40 +68,56 @@ class PaginatedListState<T> extends Equatable {
   List<Object?> get props => [isLoading, items];
 }
 
-abstract class PaginatedListCubit<T> extends RefreshablePageCubit<PaginatedListState<T>> {
-  PaginatedListCubit(super.initialState);
+abstract class InfinityListCubit<T> extends RefreshablePageCubit<InfinityListState<T>> {
+  static const double nextPageActivatorOffset = 100;
+  final ScrollController scrollController;
+
+  InfinityListCubit(super.initialState, {required this.scrollController}) {
+    scrollController.addListener(_handleScroll);
+  }
+
+  @override
+  Future<void> close() {
+    scrollController.removeListener(_handleScroll);
+    return super.close();
+  }
 
   @override
   Future<void> reload() async {
-    emit(const PaginatedListState.loading());
+    emit(const InfinityListState.loading());
     PaginatedRequest paginatedRequest = PaginatedRequest(offset: 0, limit: state.pageSize);
     PaginatedListWrapper<T> paginationResponse = await getPage(paginatedRequest);
 
-    emit(PaginatedListState.loaded(
+    emit(InfinityListState.loaded(
       items: paginationResponse.items,
-      total: state.total != -1 ? state.total : paginationResponse.total,
+      total: paginationResponse.total,
       pageIndex: 0,
     ));
   }
 
-  void nextPage() => goToPage(state.pageIndex + 1);
-
-  void previousPage() => goToPage(state.pageIndex - 1);
-
-  void goToPage(int pageIndex) async {
-    if (pageIndex < 0) return;
+  void fetchNextPage() async {
     if(state.isLoading) return;
 
-    emit(state.copyWith(isLoading: true, pageIndex: pageIndex));
+    emit(state.copyWith(isLoading: true));
 
-    PaginatedRequest paginatedRequest = PaginatedRequest(offset: pageIndex * state.pageSize, limit: state.pageSize);
+    int nextIndex = state.pageIndex + 1;
+
+    PaginatedRequest paginatedRequest = PaginatedRequest(offset: nextIndex * state.pageSize, limit: state.pageSize);
     PaginatedListWrapper<T> paginationResponse = await getPage(paginatedRequest);
 
-    emit(PaginatedListState.loaded(
+    emit(state.add(
       items: paginationResponse.items,
-      total: state.total != -1 ? state.total : paginationResponse.total,
-      pageIndex: pageIndex,
+      pageIndex: nextIndex,
     ));
+  }
+
+  void _handleScroll() {
+    double currentOffset = scrollController.offset;
+    double maxOffset = scrollController.position.maxScrollExtent - nextPageActivatorOffset;
+    bool reachedMax = currentOffset >= maxOffset;
+    if (reachedMax && state.isLoading == false) {
+      fetchNextPage();
+    }
   }
 
   Future<PaginatedListWrapper<T>> getPage(PaginatedRequest paginatedRequest);

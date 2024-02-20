@@ -146,10 +146,23 @@ class BlocksList extends StatelessWidget {
         ColumnConfig(
           title: 'Age',
           cellBuilder: (BuildContext context, Block item) {
+            Duration duration = item.time.difference(DateTime.now());
             return Text(
-              item.time.difference(DateTime.now()).inSeconds > 0
-                  ? '${item.time.difference(DateTime.now()).inSeconds.abs()} seconds ago'
-                  : '${item.time.difference(DateTime.now()).inMinutes.abs()} minutes ago',
+              switch (duration.inSeconds.abs()) {
+                == 0 => 'just now',
+                == 1 => '1 second ago',
+                < 60 => '${duration.inSeconds.abs()} seconds ago',
+                < 120 => '1 minute ago',
+                < 3600 => '${duration.inMinutes.abs()} minutes ago',
+                < 7200 => '1 hour ago',
+                < 86400 => '${duration.inHours.abs()} hours ago',
+                < 172800 => '1 day ago',
+                < 604800 => '${duration.inDays.abs()} weeks ago',
+                < 1209600 => '1 month ago',
+                < 2592000 => '${duration.inDays.abs()} months ago',
+                < 5184000 => '1 year ago',
+                (_) => '${(duration.inDays.abs() / 365).ceil()} years ago',
+              },
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
