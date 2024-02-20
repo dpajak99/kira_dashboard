@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_dialog.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_state.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_state.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
 
 class NetworkButton extends StatelessWidget {
@@ -17,9 +17,9 @@ class NetworkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NetworkListCubit, NetworkListState>(
-      bloc: getIt<NetworkListCubit>(),
-      builder: (BuildContext context, NetworkListState state) {
+    return BlocBuilder<NetworkCubit, NetworkState>(
+      bloc: getIt<NetworkCubit>(),
+      builder: (BuildContext context, NetworkState state) {
         NetworkStatus currentNetwork = state.currentNetwork!;
 
         if (small) {

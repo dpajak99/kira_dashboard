@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/predefined_networks.dart';
 import 'package:kira_dashboard/infra/services/network_service.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_state.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_state.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
 
 class NetworkStatusNotifier extends ValueNotifier<NetworkStatus?> {
@@ -45,19 +45,16 @@ class NetworkStatusNotifier extends ValueNotifier<NetworkStatus?> {
   }
 }
 
-class NetworkListCubit extends Cubit<NetworkListState> {
-  final Completer<void> initializationCompleter = Completer<void>();
+class NetworkCubit extends Cubit<NetworkState> {
   final NetworkService networkService = NetworkService();
   final NetworkStatusNotifier networkStatusNotifier = NetworkStatusNotifier();
 
-  NetworkListCubit() : super(const NetworkListState(availableNetworks: [], currentNetwork: null)) {
+  NetworkCubit() : super(const NetworkState(availableNetworks: [], currentNetwork: null)) {
     init();
   }
 
-  Future<void> init() async {
+  void init() {
     List<NetworkTemplate> predefinedNetworks = PredefinedNetworks.networks;
-    NetworkTemplate defaultNetwork = PredefinedNetworks.defaultNetwork;
-
     List<NetworkStatus> loadingNetworkStatuses = predefinedNetworks.map((e) {
       return NetworkStatus(
         name: e.name,
@@ -65,13 +62,9 @@ class NetworkListCubit extends Cubit<NetworkListState> {
         status: NetworkStatusType.connecting,
       );
     }).toList();
-    NetworkStatus? currentNetwork = loadingNetworkStatuses.firstWhere((element) => element.compareUri(defaultNetwork.interxUrl));
-    List<NetworkStatus> availableNetworks = loadingNetworkStatuses.where((element) => element.compareUri(defaultNetwork.interxUrl) == false).toList();
-
-    emit(state.copyWith(availableNetworks: availableNetworks, currentNetwork: currentNetwork));
-    initializationCompleter.complete();
-
-    reload();
+    List<NetworkStatus> availableNetworks = loadingNetworkStatuses.where((e) => e.compareUri(state.currentNetwork?.interxUrl) == false).toList();
+    emit(state.copyWith(availableNetworks: availableNetworks));
+    refreshAll();
   }
 
   Future<void> addCustomNetwork(NetworkTemplate networkTemplate) async {
@@ -85,7 +78,7 @@ class NetworkListCubit extends Cubit<NetworkListState> {
       custom: networkTemplate.custom,
     );
     emit(state.copyWith(availableNetworks: [...state.availableNetworks, networkStatus]));
-    updateNetworkStatus(networkStatus);
+    refreshNetworkStatus(networkStatus);
   }
 
   Future<void> removeCustomNetwork(Uri uri) async {
@@ -93,7 +86,12 @@ class NetworkListCubit extends Cubit<NetworkListState> {
     emit(state.copyWith(availableNetworks: availableNetworks));
   }
 
-  Future<void> updateConnectedNetwork(Uri newUri) async {
+  Future<void> connect(NetworkStatus networkStatus) async {
+    emit(state.copyWith(currentNetwork: networkStatus));
+    networkStatusNotifier.notifyChanged(networkStatus);
+  }
+
+  Future<void> connectX(Uri newUri) async {
     List<NetworkStatus> allNetworks = state.all;
     NetworkStatus networkStatus;
     List<NetworkStatus> availableNetworks;
@@ -109,14 +107,14 @@ class NetworkListCubit extends Cubit<NetworkListState> {
     networkStatusNotifier.notifyChanged(networkStatus);
   }
 
-  void reload() {
+  void refreshAll() {
     List<NetworkStatus> networksToUpdate = state.all;
     for (NetworkStatus networkStatus in networksToUpdate) {
-      updateNetworkStatus(networkStatus);
+      refreshNetworkStatus(networkStatus);
     }
   }
 
-  Future<void> updateNetworkStatus(NetworkStatus networkStatus) async {
+  Future<void> refreshNetworkStatus(NetworkStatus networkStatus) async {
     NetworkStatus updatedNetworkStatus = await networkService.getStatusForNetwork(networkStatus.networkTemplate);
     if (networkStatus.compareUri(state.currentNetwork?.interxUrl)) {
       emit(state.copyWith(currentNetwork: updatedNetworkStatus));

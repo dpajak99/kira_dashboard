@@ -5,13 +5,12 @@ import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/predefined_networks.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_state.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_state.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
 import 'package:kira_dashboard/utils/network_utils.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
-import 'package:kira_dashboard/widgets/notification_box.dart';
 
 class NetworkDialog extends DialogContentWidget {
   const NetworkDialog({super.key});
@@ -27,9 +26,9 @@ class _NetworkDialog extends State<NetworkDialog> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return BlocBuilder<NetworkListCubit, NetworkListState>(
-      bloc: getIt<NetworkListCubit>(),
-      builder: (BuildContext context, NetworkListState state) {
+    return BlocBuilder<NetworkCubit, NetworkState>(
+      bloc: getIt<NetworkCubit>(),
+      builder: (BuildContext context, NetworkState state) {
         return CustomDialog(
           title: 'Select network',
           width: 420,
@@ -52,7 +51,12 @@ class _NetworkDialog extends State<NetworkDialog> {
                 child: Column(
                   children: [
                     ...state.availableNetworks.map((NetworkStatus e) {
-                      return AvailableNetworkTile(networkStatus: e);
+                      return AvailableNetworkTile(
+                        networkStatus: e,
+                        onTap: () {
+                          getIt<NetworkCubit>().connect(e);
+                        },
+                      );
                     }),
                   ],
                 ),
@@ -88,10 +92,10 @@ class _NetworkDialog extends State<NetworkDialog> {
                       style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                       onTap: () {
                         try {
-                          getIt<NetworkListCubit>().addCustomNetwork(NetworkTemplate(
+                          getIt<NetworkCubit>().addCustomNetwork(NetworkTemplate(
                             name: 'Custom',
                             custom: true,
-                            interxUrl: NetworkUtils.formatUrl(Uri.parse(controller.text)),
+                            interxUrl: NetworkUtils.formatUrl(controller.text),
                           ));
                         } finally {
                           controller.clear();
@@ -208,10 +212,12 @@ class ConnectedNetworkTile extends StatelessWidget {
 
 class AvailableNetworkTile extends StatelessWidget {
   final NetworkStatus networkStatus;
+  final VoidCallback onTap;
 
   const AvailableNetworkTile({
     super.key,
     required this.networkStatus,
+    required this.onTap,
   });
 
   @override
@@ -252,15 +258,13 @@ class AvailableNetworkTile extends StatelessWidget {
               text: 'Connect',
               highlightColor: const Color(0xfffbfbfb),
               style: textTheme.labelMedium!.copyWith(color: const Color(0xff4888f0)),
-              onTap: () {
-                getIt<NetworkListCubit>().updateConnectedNetwork(networkStatus.interxUrl);
-              },
+              onTap: onTap,
             ),
           if (networkStatus.custom) ...<Widget>[
             const SizedBox(width: 8),
             IconButton(
-              onPressed: () {
-                getIt<NetworkListCubit>().removeCustomNetwork(networkStatus.interxUrl);
+              onPressed: (){
+                getIt<NetworkCubit>().removeCustomNetwork(networkStatus.interxUrl);
               },
               visualDensity: VisualDensity.compact,
               icon: const Icon(

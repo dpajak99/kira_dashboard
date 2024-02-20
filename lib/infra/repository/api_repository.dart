@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:kira_dashboard/config/get_it.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
 import 'package:kira_dashboard/utils/network_utils.dart';
 
@@ -46,8 +46,8 @@ abstract class ApiRepository {
   }
 
   Dio get httpClient {
-    NetworkListCubit networkListCubit = getIt<NetworkListCubit>();
-    NetworkStatus currentNetwork = networkListCubit.state.currentNetwork!;
+    NetworkCubit networkCubit = getIt<NetworkCubit>();
+    NetworkStatus currentNetwork = networkCubit.state.currentNetwork!;
 
     String networkUrl = currentNetwork.interxUrl.toString();
     if (currentNetwork.proxyEnabled) {

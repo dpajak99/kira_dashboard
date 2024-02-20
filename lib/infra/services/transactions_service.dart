@@ -24,12 +24,12 @@ import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/models/transaction_remote_data.dart';
 import 'package:kira_dashboard/models/transaction_result.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_cubit.dart';
 import 'package:kira_dashboard/utils/custom_date_utils.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class TransactionsService {
-  final NetworkListCubit networkListCubit = getIt<NetworkListCubit>();
+  final NetworkCubit networkCubit = getIt<NetworkCubit>();
   final NetworkRepository networkRepository = NetworkRepository();
   final FeesRepository feesRepository = FeesRepository();
   final AccountsRepository accountsRepository = AccountsRepository();
@@ -43,7 +43,7 @@ class TransactionsService {
   }
 
   Future<Coin> getExecutionFeeForMessage(String message) async {
-    String defaultTokenDenom = networkListCubit.state.defaultDenom;
+    String defaultTokenDenom = networkCubit.state.defaultDenom;
 
     try {
       FeeConfigEntity feeConfigEntity = await feesRepository.getFee(message);

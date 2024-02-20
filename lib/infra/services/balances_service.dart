@@ -5,11 +5,11 @@ import 'package:kira_dashboard/infra/repository/balances_repository.dart';
 import 'package:kira_dashboard/infra/services/tokens_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
-import 'package:kira_dashboard/pages/dialogs/network_dialog/network_list_cubit.dart';
+import 'package:kira_dashboard/pages/dialogs/network_dialog/network_cubit.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class BalancesService {
-  final NetworkListCubit networkListCubit = getIt<NetworkListCubit>();
+  final NetworkCubit networkCubit = getIt<NetworkCubit>();
   final BalancesRepository balancesRepository = BalancesRepository();
   final TokensService tokensService = TokensService();
 
@@ -30,7 +30,7 @@ class BalancesService {
   }
 
   Future<Coin> getDefaultCoinBalance(String address) async {
-    String defaultCoinDenom = networkListCubit.state.defaultDenom;
+    String defaultCoinDenom = networkCubit.state.defaultDenom;
     Coin defaultCoinBalance = await getByDenom(address, defaultCoinDenom);
     return defaultCoinBalance;
   }

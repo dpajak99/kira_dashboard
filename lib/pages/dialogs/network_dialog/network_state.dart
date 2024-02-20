@@ -1,20 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_status.dart';
 
-class NetworkListState extends Equatable {
+class NetworkState extends Equatable {
   final NetworkStatus? currentNetwork;
   final List<NetworkStatus> availableNetworks;
 
-  const NetworkListState({
+  const NetworkState({
     required this.currentNetwork,
     required this.availableNetworks,
   });
 
-  NetworkListState copyWith({
+  NetworkState copyWith({
     NetworkStatus? currentNetwork,
     List<NetworkStatus>? availableNetworks,
   }) {
-    return NetworkListState(
+    return NetworkState(
       currentNetwork: currentNetwork ?? this.currentNetwork,
       availableNetworks: availableNetworks ?? this.availableNetworks,
     );

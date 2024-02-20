@@ -10,31 +10,40 @@ class NetworkUtils {
   ///
   /// @param parsedUrl The original URI to be formatted.
   /// @return A new URI instance with the applied formatting rules.
-  static  Uri formatUrl(Uri parsedUrl) {
-    // Default to https if no scheme is present
-    String scheme = parsedUrl.scheme.isNotEmpty ? parsedUrl.scheme : 'https';
+  static Uri formatUrl(String rawUri) {
+    String parsedUri = rawUri;
+    if (parsedUri.endsWith('/')) {
+      parsedUri = parsedUri.substring(0, parsedUri.length - 1);
+    }
 
-    // Remove trailing slash if present
-    String path = parsedUrl.path.endsWith('/') ? parsedUrl.path.substring(0, parsedUrl.path.length - 1) : parsedUrl.path;
+    RegExp schemeRegExp = RegExp(r'^(http://|https://)');
+    String scheme = schemeRegExp.firstMatch(parsedUri)?.group(0) ?? 'https://';
 
-    // Adjust host for IPv6 addresses to ensure it's wrapped in brackets
-    String host = parsedUrl.host;
-    if (isIPv6(parsedUrl) && !host.startsWith('[')) {
+    if (parsedUri.startsWith(scheme)) {
+      parsedUri = parsedUri.substring(scheme.length);
+    }
+
+    List<String> uriParts = parsedUri.split('/');
+    List<String> hostParts = uriParts[0].split(':');
+    String host = hostParts[0];
+
+    if (isIPv6(host)) {
+      if (host.startsWith('[')) {
+        host = host.substring(1);
+      } else if (host.endsWith(']')) {
+        host = host.substring(0, host.length - 1);
+      }
       host = '[$host]';
     }
 
-    // Handle port logic
-    int? port;
-    if (!parsedUrl.hasPort && !isLocalhost(parsedUrl) && !isIPv4(parsedUrl)) {
+    int? port = int.tryParse(hostParts.elementAtOrNull(1) ?? '');
+    if (port == null && !isLocalhost(host) && !isIPv4(host)) {
       // Add default port only if it's not localhost, not an IPv4, and no port is specified
       port = 11000;
-    } else {
-      // Use the specified port or null to keep the URI's original port
-      port = parsedUrl.hasPort ? parsedUrl.port : null;
     }
 
     // Reconstruct the URI with the adjustments
-    return Uri(scheme: scheme, host: host, port: port, path: path);
+    return Uri.parse('$scheme$host${port != null ? ':$port' : ''}');
   }
 
   /// Determines whether a proxy should be used based on the application's
@@ -58,7 +67,7 @@ class NetworkUtils {
   /// otherwise `false`.
   static bool shouldUseProxy(Uri appUri, Uri backendUri) {
     // No proxy needed for localhost or private 192.168.x.x network addresses
-    if (isLocalhost(appUri) || isPrivateNetworkAddress(appUri)) {
+    if (isLocalhost(appUri.host) || isPrivateNetworkAddress(appUri)) {
       return false;
     }
 
@@ -78,9 +87,9 @@ class NetworkUtils {
   /// localhost address.
   ///
   /// Returns `true` if the URI is a localhost address, otherwise `false`.
-  static bool isLocalhost(Uri uri) {
+  static bool isLocalhost(String uri) {
     const localhostAddresses = ['localhost', '127.0.0.1', '::1'];
-    return localhostAddresses.contains(uri.host);
+    return localhostAddresses.contains(uri);
   }
 
   /// Checks if the given [uri] falls within the 192.168.x.x address range.
@@ -99,8 +108,8 @@ class NetworkUtils {
   ///
   /// @param uri The URI to check.
   /// @return `true` if the host is an IPv4 address, otherwise `false`.
-  static bool isIPv4(Uri uri) {
-    return RegExp(r'^\d{1,3}(\.\d{1,3}){3}$').hasMatch(uri.host);
+  static bool isIPv4(String uri) {
+    return RegExp(r'^\d{1,3}(\.\d{1,3}){3}$').hasMatch(uri);
   }
 
   /// Checks if the given URI's host is an IPv6 address. This method
@@ -109,8 +118,8 @@ class NetworkUtils {
   ///
   /// @param uri The URI to check.
   /// @return `true` if the host is an IPv6 address, otherwise `false`.
-  static bool isIPv6(Uri uri) {
+  static bool isIPv6(String uri) {
     // This checks for the presence of colons, indicating an IPv6, but not in a simplistic IPv4 pattern
-    return uri.host.contains(':') && !RegExp(r'^\d+\.\d+\.\d+\.\d+$').hasMatch(uri.host);
+    return uri.contains(':') && !RegExp(r'^\d+\.\d+\.\d+\.\d+$').hasMatch(uri);
   }
 }

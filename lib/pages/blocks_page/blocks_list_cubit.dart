@@ -12,7 +12,7 @@ class BlocksListCubit extends PaginatedListCubit<Block> {
 
   @override
   Future<PaginatedListWrapper<Block>> getPage(PaginatedRequest paginatedRequest) {
-    int total = networkListCubit.state.currentNetwork!.details!.block;
+    int total = networkCubit.state.currentNetwork!.details!.block;
     if( state.total != -1) {
       total = state.total;
     }

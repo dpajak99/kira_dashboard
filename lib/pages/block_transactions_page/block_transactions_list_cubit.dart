@@ -13,7 +13,7 @@ class BlockTransactionsListCubit extends PaginatedListCubit<BlockTransaction> {
 
   @override
   Future<PaginatedListWrapper<BlockTransaction>> getPage(PaginatedRequest paginatedRequest) async {
-    blockId ??= networkListCubit.state.currentNetwork?.details?.block.toString();
+    blockId ??= networkCubit.state.currentNetwork?.details?.block.toString();
 
     return transactionsService.getBlockTransactionsPage(blockId!, paginatedRequest);
   }
