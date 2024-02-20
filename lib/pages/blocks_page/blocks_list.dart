@@ -29,69 +29,23 @@ class BlocksList extends StatelessWidget {
       onItemTap: (Block item) => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
       mobileBuilder: (BuildContext context, Block? item, bool loading) {
         if (item == null || loading) {
-          return const SizedShimmer(width: double.infinity, height: 200);
+          return const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedShimmer(width: 60, height: 16),
+              SizedBox(height: 4),
+              SizedShimmer(width: double.infinity, height: 16),
+              SizedBox(height: 16),
+              SizedShimmer(width: double.infinity, height: 16),
+              SizedBox(height: 8),
+              SizedShimmer(width: double.infinity, height: 16),
+              SizedBox(height: 8),
+              SizedShimmer(width: double.infinity, height: 16),
+            ],
+          );
         }
-        String hrTime = item.time.difference(DateTime.now()).inSeconds > 0
-            ? '${item.time.difference(DateTime.now()).inSeconds.abs()} sec ago'
-            : '${item.time.difference(DateTime.now()).inMinutes.abs()} min ago';
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            OpenableText(
-              text: 'Block #${item.height}',
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-              onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
-            ),
-            const SizedBox(height: 4),
-            CopyableHash(
-              hash: '0x${item.hash}',
-              style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
-            ),
-            const SizedBox(height: 16),
-            MobileRow(
-              title: Text(
-                'Block time:',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-              ),
-              value: RichText(
-                text: TextSpan(
-                  text: '${DateFormat('d MMM y, HH:mm').format(item.time)} ($hrTime)',
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            MobileRow(
-              title: Text(
-                'Proposed by:',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-              ),
-              value: Row(
-                children: [
-                  IdentityAvatar(size: 16, address: item.proposer),
-                  const SizedBox(width: 4),
-                  OpenableAddressText(
-                    address: item.proposer,
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
-            MobileRow(
-              title: Text(
-                'Transactions:',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
-              ),
-              value: OpenableText(
-                text: item.numTxs,
-                onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-              ),
-            ),
-          ],
-        );
+        return _MobileListTile(item: item);
       },
       columns: [
         ColumnConfig(
@@ -168,6 +122,79 @@ class BlocksList extends StatelessWidget {
               style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
             );
           },
+        ),
+      ],
+    );
+  }
+}
+
+class _MobileListTile extends StatelessWidget {
+  final Block item;
+
+  const _MobileListTile({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    String hrTime = item.time.difference(DateTime.now()).inSeconds > 0
+        ? '${item.time.difference(DateTime.now()).inSeconds.abs()} sec ago'
+        : '${item.time.difference(DateTime.now()).inMinutes.abs()} min ago';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        OpenableText(
+          text: 'Block #${item.height}',
+          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
+        ),
+        const SizedBox(height: 4),
+        CopyableHash(
+          hash: '0x${item.hash}',
+          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+        ),
+        const SizedBox(height: 16),
+        MobileRow(
+          title: Text(
+            'Block time:',
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+          ),
+          value: RichText(
+            text: TextSpan(
+              text: '${DateFormat('d MMM y, HH:mm').format(item.time)} ($hrTime)',
+              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        MobileRow(
+          title: Text(
+            'Proposed by:',
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+          ),
+          value: Row(
+            children: [
+              IdentityAvatar(size: 16, address: item.proposer),
+              const SizedBox(width: 4),
+              OpenableAddressText(
+                address: item.proposer,
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        MobileRow(
+          title: Text(
+            'Transactions:',
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+          ),
+          value: OpenableText(
+            text: item.numTxs,
+            onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
+            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          ),
         ),
       ],
     );

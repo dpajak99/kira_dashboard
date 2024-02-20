@@ -27,7 +27,20 @@ class OutboundVerificationRequestsList extends StatelessWidget {
       cubit: cubit,
       mobileBuilder: (BuildContext context, VerificationRequest? item, bool loading) {
         if (item == null || loading) {
-          return const SizedShimmer(width: double.infinity, height: 200);
+          return const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedShimmer(width: 60, height: 24),
+              SizedBox(height: 16),
+              SizedShimmer(width: double.infinity, height: 16),
+              SizedBox(height: 8),
+              SizedShimmer(width: double.infinity, height: 16),
+              SizedBox(height: 8),
+              SizedShimmer(width: double.infinity, height: 16),
+              SizedBox(height: 8),
+              SizedShimmer(width: 60, height: 16),
+            ],
+          );
         }
         return _MobileListTile(
           item: item,
@@ -164,11 +177,15 @@ class _MobileListTile extends StatelessWidget {
         ),
         if (isMyWallet) ...<Widget>[
           const SizedBox(height: 32),
-          IconTextButton(
-            text: 'Cancel',
-            highlightColor: const Color(0xfffbfbfb),
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
-            onTap: onCancel,
+          Row(
+            children: [
+              IconTextButton(
+                text: 'Cancel',
+                highlightColor: const Color(0xfffbfbfb),
+                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
+                onTap: onCancel,
+              ),
+            ],
           ),
         ],
       ],

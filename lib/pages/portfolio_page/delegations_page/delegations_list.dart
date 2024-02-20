@@ -32,7 +32,16 @@ class DelegationList extends StatelessWidget {
       cubit: delegationsListCubit,
       mobileBuilder: (BuildContext context, Delegation? item, bool loading) {
         if (item == null || loading) {
-          return const SizedShimmer(width: double.infinity, height: 200);
+          return const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedShimmer(width: 60, height: 24),
+              SizedBox(height: 8),
+              SizedShimmer(width: double.infinity, height: 16),
+              SizedBox(height: 16),
+              SizedShimmer(width: 60, height: 16),
+            ],
+          );
         }
         return _MobileListTile(
           item: item,

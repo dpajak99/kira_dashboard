@@ -16,7 +16,6 @@ import 'package:kira_dashboard/utils/network_utils.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/background.dart';
-import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
 @RoutePage()
 class SplashPage extends StatefulWidget {
@@ -215,12 +214,9 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _handleSuccessConnection() {
-    print('Success callback');
     if (widget.routeInfo != null) {
-      print('Navigate to ${widget.routeInfo}');
       AutoRouter.of(context).replace(widget.routeInfo!);
     } else {
-      print('Navigate to MenuWrapperRoute');
       AutoRouter.of(context).replace(const MenuWrapperRoute());
     }
   }

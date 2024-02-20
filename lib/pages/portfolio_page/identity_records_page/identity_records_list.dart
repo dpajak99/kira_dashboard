@@ -35,7 +35,16 @@ class IdentityRecordsList extends StatelessWidget {
           loading: state.isLoading,
           mobileBuilder: (BuildContext context, IdentityRecord? item, bool loading) {
             if (item == null || loading) {
-              return const SizedShimmer(width: double.infinity, height: 200);
+              return const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedShimmer(width: 60, height: 24),
+                  SizedBox(height: 16),
+                  SizedShimmer(width: double.infinity, height: 24),
+                  SizedBox(height: 8),
+                  SizedShimmer(width: 60, height: 16),
+                ],
+              );
             }
             return _MobileListTile(
               item: item,

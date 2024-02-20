@@ -49,7 +49,7 @@ class NetworkCubit extends Cubit<NetworkState> {
   final NetworkService networkService = NetworkService();
   final NetworkStatusNotifier networkStatusNotifier = NetworkStatusNotifier();
 
-  NetworkCubit() : super(const NetworkState(availableNetworks: [], currentNetwork: null)) {
+  NetworkCubit() : super(NetworkState(availableNetworks: const [], currentNetwork: null)) {
     init();
   }
 

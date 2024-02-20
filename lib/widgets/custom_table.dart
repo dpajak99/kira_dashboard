@@ -114,7 +114,7 @@ class _MobileTable<T> extends StatelessWidget {
             ),
           )
         else ...<Widget>[
-          for (int y = 0; (y < (loading ? pageSize : items.length)); y++)
+          for (int y = 0; (y < (loading ? 4 : items.length)); y++)
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: CustomCard(

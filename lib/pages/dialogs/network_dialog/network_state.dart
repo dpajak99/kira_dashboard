@@ -5,10 +5,10 @@ class NetworkState extends Equatable {
   final NetworkStatus? currentNetwork;
   final List<NetworkStatus> availableNetworks;
 
-  const NetworkState({
+  NetworkState({
     required this.currentNetwork,
-    required this.availableNetworks,
-  });
+    required List<NetworkStatus> availableNetworks,
+  }) : availableNetworks = availableNetworks.where((e) => e.interxUrl != currentNetwork?.interxUrl).toList();
 
   NetworkState copyWith({
     NetworkStatus? currentNetwork,
