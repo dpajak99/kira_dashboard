@@ -44,6 +44,23 @@ class CustomTablePaginated<T> extends StatelessWidget {
           }
         }
 
+        Widget pagesWidget = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = pageSelectorStart; i < pageSelectorEnd; i++) ...<Widget>[
+              IconButton(
+                onPressed: () => cubit.goToPage(i),
+                icon: Text(
+                  (i + 1).toString(),
+                  style: textTheme.bodyMedium!.copyWith(
+                    color: i == state.pageIndex ? const Color(0xff4888f0) : const Color(0xff6c86ad),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        );
+
         return Column(
           children: [
             CustomTable(
@@ -70,24 +87,8 @@ class CustomTablePaginated<T> extends StatelessWidget {
                       style: buttonStyle,
                       icon: const Icon(Icons.keyboard_double_arrow_left),
                     ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          for (int i = pageSelectorStart; i < pageSelectorEnd; i++) ...<Widget>[
-                            IconButton(
-                              onPressed: () => cubit.goToPage(i),
-                              icon: Text(
-                                (i + 1).toString(),
-                                style: textTheme.bodyMedium!.copyWith(
-                                  color: i == state.pageIndex ? const Color(0xff4888f0) : const Color(0xff6c86ad),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
+                    if (MediaQuery.of(context).size.width > 600) Expanded(child: pagesWidget)
+                    else const Spacer(),
                     IconButton(
                       onPressed: state.isLastPage ? null : () => cubit.goToPage(state.totalPages - 1),
                       style: buttonStyle,
@@ -101,6 +102,7 @@ class CustomTablePaginated<T> extends StatelessWidget {
                   ],
                 ),
               ),
+              if (MediaQuery.of(context).size.width <= 600) pagesWidget,
             ],
           ],
         );

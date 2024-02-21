@@ -18,9 +18,9 @@ class ProposalDetails extends Equatable {
 
   int get totalVoters => proposal.voters;
 
-  double get yesVotesPercentage => yesVotes.length / proposal.voters;
+  double get yesVotesPercentage => yesVotes.length / (proposal.voters == 0 ? 1 : proposal.voters);
 
-  double get noVotesPercentage => noVotes.length / proposal.voters;
+  double get noVotesPercentage => noVotes.length / (proposal.voters == 0 ? 1 : proposal.voters);
 
   double get unknownVotePercentage => 1 - yesVotesPercentage - noVotesPercentage;
 

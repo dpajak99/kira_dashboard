@@ -86,7 +86,7 @@ class NetworkCubit extends Cubit<NetworkState> {
     emit(state.copyWith(availableNetworks: availableNetworks));
   }
 
-  Future<void> connect(NetworkStatus networkStatus) async {
+  void connect(NetworkStatus networkStatus) {
     emit(state.copyWith(currentNetwork: networkStatus));
     networkStatusNotifier.notifyChanged(networkStatus);
   }

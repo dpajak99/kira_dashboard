@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
+import 'package:kira_dashboard/widgets/background.dart';
 import 'package:kira_dashboard/widgets/late_value_listenable_builder.dart';
 import 'package:kira_dashboard/widgets/menu_searchbar.dart';
 import 'package:kira_dashboard/widgets/network_button.dart';
@@ -17,35 +18,15 @@ class MenuWrapperPage extends StatefulWidget {
 }
 
 class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProviderStateMixin {
-  late final NotifierRouteObserver notifierRouteObserver;
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  bool collapsed = false;
-
-  @override
-  void initState() {
-    super.initState();
-    notifierRouteObserver = NotifierRouteObserver();
-  }
+  late final NotifierRouteObserver notifierRouteObserver = NotifierRouteObserver();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       drawer: _Drawer(notifierRouteObserver: notifierRouteObserver),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: <double>[0.0, 0.3, 0.6, 1],
-            colors: <Color>[
-              Color(0xff0e121a),
-              Color(0xff06070a),
-              Color(0xff06070a),
-              Color(0xff0e121a),
-            ],
-          ),
-        ),
+      body: Background(
         child: Row(
           children: [
             if (MediaQuery.of(context).size.width > 900)
@@ -282,7 +263,7 @@ class _LargeNavigationButton extends StatelessWidget {
               const SizedBox(width: 16),
               Text(
                 title,
-                style: textTheme.bodyMedium!.copyWith(color:  current ? const Color(0xff4888f0) : Colors.white.withOpacity(0.5)),
+                style: textTheme.bodyMedium!.copyWith(color: current ? const Color(0xff4888f0) : Colors.white.withOpacity(0.5)),
               ),
             ],
           ),

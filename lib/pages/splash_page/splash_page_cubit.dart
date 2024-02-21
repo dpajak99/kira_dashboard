@@ -17,9 +17,7 @@ class SplashPageCubit extends Cubit<SplashPageState> {
   SplashPageCubit.fromState({
     required this.successCallback,
     required SplashPageState state,
-  }) : super(state) {
-    init();
-  }
+  }) : super(state);
 
   factory SplashPageCubit.initializeConnection({
     required VoidCallback successCallback,
@@ -36,13 +34,23 @@ class SplashPageCubit extends Cubit<SplashPageState> {
 
     NetworkTemplate defaultNetwork = (state as ConnectingState).network;
     NetworkStatus networkStatus = await networkService.getStatusForNetwork(defaultNetwork);
+
+    if(isClosed) return;
+
     networkCubit.init();
 
     if (networkStatus.isOnline) {
-      await networkCubit.connect(networkStatus);
+      if(state is! ConnectingState) return;
+      networkCubit.connect(networkStatus);
       successCallback.call();
     } else {
       emit(DisconnectedState(network: defaultNetwork));
+    }
+  }
+
+  void cancelConnection() {
+    if (state is ConnectingState) {
+      emit(DisconnectedState(network: (state as ConnectingState).network));
     }
   }
 }

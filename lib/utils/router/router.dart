@@ -19,54 +19,61 @@ class AppRouter extends $AppRouter {
       AutoRoute(
         page: SplashRoute.page,
         path: '/loading',
+        usesPathAsKey: true,
         guards: [SplashGuard()],
       ),
       AutoRoute(
         page: MenuWrapperRoute.page,
         initial: true,
         path: '/',
+        usesPathAsKey: true,
         guards: [ConnectionGuard()],
         children: [
           AutoRoute(
             page: DashboardRoute.page,
             initial: true,
+            usesPathAsKey: true,
             path: 'dashboard',
           ),
           AutoRoute(
             page: PortfolioRoute.page,
-            path: 'address/:address',
             usesPathAsKey: true,
+            path: 'address/:address',
           ),
           AutoRoute(
             page: ValidatorsRoute.page,
+            usesPathAsKey: true,
             path: 'validators',
           ),
           AutoRoute(
             page: BlocksRoute.page,
+            usesPathAsKey: true,
             path: 'blocks',
           ),
           AutoRoute(
             page: ProposalsRoute.page,
+            usesPathAsKey: true,
             path: 'proposals',
           ),
           AutoRoute(
             page: ProposalDetailsRoute.page,
-            path: 'proposal/:proposalId',
             usesPathAsKey: true,
+            path: 'proposal/:proposalId',
           ),
           AutoRoute(
             page: BlockTransactionsRoute.page,
+            usesPathAsKey: true,
             path: 'transactions',
           ),
           AutoRoute(
             page: TransactionDetailsRoute.page,
-            path: 'transaction/:hash',
             usesPathAsKey: true,
+            path: 'transaction/:hash',
           ),
           AutoRoute(
             page: BlockDetailsRoute.page,
-            path: 'blocks/:height',
             usesPathAsKey: true,
+            path: 'blocks/:height',
           ),
         ],
       ),
