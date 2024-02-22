@@ -65,7 +65,7 @@ class InboundVerificationRequestsList extends StatelessWidget {
               DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -76,7 +76,7 @@ class InboundVerificationRequestsList extends StatelessWidget {
               item.records.map((e) => e.key).join(', '),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -89,7 +89,7 @@ class InboundVerificationRequestsList extends StatelessWidget {
               maxLines: 1,
               textAlign: TextAlign.right,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -152,39 +152,39 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Records',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Text(
             item.records.map((e) => e.key).join(', '),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ),
         const SizedBox(height: 8),
         MobileRow(
           title: Text(
             'Edited',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Text(
             DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ),
         const SizedBox(height: 8),
         MobileRow(
           title: Text(
             'Tip',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Text(
             item.tip.toNetworkDenominationString(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ),
         if (isMyWallet) ...<Widget>[

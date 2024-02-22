@@ -34,7 +34,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
         children: [
           Text(
             'Connect your wallet to access your account',
-            style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
+            style: textTheme.bodySmall!.copyWith(color: CustomColors.secondary),
           ),
           const SizedBox(height: 16),
           Row(
@@ -76,7 +76,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           const SizedBox(height: 16),
           Text(
             'Unsafe options',
-            style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
+            style: textTheme.bodySmall!.copyWith(color: CustomColors.secondary),
           ),
           const SizedBox(height: 8),
           Row(
@@ -116,26 +116,26 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           TextButton.icon(
             onPressed: () => DialogRouter().navigate(const CreateWalletDialog()),
             style: lightTextButtonStyle,
-            icon: Icon(Icons.wallet, color: appColors.primary),
+            icon: Icon(Icons.wallet, color: CustomColors.primary),
             label: const Text("Create Wallet"),
           ),
           const SizedBox(height: 24),
           RichText(
             text: TextSpan(
               text: 'By connecting your wallet, you agree to\nour ',
-              style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+              style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
               children: [
                 TextSpan(
                   text: 'Terms of Service',
-                  style: TextStyle(color: appColors.primary),
+                  style: TextStyle(color: CustomColors.primary),
                 ),
                 TextSpan(
                   text: ' and ',
-                  style: TextStyle(color: appColors.primary),
+                  style: TextStyle(color: CustomColors.primary),
                 ),
                 TextSpan(
                   text: 'Privacy Policy',
-                  style: TextStyle(color: appColors.primary),
+                  style: TextStyle(color: CustomColors.primary),
                 ),
               ],
             ),

@@ -41,12 +41,12 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
                   children: [
                     Text(
                       'Validators',
-                      style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
+                      style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       "Choose a validator to delegate your tokens and start earning rewards. Validators play a vital role in maintaining the network, and by staking with them, you contribute to the network's stability and earn a share of the rewards. Detailed information about each validator's performance, such as uptime and streak records, helps guide your decision. Your stake supports the validator's reliability while entitling you to rewards generated from block creation and transaction fees.",
-                      style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                      style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                     ),
                     const SizedBox(height: 32),
                   ],
@@ -106,9 +106,9 @@ class _ValidatorTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
-              color: appColors.primaryContainer,
+              color: CustomColors.container,
               border: Border.all(
-                color: states.contains(MaterialState.hovered) ? appColors.outline : const Color(0xff141822),
+                color: states.contains(MaterialState.hovered) ? CustomColors.divider : const Color(0xff141822),
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(16),
@@ -134,7 +134,7 @@ class _ValidatorTile extends StatelessWidget {
                         maxLines: 1,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                        style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                       ),
                       const SizedBox(height: 4),
                       FittedBox(
@@ -156,12 +156,12 @@ class _ValidatorTile extends StatelessWidget {
                         children: [
                           Text(
                             'Uptime',
-                            style: textTheme.bodyMedium?.copyWith(color: appColors.secondary),
+                            style: textTheme.bodyMedium?.copyWith(color: CustomColors.secondary),
                           ),
                           const Spacer(),
                           Text(
                             '${validator.uptime}%',
-                            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                           ),
                         ],
                       ),
@@ -170,12 +170,12 @@ class _ValidatorTile extends StatelessWidget {
                         children: [
                           Text(
                             'Streak',
-                            style: textTheme.bodyMedium?.copyWith(color: appColors.secondary),
+                            style: textTheme.bodyMedium?.copyWith(color: CustomColors.secondary),
                           ),
                           const Spacer(),
                           Text(
                             validator.streak,
-                            style: textTheme.bodyMedium?.copyWith(color: appColors.onBackground),
+                            style: textTheme.bodyMedium?.copyWith(color: CustomColors.white),
                           ),
                         ],
                       ),
@@ -216,13 +216,13 @@ class _RankBookmark extends StatelessWidget {
       width: 72,
       height: 32,
       decoration: BoxDecoration(
-        color: appColors.primary,
+        color: CustomColors.primary,
         borderRadius: const BorderRadius.only(bottomRight: Radius.circular(16)),
       ),
       child: Center(
         child: Text(
           'Rank #$rank',
-          style: textTheme.labelMedium!.copyWith(color: appColors.onBackground),
+          style: textTheme.labelMedium!.copyWith(color: CustomColors.white),
         ),
       ),
     );

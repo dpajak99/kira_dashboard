@@ -52,15 +52,15 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
                   leading: TokenIcon(size: 24, iconUrl: balance.icon),
                   title: Text(
                     balance.name,
-                    style: textTheme.titleLarge!.copyWith(color: appColors.onBackground),
+                    style: textTheme.titleLarge!.copyWith(color: CustomColors.white),
                   ),
                   subtitle: Text(
                     balance.toNetworkDenominationString(),
-                    style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+                    style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
                   ),
                   trailing: Icon(
                     AppIcons.chevron_right,
-                    color: appColors.secondary,
+                    color: CustomColors.secondary,
                     size: 16,
                   ),
                 ),

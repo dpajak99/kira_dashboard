@@ -30,7 +30,7 @@ class CustomCard extends StatelessWidget {
     Widget titleWidget = Row(
       children: [
         if (title != null) ...<Widget>[
-          Text(title!, style: titleStyle ?? textTheme.headlineMedium!.copyWith(color: appColors.onBackground)),
+          Text(title!, style: titleStyle ?? textTheme.headlineMedium!.copyWith(color: CustomColors.white)),
         ],
         if (leading != null) ...<Widget>[
           Expanded(
@@ -72,7 +72,7 @@ class CustomCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: appColors.primaryContainer,
+        color: CustomColors.container,
       ),
       child: content,
     );

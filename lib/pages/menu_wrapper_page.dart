@@ -163,7 +163,7 @@ class _Drawer extends StatelessWidget {
         return Drawer(
           width: 250,
           child: Container(
-            color: appColors.surface,
+            color: CustomColors.container,
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
@@ -246,7 +246,7 @@ class _LargeNavigationButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: current ? () {} : () => AutoRouter.of(context).push(route),
         style: ElevatedButton.styleFrom(
-          backgroundColor: current ? appColors.secondary: Colors.transparent,
+          backgroundColor: current ? CustomColors.secondary.withOpacity(0.2): Colors.transparent,
           shadowColor: Colors.transparent,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -259,12 +259,12 @@ class _LargeNavigationButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: current ? appColors.primary : Colors.white54,
+                color: current ? CustomColors.primary : Colors.white54,
               ),
               const SizedBox(width: 16),
               Text(
                 title,
-                style: textTheme.bodyMedium!.copyWith(color: current ? appColors.primary : Colors.white54),
+                style: textTheme.bodyMedium!.copyWith(color: current ? CustomColors.primary : Colors.white54),
               ),
             ],
           ),
@@ -293,7 +293,7 @@ class _SmallNavigationButton extends StatelessWidget {
         onPressed: current ? () {} : () => AutoRouter.of(context).push(route),
         icon: Icon(
           icon,
-          color: current ? appColors.primary : Colors.white54,
+          color: current ? CustomColors.primary : Colors.white54,
         ),
       ),
     );

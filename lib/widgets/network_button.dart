@@ -32,7 +32,7 @@ class NetworkButton extends StatelessWidget {
                 NetworkStatusType.online => CustomColors.green,
                 NetworkStatusType.unhealthy => CustomColors.yellow,
                 NetworkStatusType.offline => CustomColors.red,
-                NetworkStatusType.connecting => appColors.secondary,
+                NetworkStatusType.connecting => CustomColors.secondary,
               },
             ),
           );
@@ -57,7 +57,7 @@ class NetworkButton extends StatelessWidget {
                     NetworkStatusType.online => CustomColors.green,
                     NetworkStatusType.unhealthy => CustomColors.yellow,
                     NetworkStatusType.offline => CustomColors.red,
-                    NetworkStatusType.connecting => appColors.secondary,
+                    NetworkStatusType.connecting => CustomColors.secondary,
                   },
                 ),
                 const SizedBox(width: 8),

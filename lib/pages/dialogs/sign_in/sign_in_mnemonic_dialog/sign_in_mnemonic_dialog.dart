@@ -52,9 +52,9 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
         bloc: cubit,
         builder: (BuildContext context, SignInMnemonicDialogState state) {
           return Container(
-            decoration: BoxDecoration(
-              color: appColors.surface,
-              borderRadius: const BorderRadius.all(Radius.circular(24)),
+            decoration: const BoxDecoration(
+              color: CustomColors.dialogContainer,
+              borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -62,7 +62,7 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
               children: [
                 Text(
                   'Select mnemonic size',
-                  style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
+                  style: textTheme.bodySmall!.copyWith(color: CustomColors.secondary),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -77,7 +77,7 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
                 const SizedBox(height: 24),
                 Text(
                   'Enter mnemonic passphrase',
-                  style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
+                  style: textTheme.bodySmall!.copyWith(color: CustomColors.secondary),
                 ),
                 const SizedBox(height: 8),
                 ..._buildCells(state),

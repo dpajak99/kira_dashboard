@@ -171,9 +171,9 @@ class _TextFieldState extends State<_TextField> {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: appColors.surface,
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+      decoration: const BoxDecoration(
+        color: CustomColors.dialogContainer,
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         children: [
@@ -181,16 +181,16 @@ class _TextFieldState extends State<_TextField> {
             children: [
               Text(
                 widget.title,
-                style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+                style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
               ),
               const Spacer(),
               const Spacer(),
               InkWell(
                 onTap: () => widget.controller.clear(),
                 radius: 30,
-                child: Icon(
+                child: const Icon(
                   Icons.brush,
-                  color: appColors.secondary,
+                  color: CustomColors.secondary,
                   size: 16,
                 ),
               ),
@@ -209,14 +209,14 @@ class _TextFieldState extends State<_TextField> {
                       maxLines: widget.maxLines,
                       focusNode: focusNode,
                       controller: widget.controller,
-                      style: textTheme.bodyLarge!.copyWith(color: appColors.onBackground),
-                      cursorColor: appColors.onBackground,
+                      style: textTheme.bodyLarge!.copyWith(color: CustomColors.white),
+                      cursorColor: CustomColors.white,
                       cursorWidth: 1,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         isDense: true,
                         hintText: 'Enter value',
-                        hintStyle: textTheme.bodyLarge!.copyWith(color: appColors.secondaryContainer),
+                        hintStyle: textTheme.bodyLarge!.copyWith(color: CustomColors.secondary),
                         border: InputBorder.none,
                       ),
                     ),

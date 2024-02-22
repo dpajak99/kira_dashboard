@@ -104,7 +104,7 @@ class _ConnectingView extends StatelessWidget {
         Text(
           'MIRO 看 (見る)',
           textAlign: TextAlign.center,
-          style: GoogleFonts.notoSans(color: appColors.onBackground, fontSize: 32),
+          style: GoogleFonts.notoSans(color: CustomColors.white, fontSize: 32),
         ),
         const SizedBox(height: 16),
         Image.asset(
@@ -116,7 +116,7 @@ class _ConnectingView extends StatelessWidget {
         Text(
           'Connecting to: ${network.name} (${network.interxUrl.toString()})',
           textAlign: TextAlign.center,
-          style: GoogleFonts.notoSans(color: appColors.onBackground, fontSize: 15),
+          style: GoogleFonts.notoSans(color: CustomColors.white, fontSize: 15),
         ),
         const SizedBox(height: 16),
         TextButton(
@@ -173,20 +173,20 @@ class _NetworkListViewState extends State<_NetworkListView> {
                       Text(
                         'MIRO 看 (見る)',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.notoSans(color: appColors.onBackground, fontSize: 32),
+                        style: GoogleFonts.notoSans(color: CustomColors.white, fontSize: 32),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'Connection with ${widget.network.name} server failed',
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium!.copyWith(
-                          color: appColors.onBackground,
+                          color: CustomColors.white,
                         ),
                       ),
                       Text(
                         widget.network.interxUrl.toString(),
                         style: textTheme.labelMedium!.copyWith(
-                          color: appColors.secondary,
+                          color: CustomColors.secondary,
                         ),
                       ),
                       const SizedBox(height: 100),
@@ -194,7 +194,7 @@ class _NetworkListViewState extends State<_NetworkListView> {
                         'Select a network to connect to:',
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium!.copyWith(
-                          color: appColors.onBackground,
+                          color: CustomColors.white,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -208,9 +208,9 @@ class _NetworkListViewState extends State<_NetworkListView> {
                             children: [
                               Container(
                                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 8),
-                                decoration: BoxDecoration(
-                                  color: appColors.secondaryContainer,
-                                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                                decoration: const BoxDecoration(
+                                  color: CustomColors.container,
+                                  borderRadius: BorderRadius.all(Radius.circular(16)),
                                 ),
                                 child: Column(
                                   children: [
@@ -228,23 +228,23 @@ class _NetworkListViewState extends State<_NetworkListView> {
                               const SizedBox(height: 16),
                               Container(
                                 padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: appColors.secondaryContainer,
-                                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                                decoration: const BoxDecoration(
+                                  color: CustomColors.container,
+                                  borderRadius: BorderRadius.all(Radius.circular(16)),
                                 ),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: TextField(
                                         controller: controller,
-                                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
-                                        cursorColor: appColors.onBackground,
+                                        style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
+                                        cursorColor: CustomColors.white,
                                         cursorWidth: 1,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.zero,
                                           isDense: true,
                                           hintText: 'Custom address',
-                                          hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
+                                          hintStyle: textTheme.bodyMedium!.copyWith(color: CustomColors.container),
                                           border: InputBorder.none,
                                         ),
                                       ),

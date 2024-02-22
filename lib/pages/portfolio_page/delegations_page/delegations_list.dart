@@ -73,7 +73,7 @@ class DelegationList extends StatelessWidget {
           cellBuilder: (BuildContext context, Delegation item) {
             return Text(
               '${item.poolInfo.commissionPercentage}%',
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               textAlign: TextAlign.right,
             );
           },
@@ -139,7 +139,7 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Status',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: _StatusChip(stakingPoolStatus: item.poolInfo.status),
         ),
@@ -147,13 +147,13 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Commision',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Text(
             '${item.poolInfo.commissionPercentage}%',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ),
         if (isMyWallet) ...<Widget>[

@@ -51,7 +51,7 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
             height: 90,
             child: switch (widget.status) {
               TransactionProcessStatus.broadcast => CircularProgressIndicator(
-                  color: appColors.primary,
+                  color: CustomColors.primary,
                   strokeWidth: 2,
                 ),
               TransactionProcessStatus.success => const Icon(
@@ -76,7 +76,7 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
             Text(
               widget.internalBroadcastException!.message,
               textAlign: TextAlign.center,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
             ),
             const SizedBox(height: 40),
             SizedBox(

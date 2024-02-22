@@ -22,7 +22,7 @@ class CustomTabBar extends StatelessWidget {
       child: Container(
         height: 46,
         decoration: BoxDecoration(
-          color: appColors.primaryContainer,
+          color: CustomColors.container,
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(8),
@@ -32,12 +32,12 @@ class CustomTabBar extends StatelessWidget {
           tabAlignment: TabAlignment.start,
           indicator: ShapeDecoration(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-            color: appColors.primary,
+            color: CustomColors.primary,
           ),
           dividerHeight: 0,
           indicatorSize: TabBarIndicatorSize.tab,
           labelColor: Colors.white,
-          unselectedLabelColor: appColors.secondary,
+          unselectedLabelColor: CustomColors.secondary,
           tabs: tabs.map((Tab tab) {
             return Tab(text: tab.text ?? '');
           }).toList(),

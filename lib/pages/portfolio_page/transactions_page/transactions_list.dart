@@ -48,7 +48,7 @@ class TransactionsList extends StatelessWidget {
             return OpenableHash(
               hash: item.hash,
               onTap: () => AutoRouter.of(context).push(TransactionDetailsRoute(hash: item.hash)),
-              style: textTheme.bodyMedium!.copyWith(color: appColors.primary),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.primary),
             );
           },
         ),
@@ -67,7 +67,7 @@ class TransactionsList extends StatelessWidget {
               DateFormat('d MMM y, HH:mm').format(item.time),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -111,7 +111,7 @@ class TransactionsList extends StatelessWidget {
                 if (item.amounts.length > 1)
                   Text(
                     ' + ${item.amounts.length - 1}',
-                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                    style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                   ),
               ],
             );
@@ -146,7 +146,7 @@ class _MobileListTile extends StatelessWidget {
                     DateFormat('d MMM y, HH:mm').format(item.time),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+                    style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
                   ),
                 ],
               ),
@@ -167,7 +167,7 @@ class _MobileListTile extends StatelessWidget {
                   if (item.amounts.length > 1)
                     Text(
                       ' + ${item.amounts.length - 1}',
-                      style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                      style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                     ),
                 ],
               ),
@@ -177,11 +177,11 @@ class _MobileListTile extends StatelessWidget {
         const SizedBox(height: 16),
         Text(
           'Hash',
-          style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+          style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
         ),
         OpenableHash(
           hash: item.hash,
-          style: textTheme.bodyMedium!.copyWith(color: appColors.primary ),
+          style: textTheme.bodyMedium!.copyWith(color: CustomColors.primary ),
           onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
         ),
         const SizedBox(height: 16),
@@ -194,7 +194,7 @@ class _MobileListTile extends StatelessWidget {
                 children: [
                   Text(
                     'From',
-                    style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+                    style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
                   ),
                   OpenableAddressText(address: item.from),
                 ],
@@ -213,7 +213,7 @@ class _MobileListTile extends StatelessWidget {
                 children: [
                   Text(
                     'To',
-                    style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+                    style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
                   ),
                   OpenableAddressText(address: item.to),
                 ],
@@ -268,7 +268,7 @@ class _MethodChip extends StatelessWidget {
         label,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+        style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
       ),
     );
   }

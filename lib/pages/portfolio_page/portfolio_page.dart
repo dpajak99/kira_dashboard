@@ -31,7 +31,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       builder: (BuildContext context, PortfolioPageState state) {
         if (state.isLoading) {
           return Center(
-            child: CircularProgressIndicator(color: appColors.primary, strokeWidth: 2),
+            child: CircularProgressIndicator(color: CustomColors.primary, strokeWidth: 2),
           );
         }
         return PortfolioPageContent(

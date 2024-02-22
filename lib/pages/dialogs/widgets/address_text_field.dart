@@ -48,9 +48,9 @@ class _AddressTextFieldState extends State<AddressTextField> {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: appColors.surface,
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+      decoration: const BoxDecoration(
+        color: CustomColors.dialogContainer,
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         children: [
@@ -58,7 +58,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
             children: [
               Text(
                 widget.title,
-                style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+                style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
               ),
               const Spacer(),
               InkWell(
@@ -66,7 +66,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
                 radius: 30,
                 child: Icon(
                   widget.locked ? Icons.lock : Icons.paste,
-                  color: appColors.secondary,
+                  color: CustomColors.secondary,
                   size: 16,
                 ),
               ),
@@ -90,14 +90,14 @@ class _AddressTextFieldState extends State<AddressTextField> {
                       enabled: !widget.locked,
                       focusNode: focusNode,
                       controller: controller,
-                      style: textTheme.bodyLarge!.copyWith(color: appColors.onBackground),
-                      cursorColor: appColors.onBackground,
+                      style: textTheme.bodyLarge!.copyWith(color: CustomColors.white),
+                      cursorColor: CustomColors.white,
                       cursorWidth: 1,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         isDense: true,
                         hintText: 'kira...',
-                        hintStyle: textTheme.bodyLarge!.copyWith(color: appColors.onBackground),
+                        hintStyle: textTheme.bodyLarge!.copyWith(color: CustomColors.white),
                         border: InputBorder.none,
                       ),
                     ),
@@ -117,7 +117,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
                   if (errorMessage != null) {
                     return Text(
                       errorMessage,
-                      style: textTheme.labelLarge!.copyWith(color: appColors.error),
+                      style: textTheme.labelLarge!.copyWith(color: CustomColors.error),
                     );
                   } else {
                     return const SizedBox();

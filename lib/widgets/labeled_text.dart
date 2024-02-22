@@ -20,13 +20,13 @@ class LabeledText extends StatelessWidget {
       children: [
         Text(
           label,
-          style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+          style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
         ),
         Text(
           text,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+          style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
         ),
       ],
     );

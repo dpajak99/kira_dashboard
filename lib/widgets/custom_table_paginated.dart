@@ -25,8 +25,8 @@ class CustomTablePaginated<T> extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     ButtonStyle buttonStyle = IconButton.styleFrom(
-      foregroundColor: appColors.secondary,
-      disabledForegroundColor: appColors.secondary.withOpacity(0.8)
+      foregroundColor: CustomColors.secondary,
+      disabledForegroundColor: CustomColors.secondary.withOpacity(0.8)
     );
 
     return BlocBuilder<PaginatedListCubit<T>, PaginatedListState<T>>(
@@ -54,7 +54,7 @@ class CustomTablePaginated<T> extends StatelessWidget {
                 icon: Text(
                   (i + 1).toString(),
                   style: textTheme.bodyMedium!.copyWith(
-                    color: i == state.pageIndex ? appColors.primary : appColors.secondary,
+                    color: i == state.pageIndex ? CustomColors.primary : CustomColors.secondary,
                   ),
                 ),
               ),

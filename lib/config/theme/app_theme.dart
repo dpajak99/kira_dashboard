@@ -14,7 +14,7 @@ class AppTheme {
     double fontSizeCofactor = windowWidth < 900 ? 0.9 : 1;
 
     return baseTheme.copyWith(
-      scaffoldBackgroundColor: appColors.surface,
+      scaffoldBackgroundColor: CustomColors.dialogContainer,
       colorScheme: appColors,
       textSelectionTheme: TextSelectionThemeData(selectionColor: Colors.white.withOpacity(0.2)),
       textButtonTheme: TextButtonThemeData(style: darkTextButtonStyle),

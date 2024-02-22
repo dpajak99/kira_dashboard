@@ -64,7 +64,7 @@ class IdentityRecordsList extends StatelessWidget {
                   item.key,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                 );
               },
             ),
@@ -76,7 +76,7 @@ class IdentityRecordsList extends StatelessWidget {
                   item.value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                 );
               },
             ),

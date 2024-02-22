@@ -36,7 +36,7 @@ class _ReceiveTokensDialog extends State<ReceiveTokensDialog> {
                 borderRadius: BorderRadius.circular(12.0),
                 child: QrImageView(
                   data: wallet.address,
-                  backgroundColor: appColors.onBackground,
+                  backgroundColor: CustomColors.white,
                   version: QrVersions.auto,
                   size: 200.0,
                   embeddedImage: const AssetImage('qr_placeholder.png'),
@@ -48,7 +48,7 @@ class _ReceiveTokensDialog extends State<ReceiveTokensDialog> {
               const SizedBox(height: 32),
               Text(
                 'Your address',
-                style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+                style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
               ),
               CopyableAddressText(
                 address: wallet.address,

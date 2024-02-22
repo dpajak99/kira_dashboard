@@ -66,7 +66,7 @@ class BalancesList extends StatelessWidget {
           cellBuilder: (BuildContext context, Coin item) {
             return CoinText(
               coin: item,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               textAlign: TextAlign.right,
             );
           },
@@ -130,7 +130,7 @@ class _MobileListTile extends StatelessWidget {
                 children: [
                   CoinText(
                     coin: coin,
-                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                    style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                     textAlign: TextAlign.right,
                   ),
                   if (isMyWallet) ...<Widget>[
@@ -167,9 +167,9 @@ class _TokenTypeChip extends StatelessWidget {
         '${type.name[0].toUpperCase()}${type.name.substring(1)}',
         style: textTheme.labelMedium!.copyWith(
           color: switch (type) {
-            CoinType.token => appColors.secondary,
-            CoinType.native => appColors.primary,
-            CoinType.derivative => appColors.primary,
+            CoinType.token => CustomColors.secondary,
+            CoinType.native => CustomColors.primary,
+            CoinType.derivative => CustomColors.primary,
           },
         ),
       ),

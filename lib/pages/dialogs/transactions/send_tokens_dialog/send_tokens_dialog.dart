@@ -72,19 +72,19 @@ class _SendTokensDialogState extends State<SendTokensDialog> {
                 else
                   const TokenAmountTextFieldLoading(),
                 const SizedBox(height: 8),
-                Divider(color: appColors.outline),
+                Divider(color: CustomColors.divider),
                 const SizedBox(height: 8),
                 Row(
                   children: [
                     Text(
                       'Fee:',
-                      style: textTheme.bodyMedium?.copyWith(color: appColors.onBackground),
+                      style: textTheme.bodyMedium?.copyWith(color: CustomColors.white),
                     ),
                     const Spacer(),
                     if (state is SendTokensDialogLoadedState)
                       Text(
                         state.executionFee.toNetworkDenominationString(),
-                        style: textTheme.bodyMedium?.copyWith(color: appColors.secondary),
+                        style: textTheme.bodyMedium?.copyWith(color: CustomColors.secondary),
                       )
                     else
                       const SizedShimmer(width: 60, height: 14, reversed: true),

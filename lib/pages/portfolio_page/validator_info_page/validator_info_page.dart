@@ -85,19 +85,19 @@ class _StatsWidget extends StatelessWidget {
       title: 'Stats',
       titleSpacing: 8,
       titleStyle: textTheme.titleMedium!.copyWith(
-        color: appColors.onBackground,
+        color: CustomColors.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color: appColors.outline),
+          Divider(color: CustomColors.divider),
           const SizedBox(height: 8),
           _ListTile(
             title: 'First present block',
             value: OpenableText(
               text: validator.startHeight.toString(),
               style: textTheme.bodyMedium!.copyWith(
-                color: appColors.onBackground,
+                color: CustomColors.white,
               ),
               onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: validator.startHeight.toString())),
             ),
@@ -108,7 +108,7 @@ class _StatsWidget extends StatelessWidget {
             value: OpenableText(
               text: validator.lastPresentBlock.toString(),
               style: textTheme.bodyMedium!.copyWith(
-                color: appColors.onBackground,
+                color: CustomColors.white,
               ),
               onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: validator.lastPresentBlock.toString())),
             ),
@@ -168,7 +168,7 @@ class _StakingPoolWidget extends StatelessWidget {
       title: 'Staking pool',
       titleSpacing: 8,
       titleStyle: textTheme.titleMedium!.copyWith(
-        color: appColors.onBackground,
+        color: CustomColors.white,
       ),
       leading: Row(
         children: [
@@ -183,7 +183,7 @@ class _StakingPoolWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color: appColors.outline),
+          Divider(color: CustomColors.divider),
           const SizedBox(height: 8),
           _ListTile(
             title: 'Staking pool',
@@ -200,12 +200,12 @@ class _StakingPoolWidget extends StatelessWidget {
             value: isLoading ? const SizedShimmer(width: 80, height: 16) : stakingPool!.slashedPercentage,
           ),
           const SizedBox(height: 8),
-          Divider(color: appColors.outline),
+          Divider(color: CustomColors.divider),
           const SizedBox(height: 8),
           Text(
             'Staked voting powers',
             style: textTheme.bodyMedium!.copyWith(
-              color: appColors.secondary,
+              color: CustomColors.secondary,
             ),
           ),
           if (isLoading) ...<Widget>[
@@ -219,11 +219,11 @@ class _StakingPoolWidget extends StatelessWidget {
                 leading: TokenIcon(size: 24, iconUrl: coin.icon),
                 title: Text(
                   coin.name,
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                 ),
                 trailing: Text(
                   coin.toNetworkDenominationString(),
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                 ),
               ),
         ],
@@ -250,14 +250,14 @@ class _ListTile extends StatelessWidget {
         Text(
           title,
           style: textTheme.bodyMedium!.copyWith(
-            color: appColors.secondary,
+            color: CustomColors.secondary,
           ),
         ),
         if (value is String)
           Text(
             value,
             style: textTheme.bodyMedium!.copyWith(
-              color: appColors.onBackground,
+              color: CustomColors.white,
             ),
           )
         else

@@ -11,16 +11,16 @@ class Background extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          stops: const <double>[0.0, 0.3, 0.6, 1],
+          stops: <double>[0.0, 0.3, 0.6, 1],
           colors: <Color>[
-            const Color(0xff0e121a),
-            appColors.surface,
-            appColors.surface,
-            const Color(0xff0e121a),
+            Color(0xff0e121a),
+            Color(0xff06070a),
+            Color(0xff06070a),
+            Color(0xff0e121a),
           ],
         ),
       ),

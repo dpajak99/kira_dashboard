@@ -36,7 +36,7 @@ class ProposalsList extends StatelessWidget {
           children: [
             OpenableText(
               text: 'Proposal #${item.id}',
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.id)),
             ),
             const SizedBox(height: 4),
@@ -44,13 +44,13 @@ class ProposalsList extends StatelessWidget {
               item.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             ),
             const SizedBox(height: 16),
             MobileRow(
               title: Text(
                 'Status',
-                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
               ),
               value: _StatusChip(voteResult: item.status),
             ),
@@ -58,39 +58,39 @@ class ProposalsList extends StatelessWidget {
             MobileRow(
               title: Text(
                 'Voters',
-                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
               ),
               value: Text(
                 item.voters.toString(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               ),
             ),
             const SizedBox(height: 8),
             MobileRow(
               title: Text(
                 'Age',
-                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
               ),
               value: Text(
                 item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               ),
             ),
             const SizedBox(height: 8),
             MobileRow(
               title: Text(
                 'End time',
-                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
               ),
               value: Text(
                 DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               ),
             ),
           ],
@@ -105,7 +105,7 @@ class ProposalsList extends StatelessWidget {
               item.id,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -117,7 +117,7 @@ class ProposalsList extends StatelessWidget {
               item.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -136,7 +136,7 @@ class ProposalsList extends StatelessWidget {
               item.voters.toString(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -147,7 +147,7 @@ class ProposalsList extends StatelessWidget {
               item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -158,7 +158,7 @@ class ProposalsList extends StatelessWidget {
               DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),

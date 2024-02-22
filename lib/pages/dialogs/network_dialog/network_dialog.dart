@@ -45,9 +45,9 @@ class _NetworkDialog extends State<NetworkDialog> {
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 8),
-                decoration: BoxDecoration(
-                  color: appColors.secondaryContainer,
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                decoration: const BoxDecoration(
+                  color: CustomColors.dialogContainer,
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
                 child: Column(
                   children: [
@@ -65,23 +65,23 @@ class _NetworkDialog extends State<NetworkDialog> {
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: appColors.secondaryContainer,
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                decoration: const BoxDecoration(
+                  color: CustomColors.dialogContainer,
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
                 child: Row(
                   children: [
                     Expanded(
                       child: TextField(
                         controller: controller,
-                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
-                        cursorColor: appColors.onBackground,
+                        style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
+                        cursorColor: CustomColors.white,
                         cursorWidth: 1,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           isDense: true,
                           hintText: 'Custom address',
-                          hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
+                          hintStyle: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                           border: InputBorder.none,
                         ),
                       ),
@@ -127,9 +127,9 @@ class ConnectedNetworkTile extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: appColors.secondaryContainer,
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+      decoration: const BoxDecoration(
+        color: CustomColors.dialogContainer,
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -144,20 +144,20 @@ class ConnectedNetworkTile extends StatelessWidget {
                 NetworkStatusType.online => CustomColors.green,
                 NetworkStatusType.unhealthy => CustomColors.yellow,
                 NetworkStatusType.offline => CustomColors.red,
-                NetworkStatusType.connecting => appColors.secondary,
+                NetworkStatusType.connecting => CustomColors.secondary,
               },
             ),
             title: Text(
               networkStatus.name ?? 'unknown',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             ),
             subtitle: Text(
               networkStatus.interxUrl.toString(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+              style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
             ),
             trailing: Text(
               'Connected',
@@ -166,12 +166,12 @@ class ConnectedNetworkTile extends StatelessWidget {
                   NetworkStatusType.online => CustomColors.green,
                   NetworkStatusType.unhealthy => CustomColors.yellow,
                   NetworkStatusType.offline => CustomColors.red,
-                  NetworkStatusType.connecting => appColors.secondary,
+                  NetworkStatusType.connecting => CustomColors.secondary,
                 },
               ),
             ),
           ),
-          Divider(color: appColors.outline),
+          Divider(color: CustomColors.divider),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
@@ -179,25 +179,25 @@ class ConnectedNetworkTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Chain', style: textTheme.labelMedium!.copyWith(color: appColors.secondary)),
-                    Text(details?.chainId ?? '---', style: textTheme.labelMedium!.copyWith(color: appColors.onBackground)),
+                    Text('Chain', style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary)),
+                    Text(details?.chainId ?? '---', style: textTheme.labelMedium!.copyWith(color: CustomColors.white)),
                   ],
                 ),
                 const SizedBox(width: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Block time', style: textTheme.labelMedium!.copyWith(color: appColors.secondary)),
+                    Text('Block time', style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary)),
                     Text(details?.blockDateTime != null ? DateFormat('d MMM y, HH:mm').format(details!.blockDateTime) : '---',
-                        style: textTheme.labelMedium!.copyWith(color: appColors.onBackground)),
+                        style: textTheme.labelMedium!.copyWith(color: CustomColors.white)),
                   ],
                 ),
                 const SizedBox(width: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Block height', style: textTheme.labelMedium!.copyWith(color: appColors.secondary)),
-                    Text(details?.block.toString() ?? '---', style: textTheme.labelMedium!.copyWith(color: appColors.onBackground)),
+                    Text('Block height', style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary)),
+                    Text(details?.block.toString() ?? '---', style: textTheme.labelMedium!.copyWith(color: CustomColors.white)),
                   ],
                 ),
               ],
@@ -233,20 +233,20 @@ class AvailableNetworkTile extends StatelessWidget {
           NetworkStatusType.online => Colors.green,
           NetworkStatusType.unhealthy => Colors.yellow,
           NetworkStatusType.offline => Colors.red,
-          NetworkStatusType.connecting => appColors.secondary,
+          NetworkStatusType.connecting => CustomColors.secondary,
         },
       ),
       title: Text(
         networkStatus.name ?? 'unknown',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+        style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
       ),
       subtitle: Text(
         networkStatus.interxUrl.toString(),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+        style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -266,7 +266,7 @@ class AvailableNetworkTile extends StatelessWidget {
               visualDensity: VisualDensity.compact,
               icon: Icon(
                 AppIcons.cancel,
-                color: appColors.secondary,
+                color: CustomColors.secondary,
                 size: 16,
               ),
             ),

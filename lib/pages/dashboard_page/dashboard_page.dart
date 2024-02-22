@@ -100,7 +100,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           value: state.dashboard?.currentBlockValidator.moniker ?? '',
                           icon: Icon(
                             AppIcons.block,
-                            color: appColors.primary,
+                            color: CustomColors.primary,
                           ),
                         ),
                       ),
@@ -113,7 +113,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           value: state.dashboard?.consensusHealthPercentage ?? '',
                           icon: Icon(
                             AppIcons.consensus,
-                            color: appColors.primary,
+                            color: CustomColors.primary,
                           ),
                         ),
                       ),
@@ -130,7 +130,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           },
                           icon: Icon(
                             AppIcons.health,
-                            color: appColors.primary,
+                            color: CustomColors.primary,
                           ),
                         ),
                       ),
@@ -146,7 +146,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: _DashboardTile(
                         title: 'Current block validator',
                         value: state.dashboard?.currentBlockValidator.moniker ?? '',
-                        icon: Icon(AppIcons.block, color: appColors.primary),
+                        icon: Icon(AppIcons.block, color: CustomColors.primary),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -154,7 +154,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: _DashboardTile(
                         title: 'Consensus',
                         value: state.dashboard?.consensusHealthPercentage ?? '',
-                        icon: Icon(AppIcons.consensus, color: appColors.primary),
+                        icon: Icon(AppIcons.consensus, color: CustomColors.primary),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -166,7 +166,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ConsensusStateType.unhealthy => 'Unhealthy',
                           (_) => '',
                         },
-                        icon: Icon(AppIcons.health, color: appColors.primary),
+                        icon: Icon(AppIcons.health, color: CustomColors.primary),
                       ),
                     ),
                   ],
@@ -255,7 +255,7 @@ class _DashboardCard extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.headlineMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.headlineMedium!.copyWith(color: CustomColors.white),
           ),
           const SizedBox(height: 20),
           CustomCard(
@@ -305,13 +305,13 @@ class _DashboardTile extends StatelessWidget {
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.titleMedium!.copyWith(color: appColors.onBackground),
+          style: textTheme.titleMedium!.copyWith(color: CustomColors.white),
         ),
         Text(
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+          style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
         ),
       ],
     );

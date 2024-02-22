@@ -22,7 +22,7 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: appColors.surface,
+        color: CustomColors.dialogContainer,
         borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
@@ -34,7 +34,7 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
               children: [
                 Text(
                   'Asset',
-                  style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+                  style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
                 ),
                 const Spacer(),
                 balanceWidget,

@@ -24,7 +24,7 @@ class TokenTile extends StatelessWidget {
         padding: EdgeInsets.only(right: reversed ? 0 : 32, left: reversed ? 32 : 0),
         child: Text(
           '---',
-          style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+          style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
         ),
       );
     }
@@ -37,7 +37,7 @@ class TokenTile extends StatelessWidget {
               showAmount ? coin!.toNetworkDenominationString() : coin!.name,
               maxLines: 1,
               textAlign: TextAlign.right,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             ),
           ),
           const SizedBox(width: 12),
@@ -54,7 +54,7 @@ class TokenTile extends StatelessWidget {
           child: Text(
             showAmount ? coin!.toNetworkDenominationString() : coin!.name,
             maxLines: 1,
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ),
       ],

@@ -37,7 +37,7 @@ class MenuSearchbarState extends State<MenuSearchbar> {
         child: Container(
           width: 350,
           decoration: const BoxDecoration(
-            color: Color(0xff151923),
+            color: CustomColors.appBarContainer,
             borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -55,7 +55,7 @@ class MenuSearchbarState extends State<MenuSearchbar> {
                     controller: controller,
                     maxLines: 1,
                     style: textTheme.bodyMedium!.copyWith(
-                      color: appColors.onBackground,
+                      color: CustomColors.white,
                     ),
                     decoration: InputDecoration(
                       isDense: true,
@@ -90,7 +90,7 @@ class MenuSearchbarState extends State<MenuSearchbar> {
                         return Icon(
                           Icons.close,
                           size: 16,
-                          color: states.contains(MaterialState.hovered) ? appColors.secondary : const Color(0xff47546d),
+                          color: states.contains(MaterialState.hovered) ? CustomColors.secondary : const Color(0xff47546d),
                         );
                       },
                     ),
@@ -139,7 +139,7 @@ class MenuSearchbarState extends State<MenuSearchbar> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               title: Text(
                 'Address',
-                style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
+                style: textTheme.bodySmall!.copyWith(color: CustomColors.secondary),
               ),
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -153,7 +153,7 @@ class MenuSearchbarState extends State<MenuSearchbar> {
               subtitle: Text(
                 value,
                 maxLines: 1,
-                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               ),
             )
           else if (validTxHash)
@@ -167,12 +167,12 @@ class MenuSearchbarState extends State<MenuSearchbar> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               title: Text(
                 'Transaction',
-                style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
+                style: textTheme.bodySmall!.copyWith(color: CustomColors.secondary),
               ),
               subtitle: Text(
                 value,
                 maxLines: 1,
-                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
               ),
             )
           else

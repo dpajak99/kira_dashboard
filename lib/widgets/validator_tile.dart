@@ -25,7 +25,7 @@ class ValidatorTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(moniker, style: textTheme.bodyMedium?.copyWith(color: appColors.onBackground)),
+              Text(moniker, style: textTheme.bodyMedium?.copyWith(color: CustomColors.white)),
               const SizedBox(height: 2),
               OpenableAddressText(address: address),
             ],

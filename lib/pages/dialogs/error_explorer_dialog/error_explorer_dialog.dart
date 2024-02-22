@@ -30,7 +30,7 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: appColors.surface,
+              color: CustomColors.dialogContainer,
               borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
             child: Row(
@@ -49,7 +49,7 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                   radius: 30,
                   child: Icon(
                     Icons.copy,
-                    color: appColors.secondary,
+                    color: CustomColors.secondary,
                     size: 16,
                   ),
                 ),
@@ -64,14 +64,14 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                   height: 400,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: appColors.surface,
+                    color: CustomColors.dialogContainer,
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
                   ),
                   child: Column(
                     children: [
                       Text(
                         'Request',
-                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                        style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                       ),
                       const SizedBox(height: 16),
                       Expanded(
@@ -89,14 +89,14 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                   height: 400,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: appColors.surface,
+                    color: CustomColors.dialogContainer,
                     borderRadius: const BorderRadius.all(Radius.circular(16)),
                   ),
                   child: Column(
                     children: [
                       Text(
                         'Response',
-                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                        style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                       ),
                       const SizedBox(height: 16),
                       Expanded(

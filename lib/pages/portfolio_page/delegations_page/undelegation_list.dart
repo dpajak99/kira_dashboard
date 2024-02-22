@@ -64,7 +64,7 @@ class UndelegationList extends StatelessWidget {
               item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -124,13 +124,13 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Amounts',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Text(
             item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ),
         if (item.isClaimable == false) ...<Widget>[
@@ -138,13 +138,13 @@ class _MobileListTile extends StatelessWidget {
           MobileRow(
             title: Text(
               'Claim after',
-              style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
             ),
             value: Text(
               DateFormat('d MMM y, HH:mm').format(item.expiry),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             ),
           ),
         ],

@@ -28,8 +28,8 @@ class UserTypeChip extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: switch (userType) {
-            UserType.user => appColors.secondary,
-            UserType.validator => appColors.primary,
+            UserType.user => CustomColors.secondary,
+            UserType.validator => CustomColors.primary,
             UserType.yourAccount => CustomColors.green,
           }.withOpacity(0.3),
         ),
@@ -41,8 +41,8 @@ class UserTypeChip extends StatelessWidget {
           },
           style: textTheme.labelLarge!.copyWith(
             color: switch (userType) {
-              UserType.user => appColors.secondary,
-              UserType.validator => appColors.primary,
+              UserType.user => CustomColors.secondary,
+              UserType.validator => CustomColors.primary,
               UserType.yourAccount => CustomColors.green,
             },
           ),

@@ -55,7 +55,7 @@ class BlocksList extends StatelessWidget {
           cellBuilder: (BuildContext context, Block item) {
             return Text(
               item.height,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -92,7 +92,7 @@ class BlocksList extends StatelessWidget {
             return OpenableText(
               text: item.numTxs,
               onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -118,7 +118,7 @@ class BlocksList extends StatelessWidget {
               },
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -145,24 +145,24 @@ class _MobileListTile extends StatelessWidget {
       children: [
         OpenableText(
           text: 'Block #${item.height}',
-          style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+          style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
         ),
         const SizedBox(height: 4),
         CopyableHash(
           hash: '0x${item.hash}',
-          style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+          style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
         ),
         const SizedBox(height: 16),
         MobileRow(
           title: Text(
             'Block time:',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: RichText(
             text: TextSpan(
               text: '${DateFormat('d MMM y, HH:mm').format(item.time)} ($hrTime)',
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             ),
           ),
         ),
@@ -170,7 +170,7 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Proposed by:',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Row(
             children: [
@@ -184,12 +184,12 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Transactions:',
-            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: OpenableText(
             text: item.numTxs,
             onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ),
       ],

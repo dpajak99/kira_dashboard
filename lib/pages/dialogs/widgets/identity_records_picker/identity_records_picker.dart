@@ -44,7 +44,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-            color: appColors.surface,
+            color: CustomColors.dialogContainer,
             borderRadius: const BorderRadius.all(Radius.circular(16)),
           ),
           child: Column(
@@ -56,7 +56,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                   children: [
                     Text(
                       'Records',
-                      style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+                      style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
                     ),
                     const Spacer(),
                     InkWell(
@@ -74,7 +74,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                       radius: 30,
                       child: Icon(
                         AppIcons.pencil,
-                        color: appColors.secondary,
+                        color: CustomColors.secondary,
                         size: 16,
                       ),
                     ),
@@ -94,7 +94,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                             child: Text(
                               record.key,
                               maxLines: 1,
-                              style: textTheme.titleLarge!.copyWith(color:  appColors.onBackground),
+                              style: textTheme.titleLarge!.copyWith(color:  CustomColors.white),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -102,7 +102,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                             child: Text(
                               record.value,
                               maxLines: 1,
-                              style: textTheme.labelLarge!.copyWith(color:  appColors.onBackground),
+                              style: textTheme.labelLarge!.copyWith(color:  CustomColors.white),
                             ),
                           ),
                         ],
@@ -118,7 +118,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                     children: [
                       Text(
                         'Records cannot be empty',
-                        style: textTheme.labelLarge!.copyWith(color: appColors.error),
+                        style: textTheme.labelLarge!.copyWith(color: CustomColors.error),
                       ),
                     ],
                   ),

@@ -34,23 +34,23 @@ class PopupInfinityListState<T> extends State<PopupInfinityList<T>> {
           Container(
             padding: const EdgeInsets.all(16),
             margin: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
-            decoration: BoxDecoration(
-              color: appColors.surface,
-              borderRadius: const BorderRadius.all(Radius.circular(16)),
+            decoration: const BoxDecoration(
+              color: CustomColors.dialogContainer,
+              borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: TextEditingController(),
-                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
-                    cursorColor: appColors.onBackground,
+                    style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
+                    cursorColor: CustomColors.white,
                     cursorWidth: 1,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.zero,
                       isDense: true,
                       hintText: 'Search by lowest denomination name',
-                      hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
+                      hintStyle: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                       border: InputBorder.none,
                     ),
                   ),

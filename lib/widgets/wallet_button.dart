@@ -46,25 +46,25 @@ class _ConnectWalletButton extends StatelessWidget {
     if (small) {
       return IconButton(
         onPressed: () => DialogRouter().navigate(const ConnectWalletDialog()),
-        icon: Icon(Icons.wallet, color: appColors.primary),
+        icon: Icon(Icons.wallet, color: CustomColors.primary),
       );
     }
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () => DialogRouter().navigate(const ConnectWalletDialog()),
       child: Container(
-        decoration: BoxDecoration(
-          color: appColors.secondaryContainer,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        decoration: const BoxDecoration(
+          color: CustomColors.appBarContainer,
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Row(
           children: [
-            Icon(Icons.wallet, color: appColors.primary),
+            Icon(Icons.wallet, color: CustomColors.primary),
             const SizedBox(width: 8),
             Text(
               "Connect Wallet",
-              style: textTheme.titleLarge!.copyWith(color: appColors.primary),
+              style: textTheme.titleLarge!.copyWith(color: CustomColors.primary),
             ),
           ],
         ),
@@ -96,9 +96,9 @@ class _WalletButton extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () => DialogRouter().navigate(const AccountDialog()),
       child: Container(
-        decoration: BoxDecoration(
-          color: appColors.surface,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        decoration: const BoxDecoration(
+          color: CustomColors.dialog,
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Row(

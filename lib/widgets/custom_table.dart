@@ -109,7 +109,7 @@ class _MobileTable<T> extends StatelessWidget {
                 Text(
                   'Nothing here',
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                 ),
               ],
             ),
@@ -168,7 +168,7 @@ class _DesktopTable<T> extends StatelessWidget {
                 Text(
                   'Nothing here',
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                 ),
               ],
             ),
@@ -178,7 +178,7 @@ class _DesktopTable<T> extends StatelessWidget {
             padding: onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24) : EdgeInsets.zero,
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(color: appColors.outline, width: 1),
+                bottom: BorderSide(color: CustomColors.divider, width: 1),
               ),
             ),
             child: Row(
@@ -295,7 +295,7 @@ class _TableCellHeader extends StatelessWidget {
         text,
         textAlign: textAlign,
         maxLines: 1,
-        style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+        style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
       ),
     );
   }

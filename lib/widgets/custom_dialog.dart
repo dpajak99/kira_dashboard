@@ -82,9 +82,9 @@ class _CustomDialogRoute extends State<CustomDialog> with SingleTickerProviderSt
           child: Container(
             width: MediaQuery.of(context).size.width < 600 ? double.maxFinite : widget.width,
             padding: const EdgeInsets.symmetric(vertical: 16),
-            decoration: BoxDecoration(
-              color: appColors.secondaryContainer,
-              borderRadius: const BorderRadius.all(Radius.circular(24)),
+            decoration: const BoxDecoration(
+              color: CustomColors.dialog,
+              borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -99,7 +99,7 @@ class _CustomDialogRoute extends State<CustomDialog> with SingleTickerProviderSt
                         IconButton(
                           icon: const Icon(
                             Icons.chevron_left,
-                            color: Colors.white,
+                            color: CustomColors.white,
                             size: 24,
                           ),
                           onPressed: () => DialogRouter().navigateBack(),
@@ -112,13 +112,13 @@ class _CustomDialogRoute extends State<CustomDialog> with SingleTickerProviderSt
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: textTheme.headlineSmall!.copyWith(color: Colors.white),
+                          style: textTheme.headlineSmall!.copyWith(color: CustomColors.white),
                         ),
                       ),
                       IconButton(
                         icon: const Icon(
                           Icons.close,
-                          color: Colors.white,
+                          color: CustomColors.white,
                           size: 24,
                         ),
                         onPressed: () => Navigator.of(context).pop(),

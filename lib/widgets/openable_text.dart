@@ -35,7 +35,7 @@ class OpenableHash extends StatelessWidget {
               child: Icon(
                 Icons.open_in_new,
                 size: 16,
-                color: states.contains(MaterialState.hovered) ? appColors.onBackground : appColors.primary,
+                color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.primary,
               ),
             ),
           ],
@@ -75,7 +75,7 @@ class CopyableHash extends StatelessWidget {
               child: Icon(
                 Icons.copy,
                 size: 16,
-                color: states.contains(MaterialState.hovered) ? appColors.onBackground : appColors.primary,
+                color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.primary,
               ),
             ),
           ],
@@ -111,7 +111,7 @@ class OpenableText extends StatelessWidget {
           text: TextSpan(
             text: text,
             style: style.copyWith(
-              color: states.contains(MaterialState.hovered) ? Colors.white54 : appColors.secondary,
+              color: states.contains(MaterialState.hovered) ? Colors.white54 : CustomColors.secondary,
             ),
             children: [
               WidgetSpan(
@@ -121,7 +121,7 @@ class OpenableText extends StatelessWidget {
                   child: Icon(
                     Icons.open_in_new,
                     size: 16,
-                    color: states.contains(MaterialState.hovered) ? Colors.white54 : appColors.secondary,
+                    color: states.contains(MaterialState.hovered) ? Colors.white54 : CustomColors.secondary,
                   ),
                 ),
               ),

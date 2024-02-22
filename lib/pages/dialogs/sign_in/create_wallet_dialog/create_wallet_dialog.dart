@@ -39,9 +39,9 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
-              color: appColors.surface,
-              borderRadius: const BorderRadius.all(Radius.circular(24)),
+            decoration: const BoxDecoration(
+              color: CustomColors.dialogContainer,
+              borderRadius: BorderRadius.all(Radius.circular(24)),
             ),
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -49,12 +49,12 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
               children: [
                 Text(
                   'Write down your Secret Recovery Phrase',
-                  style: textTheme.titleSmall!.copyWith(color: appColors.onBackground),
+                  style: textTheme.titleSmall!.copyWith(color: CustomColors.white),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Write down this 24-word Secret Recovery Phrase and save it in a place that you trust and only you can access.',
-                  style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
+                  style: textTheme.bodySmall!.copyWith(color: CustomColors.secondary),
                 ),
                 const SizedBox(height: 24),
                 for (int row = 0; row < rowsCount; row++)
@@ -81,10 +81,10 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(onPressed: refreshMnemonic, icon: const Icon(Icons.refresh, size: 20), color: appColors.primary),
+                    IconButton(onPressed: refreshMnemonic, icon: const Icon(Icons.refresh, size: 20), color: CustomColors.primary),
                     const Spacer(),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.copy, size: 20), color: appColors.primary),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.qr_code, size: 20), color: appColors.primary),
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.copy, size: 20), color: CustomColors.primary),
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.qr_code, size: 20), color: CustomColors.primary),
                   ],
                 ),
               ],
@@ -97,14 +97,14 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
               Checkbox(
                 value: termsAccepted,
                 onChanged: (bool? value) => setState(() => termsAccepted = value ?? false),
-                activeColor: appColors.primary,
-                side: BorderSide(color: appColors.primary, width: 2),
+                activeColor: CustomColors.primary,
+                side: BorderSide(color: CustomColors.primary, width: 2),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'I have written down all 24 recovery words in their correct order and understand if I lose any one of them, or even unknowingly reveal, ALL my assets and data secured by this wallet might be stolen or irrecoverable.',
-                  style: textTheme.labelSmall!.copyWith(color: appColors.secondary),
+                  style: textTheme.labelSmall!.copyWith(color: CustomColors.secondary),
                 ),
               ),
             ],
@@ -149,9 +149,9 @@ class _MnemonicItem extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Container(
-      decoration: BoxDecoration(
-        color: appColors.secondaryContainer,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      decoration: const BoxDecoration(
+        color: CustomColors.container,
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
@@ -160,13 +160,13 @@ class _MnemonicItem extends StatelessWidget {
             width: 24,
             child: Text(
               '$index.',
-              style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
             ),
           ),
           const SizedBox(width: 4),
           Text(
             word,
-            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
           ),
         ],
       ),

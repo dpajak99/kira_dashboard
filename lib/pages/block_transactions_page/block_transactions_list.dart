@@ -57,7 +57,7 @@ class BlockTransactionsList extends StatelessWidget {
                         DateFormat('d MMM y, HH:mm').format(item.time),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+                        style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
                       ),
                     ],
                   ),
@@ -72,7 +72,7 @@ class BlockTransactionsList extends StatelessWidget {
                           child: CoinText(
                             coin: item.amounts.first,
                             textAlign: TextAlign.right,
-                            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                            style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -81,7 +81,7 @@ class BlockTransactionsList extends StatelessWidget {
                       if (item.amounts.length > 1)
                         Text(
                           ' + ${item.amounts.length - 1}',
-                          style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                          style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                         ),
                     ],
                   ),
@@ -91,11 +91,11 @@ class BlockTransactionsList extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Hash',
-              style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+              style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
             ),
             OpenableHash(
               hash: item.hash,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.primary),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.primary),
               onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
             ),
             const SizedBox(height: 16),
@@ -108,7 +108,7 @@ class BlockTransactionsList extends StatelessWidget {
                     children: [
                       Text(
                         'From',
-                        style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+                        style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
                       ),
                       OpenableAddressText(
                         address: item.from,
@@ -124,7 +124,7 @@ class BlockTransactionsList extends StatelessWidget {
                     children: [
                       Text(
                         'To',
-                        style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+                        style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
                       ),
                       OpenableAddressText(
                         address: item.to,
@@ -145,7 +145,7 @@ class BlockTransactionsList extends StatelessWidget {
             return OpenableHash(
               hash: item.hash,
               onTap: () => AutoRouter.of(context).push(TransactionDetailsRoute(hash: item.hash)),
-              style: textTheme.bodyMedium!.copyWith(color: appColors.primary),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.primary),
             );
           },
         ),
@@ -163,7 +163,7 @@ class BlockTransactionsList extends StatelessWidget {
               DateFormat('d MMM y, HH:mm').format(item.time),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+              style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
             );
           },
         ),
@@ -181,7 +181,7 @@ class BlockTransactionsList extends StatelessWidget {
           cellBuilder: (BuildContext context, BlockTransaction item) {
             return Icon(
               Icons.arrow_forward,
-              color: appColors.secondary,
+              color: CustomColors.secondary,
             );
           },
         ),
@@ -206,7 +206,7 @@ class BlockTransactionsList extends StatelessWidget {
                     child: CoinText(
                       coin: item.amounts.first,
                       textAlign: TextAlign.right,
-                      style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                      style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -215,14 +215,14 @@ class BlockTransactionsList extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 32),
                     child: Text(
                       '---',
-                      style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                      style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                     ),
                   ),
                 TokenIcon(size: 24, iconUrl: item.amounts.firstOrNull?.icon),
                 if (item.amounts.length > 1)
                   Text(
                     ' + ${item.amounts.length - 1}',
-                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                    style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                   ),
               ],
             );
@@ -249,13 +249,13 @@ class _MethodChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: appColors.secondary.withOpacity(0.3),
+          color: CustomColors.secondary.withOpacity(0.3),
         ),
         child: Text(
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+          style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
         ),
       ),
     );

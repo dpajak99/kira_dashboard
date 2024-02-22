@@ -27,8 +27,8 @@ class _BlockDetailsPageState extends State<BlockDetailsPage> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: appColors.secondary);
-    TextStyle valueStyle =  textTheme.bodyMedium!.copyWith(color: appColors.onBackground);
+    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: CustomColors.secondary);
+    TextStyle valueStyle =  textTheme.bodyMedium!.copyWith(color: CustomColors.white);
 
     return BlocBuilder<BlockDetailsCubit, BlockDetailsState>(
       bloc: blockDetailsCubit,
@@ -44,11 +44,11 @@ class _BlockDetailsPageState extends State<BlockDetailsPage> {
                       children: [
                         Text(
                           'Block Details',
-                          style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
+                          style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
                         ),
                         Text(
                           '#${widget.height}',
-                          style: textTheme.titleLarge!.copyWith(color: appColors.secondary),
+                          style: textTheme.titleLarge!.copyWith(color: CustomColors.secondary),
                         )
                       ],
                     ),

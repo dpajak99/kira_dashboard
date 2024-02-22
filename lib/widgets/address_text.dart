@@ -103,7 +103,7 @@ class AddressText extends StatelessWidget {
     if (address == null) {
       return Text(
         '---',
-        style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+        style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
       );
     }
     return SimpleTextButton(
@@ -140,7 +140,7 @@ class SimpleTextButton extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     
     Color highlightColor = Colors.white60;
-    TextStyle style = textTheme.bodyMedium!.copyWith(color: dark? appColors.secondary : appColors.primary );
+    TextStyle style = textTheme.bodyMedium!.copyWith(color: dark? CustomColors.secondary : CustomColors.primary );
     
     return MouseStateListener(
       onTap: onTap,

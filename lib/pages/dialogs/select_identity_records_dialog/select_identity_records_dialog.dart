@@ -51,18 +51,18 @@ class _SelectIdentityRecordsDialogState extends State<SelectIdentityRecordsDialo
                       value: selectedRecords.contains(record),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                       dense: true,
-                      activeColor: appColors.primary,
-                      side: BorderSide(color: appColors.primary, width: 2),
+                      activeColor: CustomColors.primary,
+                      side: BorderSide(color: CustomColors.primary, width: 2),
                       onChanged: (_) => _toggleRecord(record),
                       title: Text(
                         record.key,
                         maxLines: 1,
-                        style: textTheme.bodyMedium!.copyWith( color: appColors.onBackground),
+                        style: textTheme.bodyMedium!.copyWith( color: CustomColors.white),
                       ),
                       subtitle: Text(
                         record.value,
                         maxLines: 1,
-                        style: textTheme.labelMedium!.copyWith( color: appColors.secondary),
+                        style: textTheme.labelMedium!.copyWith( color: CustomColors.secondary),
                       ),
                     );
                   },

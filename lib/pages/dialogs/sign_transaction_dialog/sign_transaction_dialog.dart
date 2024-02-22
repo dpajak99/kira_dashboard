@@ -33,14 +33,14 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: appColors.surface,
+              color: CustomColors.dialogContainer,
               borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
             child: Column(
               children: [
                 Text(
                   widget.message,
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                 ),
               ],
             ),

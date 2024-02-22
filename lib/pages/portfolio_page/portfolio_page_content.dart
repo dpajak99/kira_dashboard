@@ -64,7 +64,7 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
                   children: [
                     Text(
                       'Address overview',
-                      style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
+                      style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
                     ),
                     CopyableAddressText(address: widget.address, dark: true, full: true)
                   ],
@@ -116,7 +116,7 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
                           text: 'Website',
                           onTap: () {},
                           style: textTheme.bodyMedium!.copyWith(
-                            color: appColors.secondary,
+                            color: CustomColors.secondary,
                           ),
                         ),
                       ],
@@ -129,13 +129,13 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
                     children: [
                       Text(
                         widget.identityRecords.getName(widget.isValidator) ?? '---',
-                        style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
+                        style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
                       ),
                       if (widget.identityRecords.isUsernameTrusted()) ...<Widget>[
                         const SizedBox(width: 8),
                         Tooltip(
                           message: 'Verified by your trusted addresses:\n- ${widget.identityRecords.username!.trustedVerifiers.join('\n- ')}',
-                          child: Icon(Icons.verified, color: appColors.primary),
+                          child: Icon(Icons.verified, color: CustomColors.primary),
                         ),
                       ],
                     ],
@@ -150,7 +150,7 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
                           child: Icon(
                             e.icon,
                             size: 24,
-                            color: states.contains(MaterialState.hovered) ? appColors.onBackground : appColors.secondary,
+                            color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.secondary,
                           ),
                         );
                       });
@@ -217,7 +217,7 @@ class TabBar extends StatelessWidget {
                 onPressed: () => tabController.animateTo(i),
                 style: TextButton.styleFrom(
                   textStyle: textTheme.bodyMedium!,
-                  foregroundColor: tabController.index == i ? appColors.onBackground : appColors.secondary,
+                  foregroundColor: tabController.index == i ? CustomColors.white : CustomColors.secondary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -248,11 +248,11 @@ class RankChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: appColors.primary,
+        color: CustomColors.primary,
       ),
       child: Text(
         'Rank #$rank',
-        style: textTheme.labelLarge!.copyWith(color: appColors.onBackground),
+        style: textTheme.labelLarge!.copyWith(color: CustomColors.white),
       ),
     );
   }
@@ -293,7 +293,7 @@ class _TrustAddressStarState extends State<TrustAddressStar> {
       icon: Icon(
         widget.isFavourite ? Icons.shield : Icons.shield_outlined,
         size: 24,
-        color: widget.isFavourite ? appColors.primary : appColors.onBackground,
+        color: widget.isFavourite ? CustomColors.primary : CustomColors.white,
       ),
     );
   }

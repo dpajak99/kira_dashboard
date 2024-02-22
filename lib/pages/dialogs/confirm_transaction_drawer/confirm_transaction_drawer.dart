@@ -27,12 +27,12 @@ class _ConfirmTransactionDialog extends State<ConfirmTransactionDialog> {
           SizedBox(
             width: 90,
             height: 90,
-            child: CircularProgressIndicator(color: appColors.primary, strokeWidth: 2),
+            child: CircularProgressIndicator(color: CustomColors.primary, strokeWidth: 2),
           ),
           const SizedBox(height: 48),
           Text(
             'Please, confirm transaction in your wallet',
-            style: textTheme.titleLarge!.copyWith(color: appColors.secondary),
+            style: textTheme.titleLarge!.copyWith(color: CustomColors.secondary),
           ),
           const SizedBox(height: 48),
           SizedBox(

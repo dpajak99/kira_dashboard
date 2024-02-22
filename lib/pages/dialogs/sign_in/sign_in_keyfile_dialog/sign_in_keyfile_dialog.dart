@@ -38,7 +38,7 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: appColors.secondaryContainer,
+                  color: CustomColors.dialogContainer,
                 ),
                 height: 200,
                 width: double.infinity,
@@ -58,52 +58,52 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
                                   Text(
                                     'Drop'.toUpperCase(),
                                     style: textTheme.titleLarge!.copyWith(
-                                      color: appColors.onBackground,
+                                      color: CustomColors.white,
                                     ),
                                   ),
                                 ] else if (state.file != null) ...<Widget>[
                                   Icon(
                                     Icons.file_present,
                                     size: 40,
-                                    color: appColors.secondary,
+                                    color: CustomColors.secondary,
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     state.file!.name,
                                     style: textTheme.bodyMedium!.copyWith(
-                                      color: appColors.onBackground,
+                                      color: CustomColors.white,
                                     ),
                                   ),
                                   if (state.encryptedKeyfile != null)
                                     Text(
                                       Bech32Encoder.encode('kira', state.encryptedKeyfile!.addressBytes),
                                       style: textTheme.labelSmall!.copyWith(
-                                        color: appColors.secondary,
+                                        color: CustomColors.secondary,
                                       ),
                                     ),
                                   Text(
                                     state.file!.sizeString,
                                     style: textTheme.labelSmall!.copyWith(
-                                      color: appColors.secondary,
+                                      color: CustomColors.secondary,
                                     ),
                                   ),
                                 ] else ...<Widget>[
                                   Icon(
                                     Icons.file_upload_outlined,
                                     size: 40,
-                                    color: appColors.secondary,
+                                    color: CustomColors.secondary,
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     'Drop keyfile here'.toUpperCase(),
                                     style: textTheme.bodyMedium!.copyWith(
-                                      color: appColors.onBackground,
+                                      color: CustomColors.white,
                                     ),
                                   ),
                                   Text(
                                     'Drag and drop your .json keyfile here or click to browse',
                                     style: textTheme.labelSmall!.copyWith(
-                                      color: appColors.secondary,
+                                      color: CustomColors.secondary,
                                     ),
                                   ),
                                 ]
@@ -134,19 +134,19 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: appColors.secondaryContainer,
+                  color: CustomColors.dialogContainer,
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
                 ),
                 child: TextField(
                   controller: cubit.passwordController,
-                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
-                  cursorColor: appColors.onBackground,
+                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
+                  cursorColor: CustomColors.white,
                   cursorWidth: 1,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.zero,
                     isDense: true,
                     hintText: 'Enter password',
-                    hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
+                    hintStyle: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                     border: InputBorder.none,
                   ),
                   onChanged: (String value) => cubit.tryDecrypt(),

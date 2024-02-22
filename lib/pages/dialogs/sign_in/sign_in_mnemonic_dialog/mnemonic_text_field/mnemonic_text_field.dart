@@ -46,9 +46,9 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Container(
-      decoration: BoxDecoration(
-        color: appColors.surface,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      decoration: const BoxDecoration(
+        color: CustomColors.container,
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
@@ -58,7 +58,7 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
             builder: (BuildContext context, MnemonicTextFieldState state) {
               Color color;
               if (state.word.isEmpty) {
-                color = appColors.secondary;
+                color = CustomColors.secondary;
               } else if ((state.hasHint && focusNode.hasFocus) || state.valid) {
                 color = CustomColors.green;
               } else {
@@ -80,7 +80,7 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
               controller: widget.controller,
               focusNode: focusNode,
               style: textTheme.bodyMedium!.copyWith(
-                color: appColors.onBackground,
+                color: CustomColors.white,
                 letterSpacing: 1,
               ),
               inputFormatters: [
@@ -90,7 +90,7 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
                 ),
                 LengthLimitingTextInputFormatter(8),
               ],
-              suggestionColor: appColors.secondary,
+              suggestionColor: CustomColors.secondary,
               suggestionList: Bip39Languages.english.wordList,
             ),
           ),

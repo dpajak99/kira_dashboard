@@ -33,8 +33,8 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: appColors.secondary);
-    TextStyle valueStyle = textTheme.bodyMedium!.copyWith(color: appColors.onBackground);
+    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: CustomColors.secondary);
+    TextStyle valueStyle = textTheme.bodyMedium!.copyWith(color: CustomColors.white);
 
     return BlocBuilder<TransactionDetailsCubit, TransactionDetailsState>(
       bloc: cubit,
@@ -50,7 +50,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                       children: [
                         Text(
                           'Transaction Details',
-                          style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
+                          style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
                         ),
                         CopyableText(text: widget.hash)
                       ],
@@ -107,7 +107,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                           : Text(state.transactionResult!.blockTimestamp.toString(), style: valueStyle),
                     ),
                     const SizedBox(height: 12),
-                    Divider(color: appColors.outline),
+                    Divider(color: CustomColors.divider),
                     const SizedBox(height: 12),
                     if (state.transactionResult?.msgs.isNotEmpty ?? false)
                       _DetailRow(
@@ -152,7 +152,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
-                                  color: appColors.surface,
+                                  color: CustomColors.dialogContainer,
                                 ),
                                 child: JsonView(
                                   json: e.toJson(),
@@ -211,13 +211,13 @@ class _MethodChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: appColors.secondary.withOpacity(0.3),
+          color: CustomColors.secondary.withOpacity(0.3),
         ),
         child: Text(
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
+          style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
         ),
       ),
     );
