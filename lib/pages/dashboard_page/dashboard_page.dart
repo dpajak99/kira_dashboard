@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/dashboard_model.dart';
 import 'package:kira_dashboard/pages/dashboard_page/dashboard_page_cubit.dart';
 import 'package:kira_dashboard/pages/dashboard_page/dashboard_page_state.dart';
@@ -97,9 +98,9 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: _DashboardTile(
                           title: 'Current block validator',
                           value: state.dashboard?.currentBlockValidator.moniker ?? '',
-                          icon: const Icon(
+                          icon: Icon(
                             AppIcons.block,
-                            color: Color(0xff4888f0),
+                            color: appColors.primary,
                           ),
                         ),
                       ),
@@ -110,9 +111,9 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: _DashboardTile(
                           title: 'Consensus',
                           value: state.dashboard?.consensusHealthPercentage ?? '',
-                          icon: const Icon(
+                          icon: Icon(
                             AppIcons.consensus,
-                            color: Color(0xff4888f0),
+                            color: appColors.primary,
                           ),
                         ),
                       ),
@@ -127,9 +128,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             ConsensusStateType.unhealthy => 'Unhealthy',
                             (_) => '',
                           },
-                          icon: const Icon(
+                          icon: Icon(
                             AppIcons.health,
-                            color: Color(0xff4888f0),
+                            color: appColors.primary,
                           ),
                         ),
                       ),
@@ -145,10 +146,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: _DashboardTile(
                         title: 'Current block validator',
                         value: state.dashboard?.currentBlockValidator.moniker ?? '',
-                        icon: const Icon(
-                          AppIcons.block,
-                          color: Color(0xff4888f0),
-                        ),
+                        icon: Icon(AppIcons.block, color: appColors.primary),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -156,10 +154,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: _DashboardTile(
                         title: 'Consensus',
                         value: state.dashboard?.consensusHealthPercentage ?? '',
-                        icon: const Icon(
-                          AppIcons.consensus,
-                          color: Color(0xff4888f0),
-                        ),
+                        icon: Icon(AppIcons.consensus, color: appColors.primary),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -171,10 +166,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ConsensusStateType.unhealthy => 'Unhealthy',
                           (_) => '',
                         },
-                        icon: const Icon(
-                          AppIcons.health,
-                          color: Color(0xff4888f0),
-                        ),
+                        icon: Icon(AppIcons.health, color: appColors.primary),
                       ),
                     ),
                   ],
@@ -263,7 +255,7 @@ class _DashboardCard extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            style: textTheme.headlineMedium!.copyWith(color: appColors.onBackground),
           ),
           const SizedBox(height: 20),
           CustomCard(
@@ -313,13 +305,13 @@ class _DashboardTile extends StatelessWidget {
           value,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.titleMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          style: textTheme.titleMedium!.copyWith(color: appColors.onBackground),
         ),
         Text(
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+          style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
         ),
       ],
     );

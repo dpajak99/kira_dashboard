@@ -18,7 +18,6 @@ class SignInKeyfileDialogCubit extends Cubit<SignInKeyfileDialogState> {
     try {
       encryptedKeyfile = EncryptedKeyfile.fromJson(jsonDecode(customFile.content));
     } catch (e) {
-      print(e);
       // emit error
     }
     emit(SignInKeyfileDialogState(file: customFile, encryptedKeyfile: encryptedKeyfile));

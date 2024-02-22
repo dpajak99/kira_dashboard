@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delete_identity_records_dialog/delete_identity_records_dialog.dart';
@@ -63,7 +64,7 @@ class IdentityRecordsList extends StatelessWidget {
                   item.key,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                 );
               },
             ),
@@ -75,7 +76,7 @@ class IdentityRecordsList extends StatelessWidget {
                   item.value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                 );
               },
             ),
@@ -96,24 +97,18 @@ class IdentityRecordsList extends StatelessWidget {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconTextButton(
+                      SimpleTextButton(
                         text: 'Edit',
-                        highlightColor: const Color(0xfffbfbfb),
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                         onTap: () => _handleEdit(item),
                       ),
                       const SizedBox(width: 16),
-                      IconTextButton(
+                      SimpleTextButton(
                         text: 'Verify',
-                        highlightColor: const Color(0xfffbfbfb),
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                         onTap: () => _handleVerify(item),
                       ),
                       const SizedBox(width: 16),
-                      IconTextButton(
+                      SimpleTextButton(
                         text: 'Delete',
-                        highlightColor: const Color(0xfffbfbfb),
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                         onTap: () => _handleDelete(item),
                       ),
                     ],
@@ -156,8 +151,6 @@ class _MobileListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -185,26 +178,20 @@ class _MobileListTile extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              IconTextButton(
+              SimpleTextButton(
                 text: 'Edit',
-                highlightColor: const Color(0xfffbfbfb),
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                 onTap: () => DialogRouter().navigate(RegisterIdentityRecordsDialog(records: [item])),
               ),
               const SizedBox(width: 16),
-              IconTextButton(
+              SimpleTextButton(
                 text: 'Verify',
-                highlightColor: const Color(0xfffbfbfb),
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                 onTap: () => DialogRouter().navigate(VerifyIdentityRecordsDialog(
                   records: [item],
                 )),
               ),
               const SizedBox(width: 16),
-              IconTextButton(
+              SimpleTextButton(
                 text: 'Delete',
-                highlightColor: const Color(0xfffbfbfb),
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                 onTap: () => DialogRouter().navigate(DeleteIdentityRecordsDialog(records: [item])),
               ),
             ],
@@ -232,13 +219,13 @@ class _VerificationChip extends StatelessWidget {
     String label;
 
     if (trustedVerifiers.isNotEmpty) {
-      textColor = const Color(0xff35b15f);
+      textColor = CustomColors.green;
       label = 'Trusted by ${trustedVerifiers.length}';
     } else if (verifiers.isNotEmpty) {
-      textColor = const Color(0xff59b987);
+      textColor = CustomColors.green;
       label = 'Verified by ${verifiers.length}';
     } else {
-      textColor = const Color(0xfff12e1f);
+      textColor = CustomColors.red;
       label = 'Unverified';
     }
 

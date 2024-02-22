@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delete_identity_records_dialog/delete_identity_records_dialog_cubit.dart';
@@ -58,19 +59,19 @@ class _DeleteIdentityRecordsDialogState extends State<DeleteIdentityRecordsDialo
                   initialRecords: widget.records,
                 ),
                 const SizedBox(height: 8),
-                const Divider(color: Color(0xff222b3a)),
+                Divider(color: appColors.outline),
                 const SizedBox(height: 8),
                 Row(
                   children: [
                     Text(
                       'Fee:',
-                      style: textTheme.bodyMedium!.copyWith(color:  const Color(0xfffbfbfb)),
+                      style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                     ),
                     const Spacer(),
                     if (state is DeleteIdentityRecordsDialogLoadedState)
                       Text(
                         state.executionFee.toNetworkDenominationString(),
-                        style: textTheme.bodyMedium!.copyWith(color:  const Color(0xff6c86ad)),
+                        style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
                       )
                     else
                       const SizedShimmer(width: 60, height: 14, reversed: true),
@@ -104,7 +105,7 @@ class _DeleteIdentityRecordsDialogState extends State<DeleteIdentityRecordsDialo
   }
 
   void _validateForm() {
-    if(identityRecordsPickerController.value.isEmpty) {
+    if (identityRecordsPickerController.value.isEmpty) {
       errorNotifier.value = 'Select records';
     } else {
       errorNotifier.value = null;

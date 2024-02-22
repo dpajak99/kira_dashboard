@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
 
@@ -23,7 +24,7 @@ class TokenTile extends StatelessWidget {
         padding: EdgeInsets.only(right: reversed ? 0 : 32, left: reversed ? 32 : 0),
         child: Text(
           '---',
-          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
         ),
       );
     }
@@ -36,7 +37,7 @@ class TokenTile extends StatelessWidget {
               showAmount ? coin!.toNetworkDenominationString() : coin!.name,
               maxLines: 1,
               textAlign: TextAlign.right,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             ),
           ),
           const SizedBox(width: 12),
@@ -53,7 +54,7 @@ class TokenTile extends StatelessWidget {
           child: Text(
             showAmount ? coin!.toNetworkDenominationString() : coin!.name,
             maxLines: 1,
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
           ),
         ),
       ],

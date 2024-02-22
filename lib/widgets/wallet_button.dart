@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog.dart';
@@ -45,31 +46,25 @@ class _ConnectWalletButton extends StatelessWidget {
     if (small) {
       return IconButton(
         onPressed: () => DialogRouter().navigate(const ConnectWalletDialog()),
-        icon: const Icon(
-          Icons.wallet,
-          color: Color(0xff4888f0),
-        ),
+        icon: Icon(Icons.wallet, color: appColors.primary),
       );
     }
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () => DialogRouter().navigate(const ConnectWalletDialog()),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xff101c2e),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+        decoration: BoxDecoration(
+          color: appColors.secondaryContainer,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Row(
           children: [
-            const Icon(
-              Icons.wallet,
-              color: Color(0xff4888f0),
-            ),
+            Icon(Icons.wallet, color: appColors.primary),
             const SizedBox(width: 8),
             Text(
               "Connect Wallet",
-              style: textTheme.titleLarge!.copyWith(color: const Color(0xff4888f0)),
+              style: textTheme.titleLarge!.copyWith(color: appColors.primary),
             ),
           ],
         ),
@@ -101,14 +96,14 @@ class _WalletButton extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       onTap: () => DialogRouter().navigate(const AccountDialog()),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xff324054),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+        decoration: BoxDecoration(
+          color: appColors.surface,
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Row(
           children: [
-            if(wallet is KeplrWallet) ...<Widget>[
+            if (wallet is KeplrWallet) ...<Widget>[
               SvgPicture.asset(
                 'icons/keplr.svg',
                 width: 20,

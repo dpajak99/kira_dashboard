@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 
 class RecordConfig extends Equatable {
   final int maxLength;
@@ -170,9 +171,9 @@ class _TextFieldState extends State<_TextField> {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Color(0xff06070a),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+      decoration: BoxDecoration(
+        color: appColors.surface,
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         children: [
@@ -180,16 +181,16 @@ class _TextFieldState extends State<_TextField> {
             children: [
               Text(
                 widget.title,
-                style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
               ),
               const Spacer(),
               const Spacer(),
               InkWell(
                 onTap: () => widget.controller.clear(),
                 radius: 30,
-                child: const Icon(
+                child: Icon(
                   Icons.brush,
-                  color: Color(0xff6c86ad),
+                  color: appColors.secondary,
                   size: 16,
                 ),
               ),
@@ -208,14 +209,14 @@ class _TextFieldState extends State<_TextField> {
                       maxLines: widget.maxLines,
                       focusNode: focusNode,
                       controller: widget.controller,
-                      style: textTheme.bodyLarge!.copyWith(color: const Color(0xfffbfbfb)),
-                      cursorColor: const Color(0xfffbfbfb),
+                      style: textTheme.bodyLarge!.copyWith(color: appColors.onBackground),
+                      cursorColor: appColors.onBackground,
                       cursorWidth: 1,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         isDense: true,
                         hintText: 'Enter value',
-                        hintStyle: textTheme.bodyLarge!.copyWith(color: const Color(0xff3e4c63)),
+                        hintStyle: textTheme.bodyLarge!.copyWith(color: appColors.secondaryContainer),
                         border: InputBorder.none,
                       ),
                     ),
@@ -235,7 +236,7 @@ class _TextFieldState extends State<_TextField> {
                   if (errorMessage != null) {
                     return Text(
                       errorMessage,
-                      style: textTheme.labelLarge!.copyWith(color: const Color(0xfff12e1f)),
+                      style: textTheme.labelLarge!.copyWith(color: CustomColors.red),
                     );
                   } else {
                     return const SizedBox();

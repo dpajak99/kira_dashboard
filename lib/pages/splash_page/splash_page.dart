@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/predefined_networks.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_dialog.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_state.dart';
@@ -103,7 +104,7 @@ class _ConnectingView extends StatelessWidget {
         Text(
           'MIRO 看 (見る)',
           textAlign: TextAlign.center,
-          style: GoogleFonts.notoSans(color: const Color(0xfffbfbfb), fontSize: 32),
+          style: GoogleFonts.notoSans(color: appColors.onBackground, fontSize: 32),
         ),
         const SizedBox(height: 16),
         Image.asset(
@@ -115,7 +116,7 @@ class _ConnectingView extends StatelessWidget {
         Text(
           'Connecting to: ${network.name} (${network.interxUrl.toString()})',
           textAlign: TextAlign.center,
-          style: GoogleFonts.notoSans(color: const Color(0xfffbfbfb), fontSize: 15),
+          style: GoogleFonts.notoSans(color: appColors.onBackground, fontSize: 15),
         ),
         const SizedBox(height: 16),
         TextButton(
@@ -172,20 +173,20 @@ class _NetworkListViewState extends State<_NetworkListView> {
                       Text(
                         'MIRO 看 (見る)',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.notoSans(color: const Color(0xfffbfbfb), fontSize: 32),
+                        style: GoogleFonts.notoSans(color: appColors.onBackground, fontSize: 32),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'Connection with ${widget.network.name} server failed',
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       Text(
                         widget.network.interxUrl.toString(),
                         style: textTheme.labelMedium!.copyWith(
-                          color: const Color(0xff6c86ad),
+                          color: appColors.secondary,
                         ),
                       ),
                       const SizedBox(height: 100),
@@ -193,7 +194,7 @@ class _NetworkListViewState extends State<_NetworkListView> {
                         'Select a network to connect to:',
                         textAlign: TextAlign.center,
                         style: textTheme.bodyMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -207,9 +208,9 @@ class _NetworkListViewState extends State<_NetworkListView> {
                             children: [
                               Container(
                                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 8),
-                                decoration: const BoxDecoration(
-                                  color: Color(0xff0a0d15),
-                                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                                decoration: BoxDecoration(
+                                  color: appColors.secondaryContainer,
+                                  borderRadius: const BorderRadius.all(Radius.circular(16)),
                                 ),
                                 child: Column(
                                   children: [
@@ -227,32 +228,30 @@ class _NetworkListViewState extends State<_NetworkListView> {
                               const SizedBox(height: 16),
                               Container(
                                 padding: const EdgeInsets.all(16),
-                                decoration: const BoxDecoration(
-                                  color: Color(0xff0a0d15),
-                                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                                decoration: BoxDecoration(
+                                  color: appColors.secondaryContainer,
+                                  borderRadius: const BorderRadius.all(Radius.circular(16)),
                                 ),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: TextField(
                                         controller: controller,
-                                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                                        cursorColor: const Color(0xfffbfbfb),
+                                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                                        cursorColor: appColors.onBackground,
                                         cursorWidth: 1,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.zero,
                                           isDense: true,
                                           hintText: 'Custom address',
-                                          hintStyle: textTheme.bodyMedium!.copyWith(color: const Color(0xff3e4c63)),
+                                          hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
                                           border: InputBorder.none,
                                         ),
                                       ),
                                     ),
                                     const SizedBox(width: 16),
-                                    IconTextButton(
+                                    SimpleTextButton(
                                       text: 'Add',
-                                      highlightColor: const Color(0xfffbfbfb),
-                                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                                       onTap: () {
                                         try {
                                           getIt<NetworkCubit>().addCustomNetwork(NetworkTemplate(

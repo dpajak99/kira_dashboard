@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/proposal.dart';
 import 'package:kira_dashboard/pages/proposals_page/proposals_list_cubit.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
@@ -35,7 +36,7 @@ class ProposalsList extends StatelessWidget {
           children: [
             OpenableText(
               text: 'Proposal #${item.id}',
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
               onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.id)),
             ),
             const SizedBox(height: 4),
@@ -43,13 +44,13 @@ class ProposalsList extends StatelessWidget {
               item.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             ),
             const SizedBox(height: 16),
             MobileRow(
               title: Text(
                 'Status',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
               ),
               value: _StatusChip(voteResult: item.status),
             ),
@@ -57,39 +58,39 @@ class ProposalsList extends StatelessWidget {
             MobileRow(
               title: Text(
                 'Voters',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
               ),
               value: Text(
                 item.voters.toString(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
               ),
             ),
             const SizedBox(height: 8),
             MobileRow(
               title: Text(
                 'Age',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
               ),
               value: Text(
                 item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
               ),
             ),
             const SizedBox(height: 8),
             MobileRow(
               title: Text(
                 'End time',
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
               ),
               value: Text(
                 DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
               ),
             ),
           ],
@@ -104,7 +105,7 @@ class ProposalsList extends StatelessWidget {
               item.id,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -116,7 +117,7 @@ class ProposalsList extends StatelessWidget {
               item.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -135,7 +136,7 @@ class ProposalsList extends StatelessWidget {
               item.voters.toString(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -146,7 +147,7 @@ class ProposalsList extends StatelessWidget {
               item.timePassed.inDays < 1 ? 'Today' : '${item.timePassed.inDays} days ago',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -157,7 +158,7 @@ class ProposalsList extends StatelessWidget {
               DateFormat('d MMM y, HH:mm').format(item.votingEndTime),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -182,15 +183,15 @@ class _StatusChip extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: switch (voteResult) {
-            VoteResult.unknown => const Color(0x29f12e1f),
-            VoteResult.passed => const Color(0x2935b15f),
-            VoteResult.rejected => const Color(0x29f12e1f),
-            VoteResult.rejectedWithVeto => const Color(0x29f12e1f),
-            VoteResult.pending => const Color(0x29ffa500),
-            VoteResult.quorumNotReached => const Color(0x29f12e1f),
-            VoteResult.enactment => const Color(0x2989ffb0),
-            VoteResult.passedWithExecFail => const Color(0x29f12e1f),
-          },
+            VoteResult.unknown => CustomColors.red,
+            VoteResult.passed => CustomColors.green,
+            VoteResult.rejected => CustomColors.red,
+            VoteResult.rejectedWithVeto => CustomColors.red,
+            VoteResult.pending => CustomColors.yellow,
+            VoteResult.quorumNotReached => CustomColors.red,
+            VoteResult.enactment => CustomColors.green,
+            VoteResult.passedWithExecFail => CustomColors.red,
+          }.withOpacity(0.3),
         ),
         child: Text(
           switch (voteResult) {
@@ -205,14 +206,14 @@ class _StatusChip extends StatelessWidget {
           },
           style: textTheme.labelMedium!.copyWith(
             color: switch (voteResult) {
-              VoteResult.unknown => const Color(0xfff12e1f),
-              VoteResult.passed => const Color(0xff35b15f),
-              VoteResult.rejected => const Color(0xfff12e1f),
-              VoteResult.rejectedWithVeto => const Color(0xfff12e1f),
-              VoteResult.pending => const Color(0xffffa500),
-              VoteResult.quorumNotReached => const Color(0xfff12e1f),
-              VoteResult.enactment => const Color(0xff89ffb0),
-              VoteResult.passedWithExecFail => const Color(0xfff12e1f),
+              VoteResult.unknown => CustomColors.red,
+              VoteResult.passed => CustomColors.green,
+              VoteResult.rejected => CustomColors.red,
+              VoteResult.rejectedWithVeto => CustomColors.red,
+              VoteResult.pending => CustomColors.yellow,
+              VoteResult.quorumNotReached => CustomColors.red,
+              VoteResult.enactment => CustomColors.green,
+              VoteResult.passedWithExecFail => CustomColors.red,
             },
           ),
         ),

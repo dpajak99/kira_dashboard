@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
 class OpenableHash extends StatelessWidget {
@@ -34,7 +35,7 @@ class OpenableHash extends StatelessWidget {
               child: Icon(
                 Icons.open_in_new,
                 size: 16,
-                color: states.contains(MaterialState.hovered) ? const Color(0xfffbfbfb) : const Color(0xff2f8af5),
+                color: states.contains(MaterialState.hovered) ? appColors.onBackground : appColors.primary,
               ),
             ),
           ],
@@ -74,7 +75,7 @@ class CopyableHash extends StatelessWidget {
               child: Icon(
                 Icons.copy,
                 size: 16,
-                color: states.contains(MaterialState.hovered) ? const Color(0xfffbfbfb) : const Color(0xff2f8af5),
+                color: states.contains(MaterialState.hovered) ? appColors.onBackground : appColors.primary,
               ),
             ),
           ],
@@ -110,7 +111,7 @@ class OpenableText extends StatelessWidget {
           text: TextSpan(
             text: text,
             style: style.copyWith(
-              color: states.contains(MaterialState.hovered) ? const Color(0xfffbfbfb) : const Color(0xff2f8af5),
+              color: states.contains(MaterialState.hovered) ? Colors.white54 : appColors.secondary,
             ),
             children: [
               WidgetSpan(
@@ -120,7 +121,7 @@ class OpenableText extends StatelessWidget {
                   child: Icon(
                     Icons.open_in_new,
                     size: 16,
-                    color: states.contains(MaterialState.hovered) ? const Color(0xfffbfbfb) : const Color(0xff2f8af5),
+                    color: states.contains(MaterialState.hovered) ? Colors.white54 : appColors.secondary,
                   ),
                 ),
               ),

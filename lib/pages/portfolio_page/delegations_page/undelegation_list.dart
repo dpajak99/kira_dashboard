@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/undelegation.dart';
 import 'package:kira_dashboard/pages/portfolio_page/delegations_page/undelegations_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
@@ -63,7 +64,7 @@ class UndelegationList extends StatelessWidget {
               item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -74,10 +75,8 @@ class UndelegationList extends StatelessWidget {
             if (item.isClaimable && isMyWallet) {
               return Align(
                 alignment: Alignment.centerRight,
-                child: IconTextButton(
+                child: SimpleTextButton(
                   text: 'Claim',
-                  highlightColor: const Color(0xfffbfbfb),
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                   onTap: () => _handleClaimUndelegation(item),
                 ),
               );
@@ -85,7 +84,7 @@ class UndelegationList extends StatelessWidget {
 
             return Text(
               DateFormat('d MMM y, HH:mm').format(item.expiry),
-              style: textTheme.bodyMedium!.copyWith(color: item.isClaimable ? const Color(0xff35b15f) : const Color(0xfff12e1f)),
+              style: textTheme.bodyMedium!.copyWith(color: item.isClaimable ? CustomColors.green : CustomColors.red),
               textAlign: TextAlign.right,
             );
           },
@@ -125,13 +124,13 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Amounts',
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
           ),
           value: Text(
             item.amounts.map((e) => e.toNetworkDenominationString()).join(', '),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
           ),
         ),
         if (item.isClaimable == false) ...<Widget>[
@@ -139,22 +138,20 @@ class _MobileListTile extends StatelessWidget {
           MobileRow(
             title: Text(
               'Claim after',
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
             ),
             value: Text(
               DateFormat('d MMM y, HH:mm').format(item.expiry),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             ),
           ),
         ],
         if (isMyWallet && item.isClaimable) ...<Widget>[
           const SizedBox(height: 32),
-          IconTextButton(
+          SimpleTextButton(
             text: 'Claim',
-            highlightColor: const Color(0xfffbfbfb),
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
             onTap: onClaim,
           ),
         ],

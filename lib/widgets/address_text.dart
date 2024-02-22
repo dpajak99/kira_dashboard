@@ -1,28 +1,29 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/mouse_state_listener.dart';
 
 class CopyableAddressText extends StatelessWidget {
   final String address;
-  final TextStyle style;
   final bool full;
+  final bool dark;
 
   const CopyableAddressText({
     super.key,
     required this.address,
-    required this.style,
     this.full = false,
+    this.dark = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return AddressText(
       address: address,
-      style: style,
       icon: Icons.copy,
       full: full,
+      dark: dark,
       onTap: () => _copyAddress(context),
     );
   }
@@ -34,19 +35,16 @@ class CopyableAddressText extends StatelessWidget {
 
 class CopyableText extends StatelessWidget {
   final String text;
-  final TextStyle style;
 
   const CopyableText({
     super.key,
     required this.text,
-    required this.style,
   });
 
   @override
   Widget build(BuildContext context) {
-    return IconTextButton(
+    return SimpleTextButton(
       text: text,
-      style: style,
       icon: Icons.copy,
       onTap: () => _copyText(context),
     );
@@ -59,13 +57,11 @@ class CopyableText extends StatelessWidget {
 
 class OpenableAddressText extends StatelessWidget {
   final String? address;
-  final TextStyle style;
   final bool full;
 
   const OpenableAddressText({
     super.key,
     required this.address,
-    required this.style,
     this.full = false,
   });
 
@@ -73,7 +69,6 @@ class OpenableAddressText extends StatelessWidget {
   Widget build(BuildContext context) {
     return AddressText(
       address: address,
-      style: style,
       full: full,
       icon: Icons.open_in_new,
       onTap: () => _openAddress(context),
@@ -87,61 +82,66 @@ class OpenableAddressText extends StatelessWidget {
 
 class AddressText extends StatelessWidget {
   final String? address;
-  final TextStyle style;
   final IconData? icon;
   final VoidCallback? onTap;
   final bool full;
+  final bool dark;
 
   const AddressText({
     super.key,
     required this.address,
-    required this.style,
     this.icon,
     this.onTap,
     this.full = false,
+    this.dark = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    
     if (address == null) {
       return Text(
         '---',
-        style: style,
+        style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
       );
     }
-    return IconTextButton(
+    return SimpleTextButton(
       text: full ? address! : '${address!.substring(0, 8)}...${address!.substring(address!.length - 4)}',
-      style: style,
       icon: icon,
+      dark: dark,
       onTap: onTap,
     );
   }
 }
 
-class IconTextButton extends StatelessWidget {
+class SimpleTextButton extends StatelessWidget {
   final String text;
-  final TextStyle style;
   final IconData? icon;
   final VoidCallback? onTap;
   final double gap;
-  final Color highlightColor;
   final double? rotateAngle;
   final bool reversed;
+  final bool dark;
 
-  const IconTextButton({
+  const SimpleTextButton({
     super.key,
     required this.text,
-    required this.style,
     this.icon,
     required this.onTap,
-    this.highlightColor = const Color(0xff4888f0),
     this.gap = 8,
     this.rotateAngle,
+    this.dark = false,
     this.reversed = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    
+    Color highlightColor = Colors.white60;
+    TextStyle style = textTheme.bodyMedium!.copyWith(color: dark? appColors.secondary : appColors.primary );
+    
     return MouseStateListener(
       onTap: onTap,
       childBuilder: (Set<MaterialState> states) {
@@ -150,6 +150,7 @@ class IconTextButton extends StatelessWidget {
                 icon,
                 size: 16,
                 color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+          
               )
             : null;
 

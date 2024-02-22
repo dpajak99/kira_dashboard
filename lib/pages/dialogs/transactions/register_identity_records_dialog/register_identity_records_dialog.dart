@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/governance.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
@@ -91,19 +92,19 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
                 ),
               ),
               const SizedBox(height: 8),
-              const Divider(color: Color(0xff222b3a)),
+              Divider(color: appColors.outline),
               const SizedBox(height: 8),
               Row(
                 children: [
                   Text(
                     'Fee:',
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                   ),
                   const Spacer(),
                   if (state is RegisterIdentityRecordsDialogLoadedState)
                     Text(
                       state.executionFee.toNetworkDenominationString(),
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                      style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
                     )
                   else
                     const SizedShimmer(width: 60, height: 14, reversed: true),
@@ -191,9 +192,9 @@ class _RecordPreview extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
           padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            color: Color(0xff06070a),
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+          decoration: BoxDecoration(
+            color: appColors.surface,
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
           ),
           child: Row(
             children: [
@@ -203,12 +204,12 @@ class _RecordPreview extends StatelessWidget {
                   children: [
                     Text(
                       'Key',
-                      style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                      style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                     ),
                     Text(
                       controller.hasKey ? controller.irKey : '---',
                       maxLines: 1,
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                      style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                     ),
                   ],
                 ),
@@ -221,23 +222,23 @@ class _RecordPreview extends StatelessWidget {
                   children: [
                     Text(
                       'Value',
-                      style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                      style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                     ),
                     Text(
                       controller.hasValue ? controller.irValue : '---',
                       maxLines: 1,
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                      style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                     ),
                   ],
                 ),
               ),
               IconButton(
                 onPressed: onEdit,
-                icon: const Icon(AppIcons.pencil, color: Color(0xff6c86ad), size: 20),
+                icon: Icon(AppIcons.pencil, color: appColors.secondary, size: 20),
               ),
               IconButton(
                 onPressed: onDelete,
-                icon: const Icon(Icons.close, color: Color(0xff6c86ad), size: 20),
+                icon: Icon(Icons.close, color: appColors.secondary, size: 20),
               ),
             ],
           ),

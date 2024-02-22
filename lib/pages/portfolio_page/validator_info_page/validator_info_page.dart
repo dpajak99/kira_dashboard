@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/staking_pool.dart';
@@ -84,19 +85,19 @@ class _StatsWidget extends StatelessWidget {
       title: 'Stats',
       titleSpacing: 8,
       titleStyle: textTheme.titleMedium!.copyWith(
-        color: const Color(0xfffbfbfb),
+        color: appColors.onBackground,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Divider(color: Color(0xff222b3a)),
+          Divider(color: appColors.outline),
           const SizedBox(height: 8),
           _ListTile(
             title: 'First present block',
             value: OpenableText(
               text: validator.startHeight.toString(),
               style: textTheme.bodyMedium!.copyWith(
-                color: const Color(0xfffbfbfb),
+                color: appColors.onBackground,
               ),
               onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: validator.startHeight.toString())),
             ),
@@ -107,7 +108,7 @@ class _StatsWidget extends StatelessWidget {
             value: OpenableText(
               text: validator.lastPresentBlock.toString(),
               style: textTheme.bodyMedium!.copyWith(
-                color: const Color(0xfffbfbfb),
+                color: appColors.onBackground,
               ),
               onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: validator.lastPresentBlock.toString())),
             ),
@@ -167,15 +168,13 @@ class _StakingPoolWidget extends StatelessWidget {
       title: 'Staking pool',
       titleSpacing: 8,
       titleStyle: textTheme.titleMedium!.copyWith(
-        color: const Color(0xfffbfbfb),
+        color: appColors.onBackground,
       ),
       leading: Row(
         children: [
           if (getIt<WalletProvider>().isSignedIn) ...<Widget>[
-            IconTextButton(
+            SimpleTextButton(
               text: 'Delegate',
-              highlightColor: const Color(0xfffbfbfb),
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
               onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: validator.valkey)),
             ),
           ],
@@ -184,7 +183,7 @@ class _StakingPoolWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Divider(color: Color(0xff222b3a)),
+          Divider(color: appColors.outline),
           const SizedBox(height: 8),
           _ListTile(
             title: 'Staking pool',
@@ -201,12 +200,12 @@ class _StakingPoolWidget extends StatelessWidget {
             value: isLoading ? const SizedShimmer(width: 80, height: 16) : stakingPool!.slashedPercentage,
           ),
           const SizedBox(height: 8),
-          const Divider(color: Color(0xff222b3a)),
+          Divider(color: appColors.outline),
           const SizedBox(height: 8),
           Text(
             'Staked voting powers',
             style: textTheme.bodyMedium!.copyWith(
-              color: const Color(0xff6c86ad),
+              color: appColors.secondary,
             ),
           ),
           if (isLoading) ...<Widget>[
@@ -220,11 +219,11 @@ class _StakingPoolWidget extends StatelessWidget {
                 leading: TokenIcon(size: 24, iconUrl: coin.icon),
                 title: Text(
                   coin.name,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                 ),
                 trailing: Text(
                   coin.toNetworkDenominationString(),
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
                 ),
               ),
         ],
@@ -251,14 +250,14 @@ class _ListTile extends StatelessWidget {
         Text(
           title,
           style: textTheme.bodyMedium!.copyWith(
-            color: const Color(0xff6c86ad),
+            color: appColors.secondary,
           ),
         ),
         if (value is String)
           Text(
             value,
             style: textTheme.bodyMedium!.copyWith(
-              color: const Color(0xfffbfbfb),
+              color: appColors.onBackground,
             ),
           )
         else

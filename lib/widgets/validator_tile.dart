@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 
@@ -24,12 +25,9 @@ class ValidatorTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(moniker, style: textTheme.bodyMedium?.copyWith(color: const Color(0xfffbfbfb))),
+              Text(moniker, style: textTheme.bodyMedium?.copyWith(color: appColors.onBackground)),
               const SizedBox(height: 2),
-              OpenableAddressText(
-                address: address,
-                style: textTheme.labelMedium!.copyWith(color: const Color(0xff2f8af5)),
-              ),
+              OpenableAddressText(address: address),
             ],
           ),
         ),

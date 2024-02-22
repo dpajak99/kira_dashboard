@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/predefined_networks.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/network_dialog/network_state.dart';
@@ -44,9 +45,9 @@ class _NetworkDialog extends State<NetworkDialog> {
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 8),
-                decoration: const BoxDecoration(
-                  color: Color(0xff0a0d15),
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                decoration: BoxDecoration(
+                  color: appColors.secondaryContainer,
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
                 ),
                 child: Column(
                   children: [
@@ -64,32 +65,30 @@ class _NetworkDialog extends State<NetworkDialog> {
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: Color(0xff0a0d15),
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                decoration: BoxDecoration(
+                  color: appColors.secondaryContainer,
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
                 ),
                 child: Row(
                   children: [
                     Expanded(
                       child: TextField(
                         controller: controller,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                        cursorColor: const Color(0xfffbfbfb),
+                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                        cursorColor: appColors.onBackground,
                         cursorWidth: 1,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           isDense: true,
                           hintText: 'Custom address',
-                          hintStyle: textTheme.bodyMedium!.copyWith(color: const Color(0xff3e4c63)),
+                          hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
                           border: InputBorder.none,
                         ),
                       ),
                     ),
                     const SizedBox(width: 16),
-                    IconTextButton(
+                    SimpleTextButton(
                       text: 'Add',
-                      highlightColor: const Color(0xfffbfbfb),
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                       onTap: () {
                         try {
                           getIt<NetworkCubit>().addCustomNetwork(NetworkTemplate(
@@ -128,9 +127,9 @@ class ConnectedNetworkTile extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: const BoxDecoration(
-        color: Color(0xff0a0d15),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+      decoration: BoxDecoration(
+        color: appColors.secondaryContainer,
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -142,37 +141,37 @@ class ConnectedNetworkTile extends StatelessWidget {
               size: 20,
               proxyEnabled: networkStatus.proxyEnabled,
               color: switch (networkStatus.status) {
-                NetworkStatusType.online => Colors.green,
-                NetworkStatusType.unhealthy => Colors.yellow,
-                NetworkStatusType.offline => Colors.red,
-                NetworkStatusType.connecting => const Color(0xff6c86ad),
+                NetworkStatusType.online => CustomColors.green,
+                NetworkStatusType.unhealthy => CustomColors.yellow,
+                NetworkStatusType.offline => CustomColors.red,
+                NetworkStatusType.connecting => appColors.secondary,
               },
             ),
             title: Text(
               networkStatus.name ?? 'unknown',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             ),
             subtitle: Text(
               networkStatus.interxUrl.toString(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+              style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
             ),
             trailing: Text(
               'Connected',
               style: textTheme.labelMedium!.copyWith(
                 color: switch (networkStatus.status) {
-                  NetworkStatusType.online => Colors.green,
-                  NetworkStatusType.unhealthy => Colors.yellow,
-                  NetworkStatusType.offline => Colors.red,
-                  NetworkStatusType.connecting => const Color(0xff6c86ad),
+                  NetworkStatusType.online => CustomColors.green,
+                  NetworkStatusType.unhealthy => CustomColors.yellow,
+                  NetworkStatusType.offline => CustomColors.red,
+                  NetworkStatusType.connecting => appColors.secondary,
                 },
               ),
             ),
           ),
-          const Divider(color: Color(0xff222b3a)),
+          Divider(color: appColors.outline),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
@@ -180,25 +179,25 @@ class ConnectedNetworkTile extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Chain', style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad))),
-                    Text(details?.chainId ?? '---', style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb))),
+                    Text('Chain', style: textTheme.labelMedium!.copyWith(color: appColors.secondary)),
+                    Text(details?.chainId ?? '---', style: textTheme.labelMedium!.copyWith(color: appColors.onBackground)),
                   ],
                 ),
                 const SizedBox(width: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Block time', style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad))),
+                    Text('Block time', style: textTheme.labelMedium!.copyWith(color: appColors.secondary)),
                     Text(details?.blockDateTime != null ? DateFormat('d MMM y, HH:mm').format(details!.blockDateTime) : '---',
-                        style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb))),
+                        style: textTheme.labelMedium!.copyWith(color: appColors.onBackground)),
                   ],
                 ),
                 const SizedBox(width: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Block height', style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad))),
-                    Text(details?.block.toString() ?? '---', style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb))),
+                    Text('Block height', style: textTheme.labelMedium!.copyWith(color: appColors.secondary)),
+                    Text(details?.block.toString() ?? '---', style: textTheme.labelMedium!.copyWith(color: appColors.onBackground)),
                   ],
                 ),
               ],
@@ -234,30 +233,28 @@ class AvailableNetworkTile extends StatelessWidget {
           NetworkStatusType.online => Colors.green,
           NetworkStatusType.unhealthy => Colors.yellow,
           NetworkStatusType.offline => Colors.red,
-          NetworkStatusType.connecting => const Color(0xff6c86ad),
+          NetworkStatusType.connecting => appColors.secondary,
         },
       ),
       title: Text(
         networkStatus.name ?? 'unknown',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
       ),
       subtitle: Text(
         networkStatus.interxUrl.toString(),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+        style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (networkStatus.status == NetworkStatusType.online)
-            IconTextButton(
+            SimpleTextButton(
               text: 'Connect',
-              highlightColor: const Color(0xfffbfbfb),
-              style: textTheme.labelMedium!.copyWith(color: const Color(0xff4888f0)),
               onTap: onTap,
             ),
           if (networkStatus.custom) ...<Widget>[
@@ -267,9 +264,9 @@ class AvailableNetworkTile extends StatelessWidget {
                 getIt<NetworkCubit>().removeCustomNetwork(networkStatus.interxUrl);
               },
               visualDensity: VisualDensity.compact,
-              icon: const Icon(
+              icon: Icon(
                 AppIcons.cancel,
-                color: Color(0xff6c86ad),
+                color: appColors.secondary,
                 size: 16,
               ),
             ),
@@ -317,7 +314,7 @@ class CircleIcon extends StatelessWidget {
                 color: color,
                 shadows: const [
                   BoxShadow(
-                    color: Color(0x29fbfbfb),
+                    color: Colors.white30,
                     blurRadius: 8,
                     spreadRadius: 2,
                   ),

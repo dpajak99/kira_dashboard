@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 
 class LabeledText extends StatelessWidget {
   final String label;
@@ -19,13 +20,13 @@ class LabeledText extends StatelessWidget {
       children: [
         Text(
           label,
-          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+          style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
         ),
         Text(
           text,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
         ),
       ],
     );

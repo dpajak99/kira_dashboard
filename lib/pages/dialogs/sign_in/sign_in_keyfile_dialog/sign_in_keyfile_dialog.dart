@@ -1,10 +1,9 @@
 import 'package:blockchain_utils/bech32/bech32_base.dart';
-import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/keyfile.dart';
 import 'package:kira_dashboard/models/wallet.dart';
@@ -39,7 +38,7 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xff0a0d15),
+                  color: appColors.secondaryContainer,
                 ),
                 height: 200,
                 width: double.infinity,
@@ -59,52 +58,52 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
                                   Text(
                                     'Drop'.toUpperCase(),
                                     style: textTheme.titleLarge!.copyWith(
-                                      color: const Color(0xfffbfbfb),
+                                      color: appColors.onBackground,
                                     ),
                                   ),
                                 ] else if (state.file != null) ...<Widget>[
-                                  const Icon(
+                                  Icon(
                                     Icons.file_present,
                                     size: 40,
-                                    color: Color(0xff6c86ad),
+                                    color: appColors.secondary,
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     state.file!.name,
                                     style: textTheme.bodyMedium!.copyWith(
-                                      color: const Color(0xfffbfbfb),
+                                      color: appColors.onBackground,
                                     ),
                                   ),
                                   if (state.encryptedKeyfile != null)
                                     Text(
                                       Bech32Encoder.encode('kira', state.encryptedKeyfile!.addressBytes),
                                       style: textTheme.labelSmall!.copyWith(
-                                        color: const Color(0xff6c86ad),
+                                        color: appColors.secondary,
                                       ),
                                     ),
                                   Text(
                                     state.file!.sizeString,
                                     style: textTheme.labelSmall!.copyWith(
-                                      color: const Color(0xff6c86ad),
+                                      color: appColors.secondary,
                                     ),
                                   ),
                                 ] else ...<Widget>[
-                                  const Icon(
+                                  Icon(
                                     Icons.file_upload_outlined,
                                     size: 40,
-                                    color: Color(0xff6c86ad),
+                                    color: appColors.secondary,
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     'Drop keyfile here'.toUpperCase(),
                                     style: textTheme.bodyMedium!.copyWith(
-                                      color: const Color(0xfffbfbfb),
+                                      color: appColors.onBackground,
                                     ),
                                   ),
                                   Text(
                                     'Drag and drop your .json keyfile here or click to browse',
                                     style: textTheme.labelSmall!.copyWith(
-                                      color: const Color(0xff6c86ad),
+                                      color: appColors.secondary,
                                     ),
                                   ),
                                 ]
@@ -134,20 +133,20 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: Color(0xff0a0d15),
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                decoration: BoxDecoration(
+                  color: appColors.secondaryContainer,
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
                 ),
                 child: TextField(
                   controller: cubit.passwordController,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                  cursorColor: const Color(0xfffbfbfb),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                  cursorColor: appColors.onBackground,
                   cursorWidth: 1,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.zero,
                     isDense: true,
                     hintText: 'Enter password',
-                    hintStyle: textTheme.bodyMedium!.copyWith(color: const Color(0xff3e4c63)),
+                    hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
                     border: InputBorder.none,
                   ),
                   onChanged: (String value) => cubit.tryDecrypt(),

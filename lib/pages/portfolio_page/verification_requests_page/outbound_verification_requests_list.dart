@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/verification_request.dart';
 import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/outbound_verification_requests_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
@@ -63,7 +64,7 @@ class OutboundVerificationRequestsList extends StatelessWidget {
               DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -74,7 +75,7 @@ class OutboundVerificationRequestsList extends StatelessWidget {
               item.records.map((e) => e.key).join(', '),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -87,7 +88,7 @@ class OutboundVerificationRequestsList extends StatelessWidget {
               maxLines: 1,
               textAlign: TextAlign.right,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -99,10 +100,8 @@ class OutboundVerificationRequestsList extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconTextButton(
+                  SimpleTextButton(
                     text: 'Cancel',
-                    highlightColor: const Color(0xfffbfbfb),
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                     onTap: () => _handleCancel(item),
                   ),
                 ],
@@ -140,49 +139,47 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Records',
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
           ),
           value: Text(
             item.records.map((e) => e.key).join(', '),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
           ),
         ),
         const SizedBox(height: 8),
         MobileRow(
           title: Text(
             'Edited',
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
           ),
           value: Text(
             DateFormat('d MMM y, HH:mm').format(item.lastRecordEditDate),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
           ),
         ),
         const SizedBox(height: 8),
         MobileRow(
           title: Text(
             'Tip',
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
           ),
           value: Text(
             item.tip.toNetworkDenominationString(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
           ),
         ),
         if (isMyWallet) ...<Widget>[
           const SizedBox(height: 32),
           Row(
             children: [
-              IconTextButton(
+              SimpleTextButton(
                 text: 'Cancel',
-                highlightColor: const Color(0xfffbfbfb),
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                 onTap: onCancel,
               ),
             ],

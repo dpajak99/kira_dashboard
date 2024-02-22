@@ -8,12 +8,9 @@ class ConnectionGuard extends AutoRouteGuard {
 
   @override
   Future<void> onNavigation(NavigationResolver resolver, StackRouter router) async {
-    print('Guard');
     if (networkCubit.state.isConnected) {
-      print('Connected');
       resolver.next(true);
     } else {
-      print('Not connected');
       router.push(SplashRoute(routeInfo: PageRouteInfo.fromMatch(resolver.route)));
     }
   }

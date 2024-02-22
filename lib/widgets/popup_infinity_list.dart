@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/utils/cubits/list_cubit/infinity_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
@@ -34,32 +34,30 @@ class PopupInfinityListState<T> extends State<PopupInfinityList<T>> {
           Container(
             padding: const EdgeInsets.all(16),
             margin: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
-            decoration: const BoxDecoration(
-              color: Color(0xff06070a),
-              borderRadius: BorderRadius.all(Radius.circular(16)),
+            decoration: BoxDecoration(
+              color: appColors.surface,
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: TextEditingController(),
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-                    cursorColor: const Color(0xfffbfbfb),
+                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
+                    cursorColor: appColors.onBackground,
                     cursorWidth: 1,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.zero,
                       isDense: true,
                       hintText: 'Search by lowest denomination name',
-                      hintStyle: textTheme.bodyMedium!.copyWith(color: const Color(0xff3e4c63)),
+                      hintStyle: textTheme.bodyMedium!.copyWith(color: appColors.secondaryContainer),
                       border: InputBorder.none,
                     ),
                   ),
                 ),
                 const SizedBox(width: 16),
-                IconTextButton(
+                SimpleTextButton(
                   text: 'Search',
-                  highlightColor: const Color(0xfffbfbfb),
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                   onTap: () {},
                 ),
               ],

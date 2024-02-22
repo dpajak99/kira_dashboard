@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/account_dialog/account_dialog_state.dart';
@@ -43,9 +44,9 @@ class _AccountDialog extends State<AccountDialog> {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: const BoxDecoration(
-                  color: Color(0xff06070a),
-                  borderRadius: BorderRadius.all(Radius.circular(24)),
+                decoration: BoxDecoration(
+                  color: appColors.surface,
+                  borderRadius: const BorderRadius.all(Radius.circular(24)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,23 +61,19 @@ class _AccountDialog extends State<AccountDialog> {
                               Navigator.of(context).pop();
                               AutoRouter.of(context).push(PortfolioRoute(address: state.selectedWallet!.address));
                             },
-                            icon: const Icon(
-                              Icons.open_in_new,
-                              size: 20,
-                              color: Color(0xff6c86ad),
-                            ),
+                            icon: Icon(Icons.open_in_new, color: appColors.secondary, size: 20),
                             label: Text(
                               'Open portfolio',
-                              style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                              style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                             ),
                           ),
                           Row(
                             children: [
                               IconButton(
                                 onPressed: () {},
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.settings,
-                                  color: Color(0xff6c86ad),
+                                  color: appColors.secondary,
                                 ),
                               ),
                               IconButton(
@@ -85,10 +82,7 @@ class _AccountDialog extends State<AccountDialog> {
                                   cubit.signOut();
                                   AutoRouter.of(context).navigate(const MenuWrapperRoute());
                                 },
-                                icon: const Icon(
-                                  Icons.logout_outlined,
-                                  color: Color(0xff6c86ad),
-                                ),
+                                icon: Icon(Icons.logout_outlined, color: appColors.secondary),
                               ),
                             ],
                           ),
@@ -127,9 +121,9 @@ class _AccountDialog extends State<AccountDialog> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Divider(color: Color(0xff222b3a)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Divider(color: appColors.outline),
                     ),
                     const SizedBox(height: 8),
                     Padding(
@@ -138,15 +132,14 @@ class _AccountDialog extends State<AccountDialog> {
                         children: [
                           Text(
                             'Available accounts',
-                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium?.copyWith(color: appColors.secondary),
                           ),
                           const Spacer(),
-                          IconTextButton(
+                          SimpleTextButton(
                             text: 'Add',
                             gap: 4,
                             reversed: true,
                             icon: Icons.add,
-                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                             onTap: () => cubit.deriveNextWallet(),
                           ),
                         ],
@@ -173,17 +166,16 @@ class _AccountDialog extends State<AccountDialog> {
                           leading: IdentityAvatar(size: 40, address: walletInfo.wallet.address),
                           title: Text(
                             'Account ${walletInfo.wallet.index}',
-                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                           ),
                           subtitle: AddressText(
                             address: walletInfo.wallet.address,
-                            style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
                           ),
                           trailing: state.isLoading
                               ? const SizedShimmer(width: 40, height: 14)
                               : Text(
                                   walletInfo.coin?.toNetworkDenominationString() ?? '---',
-                                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                                  style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                                 ),
                         );
 
@@ -191,13 +183,10 @@ class _AccountDialog extends State<AccountDialog> {
                           item = Container(
                             margin: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
                             decoration: BoxDecoration(
-                              color: const Color(0xff222b3a),
+                              color: appColors.outline,
                               borderRadius: BorderRadius.circular(8),
-                              border: const Border(
-                                left: BorderSide(
-                                  color: Color(0xff4888f0),
-                                  width: 4,
-                                ),
+                              border: Border(
+                                left: BorderSide(color: appColors.primary, width: 4),
                               ),
                             ),
                             child: item,

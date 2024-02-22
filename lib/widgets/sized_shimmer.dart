@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SizedShimmer extends StatelessWidget {
@@ -28,8 +29,8 @@ class SizedShimmer extends StatelessWidget {
         child: ClipRRect(
           borderRadius: borderRadius ?? BorderRadius.circular(width * 0.2),
           child: Shimmer.fromColors(
-            baseColor: reversed ? const Color(0xff6c86ad) : const Color(0xff131823),
-            highlightColor: reversed ? const Color(0xff131823).withOpacity(0.5) : const Color(0xff6c86ad).withOpacity(0.2),
+            baseColor: reversed ? appColors.secondary : appColors.secondaryContainer,
+            highlightColor: reversed ? appColors.secondaryContainer.withOpacity(0.5) : appColors.secondary.withOpacity(0.2),
             child: Container(width: width, height: height, color: Colors.white.withOpacity(0.4)),
           ),
         ),
@@ -42,7 +43,7 @@ class SizedShimmer extends StatelessWidget {
           height: height,
           decoration: BoxDecoration(
             borderRadius: borderRadius ?? BorderRadius.circular(width * 0.3),
-            color: const Color(0xff131823).withOpacity(0.4),
+            color: appColors.secondaryContainer.withOpacity(0.4),
           ),
         ),
       );

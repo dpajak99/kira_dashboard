@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 
 class ScrollableAppBar extends SliverPersistentHeaderDelegate {
@@ -81,9 +82,9 @@ class _CustomDialogRoute extends State<CustomDialog> with SingleTickerProviderSt
           child: Container(
             width: MediaQuery.of(context).size.width < 600 ? double.maxFinite : widget.width,
             padding: const EdgeInsets.symmetric(vertical: 16),
-            decoration: const BoxDecoration(
-              color: Color(0xff131823),
-              borderRadius: BorderRadius.all(Radius.circular(24)),
+            decoration: BoxDecoration(
+              color: appColors.secondaryContainer,
+              borderRadius: const BorderRadius.all(Radius.circular(24)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

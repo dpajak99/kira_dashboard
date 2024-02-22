@@ -26,8 +26,6 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-
     return Column(
       children: [
         CustomCard(
@@ -36,12 +34,10 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
           leading: Row(
             children: [
               if (widget.isMyWallet)
-                IconTextButton(
+                SimpleTextButton(
                   text: 'Add',
                   icon: AppIcons.add,
                   gap: 4,
-                  highlightColor: const Color(0xfffbfbfb),
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                   onTap: () => DialogRouter().navigate(const RegisterIdentityRecordsDialog()),
                 ),
             ],

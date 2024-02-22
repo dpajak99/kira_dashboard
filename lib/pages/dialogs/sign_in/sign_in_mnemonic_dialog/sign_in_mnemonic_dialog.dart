@@ -2,6 +2,7 @@ import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
@@ -51,9 +52,9 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
         bloc: cubit,
         builder: (BuildContext context, SignInMnemonicDialogState state) {
           return Container(
-            decoration: const BoxDecoration(
-              color: Color(0xff090d15),
-              borderRadius: BorderRadius.all(Radius.circular(24)),
+            decoration: BoxDecoration(
+              color: appColors.surface,
+              borderRadius: const BorderRadius.all(Radius.circular(24)),
             ),
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -61,7 +62,7 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
               children: [
                 Text(
                   'Select mnemonic size',
-                  style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
+                  style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -76,7 +77,7 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
                 const SizedBox(height: 24),
                 Text(
                   'Enter mnemonic passphrase',
-                  style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
+                  style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
                 ),
                 const SizedBox(height: 8),
                 ..._buildCells(state),

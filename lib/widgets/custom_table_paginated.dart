@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 
@@ -24,8 +25,8 @@ class CustomTablePaginated<T> extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     ButtonStyle buttonStyle = IconButton.styleFrom(
-      foregroundColor: const Color(0xff6c86ad),
-      disabledForegroundColor: const Color(0x776c86ad),
+      foregroundColor: appColors.secondary,
+      disabledForegroundColor: appColors.secondary.withOpacity(0.8)
     );
 
     return BlocBuilder<PaginatedListCubit<T>, PaginatedListState<T>>(
@@ -53,7 +54,7 @@ class CustomTablePaginated<T> extends StatelessWidget {
                 icon: Text(
                   (i + 1).toString(),
                   style: textTheme.bodyMedium!.copyWith(
-                    color: i == state.pageIndex ? const Color(0xff4888f0) : const Color(0xff6c86ad),
+                    color: i == state.pageIndex ? appColors.primary : appColors.secondary,
                   ),
                 ),
               ),

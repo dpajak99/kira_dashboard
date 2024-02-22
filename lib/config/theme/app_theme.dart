@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 
 class AppTheme {
@@ -13,17 +14,8 @@ class AppTheme {
     double fontSizeCofactor = windowWidth < 900 ? 0.9 : 1;
 
     return baseTheme.copyWith(
-      scaffoldBackgroundColor: const Color(0xff06070a),
-      colorScheme: const ColorScheme.dark(
-        primary: Color(0xff4888f0),
-        secondary: Color(0xff6c86ad),
-        surface: Color(0xff06070a),
-        background: Color(0xff06070a),
-        onPrimary: Color(0xfffbfbfb),
-        onSecondary: Color(0xfffbfbfb),
-        onSurface: Color(0xfffbfbfb),
-        onBackground: Color(0xfffbfbfb),
-      ),
+      scaffoldBackgroundColor: appColors.surface,
+      colorScheme: appColors,
       textSelectionTheme: TextSelectionThemeData(selectionColor: Colors.white.withOpacity(0.2)),
       textButtonTheme: TextButtonThemeData(style: darkTextButtonStyle),
       elevatedButtonTheme: ElevatedButtonThemeData(style: darkElevatedButton),

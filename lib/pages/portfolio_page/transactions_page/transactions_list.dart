@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/transaction.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_list_cubit.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
@@ -47,7 +48,7 @@ class TransactionsList extends StatelessWidget {
             return OpenableHash(
               hash: item.hash,
               onTap: () => AutoRouter.of(context).push(TransactionDetailsRoute(hash: item.hash)),
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.primary),
             );
           },
         ),
@@ -66,7 +67,7 @@ class TransactionsList extends StatelessWidget {
               DateFormat('d MMM y, HH:mm').format(item.time),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -74,10 +75,7 @@ class TransactionsList extends StatelessWidget {
           title: 'From',
           width: 160,
           cellBuilder: (BuildContext context, Transaction item) {
-            return OpenableAddressText(
-              address: item.from,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-            );
+            return OpenableAddressText(address: item.from);
           },
         ),
         ColumnConfig(
@@ -91,10 +89,7 @@ class TransactionsList extends StatelessWidget {
           title: 'To',
           width: 160,
           cellBuilder: (BuildContext context, Transaction item) {
-            return OpenableAddressText(
-              address: item.to,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-            );
+            return OpenableAddressText(address: item.to);
           },
         ),
         ColumnConfig(
@@ -116,7 +111,7 @@ class TransactionsList extends StatelessWidget {
                 if (item.amounts.length > 1)
                   Text(
                     ' + ${item.amounts.length - 1}',
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                   ),
               ],
             );
@@ -151,7 +146,7 @@ class _MobileListTile extends StatelessWidget {
                     DateFormat('d MMM y, HH:mm').format(item.time),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+                    style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
                   ),
                 ],
               ),
@@ -172,7 +167,7 @@ class _MobileListTile extends StatelessWidget {
                   if (item.amounts.length > 1)
                     Text(
                       ' + ${item.amounts.length - 1}',
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                      style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                     ),
                 ],
               ),
@@ -182,11 +177,11 @@ class _MobileListTile extends StatelessWidget {
         const SizedBox(height: 16),
         Text(
           'Hash',
-          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+          style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
         ),
         OpenableHash(
           hash: item.hash,
-          style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
+          style: textTheme.bodyMedium!.copyWith(color: appColors.primary ),
           onTap: () => AutoRouter.of(context).push(ProposalDetailsRoute(proposalId: item.hash)),
         ),
         const SizedBox(height: 16),
@@ -199,12 +194,9 @@ class _MobileListTile extends StatelessWidget {
                 children: [
                   Text(
                     'From',
-                    style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+                    style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
                   ),
-                  OpenableAddressText(
-                    address: item.from,
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-                  ),
+                  OpenableAddressText(address: item.from),
                 ],
               ),
             ),
@@ -221,12 +213,9 @@ class _MobileListTile extends StatelessWidget {
                 children: [
                   Text(
                     'To',
-                    style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+                    style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
                   ),
-                  OpenableAddressText(
-                    address: item.to,
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-                  ),
+                  OpenableAddressText(address: item.to),
                 ],
               ),
             ),
@@ -255,9 +244,9 @@ class _DirectionChip extends StatelessWidget {
         direction == 'outbound' ? 'OUT' : 'IN',
         style: textTheme.labelMedium!.copyWith(
           color: switch (direction) {
-            'inbound' => const Color(0xff35b15f),
-            'outbound' => const Color(0xffffa500),
-            (_) => const Color(0x2935b15f),
+            'inbound' => CustomColors.green,
+            'outbound' => CustomColors.red,
+            (_) => Colors.transparent,
           },
         ),
       ),
@@ -279,7 +268,7 @@ class _MethodChip extends StatelessWidget {
         label,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+        style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
       ),
     );
   }

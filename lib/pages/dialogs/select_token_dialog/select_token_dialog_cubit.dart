@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:kira_dashboard/infra/services/balances_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/paginated_list_wrapper.dart';

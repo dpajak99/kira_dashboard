@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
@@ -49,19 +50,19 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
             width: 90,
             height: 90,
             child: switch (widget.status) {
-              TransactionProcessStatus.broadcast => const CircularProgressIndicator(
-                  color: Color(0xff2f8af5),
+              TransactionProcessStatus.broadcast => CircularProgressIndicator(
+                  color: appColors.primary,
                   strokeWidth: 2,
                 ),
               TransactionProcessStatus.success => const Icon(
                   Icons.done,
                   size: 90,
-                  color: Color(0xff59b987),
+                  color: CustomColors.green,
                 ),
               TransactionProcessStatus.failed => const Icon(
                   Icons.close,
                   size: 90,
-                  color: Color(0xffe74c3c),
+                  color: CustomColors.red,
                 ),
             },
           ),
@@ -69,13 +70,13 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
           if (widget.internalBroadcastException != null) ...<Widget>[
             Text(
               widget.internalBroadcastException!.code,
-              style: textTheme.headlineLarge!.copyWith(color: const Color(0xffe74c3c)),
+              style: textTheme.headlineLarge!.copyWith(color: CustomColors.red),
             ),
             const SizedBox(height: 8),
             Text(
               widget.internalBroadcastException!.message,
               textAlign: TextAlign.center,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
             ),
             const SizedBox(height: 40),
             SizedBox(

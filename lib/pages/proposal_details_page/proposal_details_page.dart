@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:json_view/json_view.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/proposal.dart';
 import 'package:kira_dashboard/pages/proposal_details_page/proposal_details_page_cubit.dart';
 import 'package:kira_dashboard/pages/proposal_details_page/proposal_details_page_state.dart';
@@ -35,12 +36,12 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
       bloc: proposalDetailsPageCubit,
       builder: (BuildContext context, ProposalDetailsPageState state) {
         if (state.isLoading) {
-          return const Center(
+          return Center(
             child: SizedBox(
               width: 90,
               height: 90,
               child: CircularProgressIndicator(
-                color: Color(0xff2f8af5),
+                color: appColors.primary,
                 strokeWidth: 2,
               ),
             ),
@@ -57,11 +58,11 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                       children: [
                         Text(
                           'Proposal #${widget.proposalId}',
-                          style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
+                          style: textTheme.titleLarge!.copyWith(color: appColors.secondary),
                         ),
                         Text(
                           state.proposalDetails!.proposal.title,
-                          style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                          style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -76,9 +77,9 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                               },
                               style: textTheme.labelLarge!.copyWith(
                                 color: switch (state.proposalDetails!.proposal.simpleStatus) {
-                                  VotingStatus.pending => const Color(0xff6c86ad),
-                                  VotingStatus.success => const Color(0xff35b15f),
-                                  VotingStatus.failure => const Color(0xfff12e1f),
+                                  VotingStatus.pending => appColors.secondary,
+                                  VotingStatus.success => CustomColors.green,
+                                  VotingStatus.failure => CustomColors.red,
                                 },
                               ),
                             ),
@@ -112,7 +113,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                               child: ListTile(
                                 title: Text(
                                   'For',
-                                  style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                                  style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                                 ),
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
@@ -126,7 +127,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                               child: ListTile(
                                 title: Text(
                                   'Against',
-                                  style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                                  style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                                 ),
                                 contentPadding: EdgeInsets.zero,
                                 dense: true,
@@ -143,15 +144,15 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                           proportions: [
                             ProportionValue(
                               value: state.proposalDetails?.yesVotesPercentage ?? 0,
-                              color: const Color(0xee35b15f),
+                              color: CustomColors.green,
                             ),
                             ProportionValue(
                               value: state.proposalDetails?.noVotesPercentage ?? 0,
-                              color: const Color(0xfff12e1f),
+                              color: CustomColors.red,
                             ),
                             ProportionValue(
                               value: state.proposalDetails?.unknownVotePercentage ?? 0,
-                              color: const Color(0xff6c86ad),
+                              color: appColors.secondary,
                             ),
                           ],
                         ),
@@ -167,7 +168,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                 'Description',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                style: textTheme.headlineMedium!.copyWith(color: appColors.onBackground),
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 20)),
@@ -178,44 +179,44 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   shrinkWrap: true,
                   config: MarkdownConfig(
                     configs: [
-                      const HrConfig(
-                        color: Color(0xff222b3a),
+                      HrConfig(
+                        color: appColors.outline,
                         height: 1,
                       ),
                       CustomH1Config(
                         style: textTheme.headlineMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       CustomH2Config(
                         style: textTheme.titleMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       H3Config(
                         style: textTheme.titleMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       H4Config(
                         style: textTheme.titleMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       H5Config(
                         style: textTheme.titleMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       H6Config(
                         style: textTheme.titleMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       PreConfig.darkConfig,
                       PConfig(
                         textStyle: textTheme.bodyMedium!.copyWith(
-                          color: const Color(0xfffbfbfb),
+                          color: appColors.onBackground,
                         ),
                       ),
                       CodeConfig.darkConfig,
@@ -231,7 +232,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                 'Details',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                style: textTheme.headlineMedium!.copyWith(color: appColors.onBackground),
               ),
             ),
             const SliverPadding(padding: EdgeInsets.only(top: 20)),
@@ -242,7 +243,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    color: const Color(0xff06070a),
+                    color: appColors.surface,
                   ),
                   child: JsonView(
                     json: state.proposalDetails!.proposal.content,
@@ -296,15 +297,15 @@ class _StatusChip extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: switch (voteResult) {
-            VoteResult.unknown => const Color(0x29f12e1f),
-            VoteResult.passed => const Color(0x2935b15f),
-            VoteResult.rejected => const Color(0x29f12e1f),
-            VoteResult.rejectedWithVeto => const Color(0x29f12e1f),
-            VoteResult.pending => const Color(0x296c86ad),
-            VoteResult.quorumNotReached => const Color(0x29f12e1f),
-            VoteResult.enactment => const Color(0x2989ffb0),
-            VoteResult.passedWithExecFail => const Color(0x29f12e1f),
-          },
+            VoteResult.unknown => CustomColors.red,
+            VoteResult.passed => CustomColors.green,
+            VoteResult.rejected => CustomColors.red,
+            VoteResult.rejectedWithVeto => CustomColors.red,
+            VoteResult.pending => appColors.secondary,
+            VoteResult.quorumNotReached => CustomColors.red,
+            VoteResult.enactment => CustomColors.green,
+            VoteResult.passedWithExecFail => CustomColors.red,
+          }.withOpacity(0.3),
         ),
         child: Text(
           switch (voteResult) {
@@ -319,14 +320,14 @@ class _StatusChip extends StatelessWidget {
           },
           style: textTheme.labelLarge!.copyWith(
             color: switch (voteResult) {
-              VoteResult.unknown => const Color(0xfff12e1f),
-              VoteResult.passed => const Color(0xff35b15f),
-              VoteResult.rejected => const Color(0xfff12e1f),
-              VoteResult.rejectedWithVeto => const Color(0xfff12e1f),
-              VoteResult.pending => const Color(0xff6c86ad),
-              VoteResult.quorumNotReached => const Color(0xfff12e1f),
-              VoteResult.enactment => const Color(0xff89ffb0),
-              VoteResult.passedWithExecFail => const Color(0xfff12e1f),
+              VoteResult.unknown => CustomColors.red,
+              VoteResult.passed => CustomColors.green,
+              VoteResult.rejected => CustomColors.red,
+              VoteResult.rejectedWithVeto => CustomColors.red,
+              VoteResult.pending => appColors.secondary,
+              VoteResult.quorumNotReached => CustomColors.red,
+              VoteResult.enactment => CustomColors.green,
+              VoteResult.passedWithExecFail => CustomColors.red,
             },
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:blockchain_utils/bip/bip/bip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_mnemonic_dialog/mnemonic_text_field/mnemonic_text_field_state.dart';
 import 'package:kira_dashboard/widgets/typeahead_text_field.dart';
@@ -45,9 +46,9 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xff131823),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+      decoration: BoxDecoration(
+        color: appColors.surface,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
@@ -57,11 +58,11 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
             builder: (BuildContext context, MnemonicTextFieldState state) {
               Color color;
               if (state.word.isEmpty) {
-                color = const Color(0xff6c86ad);
+                color = appColors.secondary;
               } else if ((state.hasHint && focusNode.hasFocus) || state.valid) {
-                color = const Color(0xff59b987);
+                color = CustomColors.green;
               } else {
-                color = const Color(0xfff12e1f);
+                color = CustomColors.red;
               }
 
               return SizedBox(
@@ -79,7 +80,7 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
               controller: widget.controller,
               focusNode: focusNode,
               style: textTheme.bodyMedium!.copyWith(
-                color: const Color(0xfffbfbfb),
+                color: appColors.onBackground,
                 letterSpacing: 1,
               ),
               inputFormatters: [
@@ -89,7 +90,7 @@ class _MnemonicTextFieldState extends State<MnemonicTextField> {
                 ),
                 LengthLimitingTextInputFormatter(8),
               ],
-              suggestionColor: const Color(0xff6c86ad),
+              suggestionColor: appColors.secondary,
               suggestionList: Bip39Languages.english.wordList,
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:json_view/json_view.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
@@ -28,9 +29,9 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: Color(0xff06070a),
-              borderRadius: BorderRadius.all(Radius.circular(16)),
+            decoration: BoxDecoration(
+              color: appColors.surface,
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
             child: Row(
               children: [
@@ -46,9 +47,9 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                 InkWell(
                   onTap: () {},
                   radius: 30,
-                  child: const Icon(
+                  child: Icon(
                     Icons.copy,
-                    color: Color(0xff6c86ad),
+                    color: appColors.secondary,
                     size: 16,
                   ),
                 ),
@@ -62,15 +63,15 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                 child: Container(
                   height: 400,
                   padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                    color: Color(0xff06070a),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  decoration: BoxDecoration(
+                    color: appColors.surface,
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
                   ),
                   child: Column(
                     children: [
                       Text(
                         'Request',
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                       ),
                       const SizedBox(height: 16),
                       Expanded(
@@ -87,15 +88,15 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                 child: Container(
                   height: 400,
                   padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                    color: Color(0xff06070a),
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  decoration: BoxDecoration(
+                    color: appColors.surface,
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
                   ),
                   child: Column(
                     children: [
                       Text(
                         'Response',
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                       ),
                       const SizedBox(height: 16),
                       Expanded(

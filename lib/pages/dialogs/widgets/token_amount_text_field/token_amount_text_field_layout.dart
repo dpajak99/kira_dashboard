@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 
 class TokenAmountTextFieldLayout extends StatelessWidget {
   final Widget balanceWidget;
@@ -20,9 +21,9 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      decoration: const BoxDecoration(
-        color: Color(0xff06070a),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+      decoration: BoxDecoration(
+        color: appColors.surface,
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         children: [
@@ -33,7 +34,7 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
               children: [
                 Text(
                   'Asset',
-                  style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                  style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                 ),
                 const Spacer(),
                 balanceWidget,

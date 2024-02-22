@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 
 ButtonStyle darkTextButtonStyle = TextButton.styleFrom(
-  foregroundColor: const Color(0xff6c86ad),
-  textStyle: const TextStyle(fontSize: 16, color: Color(0xff6c86ad)),
+  foregroundColor: appColors.secondary,
+  textStyle: TextStyle(fontSize: 16, color: appColors.secondary),
 );
 
 ButtonStyle lightTextButtonStyle = TextButton.styleFrom(
-  foregroundColor: const Color(0xff2f8af5),
-  textStyle: const TextStyle(fontSize: 16, color: Color(0xff2f8af5)),
+  foregroundColor: appColors.primary,
+  textStyle: TextStyle(fontSize: 16, color: appColors.primary),
 );
 
 ButtonStyle signupButtonStyle = ButtonStyle(
   alignment: Alignment.centerLeft,
   animationDuration: Duration.zero,
   overlayColor: MaterialStateProperty.all(Colors.transparent),
-  backgroundColor: MaterialStateProperty.all(const Color(0xff06070a)),
+  backgroundColor: MaterialStateProperty.all(appColors.surface),
   foregroundColor: MaterialStateProperty.resolveWith(
-      (Set<MaterialState> states) => states.contains(MaterialState.hovered) ? const Color(0xff2f8af5) : const Color(0xfffbfbfb)),
+      (Set<MaterialState> states) => states.contains(MaterialState.hovered) ? appColors.primary : appColors.onBackground),
   shape: MaterialStateProperty.resolveWith(
     (Set<MaterialState> states) => RoundedRectangleBorder(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       side: BorderSide(
-        color: states.contains(MaterialState.hovered) ? const Color(0xff2f3b4d) : const Color(0xff06070a),
+        color: states.contains(MaterialState.hovered) ? const Color(0xff2f3b4d) : appColors.surface,
       ),
     ),
   ),
@@ -29,10 +30,10 @@ ButtonStyle signupButtonStyle = ButtonStyle(
 
 ButtonStyle outlinedElevatedButton = OutlinedButton.styleFrom(
   textStyle: const TextStyle(fontSize: 16),
-  foregroundColor: const Color(0xff6c86ad),
-  side: const BorderSide(
+  foregroundColor: appColors.secondary,
+  side: BorderSide(
     width: 1.0,
-    color: Color(0xff6c86ad),
+    color: appColors.secondary,
   ),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -42,9 +43,9 @@ ButtonStyle outlinedElevatedButton = OutlinedButton.styleFrom(
 ButtonStyle darkElevatedButton = ElevatedButton.styleFrom(
   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
   animationDuration: Duration.zero,
-  backgroundColor: const Color(0xff2f8af5),
+  backgroundColor: appColors.primary,
   disabledBackgroundColor: const Color(0xff354053),
-  foregroundColor: const Color(0xfffbfbfb),
+  foregroundColor: appColors.onBackground,
   disabledForegroundColor: const Color(0xff7185ab),
   textStyle: const TextStyle(fontSize: 16, color: Color(0xfffbfbfb)),
   padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
@@ -56,13 +57,13 @@ ButtonStyle lightElevatedButton = ElevatedButton.styleFrom(
   animationDuration: Duration.zero,
   backgroundColor: const Color(0xff182a44),
   disabledBackgroundColor: const Color(0xff354053),
-  foregroundColor: const Color(0xff2f8af5),
+  foregroundColor: appColors.primary,
   disabledForegroundColor: const Color(0xff7185ab),
-  textStyle: const TextStyle(fontSize: 16, color: Color(0xff2f8af5)),
+  textStyle: TextStyle(fontSize: 16, color: appColors.primary),
   padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 16),
   minimumSize: const Size(100, 50),
 );
 
 ButtonStyle filledIconButton = IconButton.styleFrom(
-  backgroundColor: const Color(0xff4888f0),
+  backgroundColor: appColors.primary,
 );

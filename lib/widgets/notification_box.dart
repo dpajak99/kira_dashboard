@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 
 enum NotificationType {
   success,
@@ -23,9 +23,9 @@ class NotificationBox extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     Color color = switch (type) {
-      NotificationType.success => const Color(0xFF76cf80),
-      NotificationType.error => const Color(0xFFff5454),
-      NotificationType.warning => const Color(0xFFF2e46c),
+      NotificationType.success => CustomColors.green,
+      NotificationType.error => CustomColors.red,
+      NotificationType.warning => CustomColors.yellow,
     };
 
     return Container(

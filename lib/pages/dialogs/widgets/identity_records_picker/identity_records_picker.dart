@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/select_identity_records_dialog/select_identity_records_dialog.dart';
@@ -42,9 +43,9 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
       builder: (BuildContext context, List<IdentityRecord> records, _) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: const BoxDecoration(
-            color: Color(0xff06070a),
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+          decoration: BoxDecoration(
+            color: appColors.surface,
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
           ),
           child: Column(
             children: [
@@ -55,7 +56,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                   children: [
                     Text(
                       'Records',
-                      style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                      style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                     ),
                     const Spacer(),
                     InkWell(
@@ -71,9 +72,9 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                         }
                       },
                       radius: 30,
-                      child: const Icon(
+                      child: Icon(
                         AppIcons.pencil,
-                        color: Color(0xff6c86ad),
+                        color: appColors.secondary,
                         size: 16,
                       ),
                     ),
@@ -93,7 +94,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                             child: Text(
                               record.key,
                               maxLines: 1,
-                              style: textTheme.titleLarge!.copyWith(color:  const Color(0xfffbfbfb)),
+                              style: textTheme.titleLarge!.copyWith(color:  appColors.onBackground),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -101,7 +102,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                             child: Text(
                               record.value,
                               maxLines: 1,
-                              style: textTheme.labelLarge!.copyWith(color:  const Color(0xfffbfbfb)),
+                              style: textTheme.labelLarge!.copyWith(color:  appColors.onBackground),
                             ),
                           ),
                         ],
@@ -117,7 +118,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                     children: [
                       Text(
                         'Records cannot be empty',
-                        style: textTheme.labelLarge!.copyWith(color: const Color(0xfff12e1f)),
+                        style: textTheme.labelLarge!.copyWith(color: appColors.error),
                       ),
                     ],
                   ),

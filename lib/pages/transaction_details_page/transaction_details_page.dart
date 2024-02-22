@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_view/json_view.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/transaction_result.dart';
 import 'package:kira_dashboard/pages/transaction_details_page/transaction_details_cubit.dart';
 import 'package:kira_dashboard/pages/transaction_details_page/transaction_details_state.dart';
@@ -32,8 +33,8 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad));
-    TextStyle valueStyle = textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb));
+    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: appColors.secondary);
+    TextStyle valueStyle = textTheme.bodyMedium!.copyWith(color: appColors.onBackground);
 
     return BlocBuilder<TransactionDetailsCubit, TransactionDetailsState>(
       bloc: cubit,
@@ -49,12 +50,9 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                       children: [
                         Text(
                           'Transaction Details',
-                          style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                          style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
                         ),
-                        CopyableText(
-                          text: widget.hash,
-                          style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
-                        )
+                        CopyableText(text: widget.hash)
                       ],
                     ),
                   ),
@@ -109,7 +107,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                           : Text(state.transactionResult!.blockTimestamp.toString(), style: valueStyle),
                     ),
                     const SizedBox(height: 12),
-                    const Divider(color: Color(0xff222b3a)),
+                    Divider(color: appColors.outline),
                     const SizedBox(height: 12),
                     if (state.transactionResult?.msgs.isNotEmpty ?? false)
                       _DetailRow(
@@ -129,9 +127,6 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                         title: Text('From', style: titleStyle),
                         value: OpenableAddressText(
                           address: state.transactionResult!.msgs.first.from,
-                          style: valueStyle.copyWith(
-                            color: const Color(0xff2f8af5),
-                          ),
                           full: true,
                         ),
                       ),
@@ -140,9 +135,6 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                         title: Text('To', style: titleStyle),
                         value: OpenableAddressText(
                           address: state.transactionResult!.msgs.first.to,
-                          style: valueStyle.copyWith(
-                            color: const Color(0xff2f8af5),
-                          ),
                           full: true,
                         ),
                       ),
@@ -160,7 +152,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
-                                  color: const Color(0xff06070a),
+                                  color: appColors.surface,
                                 ),
                                 child: JsonView(
                                   json: e.toJson(),
@@ -219,13 +211,13 @@ class _MethodChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: const Color(0xff263042),
+          color: appColors.secondary.withOpacity(0.3),
         ),
         child: Text(
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+          style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
         ),
       ),
     );
@@ -248,10 +240,10 @@ class _StatusChip extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: switch (status) {
-            TxStatusType.confirmed => const Color(0x2935b15f),
-            TxStatusType.pending => const Color(0x29ffa500),
-            TxStatusType.failed => const Color(0x29f12e1f),
-          },
+            TxStatusType.confirmed => CustomColors.green,
+            TxStatusType.pending => CustomColors.yellow,
+            TxStatusType.failed => CustomColors.red,
+          }.withOpacity(0.3),
         ),
         child: Text(
           switch (status) {
@@ -261,9 +253,9 @@ class _StatusChip extends StatelessWidget {
           },
           style: textTheme.labelMedium!.copyWith(
             color: switch (status) {
-              TxStatusType.confirmed => const Color(0xff35b15f),
-              TxStatusType.pending => const Color(0xffffa500),
-              TxStatusType.failed => const Color(0xfff12e1f),
+              TxStatusType.confirmed => CustomColors.green,
+              TxStatusType.pending => CustomColors.yellow,
+              TxStatusType.failed => CustomColors.red,
             },
           ),
         ),

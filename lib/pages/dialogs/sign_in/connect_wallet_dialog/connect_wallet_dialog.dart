@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
@@ -33,7 +34,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
         children: [
           Text(
             'Connect your wallet to access your account',
-            style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
           ),
           const SizedBox(height: 16),
           Row(
@@ -75,7 +76,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           const SizedBox(height: 16),
           Text(
             'Unsafe options',
-            style: textTheme.bodySmall!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodySmall!.copyWith(color: appColors.secondary),
           ),
           const SizedBox(height: 8),
           Row(
@@ -115,29 +116,26 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           TextButton.icon(
             onPressed: () => DialogRouter().navigate(const CreateWalletDialog()),
             style: lightTextButtonStyle,
-            icon: const Icon(
-              Icons.wallet,
-              color: Color(0xff4888f0),
-            ),
+            icon: Icon(Icons.wallet, color: appColors.primary),
             label: const Text("Create Wallet"),
           ),
           const SizedBox(height: 24),
           RichText(
             text: TextSpan(
               text: 'By connecting your wallet, you agree to\nour ',
-              style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
-              children: const [
+              style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
+              children: [
                 TextSpan(
                   text: 'Terms of Service',
-                  style: TextStyle(color: Color(0xff2f8af5)),
+                  style: TextStyle(color: appColors.primary),
                 ),
                 TextSpan(
                   text: ' and ',
-                  style: TextStyle(color: Color(0xff6c86ad)),
+                  style: TextStyle(color: appColors.primary),
                 ),
                 TextSpan(
                   text: 'Privacy Policy',
-                  style: TextStyle(color: Color(0xff2f8af5)),
+                  style: TextStyle(color: appColors.primary),
                 ),
               ],
             ),

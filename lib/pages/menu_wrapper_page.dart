@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/background.dart';
 import 'package:kira_dashboard/widgets/late_value_listenable_builder.dart';
@@ -162,7 +163,7 @@ class _Drawer extends StatelessWidget {
         return Drawer(
           width: 250,
           child: Container(
-            color: const Color(0xff0e131f),
+            color: appColors.surface,
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
@@ -245,7 +246,7 @@ class _LargeNavigationButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: current ? () {} : () => AutoRouter.of(context).push(route),
         style: ElevatedButton.styleFrom(
-          backgroundColor: current ? const Color(0xff1a1f2e) : Colors.transparent,
+          backgroundColor: current ? appColors.secondary: Colors.transparent,
           shadowColor: Colors.transparent,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -258,12 +259,12 @@ class _LargeNavigationButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: current ? const Color(0xff4888f0) : Colors.white.withOpacity(0.5),
+                color: current ? appColors.primary : Colors.white54,
               ),
               const SizedBox(width: 16),
               Text(
                 title,
-                style: textTheme.bodyMedium!.copyWith(color: current ? const Color(0xff4888f0) : Colors.white.withOpacity(0.5)),
+                style: textTheme.bodyMedium!.copyWith(color: current ? appColors.primary : Colors.white54),
               ),
             ],
           ),
@@ -292,7 +293,7 @@ class _SmallNavigationButton extends StatelessWidget {
         onPressed: current ? () {} : () => AutoRouter.of(context).push(route),
         icon: Icon(
           icon,
-          color: current ? const Color(0xff4888f0) : Colors.white.withOpacity(0.5),
+          color: current ? appColors.primary : Colors.white54,
         ),
       ),
     );

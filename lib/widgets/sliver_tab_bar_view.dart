@@ -12,8 +12,8 @@ class SliverTabBarView extends StatefulWidget {
     required this.tabController,
     this.lazyLoadBool = true,
     this.maintainStateBool = true,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _SliverTabBarView();

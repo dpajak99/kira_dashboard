@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 
 enum UserType {
   validator,
@@ -27,10 +28,10 @@ class UserTypeChip extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: switch (userType) {
-            UserType.user => const Color(0xff263042),
-            UserType.validator => const Color(0x292f8af5),
-            UserType.yourAccount => const Color(0x2959b987),
-          },
+            UserType.user => appColors.secondary,
+            UserType.validator => appColors.primary,
+            UserType.yourAccount => CustomColors.green,
+          }.withOpacity(0.3),
         ),
         child: Text(
           switch (userType) {
@@ -40,9 +41,9 @@ class UserTypeChip extends StatelessWidget {
           },
           style: textTheme.labelLarge!.copyWith(
             color: switch (userType) {
-              UserType.user => const Color(0xff6c86ad),
-              UserType.validator => const Color(0xff2f8af5),
-              UserType.yourAccount => const Color(0xff59b987),
+              UserType.user => appColors.secondary,
+              UserType.validator => appColors.primary,
+              UserType.yourAccount => CustomColors.green,
             },
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
@@ -31,15 +32,15 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: Color(0xff06070a),
-              borderRadius: BorderRadius.all(Radius.circular(16)),
+            decoration: BoxDecoration(
+              color: appColors.surface,
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
             child: Column(
               children: [
                 Text(
                   widget.message,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
                 ),
               ],
             ),

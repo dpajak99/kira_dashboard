@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/pages/block_details_page/block_details_cubit.dart';
 import 'package:kira_dashboard/pages/block_details_page/block_details_state.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
@@ -26,8 +27,8 @@ class _BlockDetailsPageState extends State<BlockDetailsPage> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad));
-    TextStyle valueStyle =  textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb));
+    TextStyle titleStyle = textTheme.bodyMedium!.copyWith(color: appColors.secondary);
+    TextStyle valueStyle =  textTheme.bodyMedium!.copyWith(color: appColors.onBackground);
 
     return BlocBuilder<BlockDetailsCubit, BlockDetailsState>(
       bloc: blockDetailsCubit,
@@ -43,11 +44,11 @@ class _BlockDetailsPageState extends State<BlockDetailsPage> {
                       children: [
                         Text(
                           'Block Details',
-                          style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                          style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
                         ),
                         Text(
                           '#${widget.height}',
-                          style: textTheme.titleLarge!.copyWith(color: const Color(0xff6c86ad)),
+                          style: textTheme.titleLarge!.copyWith(color: appColors.secondary),
                         )
                       ],
                     ),

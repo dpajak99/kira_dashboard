@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 
@@ -108,7 +109,7 @@ class _MobileTable<T> extends StatelessWidget {
                 Text(
                   'Nothing here',
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0x996c86ad)),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
                 ),
               ],
             ),
@@ -167,7 +168,7 @@ class _DesktopTable<T> extends StatelessWidget {
                 Text(
                   'Nothing here',
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0x996c86ad)),
+                  style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
                 ),
               ],
             ),
@@ -175,12 +176,9 @@ class _DesktopTable<T> extends StatelessWidget {
         else ...<Widget>[
           Container(
             padding: onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24) : EdgeInsets.zero,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(
-                  color: Color(0xff222b3a),
-                  width: 1,
-                ),
+                bottom: BorderSide(color: appColors.outline, width: 1),
               ),
             ),
             child: Row(
@@ -297,7 +295,7 @@ class _TableCellHeader extends StatelessWidget {
         text,
         textAlign: textAlign,
         maxLines: 1,
-        style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+        style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
       ),
     );
   }

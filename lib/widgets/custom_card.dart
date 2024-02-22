@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;
@@ -29,7 +30,7 @@ class CustomCard extends StatelessWidget {
     Widget titleWidget = Row(
       children: [
         if (title != null) ...<Widget>[
-          Text(title!, style: titleStyle ?? textTheme.headlineMedium!.copyWith(color: const Color(0xfffbfbfb))),
+          Text(title!, style: titleStyle ?? textTheme.headlineMedium!.copyWith(color: appColors.onBackground)),
         ],
         if (leading != null) ...<Widget>[
           Expanded(
@@ -71,7 +72,7 @@ class CustomCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: const Color(0x88141924),
+        color: appColors.primaryContainer,
       ),
       child: content,
     );

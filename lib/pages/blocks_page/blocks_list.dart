@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/block.dart';
 import 'package:kira_dashboard/pages/blocks_page/blocks_list_cubit.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
@@ -54,7 +55,7 @@ class BlocksList extends StatelessWidget {
           cellBuilder: (BuildContext context, Block item) {
             return Text(
               item.height,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -69,7 +70,6 @@ class BlocksList extends StatelessWidget {
                 Expanded(
                   child: OpenableAddressText(
                     address: item.proposer,
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
                   ),
                 ),
               ],
@@ -83,7 +83,6 @@ class BlocksList extends StatelessWidget {
               '0x${item.hash}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
             );
           },
         ),
@@ -93,7 +92,7 @@ class BlocksList extends StatelessWidget {
             return OpenableText(
               text: item.numTxs,
               onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -119,7 +118,7 @@ class BlocksList extends StatelessWidget {
               },
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             );
           },
         ),
@@ -146,24 +145,24 @@ class _MobileListTile extends StatelessWidget {
       children: [
         OpenableText(
           text: 'Block #${item.height}',
-          style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
           onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
         ),
         const SizedBox(height: 4),
         CopyableHash(
           hash: '0x${item.hash}',
-          style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+          style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
         ),
         const SizedBox(height: 16),
         MobileRow(
           title: Text(
             'Block time:',
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
           ),
           value: RichText(
             text: TextSpan(
               text: '${DateFormat('d MMM y, HH:mm').format(item.time)} ($hrTime)',
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
             ),
           ),
         ),
@@ -171,16 +170,13 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Proposed by:',
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
           ),
           value: Row(
             children: [
               IdentityAvatar(size: 16, address: item.proposer),
               const SizedBox(width: 4),
-              OpenableAddressText(
-                address: item.proposer,
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
-              ),
+              OpenableAddressText(address: item.proposer),
             ],
           ),
         ),
@@ -188,12 +184,12 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Transactions:',
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
           ),
           value: OpenableText(
             text: item.numTxs,
             onTap: () => AutoRouter.of(context).push(BlockTransactionsRoute(blockId: item.height)),
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
           ),
         ),
       ],

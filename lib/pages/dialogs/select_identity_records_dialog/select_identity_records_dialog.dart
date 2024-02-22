@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/models/identity_records.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
@@ -50,18 +51,18 @@ class _SelectIdentityRecordsDialogState extends State<SelectIdentityRecordsDialo
                       value: selectedRecords.contains(record),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                       dense: true,
-                      activeColor: const Color(0xff2f8af5),
-                      side: const BorderSide(color: Color(0xff2f8af5), width: 2),
+                      activeColor: appColors.primary,
+                      side: BorderSide(color: appColors.primary, width: 2),
                       onChanged: (_) => _toggleRecord(record),
                       title: Text(
                         record.key,
                         maxLines: 1,
-                        style: textTheme.bodyMedium!.copyWith( color: const Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith( color: appColors.onBackground),
                       ),
                       subtitle: Text(
                         record.value,
                         maxLines: 1,
-                        style: textTheme.labelMedium!.copyWith( color: const Color(0xff6c86ad)),
+                        style: textTheme.labelMedium!.copyWith( color: appColors.secondary),
                       ),
                     );
                   },

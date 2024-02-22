@@ -1,5 +1,6 @@
 import 'package:bech32/bech32.dart';
 import 'package:flutter/material.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 
 class AddressTextField extends StatefulWidget {
@@ -47,9 +48,9 @@ class _AddressTextFieldState extends State<AddressTextField> {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Color(0xff06070a),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+      decoration: BoxDecoration(
+        color: appColors.surface,
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         children: [
@@ -57,7 +58,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
             children: [
               Text(
                 widget.title,
-                style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
               ),
               const Spacer(),
               InkWell(
@@ -65,7 +66,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
                 radius: 30,
                 child: Icon(
                   widget.locked ? Icons.lock : Icons.paste,
-                  color: const Color(0xff6c86ad),
+                  color: appColors.secondary,
                   size: 16,
                 ),
               ),
@@ -89,14 +90,14 @@ class _AddressTextFieldState extends State<AddressTextField> {
                       enabled: !widget.locked,
                       focusNode: focusNode,
                       controller: controller,
-                      style: textTheme.bodyLarge!.copyWith(color: const Color(0xfffbfbfb)),
-                      cursorColor: const Color(0xfffbfbfb),
+                      style: textTheme.bodyLarge!.copyWith(color: appColors.onBackground),
+                      cursorColor: appColors.onBackground,
                       cursorWidth: 1,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         isDense: true,
                         hintText: 'kira...',
-                        hintStyle: textTheme.bodyLarge!.copyWith(color: const Color(0xff3e4c63)),
+                        hintStyle: textTheme.bodyLarge!.copyWith(color: appColors.onBackground),
                         border: InputBorder.none,
                       ),
                     ),
@@ -116,7 +117,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
                   if (errorMessage != null) {
                     return Text(
                       errorMessage,
-                      style: textTheme.labelLarge!.copyWith(color: const Color(0xfff12e1f)),
+                      style: textTheme.labelLarge!.copyWith(color: appColors.error),
                     );
                   } else {
                     return const SizedBox();

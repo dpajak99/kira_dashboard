@@ -12,17 +12,12 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-
     return Row(
       children: <Widget>[
         IdentityAvatar(size: 32, address: address),
         const SizedBox(width: 12),
         Expanded(
-          child: CopyableAddressText(
-            address: address,
-            style: textTheme.bodyMedium!.copyWith(color: const Color(0xff2f8af5)),
-          ),
+          child: CopyableAddressText(address: address),
         ),
       ],
     );

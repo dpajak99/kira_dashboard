@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog.dart';
@@ -40,12 +41,12 @@ class _ValidatorsPageState extends State<ValidatorsPage> {
                   children: [
                     Text(
                       'Validators',
-                      style: textTheme.headlineLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                      style: textTheme.headlineLarge!.copyWith(color: appColors.onBackground),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       "Choose a validator to delegate your tokens and start earning rewards. Validators play a vital role in maintaining the network, and by staking with them, you contribute to the network's stability and earn a share of the rewards. Detailed information about each validator's performance, such as uptime and streak records, helps guide your decision. Your stake supports the validator's reliability while entitling you to rewards generated from block creation and transaction fees.",
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
+                      style: textTheme.bodyMedium!.copyWith(color: appColors.secondary),
                     ),
                     const SizedBox(height: 32),
                   ],
@@ -105,9 +106,9 @@ class _ValidatorTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0x88141924),
+              color: appColors.primaryContainer,
               border: Border.all(
-                color: states.contains(MaterialState.hovered) ? const Color(0xff222b3a) : const Color(0xff141822),
+                color: states.contains(MaterialState.hovered) ? appColors.outline : const Color(0xff141822),
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(16),
@@ -133,7 +134,7 @@ class _ValidatorTile extends StatelessWidget {
                         maxLines: 1,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                        style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                       ),
                       const SizedBox(height: 4),
                       FittedBox(
@@ -149,19 +150,18 @@ class _ValidatorTile extends StatelessWidget {
                       const SizedBox(height: 4),
                       CopyableAddressText(
                         address: validator.address,
-                        style: textTheme.bodyMedium!.copyWith(color: const Color(0xff6c86ad)),
                       ),
                       const SizedBox(height: 16),
                       Row(
                         children: [
                           Text(
                             'Uptime',
-                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium?.copyWith(color: appColors.secondary),
                           ),
                           const Spacer(),
                           Text(
                             '${validator.uptime}%',
-                            style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                           ),
                         ],
                       ),
@@ -170,12 +170,12 @@ class _ValidatorTile extends StatelessWidget {
                         children: [
                           Text(
                             'Streak',
-                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xff6c86ad)),
+                            style: textTheme.bodyMedium?.copyWith(color: appColors.secondary),
                           ),
                           const Spacer(),
                           Text(
                             validator.streak,
-                            style: textTheme.bodyMedium?.copyWith(color: const Color(0xfffbfbfb)),
+                            style: textTheme.bodyMedium?.copyWith(color: appColors.onBackground),
                           ),
                         ],
                       ),
@@ -215,14 +215,14 @@ class _RankBookmark extends StatelessWidget {
     return Container(
       width: 72,
       height: 32,
-      decoration: const BoxDecoration(
-        color: Color(0xff4888f0),
-        borderRadius: BorderRadius.only(bottomRight: Radius.circular(16)),
+      decoration: BoxDecoration(
+        color: appColors.primary,
+        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(16)),
       ),
       child: Center(
         child: Text(
           'Rank #$rank',
-          style: textTheme.labelMedium!.copyWith(color: const Color(0xfffbfbfb)),
+          style: textTheme.labelMedium!.copyWith(color: appColors.onBackground),
         ),
       ),
     );
@@ -244,11 +244,11 @@ class _ValidatorStatusChip extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: switch (status) {
-          ValidatorStatus.active => const Color(0x2959b987),
-          ValidatorStatus.inactive => const Color(0x29ffa500),
-          ValidatorStatus.jailed => const Color(0x29f12e1f),
-          ValidatorStatus.paused => const Color(0x29ffa500),
-        },
+          ValidatorStatus.active => CustomColors.green,
+          ValidatorStatus.inactive => CustomColors.yellow,
+          ValidatorStatus.jailed => CustomColors.red,
+          ValidatorStatus.paused => CustomColors.yellow,
+        }.withOpacity(0.3),
       ),
       child: Text(
         switch (status) {
@@ -259,10 +259,10 @@ class _ValidatorStatusChip extends StatelessWidget {
         },
         style: textTheme.labelMedium!.copyWith(
           color: switch (status) {
-            ValidatorStatus.active => const Color(0xff59b987),
-            ValidatorStatus.inactive => const Color(0xffffa500),
-            ValidatorStatus.jailed => const Color(0xfff12e1f),
-            ValidatorStatus.paused => const Color(0xffffa500),
+            ValidatorStatus.active => CustomColors.green,
+            ValidatorStatus.inactive => CustomColors.yellow,
+            ValidatorStatus.jailed => CustomColors.red,
+            ValidatorStatus.paused => CustomColors.yellow,
           },
         ),
       ),
@@ -285,10 +285,10 @@ class _PoolStatusChip extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: switch (status) {
-          StakingPoolStatus.withdraw => const Color(0x29ffa500),
-          StakingPoolStatus.disabled => const Color(0x29f12e1f),
-          StakingPoolStatus.enabled => const Color(0x2959b987),
-        },
+          StakingPoolStatus.withdraw => CustomColors.yellow,
+          StakingPoolStatus.disabled => CustomColors.red,
+          StakingPoolStatus.enabled => CustomColors.green,
+        }.withOpacity(0.3),
       ),
       child: Text(
         switch (status) {
@@ -298,9 +298,9 @@ class _PoolStatusChip extends StatelessWidget {
         },
         style: textTheme.labelMedium!.copyWith(
           color: switch (status) {
-            StakingPoolStatus.withdraw => const Color(0xffffa500),
-            StakingPoolStatus.disabled => const Color(0xfff12e1f),
-            StakingPoolStatus.enabled => const Color(0xff59b987),
+            StakingPoolStatus.withdraw => CustomColors.yellow,
+            StakingPoolStatus.disabled => CustomColors.red,
+            StakingPoolStatus.enabled => CustomColors.green,
           },
         ),
       ),

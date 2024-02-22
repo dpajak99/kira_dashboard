@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/send_tokens_dialog/send_tokens_dialog.dart';
@@ -65,7 +66,7 @@ class BalancesList extends StatelessWidget {
           cellBuilder: (BuildContext context, Coin item) {
             return CoinText(
               coin: item,
-              style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+              style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
               textAlign: TextAlign.right,
             );
           },
@@ -77,12 +78,10 @@ class BalancesList extends StatelessWidget {
             cellBuilder: (BuildContext context, Coin item) {
               return Align(
                 alignment: Alignment.centerRight,
-                child: IconTextButton(
+                child: SimpleTextButton(
                   text: 'Send',
                   gap: 4,
                   icon: AppIcons.arrow_up_right,
-                  highlightColor: const Color(0xfffbfbfb),
-                  style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                   onTap: () => _handleSend(item),
                 ),
               );
@@ -131,18 +130,16 @@ class _MobileListTile extends StatelessWidget {
                 children: [
                   CoinText(
                     coin: coin,
-                    style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
+                    style: textTheme.bodyMedium!.copyWith(color: appColors.onBackground),
                     textAlign: TextAlign.right,
                   ),
                   if (isMyWallet) ...<Widget>[
                     const SizedBox(height: 4),
-                    IconTextButton(
+                    SimpleTextButton(
                       text: 'Send',
                       gap: 4,
                       reversed: true,
                       icon: AppIcons.arrow_up_right,
-                      highlightColor: const Color(0xfffbfbfb),
-                      style: textTheme.bodyMedium!.copyWith(color: const Color(0xff4888f0)),
                       onTap: () => DialogRouter().navigate(SendTokensDialog(initialCoin: coin)),
                     ),
                   ],
@@ -170,9 +167,9 @@ class _TokenTypeChip extends StatelessWidget {
         '${type.name[0].toUpperCase()}${type.name.substring(1)}',
         style: textTheme.labelMedium!.copyWith(
           color: switch (type) {
-            CoinType.token => const Color(0xff6c86ad),
-            CoinType.native => const Color(0xff2f8af5),
-            CoinType.derivative => const Color(0xff2f8af5),
+            CoinType.token => appColors.secondary,
+            CoinType.native => appColors.primary,
+            CoinType.derivative => appColors.primary,
           },
         ),
       ),

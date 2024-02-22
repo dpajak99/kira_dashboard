@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/select_token_dialog/select_token_dialog_cubit.dart';
-import 'package:kira_dashboard/utils/cubits/list_cubit/infinity_list_cubit.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 import 'package:kira_dashboard/widgets/popup_infinity_list.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
@@ -53,15 +52,15 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
                   leading: TokenIcon(size: 24, iconUrl: balance.icon),
                   title: Text(
                     balance.name,
-                    style: textTheme.titleLarge!.copyWith(color: const Color(0xfffbfbfb)),
+                    style: textTheme.titleLarge!.copyWith(color: appColors.onBackground),
                   ),
                   subtitle: Text(
                     balance.toNetworkDenominationString(),
-                    style: textTheme.labelLarge!.copyWith(color: const Color(0xff6c86ad)),
+                    style: textTheme.labelLarge!.copyWith(color: appColors.secondary),
                   ),
-                  trailing: const Icon(
+                  trailing: Icon(
                     AppIcons.chevron_right,
-                    color: Color(0xff6c86ad),
+                    color: appColors.secondary,
                     size: 16,
                   ),
                 ),

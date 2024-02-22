@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
@@ -35,7 +36,7 @@ class _ReceiveTokensDialog extends State<ReceiveTokensDialog> {
                 borderRadius: BorderRadius.circular(12.0),
                 child: QrImageView(
                   data: wallet.address,
-                  backgroundColor: const Color(0xfffbfbfb),
+                  backgroundColor: appColors.onBackground,
                   version: QrVersions.auto,
                   size: 200.0,
                   embeddedImage: const AssetImage('qr_placeholder.png'),
@@ -47,12 +48,11 @@ class _ReceiveTokensDialog extends State<ReceiveTokensDialog> {
               const SizedBox(height: 32),
               Text(
                 'Your address',
-                style: textTheme.labelMedium!.copyWith(color: const Color(0xff6c86ad)),
+                style: textTheme.labelMedium!.copyWith(color: appColors.secondary),
               ),
               CopyableAddressText(
                 address: wallet.address,
                 full: true,
-                style: textTheme.bodyMedium!.copyWith(color: const Color(0xfffbfbfb)),
               ),
               const SizedBox(height: 32),
             ],
