@@ -66,7 +66,7 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
                       'Address overview',
                       style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
                     ),
-                    CopyableAddressText(address: widget.address, dark: true, full: true)
+                    if (MediaQuery.of(context).size.width > 600) CopyableAddressText(address: widget.address, dark: true, full: true)
                   ],
                 ),
               ),
@@ -92,72 +92,74 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
               IdentityAvatar(
                 address: widget.address,
                 avatarUrl: widget.identityRecords.avatar?.value ?? widget.validator?.logo,
-                size: 130,
+                size: MediaQuery.of(context).size.width > 600 ? 130 : 120,
               ),
               const SizedBox(width: 32),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      if (widget.isValidator) ...<Widget>[
-                        RankChip(rank: widget.validator!.top),
-                        const SizedBox(width: 8),
-                      ],
-                      UserTypeChip(userType: widget.isValidator ? UserType.validator : UserType.user),
-                      if (widget.isMyWallet) ...<Widget>[
-                        const SizedBox(width: 8),
-                        const UserTypeChip(userType: UserType.yourAccount, alignment: Alignment.centerRight),
-                      ],
-                      if (widget.validator?.website != null) ...<Widget>[
-                        const SizedBox(width: 16),
-                        OpenableText(
-                          text: 'Website',
-                          onTap: () {},
-                          style: textTheme.bodyMedium!.copyWith(
-                            color: CustomColors.secondary,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        if (widget.isValidator) ...<Widget>[
+                          RankChip(rank: widget.validator!.top),
+                          const SizedBox(width: 8),
+                        ],
+                        UserTypeChip(userType: widget.isValidator ? UserType.validator : UserType.user),
+                        if (widget.isMyWallet) ...<Widget>[
+                          const SizedBox(width: 8),
+                          const UserTypeChip(userType: UserType.yourAccount, alignment: Alignment.centerRight),
+                        ],
+                        if (widget.validator?.website != null) ...<Widget>[
+                          const SizedBox(width: 16),
+                          OpenableText(
+                            text: 'Website',
+                            onTap: () {},
+                            style: textTheme.bodyMedium!.copyWith(
+                              color: CustomColors.secondary,
+                            ),
                           ),
-                        ),
+                        ],
                       ],
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.identityRecords.getName(widget.isValidator) ?? '---',
-                        style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
-                      ),
-                      if (widget.identityRecords.isUsernameTrusted()) ...<Widget>[
-                        const SizedBox(width: 8),
-                        Tooltip(
-                          message: 'Verified by your trusted addresses:\n- ${widget.identityRecords.username!.trustedVerifiers.join('\n- ')}',
-                          child: Icon(Icons.verified, color: CustomColors.primary),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.identityRecords.getName(widget.isValidator) ?? '---',
+                          style: textTheme.headlineLarge!.copyWith(color: CustomColors.white),
                         ),
-                      ],
-                    ],
-                  ),
-                  CopyableAddressText(address: widget.address, dark: true),
-                  const SizedBox(height: 16),
-                  Wrap(
-                    children: socials.map((SocialUrl e) {
-                      return MouseStateListener(childBuilder: (Set<MaterialState> states) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: Icon(
-                            e.icon,
-                            size: 24,
-                            color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.secondary,
+                        if (widget.identityRecords.isUsernameTrusted()) ...<Widget>[
+                          const SizedBox(width: 8),
+                          Tooltip(
+                            message: 'Verified by your trusted addresses:\n- ${widget.identityRecords.username!.trustedVerifiers.join('\n- ')}',
+                            child: Icon(Icons.verified, color: CustomColors.primary),
                           ),
-                        );
-                      });
-                    }).toList(),
-                  ),
-                ],
-              )
+                        ],
+                      ],
+                    ),
+                    CopyableAddressText(address: widget.address, dark: true),
+                    const SizedBox(height: 16),
+                    Wrap(
+                      children: socials.map((SocialUrl e) {
+                        return MouseStateListener(childBuilder: (Set<MaterialState> states) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Icon(
+                              e.icon,
+                              size: 24,
+                              color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.secondary,
+                            ),
+                          );
+                        });
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

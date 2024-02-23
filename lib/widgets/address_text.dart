@@ -160,6 +160,7 @@ class SimpleTextButton extends StatelessWidget {
 
         if (reversed) {
           return RichText(
+            maxLines: 1,
             text: TextSpan(
               text: '',
               children: [

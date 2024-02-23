@@ -27,7 +27,7 @@ class _DashboardPageState extends State<DashboardPage> {
       builder: (BuildContext context, DashboardPageState state) {
         Widget blocks = _DashboardCard(
           title: 'Blocks',
-          columns: MediaQuery.of(context).size.width < 450 ? 1 : 2,
+          columns: 2,
           values: [
             _DashboardTile(
               title: 'Current height',
@@ -58,7 +58,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
         Widget proposals = _DashboardCard(
           title: 'Proposals',
-          columns: MediaQuery.of(context).size.width < 450 ? 1 : 2,
+          columns: 2,
           values: [
             _DashboardTile(
               title: 'Active',
