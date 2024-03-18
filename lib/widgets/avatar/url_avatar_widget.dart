@@ -25,7 +25,8 @@ class UrlAvatarWidget extends StatelessWidget {
       child: NetworkImage(imageUrl: url),
     );
 
-    Widget secondaryAvatarWidget = ClipOval(
+    Widget secondaryAvatarWidget = ClipRRect(
+      borderRadius: BorderRadius.circular(16),
       child: SizedBox(
         height: secondaryAvatarSize,
         width: secondaryAvatarSize,

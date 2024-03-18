@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/utils/cubits/list_cubit/list_cubit.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 class CustomTablePaginated<T> extends StatelessWidget {
   final PaginatedListCubit<T> cubit;
@@ -24,10 +26,7 @@ class CustomTablePaginated<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    ButtonStyle buttonStyle = IconButton.styleFrom(
-      foregroundColor: CustomColors.secondary,
-      disabledForegroundColor: CustomColors.secondary.withOpacity(0.8)
-    );
+    ButtonStyle buttonStyle = IconButton.styleFrom(foregroundColor: CustomColors.secondary, disabledForegroundColor: CustomColors.secondary.withOpacity(0.8));
 
     return BlocBuilder<PaginatedListCubit<T>, PaginatedListState<T>>(
       bloc: cubit,
@@ -62,7 +61,7 @@ class CustomTablePaginated<T> extends StatelessWidget {
           ],
         );
 
-        return Column(
+        return MultiSliver(
           children: [
             CustomTable(
               onItemTap: onItemTap,
@@ -73,37 +72,46 @@ class CustomTablePaginated<T> extends StatelessWidget {
               mobileBuilder: mobileBuilder,
             ),
             if (state.pageIndex != -1 && state.total != -1 && state.totalPages > 1) ...[
-              const SizedBox(height: 20),
-              IgnorePointer(
-                ignoring: state.isLoading,
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: state.isFirstPage ? null : () => cubit.previousPage(),
-                      style: buttonStyle,
-                      icon: const Icon(Icons.keyboard_arrow_left),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                sliver: SliverToBoxAdapter(
+                  child: IgnorePointer(
+                    ignoring: state.isLoading,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: state.isFirstPage ? null : () => cubit.previousPage(),
+                          style: buttonStyle,
+                          icon: const Icon(Icons.keyboard_arrow_left),
+                        ),
+                        IconButton(
+                          onPressed: state.isFirstPage ? null : () => cubit.goToPage(0),
+                          style: buttonStyle,
+                          icon: const Icon(Icons.keyboard_double_arrow_left),
+                        ),
+                        if (MediaQuery.of(context).size.width > 600) Expanded(child: pagesWidget) else const Spacer(),
+                        IconButton(
+                          onPressed: state.isLastPage ? null : () => cubit.goToPage(state.totalPages - 1),
+                          style: buttonStyle,
+                          icon: const Icon(Icons.keyboard_double_arrow_right),
+                        ),
+                        IconButton(
+                          onPressed: state.isLastPage ? null : () => cubit.nextPage(),
+                          style: buttonStyle,
+                          icon: const Icon(Icons.keyboard_arrow_right),
+                        ),
+                      ],
                     ),
-                    IconButton(
-                      onPressed: state.isFirstPage ? null : () => cubit.goToPage(0),
-                      style: buttonStyle,
-                      icon: const Icon(Icons.keyboard_double_arrow_left),
-                    ),
-                    if (MediaQuery.of(context).size.width > 600) Expanded(child: pagesWidget)
-                    else const Spacer(),
-                    IconButton(
-                      onPressed: state.isLastPage ? null : () => cubit.goToPage(state.totalPages - 1),
-                      style: buttonStyle,
-                      icon: const Icon(Icons.keyboard_double_arrow_right),
-                    ),
-                    IconButton(
-                      onPressed: state.isLastPage ? null : () => cubit.nextPage(),
-                      style: buttonStyle,
-                      icon: const Icon(Icons.keyboard_arrow_right),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              if (MediaQuery.of(context).size.width <= 600) pagesWidget,
+              if (MediaQuery.of(context).size.width <= 600)
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  sliver: SliverToBoxAdapter(
+                    child: pagesWidget,
+                  ),
+                ),
             ],
           ],
         );

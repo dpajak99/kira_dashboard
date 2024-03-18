@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 typedef CellBuilder<T> = Widget Function(BuildContext context, T item);
 
@@ -88,43 +90,49 @@ class _MobileTable<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      children: [
-        if (loading == false && items.isEmpty)
-          SizedBox(
-            height: 300,
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Opacity(
-                  opacity: 0.7,
-                  child: Image.asset(
-                    'empty_placeholder_2.png',
-                    width: 150,
-                  ),
+    if (loading == false && items.isEmpty) {
+      return SliverToBoxAdapter(
+        child: SizedBox(
+          height: 300,
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Opacity(
+                opacity: 0.7,
+                child: Image.asset(
+                  'empty_placeholder_2.png',
+                  width: 150,
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  'Nothing here',
-                  textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
-                ),
-              ],
-            ),
-          )
-        else ...<Widget>[
-          for (int y = 0; (y < (loading ? 4 : items.length)); y++)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: CustomCard(
-                child: mobileBuilder!(context, items.elementAtOrNull(y), loading),
               ),
+              const SizedBox(height: 16),
+              Text(
+                'Nothing here',
+                textAlign: TextAlign.center,
+                style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return SliverList.builder(
+        itemCount: loading ? 4 : items.length,
+        itemBuilder: (BuildContext context, int index) {
+          if (index == items.length) {
+            return const SizedBox(height: 32);
+          }
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: CustomCard(
+              child: mobileBuilder!(context, items.elementAtOrNull(index), loading),
             ),
-        ],
-      ],
-    );
+          );
+        },
+      );
+    }
   }
 }
 
@@ -148,119 +156,135 @@ class _DesktopTable<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return Column(
+    return MultiSliver(
       children: [
         if (loading == false && items.isEmpty)
-          SizedBox(
-            height: 300,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Opacity(
-                  opacity: 0.7,
-                  child: Image.asset(
-                    'empty_placeholder_2.png',
-                    width: 150,
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 300,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Opacity(
+                    opacity: 0.7,
+                    child: Image.asset(
+                      'empty_placeholder_2.png',
+                      width: 150,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Nothing here',
-                  textAlign: TextAlign.center,
-                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  Text(
+                    'Nothing here',
+                    textAlign: TextAlign.center,
+                    style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
+                  ),
+                ],
+              ),
             ),
           )
         else ...<Widget>[
-          Container(
-            padding: onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24) : EdgeInsets.zero,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: CustomColors.divider, width: 1),
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                for (int i = 0; i < columns.length; i++)
-                  if (columns[i].width != null)
-                    SizedBox(
-                      width: columns[i].width,
-                      child: _TableCellHeader(
-                        columns[i].title,
-                        padding: columns[i].padding,
-                        first: i == 0,
-                        last: i == columns.length - 1,
-                        textAlign: columns[i].textAlign,
-                      ),
-                    )
-                  else
-                    Expanded(
-                      flex: columns[i].flex,
-                      child: _TableCellHeader(
-                        columns[i].title,
-                        padding: columns[i].padding,
-                        first: i == 0,
-                        last: i == columns.length - 1,
-                        textAlign: columns[i].textAlign,
-                      ),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: PersistentHeader(
+              widget: Container(
+                decoration: const BoxDecoration(
+                  color: CustomColors.background,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: CustomColors.divider,
+                      width: 1,
                     ),
-              ],
+                  ),
+                ),
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Row(
+                  children: <Widget>[
+                    for (int i = 0; i < columns.length; i++)
+                      if (columns[i].width != null)
+                        SizedBox(
+                          width: columns[i].width,
+                          child: _TableCellHeader(
+                            columns[i].title,
+                            padding: columns[i].padding,
+                            first: i == 0,
+                            last: i == columns.length - 1,
+                            textAlign: columns[i].textAlign,
+                          ),
+                        )
+                      else
+                        Expanded(
+                          flex: columns[i].flex,
+                          child: _TableCellHeader(
+                            columns[i].title,
+                            padding: columns[i].padding,
+                            first: i == 0,
+                            last: i == columns.length - 1,
+                            textAlign: columns[i].textAlign,
+                          ),
+                        ),
+                  ],
+                ),
+              ),
             ),
           ),
           for (int y = 0; (y < (loading ? pageSize : items.length)); y++)
-            Material(
-              color: Colors.transparent,
-              child: InkWell(
-                splashFactory: InkRipple.splashFactory,
-                overlayColor: onItemTap != null ? MaterialStateProperty.all(const Color(0x296c86ad)) : null,
-                splashColor: onItemTap != null ? const Color(0x294888f0) : null,
-                onTap: onItemTap != null ? () => onItemTap?.call(items[y]) : null,
-                child: Padding(
-                  padding: onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24) : EdgeInsets.zero,
-                  child: Row(
-                    children: <Widget>[
-                      for (int x = 0; x < columns.length; x++)
-                        if (columns[x].width != null)
-                          SizedBox(
-                            width: columns[x].width,
-                            child: _TableCell(
-                              loading
-                                  ? Align(
-                                      alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
-                                      child: SizedShimmer(
-                                        height: 18,
-                                        width: 200,
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                    )
-                                  : columns[x].cellBuilder(context, items[y]),
-                              first: x == 0,
-                              last: x == columns.length - 1,
-                              textAlign: columns[x].textAlign,
-                            ),
-                          )
-                        else
-                          Expanded(
-                            flex: columns[x].flex,
-                            child: _TableCell(
-                              loading
-                                  ? Align(
-                                      alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
-                                      child: SizedShimmer(
-                                        height: 18,
-                                        width: 200,
-                                        borderRadius: BorderRadius.circular(16),
-                                      ),
-                                    )
-                                  : columns[x].cellBuilder(context, items[y]),
-                              first: x == 0,
-                              last: x == columns.length - 1,
-                              textAlign: columns[x].textAlign,
-                            ),
-                          ),
-                    ],
+            SliverToBoxAdapter(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashFactory: InkRipple.splashFactory,
+                    overlayColor: onItemTap != null ? MaterialStateProperty.all(const Color(0x296c86ad)) : null,
+                    splashColor: onItemTap != null ? const Color(0x294888f0) : null,
+                    onTap: onItemTap != null ? () => onItemTap?.call(items[y]) : null,
+                    child: Padding(
+                      padding: onItemTap != null ? const EdgeInsets.symmetric(horizontal: 24) : EdgeInsets.zero,
+                      child: Row(
+                        children: <Widget>[
+                          for (int x = 0; x < columns.length; x++)
+                            if (columns[x].width != null)
+                              SizedBox(
+                                width: columns[x].width,
+                                child: _TableCell(
+                                  loading
+                                      ? Align(
+                                          alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                                          child: SizedShimmer(
+                                            height: 18,
+                                            width: 200,
+                                            borderRadius: BorderRadius.circular(16),
+                                          ),
+                                        )
+                                      : columns[x].cellBuilder(context, items[y]),
+                                  first: x == 0,
+                                  last: x == columns.length - 1,
+                                  textAlign: columns[x].textAlign,
+                                ),
+                              )
+                            else
+                              Expanded(
+                                flex: columns[x].flex,
+                                child: _TableCell(
+                                  loading
+                                      ? Align(
+                                          alignment: columns[x].textAlign == TextAlign.right ? Alignment.centerRight : Alignment.centerLeft,
+                                          child: SizedShimmer(
+                                            height: 18,
+                                            width: 200,
+                                            borderRadius: BorderRadius.circular(16),
+                                          ),
+                                        )
+                                      : columns[x].cellBuilder(context, items[y]),
+                                  first: x == 0,
+                                  last: x == columns.length - 1,
+                                  textAlign: columns[x].textAlign,
+                                ),
+                              ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -295,7 +319,7 @@ class _TableCellHeader extends StatelessWidget {
         text,
         textAlign: textAlign,
         maxLines: 1,
-        style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
+        style: textTheme.labelMedium!.copyWith(color: CustomColors.secondary),
       ),
     );
   }
@@ -315,5 +339,31 @@ class _TableCell extends StatelessWidget {
       padding: EdgeInsets.only(top: 16, bottom: 16, left: first ? 0 : 16, right: last ? 0 : 16),
       child: child,
     );
+  }
+}
+
+class PersistentHeader extends SliverPersistentHeaderDelegate {
+  final Widget widget;
+
+  PersistentHeader({required this.widget});
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox(
+      width: double.infinity,
+      height: 56.0,
+      child: widget,
+    );
+  }
+
+  @override
+  double get maxExtent => 56.0;
+
+  @override
+  double get minExtent => 56.0;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }

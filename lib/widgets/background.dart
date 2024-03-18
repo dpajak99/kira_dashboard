@@ -12,17 +12,7 @@ class Background extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: <double>[0.0, 0.3, 0.6, 1],
-          colors: <Color>[
-            Color(0xff0e121a),
-            Color(0xff06070a),
-            Color(0xff06070a),
-            Color(0xff0e121a),
-          ],
-        ),
+        color: CustomColors.background,
       ),
       child: child,
     );

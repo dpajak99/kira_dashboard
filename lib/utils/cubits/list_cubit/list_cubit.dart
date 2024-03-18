@@ -4,7 +4,7 @@ import 'package:kira_dashboard/utils/cubits/list_cubit/refreshable_page_cubit.da
 import 'package:kira_dashboard/utils/paginated_request.dart';
 
 class PaginatedListState<T> extends Equatable {
-  final int pageSize = 10;
+  final int pageSize = 20;
   final bool isLoading;
   final int pageIndex;
   final int total;

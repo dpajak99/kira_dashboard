@@ -81,8 +81,9 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
                     constraints: const BoxConstraints(minWidth: 450),
                     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 1300),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 1600),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -96,7 +97,7 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
                               ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: SvgPicture.asset('logo_light.svg', height: MediaQuery.of(context).size.width > 900 ? 30 : 24),
+                              child: SvgPicture.asset('logo_light.svg', height: MediaQuery.of(context).size.width > 900 ? 40 : 24),
                             ),
                             const SizedBox(width: 40),
                             if (MediaQuery.of(context).size.width > 900) ...<Widget>[

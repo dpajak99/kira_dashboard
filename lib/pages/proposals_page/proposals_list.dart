@@ -98,8 +98,8 @@ class ProposalsList extends StatelessWidget {
       },
       columns: [
         ColumnConfig(
-          title: 'ID',
-          width: 80,
+          title: '#',
+          width: 50,
           cellBuilder: (BuildContext context, Proposal item) {
             return Text(
               item.id,

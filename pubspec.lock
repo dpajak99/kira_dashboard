@@ -254,10 +254,10 @@ packages:
     description:
       path: "."
       ref: "dp-feature/aesdhke-v1"
-      resolved-ref: "0ada5d5b62cb0e91db960eeb4947c76949273be6"
+      resolved-ref: "7fe11583faed30337510b72cef6fd13348a9b294"
       url: "git@github.com:snggle/cryptography_utils.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.5"
   dart_style:
     dependency: transitive
     description:

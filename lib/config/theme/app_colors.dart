@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CustomColors {
   static const Color primary = Color(0xff4888f0);
   static const Color secondary = Color(0xff6c86ad);
-  static const Color red = Color(0xffe53935);
-  static const Color green = Color(0xff43a047);
+  static const Color red = Color(0xffd44432);
+  static const Color green = Color(0xff64c380);
   static const Color yellow = Color(0xffffeb3b);
   static const Color background = Color(0xff06070a);
   static const Color container = Color(0x88141924);
@@ -13,7 +13,7 @@ class CustomColors {
   static const Color dialog = Color(0xff131823);
   static const Color dialogContainer = Color(0xff06070a);
   static const Color divider = Color(0xff222b3a);
-  static const Color error = Color(0xffe53935);
+  static const Color error = Color(0xffd44432);
 }
 
 const ColorScheme appColors = ColorScheme.dark(

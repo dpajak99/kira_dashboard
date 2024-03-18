@@ -50,8 +50,8 @@ class BlocksList extends StatelessWidget {
       },
       columns: [
         ColumnConfig(
-          title: 'Height',
-          width: 120,
+          title: '#',
+          width: 80,
           cellBuilder: (BuildContext context, Block item) {
             return Text(
               item.height,
@@ -61,12 +61,12 @@ class BlocksList extends StatelessWidget {
         ),
         ColumnConfig(
           title: 'Proposer',
-          width: 240,
+          width: 300,
           cellBuilder: (BuildContext context, Block item) {
             return Row(
               children: <Widget>[
-                IdentityAvatar(size: 20, address: item.proposer),
-                const SizedBox(width: 8),
+                IdentityAvatar(size: 62, address: item.proposer),
+                const SizedBox(width: 24),
                 Expanded(
                   child: OpenableAddressText(
                     address: item.proposer,

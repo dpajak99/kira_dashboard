@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 
 class PageScaffold extends StatefulWidget {
@@ -22,10 +24,10 @@ class _PageScaffold extends State<PageScaffold> {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width < 900 ? 16 : 64),
         child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1180),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 1600),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: CustomScrollView(

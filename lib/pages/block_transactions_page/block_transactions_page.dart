@@ -23,15 +23,20 @@ class _BlockTransactionsPageState extends State<BlockTransactionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return PageScaffold(
       slivers: [
         SliverToBoxAdapter(
-          child: CustomCard(
-            title: 'Transactions',
-            enableMobile: true,
-            child: BlockTransactionsList(
-              cubit: cubit,
-            ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+            child: Text('Transactions', style: textTheme.headlineLarge),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          sliver: BlockTransactionsList(
+            cubit: cubit,
           ),
         ),
       ],
