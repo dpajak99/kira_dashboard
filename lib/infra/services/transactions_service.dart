@@ -1,3 +1,4 @@
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/infra/entities/account/account_entity.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
@@ -73,8 +74,8 @@ class TransactionsService {
     List<Transaction> transactions = await Future.wait<Transaction>(response.items.map((TransactionEntity entity) async {
       TxMsg? txMsg = entity.txs.firstOrNull;
 
-      List<CoinEntity> amountEntities = <CoinEntity>[...(txMsg?.txAmounts ?? <CoinEntity>[])];
-      List<SimpleCoin> amountSimpleCoins = amountEntities.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
+      List<CosmosCoin> amountEntities = <CosmosCoin>[...(txMsg?.txAmounts ?? <CosmosCoin>[])];
+      List<SimpleCoin> amountSimpleCoins = amountEntities.map((e) => SimpleCoin(amount: e.amount.toString(), denom: e.denom)).toList();
 
       List<SimpleCoin> feeSimpleCoins = entity.fee.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
       List<Coin> fees = feeSimpleCoins.map((e) => tokensService.buildCoinWithAlias(e, tokenAliases[e.denom])).toList();
@@ -102,8 +103,8 @@ class TransactionsService {
     List<BlockTransaction> transactions = await Future.wait<BlockTransaction>(response.items.map((BlockTransactionEntity entity) async {
       TypedMsg? typedMsg = entity.msgs.firstOrNull;
 
-      List<CoinEntity> amounts = <CoinEntity>[...(typedMsg?.data.txAmounts ?? <CoinEntity>[])];
-      List<SimpleCoin> coins = amounts.map((e) => SimpleCoin(amount: e.amount, denom: e.denom)).toList();
+      List<CosmosCoin> amounts = <CosmosCoin>[...(typedMsg?.data.txAmounts ?? <CosmosCoin>[])];
+      List<SimpleCoin> coins = amounts.map((e) => SimpleCoin(amount: e.amount.toString(), denom: e.denom)).toList();
 
       return BlockTransaction(
         block: entity.blockHeight,

@@ -1,3 +1,4 @@
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/basket.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/collectives.dart';
@@ -13,30 +14,21 @@ import 'package:kira_dashboard/infra/entities/transactions/methods/spending.dart
 import 'package:kira_dashboard/infra/entities/transactions/methods/staking.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/tokens.dart';
 
-abstract class TxMsg {
+abstract class TxMsg extends ProtobufAny {
+  final String action;
+  final String aminoType;
+
+  TxMsg({
+    required this.action,
+    required this.aminoType,
+    required super.typeUrl,
+  });
+
   String? get from;
+
   String? get to;
-  List<CoinEntity> get txAmounts;
 
-  String get messageType;
-
-  String get signatureMessageType;
-
-  Map<String, dynamic> toJson();
-
-  Map<String, dynamic> toJsonWithType() {
-    return <String, dynamic>{
-      '@type': messageType,
-      ...toJson(),
-    };
-  }
-
-  Map<String, dynamic> toSignatureJson() {
-    return <String, dynamic>{
-      'type': signatureMessageType,
-      'value': toJson(),
-    };
-  }
+  List<CosmosCoin> get txAmounts;
 
   static TxMsg fromJsonByName(String name, Map<String, dynamic> json) {
     return switch (name) {
@@ -53,7 +45,7 @@ abstract class TxMsg {
       'donate-collective' || 'kiraHub/MsgDonateCollective' => MsgDonateCollective.fromJson(json),
       'withdraw-collective' || 'kiraHub/MsgWithdrawCollective' => MsgWithdrawCollective.fromJson(json),
       //
-      'send' || 'cosmos-sdk/MsgSend' => cosmos.MsgSend.fromJson(json),
+      'send' || 'cosmos-sdk/MsgSend' => cosmos.MsgSend.fromData(json),
       //
       'create-custody' || 'kiraHub/MsgCreateCustodyRecord' => MsgCreateCustodyRecord.fromJson(json),
       'disable-custody' || 'kiraHub/MsgDisableCustodyRecord' => MsgDisableCustodyRecord.fromJson(json),
@@ -67,7 +59,7 @@ abstract class TxMsg {
       'approve-custody-transaction' || 'kiraHub/MsgApproveCustodyTransaction' => MsgApproveCustodyTransaction.fromJson(json),
       'decline-custody-transaction' || 'kiraHub/MsgDeclineCustodyTransaction' => MsgDeclineCustodyTransaction.fromJson(json),
       'password-confirm-transaction' || 'kiraHub/MsgPasswordConfirmTransaction' => MsgPasswordConfirmTransaction.fromJson(json),
-      'custody-send' || 'kiraHub/MsgSend'=> MsgSend.fromJson(json),
+      'custody-send' || 'kiraHub/MsgSend' => MsgSend.fromJson(json),
       //
       'submit_evidence' || 'kiraHub/MsgSubmitEvidence' => MsgSubmitEvidence.fromJson(json),
       //
@@ -92,7 +84,7 @@ abstract class TxMsg {
       'cancel-identity-records-verify-request' || 'kiraHub/MsgCancelIdentityRecordsVerifyRequest' => MsgCancelIdentityRecordsVerifyRequest.fromJson(json),
       //
       'create-dapp-proposal' || 'kiraHub/MsgCreateDappProposal' => MsgCreateDappProposal.fromJson(json),
-      'bond-dapp-proposal' || 'kiraHub/MsgBondDappProposal'  => MsgBondDappProposal.fromJson(json),
+      'bond-dapp-proposal' || 'kiraHub/MsgBondDappProposal' => MsgBondDappProposal.fromJson(json),
       'reclaim-dapp-bond-proposal' || 'kiraHub/MsgReclaimDappBondProposal' => MsgReclaimDappBondProposal.fromJson(json),
       'join-dapp-verifier-with-bond' || 'kiraHub/MsgJoinDappVerifierWithBond' => MsgJoinDappVerifierWithBond.fromJson(json),
       'exit-dapp' || 'kiraHub/MsgExitDapp' => MsgExitDapp.fromJson(json),
@@ -137,7 +129,7 @@ abstract class TxMsg {
       //
       'create-spending-pool' || 'kiraHub/MsgCreateSpendingPool' => MsgCreateSpendingPool.fromJson(json),
       'deposit-spending-pool' || 'kiraHub/MsgDepositSpendingPool' => MsgDepositSpendingPool.fromJson(json),
-      'register-spending-pool-beneficiary' ||  'kiraHub/MsgRegisterSpendingPoolBeneficiary' => MsgRegisterSpendingPoolBeneficiary.fromJson(json),
+      'register-spending-pool-beneficiary' || 'kiraHub/MsgRegisterSpendingPoolBeneficiary' => MsgRegisterSpendingPoolBeneficiary.fromJson(json),
       'claim-spending-pool' || 'kiraHub/MsgClaimSpendingPool' => MsgClaimSpendingPool.fromJson(json),
       //
       'claim-validator' || 'kiraHub/MsgClaimValidator' => MsgClaimValidator.fromJson(json),

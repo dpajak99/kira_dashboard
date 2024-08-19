@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
 
@@ -6,12 +9,29 @@ class DepositWhitelist {
   final List<int> roles;
   final List<String> accounts;
 
-  DepositWhitelist.fromJson(Map<String, dynamic> json) :
-    any = json['any'] as bool,
-    roles = (json['roles'] as List<dynamic>).map((e) => e as int).toList(),
-    accounts = (json['accounts'] as List<dynamic>).map((e) => e as String).toList();
+  DepositWhitelist({
+    required this.any,
+    required this.roles,
+    required this.accounts,
+  });
 
-  Map<String, dynamic> toJson() {
+  factory DepositWhitelist.fromData(Map<String, dynamic> data) {
+    return DepositWhitelist(
+      any: data['any'] as bool,
+      roles: (data['roles'] as List<dynamic>).map((dynamic e) => e as int).toList(),
+      accounts: (data['accounts'] as List<dynamic>).map((dynamic e) => e as String).toList(),
+    );
+  }
+
+  Uint8List toProtoBytes() {
+    return Uint8List.fromList(<int>[
+      ...ProtobufEncoder.encode(1, any),
+      ...ProtobufEncoder.encode(2, roles),
+      ...ProtobufEncoder.encode(3, accounts),
+    ]);
+  }
+
+  Map<String, dynamic> toProtoJson() {
     return {
       'any': any,
       'roles': roles,
@@ -24,11 +44,26 @@ class OwnersWhitelist {
   final List<int> roles;
   final List<String> accounts;
 
-  OwnersWhitelist.fromJson(Map<String, dynamic> json) :
-        roles = (json['roles'] as List<dynamic>).map((e) => e as int).toList(),
-        accounts = (json['accounts'] as List<dynamic>).map((e) => e as String).toList();
+  OwnersWhitelist({
+    required this.roles,
+    required this.accounts,
+  });
 
-  Map<String, dynamic> toJson() {
+  factory OwnersWhitelist.fromData(Map<String, dynamic> data) {
+    return OwnersWhitelist(
+      roles: (data['roles'] as List<dynamic>).map((dynamic e) => e as int).toList(),
+      accounts: (data['accounts'] as List<dynamic>).map((dynamic e) => e as String).toList(),
+    );
+  }
+
+  Uint8List toProtoBytes() {
+    return Uint8List.fromList(<int>[
+      ...ProtobufEncoder.encode(1, roles),
+      ...ProtobufEncoder.encode(2, accounts),
+    ]);
+  }
+
+  Map<String, dynamic> toProtoJson() {
     return {
       'roles': roles,
       'accounts': accounts,
@@ -40,11 +75,26 @@ class WeightedSpendingPool {
   final String name;
   final int weight;
 
-  WeightedSpendingPool.fromJson(Map<String, dynamic> json) :
-        name = json['name'] as String,
-        weight = json['weight'] as int;
+  WeightedSpendingPool({
+    required this.name,
+    required this.weight,
+  });
 
-  Map<String, dynamic> toJson() {
+  factory WeightedSpendingPool.fromData(Map<String, dynamic> data) {
+    return WeightedSpendingPool(
+      name: data['name'] as String,
+      weight: data['weight'] as int,
+    );
+  }
+
+  Uint8List toProtoBytes() {
+    return Uint8List.fromList(<int>[
+      ...ProtobufEncoder.encode(1, name),
+      ...ProtobufEncoder.encode(2, weight),
+    ]);
+  }
+
+  Map<String, dynamic> toProtoJson() {
     return {
       'name': name,
       'weight': weight,
@@ -53,14 +103,6 @@ class WeightedSpendingPool {
 }
 
 class MsgCreateCollective extends TxMsg {
-  static String get interxName => 'create-collective';
-
-  @override
-  String get messageType => '/kira.collectives.MsgCreateCollective';
-
-  @override
-  String get signatureMessageType => 'kiraHub/MsgCreateCollective';
-
   final String sender;
   final String name;
   final String description;
@@ -75,40 +117,74 @@ class MsgCreateCollective extends TxMsg {
   final int votePeriod;
   final int voteEnactment;
 
-  MsgCreateCollective.fromJson(Map<String, dynamic> json) :
-    sender = json['sender'] as String,
-    name = json['name'] as String,
-    description = json['description'] as String,
-    bonds = (json['bonds'] as List<dynamic>).map((e) => e as String).toList(),
-    depositWhitelist = DepositWhitelist.fromJson(json['deposit_whitelist'] as Map<String, dynamic>),
-    ownersWhitelist = OwnersWhitelist.fromJson(json['owners_whitelist'] as Map<String, dynamic>),
-    spendingPools = (json['spending_pools'] as List<dynamic>).map((e) => WeightedSpendingPool.fromJson(e as Map<String, dynamic>)).toList(),
-    claimStart = json['claim_start'] as int,
-    claimPeriod = json['claim_period'] as int,
-    claimEnd = json['claim_end'] as int,
-    voteQuorum = json['vote_quorum'] as int,
-    votePeriod = json['vote_period'] as int,
-    voteEnactment = json['vote_enactment'] as int;
+  MsgCreateCollective({
+    required this.sender,
+    required this.name,
+    required this.description,
+    required this.bonds,
+    required this.depositWhitelist,
+    required this.ownersWhitelist,
+    required this.spendingPools,
+    required this.claimStart,
+    required this.claimPeriod,
+    required this.claimEnd,
+    required this.voteQuorum,
+    required this.votePeriod,
+    required this.voteEnactment,
+  }) : super(
+    action: 'create-collective',
+    aminoType: 'kiraHub/MsgCreateCollective',
+    typeUrl: '/kira.collectives.MsgCreateCollective',
+  );
+
+  factory MsgCreateCollective.fromData(Map<String, dynamic> data) {
+    return MsgCreateCollective(
+      sender: data['sender'] as String,
+      name: data['name'] as String,
+      description: data['description'] as String,
+      bonds: (data['bonds'] as List<dynamic>).map((dynamic e) => e as String).toList(),
+      depositWhitelist: DepositWhitelist.fromData(data['deposit_whitelist'] as Map<String, dynamic>),
+      ownersWhitelist: OwnersWhitelist.fromData(data['owners_whitelist'] as Map<String, dynamic>),
+      spendingPools: (data['spending_pools'] as List<dynamic>).map((dynamic e) => WeightedSpendingPool.fromData(e as Map<String, dynamic>)).toList(),
+      claimStart: data['claim_start'] as int,
+      claimPeriod: data['claim_period'] as int,
+      claimEnd: data['claim_end'] as int,
+      voteQuorum: data['vote_quorum'] as int,
+      votePeriod: data['vote_period'] as int,
+      voteEnactment: data['vote_enactment'] as int,
+    );
+  }
 
   @override
-  String? get from => sender;
+  Uint8List toProtoBytes() {
+    return Uint8List.fromList(<int>[
+      ...ProtobufEncoder.encode(1, sender),
+      ...ProtobufEncoder.encode(2, name),
+      ...ProtobufEncoder.encode(3, description),
+      ...ProtobufEncoder.encode(4, bonds),
+      ...ProtobufEncoder.encode(5, depositWhitelist),
+      ...ProtobufEncoder.encode(6, ownersWhitelist),
+      ...ProtobufEncoder.encode(7, spendingPools),
+      ...ProtobufEncoder.encode(8, claimStart),
+      ...ProtobufEncoder.encode(9, claimPeriod),
+      ...ProtobufEncoder.encode(10, claimEnd),
+      ...ProtobufEncoder.encode(11, voteQuorum),
+      ...ProtobufEncoder.encode(12, votePeriod),
+      ...ProtobufEncoder.encode(13, voteEnactment),
+    ]);
+  }
 
   @override
-  String? get to => null;
-
-  @override
-  List<CoinEntity> get txAmounts => <CoinEntity>[];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
+  Map<String, dynamic> toProtoJson() {
+    return <String, dynamic>{
+      '@type': typeUrl,
       'sender': sender,
       'name': name,
       'description': description,
       'bonds': bonds,
-      'deposit_whitelist': depositWhitelist.toJson(),
-      'owners_whitelist': ownersWhitelist.toJson(),
-      'spending_pools': spendingPools.map((e) => e.toJson()).toList(),
+      'deposit_whitelist': depositWhitelist.toProtoJson(),
+      'owners_whitelist': ownersWhitelist.toProtoJson(),
+      'spending_pools': spendingPools.map((WeightedSpendingPool e) => e.toProtoJson()).toList(),
       'claim_start': claimStart,
       'claim_period': claimPeriod,
       'claim_end': claimEnd,
@@ -117,26 +193,6 @@ class MsgCreateCollective extends TxMsg {
       'vote_enactment': voteEnactment,
     };
   }
-}
-
-
-class MsgBondCollective extends TxMsg {
-  static String get interxName => 'bond-collective';
-
-  @override
-  String get messageType => '/kira.collectives.MsgBondCollective';
-
-  @override
-  String get signatureMessageType => 'kiraHub/MsgBondCollective';
-
-  final String sender;
-  final String name;
-  final List<String> bonds;
-
-  MsgBondCollective.fromJson(Map<String, dynamic> json) :
-    sender = json['sender'] as String,
-    name = json['name'] as String,
-    bonds = (json['bonds'] as List<dynamic>).map((e) => e as String).toList();
 
   @override
   String? get from => sender;
@@ -145,53 +201,107 @@ class MsgBondCollective extends TxMsg {
   String? get to => null;
 
   @override
-  List<CoinEntity> get txAmounts => <CoinEntity>[];
+  List<CosmosCoin> get txAmounts => <CosmosCoin>[];
+}
+
+
+class MsgBondCollective extends TxMsg {
+  final String sender;
+  final String name;
+  final List<String> bonds;
+
+  MsgBondCollective({
+    required this.sender,
+    required this.name,
+    required this.bonds,
+  }) : super(
+    action: 'bond-collective',
+    aminoType: 'kiraHub/MsgBondCollective',
+    typeUrl: '/kira.collectives.MsgBondCollective',
+  );
+
+  factory MsgBondCollective.fromData(Map<String, dynamic> data) {
+    return MsgBondCollective(
+      sender: data['sender'] as String,
+      name: data['name'] as String,
+      bonds: (data['bonds'] as List<dynamic>).map((dynamic e) => e as String).toList(),
+    );
+  }
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
+  Uint8List toProtoBytes() {
+    return Uint8List.fromList(<int>[
+      ...ProtobufEncoder.encode(1, sender),
+      ...ProtobufEncoder.encode(2, name),
+      ...ProtobufEncoder.encode(3, bonds),
+    ]);
+  }
+
+  @override
+  Map<String, dynamic> toProtoJson() {
+    return <String, dynamic>{
+      '@type': typeUrl,
       'sender': sender,
       'name': name,
       'bonds': bonds,
     };
   }
+
+  @override
+  String? get from => sender;
+
+  @override
+  String? get to => null;
+
+  @override
+  List<CosmosCoin> get txAmounts => <CosmosCoin>[];
 }
 
 
 class MsgDonateCollective extends TxMsg {
-  static String get interxName => 'donate-collective';
-
-  @override
-  String get messageType => '/kira.collectives.MsgDonateCollective';
-
-  @override
-  String get signatureMessageType => 'kiraHub/MsgDonateCollective';
-
   final String sender;
   final String name;
   final int locking;
   final String donation;
   final bool donationLock;
 
-  MsgDonateCollective.fromJson(Map<String, dynamic> json) :
-    sender = json['sender'] as String,
-    name = json['name'] as String,
-    locking = json['locking'] as int,
-    donation = json['donation'] as String,
-    donationLock = json['donation_lock'] as bool;
+  MsgDonateCollective({
+    required this.sender,
+    required this.name,
+    required this.locking,
+    required this.donation,
+    required this.donationLock,
+  }) : super(
+    action: 'donate-collective',
+    aminoType: 'kiraHub/MsgDonateCollective',
+    typeUrl: '/kira.collectives.MsgDonateCollective',
+  );
+
+  factory MsgDonateCollective.fromData(Map<String, dynamic> data) {
+    return MsgDonateCollective(
+      sender: data['sender'] as String,
+      name: data['name'] as String,
+      locking: data['locking'] as int,
+      donation: data['donation'] as String,
+      donationLock: data['donation_lock'] as bool,
+    );
+  }
 
   @override
-  String? get from => sender;
+  Uint8List toProtoBytes() {
+    return Uint8List.fromList(<int>[
+      ...ProtobufEncoder.encode(1, sender),
+      ...ProtobufEncoder.encode(2, name),
+      ...ProtobufEncoder.encode(3, locking),
+      ...ProtobufEncoder.encode(4, donation),
+      ...ProtobufEncoder.encode(5, donationLock),
+    ]);
+  }
 
   @override
-  String? get to => null;
-
-  @override
-  List<CoinEntity> get txAmounts => <CoinEntity>[];
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
+  Map<String, dynamic> toProtoJson() {
+    return <String, dynamic>{
+      '@type': typeUrl,
       'sender': sender,
       'name': name,
       'locking': locking,
@@ -199,24 +309,6 @@ class MsgDonateCollective extends TxMsg {
       'donation_lock': donationLock,
     };
   }
-}
-
-
-class MsgWithdrawCollective extends TxMsg {
-  static String get interxName => 'withdraw-collective';
-
-  @override
-  String get messageType => '/kira.collectives.MsgWithdrawCollective';
-
-  @override
-  String get signatureMessageType => 'kiraHub/MsgWithdrawCollective';
-
-  final String sender;
-  final String name;
-
-  MsgWithdrawCollective.fromJson(Map<String, dynamic> json) :
-    sender = json['sender'] as String,
-    name = json['name'] as String;
 
   @override
   String? get from => sender;
@@ -225,15 +317,55 @@ class MsgWithdrawCollective extends TxMsg {
   String? get to => null;
 
   @override
-  List<CoinEntity> get txAmounts => <CoinEntity>[];
+  List<CosmosCoin> get txAmounts => <CosmosCoin>[];
+}
+
+
+class MsgWithdrawCollective extends TxMsg {
+  final String sender;
+  final String name;
+
+  MsgWithdrawCollective({
+    required this.sender,
+    required this.name,
+  }) : super(
+    action: 'withdraw-collective',
+    aminoType: 'kiraHub/MsgWithdrawCollective',
+    typeUrl: '/kira.collectives.MsgWithdrawCollective',
+  );
+
+  factory MsgWithdrawCollective.fromData(Map<String, dynamic> data) {
+    return MsgWithdrawCollective(
+      sender: data['sender'] as String,
+      name: data['name'] as String,
+    );
+  }
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
+  Uint8List toProtoBytes() {
+    return Uint8List.fromList(<int>[
+      ...ProtobufEncoder.encode(1, sender),
+      ...ProtobufEncoder.encode(2, name),
+    ]);
+  }
+
+  @override
+  Map<String, dynamic> toProtoJson() {
+    return <String, dynamic>{
+      '@type': typeUrl,
       'sender': sender,
       'name': name,
     };
   }
+
+  @override
+  String? get from => sender;
+
+  @override
+  String? get to => null;
+
+  @override
+  List<CosmosCoin> get txAmounts => <CosmosCoin>[];
 }
 
 

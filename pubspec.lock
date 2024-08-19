@@ -50,18 +50,18 @@ packages:
     dependency: "direct main"
     description:
       name: auto_route
-      sha256: eb33554581a0a4aa7e6da0f13a44291a55bf71359012f1d9feb41634ff908ff8
+      sha256: "901050372696c7fddb5b698ea328088366c13e133f9eac456cfca250b7b3c37c"
       url: "https://pub.dev"
     source: hosted
-    version: "7.9.2"
+    version: "9.2.1+1"
   auto_route_generator:
     dependency: "direct dev"
     description:
       name: auto_route_generator
-      sha256: "11067a3bcd643812518fe26c0c9ec073990286cabfd9d74b6da9ef9b913c4d22"
+      sha256: c9086eb07271e51b44071ad5cff34e889f3156710b964a308c2ab590769e79e6
       url: "https://pub.dev"
     source: hosted
-    version: "7.3.2"
+    version: "9.0.0"
   bech32:
     dependency: "direct main"
     description:
@@ -82,10 +82,10 @@ packages:
     dependency: "direct main"
     description:
       name: blockchain_utils
-      sha256: "9701dfaa74caad4daae1785f1ec4445cf7fb94e45620bc3a4aca1b9b281dc6c9"
+      sha256: aebc3a32b927b34f638817c4bfdb85f86a97e6ad35f0cd962660b0c6e8d5c56b
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "3.3.0"
   blockies_svg:
     dependency: "direct main"
     description:
@@ -254,6 +254,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      sha256: "7caf6a750a0c04effbb52a676dce9a4a592e10ad35c34d6d2d0e4811160d5670"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.4+2"
   crypto:
     dependency: "direct main"
     description:
@@ -369,10 +377,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: "1bbf65dd997458a08b531042ec3794112a6c39c07c37ff22113d2e7e4f81d4e4"
+      sha256: "167bb619cdddaa10ef2907609feb8a79c16dfa479d3afaf960f8e223f754bf12"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.1"
+    version: "8.1.2"
   fixnum:
     dependency: transitive
     description:
@@ -406,10 +414,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_dropzone
-      sha256: b399c60411f9bf9c4c2f97933c6a3a185859e75aade8897831e76cee4346c8e1
+      sha256: "47d07998745f7c85637b6fd0c95b78548938d5a45c50666f2cf75eefc8adb533"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "4.0.2"
   flutter_dropzone_platform_interface:
     dependency: transitive
     description:
@@ -422,10 +430,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_dropzone_web
-      sha256: c5a0fdb63b7216352a01761ec1b6eba1982e49541e60675735e2d3d95e207b19
+      sha256: "463e127d5f4e0c99f116e8d8d276f5fed874de6a33d53156604db0b2c46b8e6e"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.13"
+    version: "4.0.1"
   flutter_highlight:
     dependency: transitive
     description:
@@ -438,10 +446,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: "9e8c3858111da373efc5aa341de011d9bd23e2c5c5e0c62bccf32438e192d7b1"
+      sha256: "3f41d009ba7172d5ff9be5f6e6e6abb4300e263aab8866d2a0842ed2a70f8f0c"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "4.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -584,10 +592,10 @@ packages:
     dependency: "direct main"
     description:
       name: js
-      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
+      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.7"
+    version: "0.7.1"
   json_annotation:
     dependency: transitive
     description:
@@ -640,10 +648,10 @@ packages:
     dependency: transitive
     description:
       name: lints
-      sha256: cbf8d4b858bb0134ef3ef87841abdf8d63bfc255c266b7bf6b39daa1085c4290
+      sha256: "976c774dd944a42e83e2467f4cc670daef7eed6295b10b36ae8c85bcbf828235"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "4.0.0"
   loading_animation_widget:
     dependency: "direct main"
     description:

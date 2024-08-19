@@ -123,7 +123,7 @@ class UserTransactions {
     MsgSend msgSend = MsgSend(
       fromAddress: fromAddress,
       toAddress: toAddress,
-      amounts: amounts.map((Coin e) => CoinEntity(amount: e.amount.toString(), denom: e.denom)).toList(),
+      amounts: amounts.map((Coin e) => CosmosCoin(amount: e.amount.toString(), denom: e.denom)).toList(),
     );
     sendTransaction(
       msg: msgSend,
@@ -312,7 +312,7 @@ class UserTransactions {
 
     txProcessNotificator.notifyConfirmTransaction();
     TransactionRemoteData transactionRemoteData = await transactionsService.getRemoteUserTransactionData(signerAddress);
-    Coin finalFee = fee ?? await transactionsService.getExecutionFeeForMessage(msg.messageType);
+    Coin finalFee = fee ?? await transactionsService.getExecutionFeeForMessage(msg.typeUrl);
 
     CosmosSignDoc cosmosSignDoc = prepareMessage(
       compressedPublicKey: getIt<WalletProvider>().value!.publicKey,
@@ -360,7 +360,7 @@ class UserTransactions {
     String? memo,
   }) {
     CosmosSignDoc cosmosSignDoc = CosmosSignDoc(
-      txBody: CosmosTxBody(messages: [], memo: memo ?? ''),
+      txBody: CosmosTxBody(messages: [msg], memo: memo ?? ''),
       authInfo: CosmosAuthInfo(
         signerInfos: [CosmosSignerInfo(
           publicKey: CosmosSimplePublicKey(compressedPublicKey),

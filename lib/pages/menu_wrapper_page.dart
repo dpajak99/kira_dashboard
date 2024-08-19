@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kira_dashboard/config/app_icons.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
-import 'package:kira_dashboard/widgets/background.dart';
+import 'package:kira_dashboard/widgets/background_gradient.dart';
 import 'package:kira_dashboard/widgets/late_value_listenable_builder.dart';
 import 'package:kira_dashboard/widgets/menu_searchbar.dart';
 import 'package:kira_dashboard/widgets/network_button.dart';
@@ -27,7 +27,7 @@ class MenuWrapperPageState extends State<MenuWrapperPage> with SingleTickerProvi
     return Scaffold(
       key: scaffoldKey,
       drawer: _Drawer(notifierRouteObserver: notifierRouteObserver),
-      body: Background(
+      body: BackgroundGradient(
         child: Row(
           children: [
             if (MediaQuery.of(context).size.width > 900)

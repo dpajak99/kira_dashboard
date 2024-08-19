@@ -4,7 +4,7 @@ import 'package:kira_dashboard/utils/router/guards/splash_guard.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 
 @AutoRouterConfig()
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   AppRouter({super.navigatorKey});
 
   @override

@@ -10,38 +10,38 @@ dependencies:
   flutter:
     sdk: flutter
 
-  auto_route: ^7.8.4
-  equatable: ^2.0.5
-  flutter_bloc: ^8.1.4
-  blockies_svg: ^1.0.2
-  flutter_svg: ^2.0.10+1
-  cached_network_image: ^3.3.1
-  url_recognizer: ^0.0.2+2
-  intl: ^0.19.0
-  logger: ^2.0.2+1
-  crypto: ^3.0.3
-  dio: ^5.4.1
-  dio_cache_interceptor: ^3.5.0
-  dio_cache_interceptor_hive_store: ^3.2.2
-  loading_animation_widget: ^1.2.0+4
-  get_it: ^7.6.7
-  google_fonts: ^6.1.0
-  blockchain_utils: ^1.6.0
-  shimmer: ^3.0.0
-  bech32: ^0.2.2
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  decimal: ^2.3.3
-  json_view: ^0.4.2
-  markdown_widget: ^2.3.2+3
-  card_swiper: ^3.0.1
-  qr_flutter: ^4.1.0
-  just_the_tooltip: ^0.0.12
-  sliver_tools: ^0.2.12
-  flutter_dropzone: ^3.0.7
-  js: ^0.6.7
-  dotted_border: ^2.1.0
-  file_picker: ^6.1.1
+  auto_route: 9.2.1+1
+  equatable: 2.0.5
+  flutter_bloc: 8.1.6
+  blockies_svg: 1.0.2
+  flutter_svg: 2.0.10+1
+  cached_network_image: 3.4.1
+  url_recognizer: 0.0.2+2
+  intl: 0.19.0
+  logger: 2.4.0
+  crypto: 3.0.3
+  dio: 5.6.0
+  dio_cache_interceptor: 3.5.0
+  dio_cache_interceptor_hive_store: 3.2.2
+  loading_animation_widget: 1.2.1
+  get_it: 7.7.0
+  google_fonts: 6.2.1
+  blockchain_utils: 3.3.0
+  shimmer: 3.0.0
+  bech32: 0.2.2
+  hive: 2.2.3
+  hive_flutter: 1.1.0
+  decimal: 2.3.3
+  json_view: 0.4.2
+  markdown_widget: 2.3.2+6
+  card_swiper: 3.0.1
+  qr_flutter: 4.1.0
+  just_the_tooltip: 0.0.12
+  sliver_tools: 0.2.12
+  flutter_dropzone: 4.0.2
+  js: 0.7.1
+  dotted_border: 2.1.0
+  file_picker: 8.1.2
   encrypt: 5.0.3
 
   cryptography_utils:
@@ -50,10 +50,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.8
-  flutter_lints: ^3.0.1
-  auto_route_generator: ^7.3.2
-  hive_generator: ^2.0.1
+  build_runner: 2.4.12
+  flutter_lints: 4.0.0
+  auto_route_generator: 9.0.0
+  hive_generator: 2.0.1
 
 
 flutter:

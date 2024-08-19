@@ -16,7 +16,7 @@ import 'package:kira_dashboard/pages/splash_page/splash_page_state.dart';
 import 'package:kira_dashboard/utils/network_utils.dart';
 import 'package:kira_dashboard/utils/router/router.gr.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
-import 'package:kira_dashboard/widgets/background.dart';
+import 'package:kira_dashboard/widgets/background_gradient.dart';
 
 @RoutePage()
 class SplashPage extends StatefulWidget {
@@ -49,7 +49,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Background(
+      body: BackgroundGradient(
         child: BlocBuilder<SplashPageCubit, SplashPageState>(
           bloc: splashPageCubit,
           builder: (BuildContext context, SplashPageState state) {

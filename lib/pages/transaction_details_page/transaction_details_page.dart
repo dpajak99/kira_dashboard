@@ -155,7 +155,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                                   color: CustomColors.dialogContainer,
                                 ),
                                 child: JsonView(
-                                  json: e.toJson(),
+                                  json: e.toProtoJson(),
                                   shrinkWrap: true,
                                 ),
                               );

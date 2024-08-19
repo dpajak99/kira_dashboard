@@ -27,123 +27,6 @@ import 'package:kira_dashboard/pages/transaction_details_page/transaction_detail
 import 'package:kira_dashboard/pages/valdators_page/validators_page.dart'
     as _i11;
 
-abstract class $AppRouter extends _i12.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i12.PageFactory> pagesMap = {
-    BlockDetailsRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<BlockDetailsRouteArgs>(
-          orElse: () =>
-              BlockDetailsRouteArgs(height: pathParams.getString('height')));
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i1.BlockDetailsPage(
-          key: args.key,
-          height: args.height,
-        ),
-      );
-    },
-    BlockTransactionsRoute.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<BlockTransactionsRouteArgs>(
-          orElse: () => BlockTransactionsRouteArgs(
-              blockId: queryParams.optString('block')));
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i2.BlockTransactionsPage(
-          blockId: args.blockId,
-          key: args.key,
-        ),
-      );
-    },
-    BlocksRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i3.BlocksPage(),
-      );
-    },
-    DashboardRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.DashboardPage(),
-      );
-    },
-    MenuWrapperRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.MenuWrapperPage(),
-      );
-    },
-    PortfolioRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<PortfolioRouteArgs>(
-          orElse: () => PortfolioRouteArgs(
-                  address: pathParams.getString(
-                'address',
-                '',
-              )));
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i6.PortfolioPage(
-          address: args.address,
-          key: args.key,
-        ),
-      );
-    },
-    ProposalDetailsRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<ProposalDetailsRouteArgs>(
-          orElse: () => ProposalDetailsRouteArgs(
-              proposalId: pathParams.getString('proposalId')));
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i7.ProposalDetailsPage(
-          proposalId: args.proposalId,
-          key: args.key,
-        ),
-      );
-    },
-    ProposalsRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.ProposalsPage(),
-      );
-    },
-    SplashRoute.name: (routeData) {
-      final args = routeData.argsAs<SplashRouteArgs>(
-          orElse: () => const SplashRouteArgs());
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i9.SplashPage(
-          key: args.key,
-          routeInfo: args.routeInfo,
-        ),
-      );
-    },
-    TransactionDetailsRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<TransactionDetailsRouteArgs>(
-          orElse: () =>
-              TransactionDetailsRouteArgs(hash: pathParams.getString('hash')));
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i10.TransactionDetailsPage(
-          hash: args.hash,
-          key: args.key,
-        ),
-      );
-    },
-    ValidatorsRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i11.ValidatorsPage(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.BlockDetailsPage]
 class BlockDetailsRoute extends _i12.PageRouteInfo<BlockDetailsRouteArgs> {
@@ -163,8 +46,19 @@ class BlockDetailsRoute extends _i12.PageRouteInfo<BlockDetailsRouteArgs> {
 
   static const String name = 'BlockDetailsRoute';
 
-  static const _i12.PageInfo<BlockDetailsRouteArgs> page =
-      _i12.PageInfo<BlockDetailsRouteArgs>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<BlockDetailsRouteArgs>(
+          orElse: () =>
+              BlockDetailsRouteArgs(height: pathParams.getString('height')));
+      return _i1.BlockDetailsPage(
+        key: args.key,
+        height: args.height,
+      );
+    },
+  );
 }
 
 class BlockDetailsRouteArgs {
@@ -203,8 +97,19 @@ class BlockTransactionsRoute
 
   static const String name = 'BlockTransactionsRoute';
 
-  static const _i12.PageInfo<BlockTransactionsRouteArgs> page =
-      _i12.PageInfo<BlockTransactionsRouteArgs>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      final queryParams = data.queryParams;
+      final args = data.argsAs<BlockTransactionsRouteArgs>(
+          orElse: () => BlockTransactionsRouteArgs(
+              blockId: queryParams.optString('block')));
+      return _i2.BlockTransactionsPage(
+        blockId: args.blockId,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class BlockTransactionsRouteArgs {
@@ -234,7 +139,12 @@ class BlocksRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'BlocksRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      return const _i3.BlocksPage();
+    },
+  );
 }
 
 /// generated route for
@@ -248,7 +158,12 @@ class DashboardRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'DashboardRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.DashboardPage();
+    },
+  );
 }
 
 /// generated route for
@@ -262,7 +177,12 @@ class MenuWrapperRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'MenuWrapperRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.MenuWrapperPage();
+    },
+  );
 }
 
 /// generated route for
@@ -284,8 +204,22 @@ class PortfolioRoute extends _i12.PageRouteInfo<PortfolioRouteArgs> {
 
   static const String name = 'PortfolioRoute';
 
-  static const _i12.PageInfo<PortfolioRouteArgs> page =
-      _i12.PageInfo<PortfolioRouteArgs>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<PortfolioRouteArgs>(
+          orElse: () => PortfolioRouteArgs(
+                  address: pathParams.getString(
+                'address',
+                '',
+              )));
+      return _i6.PortfolioPage(
+        address: args.address,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class PortfolioRouteArgs {
@@ -324,8 +258,19 @@ class ProposalDetailsRoute
 
   static const String name = 'ProposalDetailsRoute';
 
-  static const _i12.PageInfo<ProposalDetailsRouteArgs> page =
-      _i12.PageInfo<ProposalDetailsRouteArgs>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<ProposalDetailsRouteArgs>(
+          orElse: () => ProposalDetailsRouteArgs(
+              proposalId: pathParams.getString('proposalId')));
+      return _i7.ProposalDetailsPage(
+        proposalId: args.proposalId,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class ProposalDetailsRouteArgs {
@@ -355,7 +300,12 @@ class ProposalsRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'ProposalsRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.ProposalsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -376,8 +326,17 @@ class SplashRoute extends _i12.PageRouteInfo<SplashRouteArgs> {
 
   static const String name = 'SplashRoute';
 
-  static const _i12.PageInfo<SplashRouteArgs> page =
-      _i12.PageInfo<SplashRouteArgs>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      final args =
+          data.argsAs<SplashRouteArgs>(orElse: () => const SplashRouteArgs());
+      return _i9.SplashPage(
+        key: args.key,
+        routeInfo: args.routeInfo,
+      );
+    },
+  );
 }
 
 class SplashRouteArgs {
@@ -416,8 +375,19 @@ class TransactionDetailsRoute
 
   static const String name = 'TransactionDetailsRoute';
 
-  static const _i12.PageInfo<TransactionDetailsRouteArgs> page =
-      _i12.PageInfo<TransactionDetailsRouteArgs>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<TransactionDetailsRouteArgs>(
+          orElse: () =>
+              TransactionDetailsRouteArgs(hash: pathParams.getString('hash')));
+      return _i10.TransactionDetailsPage(
+        hash: args.hash,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class TransactionDetailsRouteArgs {
@@ -447,5 +417,10 @@ class ValidatorsRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'ValidatorsRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      return const _i11.ValidatorsPage();
+    },
+  );
 }

@@ -1,3 +1,4 @@
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
@@ -37,7 +38,7 @@ class TransactionEntity extends Equatable {
   }
 
   Set<String> get allDenominations {
-    List<String> txsDenominations = txs.expand((TxMsg tx) => tx.txAmounts.map((CoinEntity coin) => coin.denom)).toList();
+    List<String> txsDenominations = txs.expand((TxMsg tx) => tx.txAmounts.map((CosmosCoin coin) => coin.denom)).toList();
     List<String> feeDenominations = fee.map((CoinEntity coin) => coin.denom).toList();
 
     return {...txsDenominations, ...feeDenominations};
