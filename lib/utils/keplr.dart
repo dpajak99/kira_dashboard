@@ -5,9 +5,9 @@ import 'dart:convert';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:js_util';
 
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:js/js.dart';
 import 'package:kira_dashboard/infra/entities/amino_sign_response.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/std_sign_doc.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 
 // #2
@@ -31,9 +31,15 @@ class KeplrImpl {
     return accountsList.map((e) => KeplrWallet.fromJson(e)).toList();
   }
 
-  Future<AminoSignResponse> signAmino(StdSignDoc stdSignDoc) async {
-    String json = jsonEncode(stdSignDoc.toSignatureJson());
-    dynamic response = await promiseToFuture(_keplr.sign(json));
+  Future<AminoSignResponse> signDirect(CosmosSignDoc cosmosSignDoc) async {
+    Map<String, dynamic> cosmosSignDocBytes = <String, dynamic>{
+      'bodyBytes': cosmosSignDoc.txBody.toProtoBytes(),
+      'authInfoBytes': cosmosSignDoc.authInfo.toProtoBytes(),
+      'chainId': cosmosSignDoc.chainId,
+      'accountNumber': cosmosSignDoc.accountNumber,
+    };
+
+    dynamic response = await promiseToFuture(_keplr.sign(jsonEncode(cosmosSignDocBytes)));
     Map<String, dynamic> responseMap = jsonDecode(response);
 
     AminoSignResponse aminoSignResponse = AminoSignResponse.fromJson(responseMap);

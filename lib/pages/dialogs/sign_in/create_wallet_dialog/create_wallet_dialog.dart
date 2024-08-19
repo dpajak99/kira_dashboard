@@ -1,5 +1,4 @@
-import 'package:blockchain_utils/bip/bip/bip.dart';
-import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
@@ -30,7 +29,7 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     int columnsCount = 3;
-    List<String> mnemonicWords = mnemonic.toList();
+    List<String> mnemonicWords = mnemonic.mnemonicList;
     int rowsCount = mnemonicWords.length ~/ columnsCount;
 
     return CustomDialog(
@@ -126,12 +125,12 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
 
   void refreshMnemonic() {
     setState(() {
-      mnemonic = Bip39MnemonicGenerator().fromWordsNumber(Bip39WordsNum.wordsNum24);
+      mnemonic = Mnemonic.generate(mnemonicSize: MnemonicSize.words24);
     });
   }
 
-  void signIn() {
-    getIt<WalletProvider>().signIn(Wallet.fromMnemonic(mnemonic: mnemonic));
+  Future<void> signIn() async {
+    getIt<WalletProvider>().signIn(await Wallet.fromMnemonic(mnemonic));
   }
 }
 

@@ -5,7 +5,6 @@ import 'package:kira_dashboard/pages/dialogs/transactions/register_identity_reco
 import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identity_records_list.dart';
 import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identity_records_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
-import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/sliver_custom_card.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 

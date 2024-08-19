@@ -1,7 +1,7 @@
 class TransactionRemoteData {
   final String chainId;
-  final String sequence;
-  final String accountNumber;
+  final int sequence;
+  final int accountNumber;
 
   TransactionRemoteData({
     required this.chainId,

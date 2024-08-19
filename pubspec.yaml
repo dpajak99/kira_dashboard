@@ -42,11 +42,10 @@ dependencies:
   js: ^0.6.7
   dotted_border: ^2.1.0
   file_picker: ^6.1.1
+  encrypt: 5.0.3
 
   cryptography_utils:
-    git:
-      url: git@github.com:snggle/cryptography_utils.git
-      ref: dp-feature/aesdhke-v1
+    path: ../cryptography_utils
 
 dev_dependencies:
   flutter_test:

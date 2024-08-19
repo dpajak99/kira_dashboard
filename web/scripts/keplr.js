@@ -8,7 +8,7 @@ KeplrApiWebInterface.prototype.isExtensionInstalled = function () {
 KeplrApiWebInterface.prototype.sign = async function (stdSignDoc) {
     try {
         const stdSignDocObject = JSON.parse(stdSignDoc);
-        const signature = await window.keplr.signAmino('localnet-1', 'kira143q8vxpvuykt9pq50e6hng9s38vmy844n8k9wx', stdSignDocObject);
+        const signature = await window.keplr.signDirect('localnet-1', 'kira143q8vxpvuykt9pq50e6hng9s38vmy844n8k9wx', stdSignDoc);
         return JSON.stringify(signature);
     } catch (e) {
         return e.toString();

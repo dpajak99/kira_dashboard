@@ -4,7 +4,7 @@ import 'package:kira_dashboard/infra/entities/unsafe_wallet_hive_entity.dart';
 class UnsafeWalletRepository {
   Future<void> saveWallet(UnsafeWalletHiveEntity wallet) async {
     Box box = Hive.box('wallets');
-    await box.put("${wallet.index}", wallet);
+    await box.put('${wallet.index}', wallet);
   }
 
   Future<void> deleteWallet(int index) async {

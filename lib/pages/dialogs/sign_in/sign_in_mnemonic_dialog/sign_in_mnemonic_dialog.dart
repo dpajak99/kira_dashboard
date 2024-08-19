@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kira_dashboard/config/get_it.dart';
@@ -138,8 +138,8 @@ class _SignInMnemonicDialog extends State<SignInMnemonicDialog> with SingleTicke
     cubit.setWordsCount(availableMnemonicSizes[tabController.index]);
   }
 
-  void signIn(List<String> mnemonicList) {
-    Mnemonic mnemonic = Mnemonic.fromList(mnemonicList);
-    getIt<WalletProvider>().signIn(Wallet.fromMnemonic(mnemonic: mnemonic));
+  Future<void> signIn(List<String> mnemonicList) async {
+    Mnemonic mnemonic = Mnemonic(mnemonicList);
+    getIt<WalletProvider>().signIn(await Wallet.fromMnemonic(mnemonic));
   }
 }

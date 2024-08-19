@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:blockchain_utils/blockchain_utils.dart';
-import 'package:cryptography_utils/cryptography_utils.dart';
+import 'package:kira_dashboard/utils/aes/aesdhke_v1.dart';
+import 'package:kira_dashboard/utils/aes/ciphertext.dart';
 
 class EncryptedKeyfile {
   final Uint8List addressBytes;

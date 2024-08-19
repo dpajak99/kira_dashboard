@@ -1,3 +1,4 @@
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
@@ -5,14 +6,13 @@ import 'package:kira_dashboard/config/theme/button_styles.dart';
 import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
-import 'package:kira_dashboard/utils/signature_utils.dart';
 import 'package:kira_dashboard/widgets/custom_dialog.dart';
 
 class SignTransactionDialog extends DialogContentWidget {
-  final String message;
+  final CosmosSignDoc cosmosSignDoc;
 
   const SignTransactionDialog({
-    required this.message,
+    required this.cosmosSignDoc,
     super.key,
   });
 
@@ -39,7 +39,7 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
             child: Column(
               children: [
                 Text(
-                  widget.message,
+                  widget.cosmosSignDoc.toString(),
                   style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
                 ),
               ],
@@ -51,8 +51,13 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
             child: ElevatedButton(
               style: darkElevatedButton,
               onPressed: () {
-                String sig = SignatureUtils.generateSignature(wallet: getIt<WalletProvider>().value as Wallet, message: widget.message);
-                Navigator.of(context).pop(sig);
+                Wallet wallet = getIt<WalletProvider>().value as Wallet;
+                Secp256k1PrivateKey privateKey = wallet.wallet.privateKey as Secp256k1PrivateKey;
+                CosmosSigner cosmosSigner = CosmosSigner(privateKey.ecPrivateKey);
+
+                CosmosSignature cosmosSignature = cosmosSigner.signDirect(widget.cosmosSignDoc);
+
+                Navigator.of(context).pop(cosmosSignature);
               },
               child: const Text('Approve'),
             ),

@@ -3,7 +3,6 @@ import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/i
 import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/inbound_verification_requests_list_cubit.dart';
 import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/outbound_verification_requests_list.dart';
 import 'package:kira_dashboard/pages/portfolio_page/verification_requests_page/outbound_verification_requests_list_cubit.dart';
-import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/sliver_custom_card.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 

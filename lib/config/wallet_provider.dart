@@ -44,11 +44,9 @@ class WalletProvider extends ValueNotifier<IWallet?> {
   Wallet deriveNextWallet() {
     if (value is Wallet) {
       availableWallets.cast().sort((a, b) => b.index.compareTo(a.index));
-      Wallet latestWallet = availableWallets.first as Wallet;
-      Wallet newWallet = Wallet(
-        index: latestWallet.index + 1,
-        bip44: latestWallet.bip44,
-        derivedBip44: latestWallet.nextAccount(),
+      Wallet newWallet = Wallet.fromMasterPrivateKey(
+        masterPrivateKey: (value as Wallet).masterPrivateKey,
+        addressIndex: availableWallets.first.index + 1,
       );
       unsafeWalletService.saveWallet(newWallet);
       availableWallets.add(newWallet);

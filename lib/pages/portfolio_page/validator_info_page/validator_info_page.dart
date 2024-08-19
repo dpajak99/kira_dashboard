@@ -15,9 +15,7 @@ import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
-import 'package:kira_dashboard/widgets/sliver_custom_card.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
-import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../utils/router/router.gr.dart';
 

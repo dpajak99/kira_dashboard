@@ -2,11 +2,8 @@ import 'package:blockchain_utils/bech32/bech32_base.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:kira_dashboard/config/get_it.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
-import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/models/keyfile.dart';
-import 'package:kira_dashboard/models/wallet.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_content_widget.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_keyfile_dialog/sign_in_keyfile_dialog_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/sign_in/sign_in_keyfile_dialog/sign_in_keyfile_dialog_state.dart';
@@ -170,6 +167,6 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
   }
 
   void signIn(DecryptedKeyfile decryptedKeyfile) {
-    getIt<WalletProvider>().signIn(Wallet.fromPrivateKey(privateKey: decryptedKeyfile.privateKey));
+    // getIt<WalletProvider>().signIn(Wallet.fromMasterPrivateKey(privateKey: decryptedKeyfile.privateKey));
   }
 }

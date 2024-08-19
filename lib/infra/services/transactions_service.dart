@@ -58,8 +58,8 @@ class TransactionsService {
     HeadersWrapper<AccountEntity> accountEntity = await accountsRepository.getWithHeaders(address);
 
     return TransactionRemoteData(
-      accountNumber: accountEntity.data.accountNumber,
-      sequence: accountEntity.data.sequence,
+      accountNumber: int.parse(accountEntity.data.accountNumber),
+      sequence: int.parse(accountEntity.data.sequence),
       chainId: accountEntity.headers.chainId,
     );
   }

@@ -1,4 +1,7 @@
-import 'dart:convert';
+import 'dart:typed_data';
+import 'package:cryptography_utils/cryptography_utils.dart';
+import 'package:kira_dashboard/config/get_it.dart';
+import 'package:kira_dashboard/config/wallet_provider.dart';
 import 'package:kira_dashboard/infra/entities/amino_sign_response.dart';
 import 'package:kira_dashboard/infra/entities/balances/coin_entity.dart';
 import 'package:kira_dashboard/infra/entities/transactions/in/types.dart';
@@ -6,16 +9,6 @@ import 'package:kira_dashboard/infra/entities/transactions/methods/cosmos.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/governance.dart';
 import 'package:kira_dashboard/infra/entities/transactions/methods/multistaking.dart';
 import 'package:kira_dashboard/infra/entities/transactions/out/broadcast_req.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/auth_info.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/mode_info/mode_info.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/mode_info/sign_mode.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/mode_info/single_mode_info.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/signer_info.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/tx_body.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/tx_fee.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/components/tx_pub_key.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/std_sign_doc.dart';
-import 'package:kira_dashboard/infra/entities/transactions/out/transaction/tx.dart';
 import 'package:kira_dashboard/infra/services/transactions_service.dart';
 import 'package:kira_dashboard/models/coin.dart';
 import 'package:kira_dashboard/models/transaction_remote_data.dart';
@@ -25,7 +18,6 @@ import 'package:kira_dashboard/pages/dialogs/sign_transaction_dialog/sign_transa
 import 'package:kira_dashboard/pages/dialogs/transaction_result_dialog/transaction_result_dialog.dart';
 import 'package:kira_dashboard/utils/exceptions/internal_broadcast_exception.dart';
 import 'package:kira_dashboard/utils/keplr.dart';
-import 'package:kira_dashboard/utils/map_utils.dart';
 
 abstract class TxProcessNotificator {
   void notifyConfirmTransaction();
@@ -66,22 +58,26 @@ class DialogTxProcessNotificator implements TxProcessNotificator {
 }
 
 abstract class TxSigner {
-  Future<AminoSignResponse?> sign(String message, StdSignDoc stdSignDoc);
+  Future<AminoSignResponse?> sign(CosmosSignDoc cosmosSignDoc);
 }
 
 class UnsafeWalletSigner extends TxSigner {
   UnsafeWalletSigner();
 
   @override
-  Future<AminoSignResponse?> sign(String message, StdSignDoc stdSignDoc) async {
-    return _getSignature(message, stdSignDoc);
+  Future<AminoSignResponse?> sign(CosmosSignDoc cosmosSignDoc) async {
+    return _getSignature(cosmosSignDoc);
   }
 
-  Future<AminoSignResponse?> _getSignature(String message, StdSignDoc stdSignDoc) async {
-    String? signature = await DialogRouter.seperated().navigate<String?>(SignTransactionDialog(message: message));
+  Future<AminoSignResponse?> _getSignature(CosmosSignDoc cosmosSignDoc) async {
+    CosmosSignature? cosmosSignature = await DialogRouter.seperated().navigate<CosmosSignature?>(SignTransactionDialog(cosmosSignDoc: cosmosSignDoc));
+    if(cosmosSignature == null) {
+      return null;
+    }
+
     AminoSignResponse aminoSignResponse = AminoSignResponse(
-      signed: stdSignDoc,
-      signature: Signature(signature: signature!),
+      signed: cosmosSignDoc,
+      signature: cosmosSignature,
     );
     return aminoSignResponse;
   }
@@ -91,13 +87,13 @@ class KeplrWalletSigner extends TxSigner {
   KeplrWalletSigner();
 
   @override
-  Future<AminoSignResponse?> sign(String message, StdSignDoc stdSignDoc) async {
-    return _getSignature(stdSignDoc);
+  Future<AminoSignResponse?> sign(CosmosSignDoc cosmosSignDoc) async {
+    return _getSignature(cosmosSignDoc);
   }
 
-  Future<AminoSignResponse?> _getSignature(StdSignDoc stdSignDoc) async {
+  Future<AminoSignResponse?> _getSignature(CosmosSignDoc cosmosSignDoc) async {
     KeplrImpl keplr = KeplrImpl();
-    AminoSignResponse? aminoSignResponse = await keplr.signAmino(stdSignDoc);
+    AminoSignResponse? aminoSignResponse = await keplr.signDirect(cosmosSignDoc);
     return aminoSignResponse;
   }
 }
@@ -313,18 +309,20 @@ class UserTransactions {
     Coin? fee,
     String? memo,
   }) async {
+
     txProcessNotificator.notifyConfirmTransaction();
     TransactionRemoteData transactionRemoteData = await transactionsService.getRemoteUserTransactionData(signerAddress);
     Coin finalFee = fee ?? await transactionsService.getExecutionFeeForMessage(msg.messageType);
 
-    (String, StdSignDoc) message = await prepareMessage(
+    CosmosSignDoc cosmosSignDoc = prepareMessage(
+      compressedPublicKey: getIt<WalletProvider>().value!.publicKey,
       transactionRemoteData: transactionRemoteData,
       msg: msg,
       fee: finalFee,
       memo: memo,
     );
 
-    AminoSignResponse? aminoSignResponse = await txSigner.sign(message.$1, message.$2);
+    AminoSignResponse? aminoSignResponse = await txSigner.sign(cosmosSignDoc);
     if (aminoSignResponse == null) {
       txProcessNotificator.notifyTransactionFailed();
       return;
@@ -332,23 +330,11 @@ class UserTransactions {
 
     txProcessNotificator.notifyBroadcastTransaction();
 
-    SignerInfo signerInfo = SignerInfo(
-      publicKey: TxPubKey(key: base64Encode(compressedPublicKey)),
-      modeInfo: const ModeInfo(single: SingleModeInfo(mode: SignMode.SIGN_MODE_LEGACY_AMINO_JSON)),
-      sequence: transactionRemoteData.sequence,
-    );
-
     BroadcastReq broadcastReq = BroadcastReq(
-      tx: Tx(
-        body: TxBody(
-          messages: <TxMsg>[msg],
-          memo: aminoSignResponse.signed.memo,
-        ),
-        authInfo: AuthInfo(
-          signerInfos: <SignerInfo>[signerInfo],
-          fee: aminoSignResponse.signed.fee,
-        ),
-        signatures: <String>[aminoSignResponse.signature.signature],
+      tx: CosmosTx.signed(
+        body: cosmosSignDoc.txBody,
+        authInfo: cosmosSignDoc.authInfo,
+        signatures: [aminoSignResponse.signature],
       ),
       mode: 'block',
     );
@@ -366,28 +352,27 @@ class UserTransactions {
     txProcessNotificator.notifyTransactionSucceeded(transactionHash);
   }
 
-  Future<(String, StdSignDoc)> prepareMessage({
+  CosmosSignDoc prepareMessage({
+    required Uint8List compressedPublicKey,
     required TransactionRemoteData transactionRemoteData,
     required TxMsg msg,
     required Coin fee,
     String? memo,
-  }) async {
-    StdSignDoc stdSignDoc = StdSignDoc(
-      accountNumber: transactionRemoteData.accountNumber,
-      sequence: transactionRemoteData.sequence,
-      chainId: transactionRemoteData.chainId,
-      memo: memo ?? '',
-      fee: TxFee(
-        amount: <CoinEntity>[
-          CoinEntity(amount: fee.amount.toString(), denom: fee.denom),
-        ],
+  }) {
+    CosmosSignDoc cosmosSignDoc = CosmosSignDoc(
+      txBody: CosmosTxBody(messages: [], memo: memo ?? ''),
+      authInfo: CosmosAuthInfo(
+        signerInfos: [CosmosSignerInfo(
+          publicKey: CosmosSimplePublicKey(compressedPublicKey),
+          sequence: transactionRemoteData.sequence,
+          modeInfo: CosmosModeInfo.single(CosmosSignMode.signModeDirect),
+        )],
+        fee: CosmosFee(gasLimit: BigInt.from(20000), amount: [CosmosCoin(denom: fee.denom, amount: fee.amount.toBigInt())]),
       ),
-      messages: [msg],
+      accountNumber: transactionRemoteData.accountNumber,
+      chainId: transactionRemoteData.chainId,
     );
 
-    Map<String, dynamic> signatureDataJson = MapUtils.sort(stdSignDoc.toSignatureJson());
-    String signatureDataString = json.encode(signatureDataJson);
-
-    return (signatureDataString, stdSignDoc);
+    return cosmosSignDoc;
   }
 }

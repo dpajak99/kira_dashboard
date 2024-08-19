@@ -1,103 +1,77 @@
 import 'dart:typed_data';
 
-import 'package:blockchain_utils/bip/bip/conf/bip_coin_conf.dart';
-import 'package:blockchain_utils/bip/bip/conf/bip_coins.dart';
-import 'package:blockchain_utils/bip/bip/conf/bip_conf_const.dart';
-import 'package:blockchain_utils/bip/coin_conf/coins_name.dart';
-import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
-import 'package:blockchain_utils/bip/slip/slip44/slip44.dart';
-import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cryptography_utils/cryptography_utils.dart';
 import 'package:equatable/equatable.dart';
-// ignore: depend_on_referenced_packages
-import 'package:pointycastle/export.dart';
+import 'package:flutter/cupertino.dart';
 
-class KiraBip44Coin implements Bip44Coins {
-  @override
-  String get name => 'KIRA Network';
-
-  @override
-  String get coinName => 'KEX';
-
-  @override
-  CoinConfig get conf => CoinConfig(
-        coinNames: const CoinNames("Kira NETWORK", "KEX"),
-        coinIdx: Slip44.atom,
-        isTestnet: false,
-        defPath: derPathNonHardenedFull,
-        keyNetVer: Bip32Const.mainNetKeyNetVersions,
-        wifNetVer: null,
-        type: EllipticCurveTypes.secp256k1,
-        addressEncoder: ([dynamic kwargs]) => AtomAddrEncoder(),
-        addrParams: {"hrp": 'kira'},
-      );
-
-  @override
-  BipProposal get proposal => BipProposal.bip44;
-
-  @override
-  Bip44Coins get value => this;
-}
-
-abstract class IWallet extends Equatable {
+abstract class IWallet {
   String get address;
 
   int get index;
 
   Uint8List get publicKey;
-
-  const IWallet();
 }
 
-class Wallet extends IWallet {
-  @override
-  final int index;
-  final Bip44 bip44;
-  final Bip44 derivedBip44;
+class Wallet extends ChangeNotifier with EquatableMixin implements IWallet {
+  final Secp256k1PrivateKey masterPrivateKey;
+  final LegacyHDWallet wallet;
+  final int accountNumber;
 
-  Wallet.deriveDefaultPath(this.bip44)
-      : derivedBip44 = bip44.deriveDefaultPath,
-        index = 0;
-
-  Wallet.fromPrivateKey({
-    required Uint8List privateKey,
-  })  : bip44 = Bip44.fromPrivateKey(privateKey, KiraBip44Coin()),
-        derivedBip44 = Bip44.fromPrivateKey(privateKey, KiraBip44Coin()),
-        index = 0;
-
-  const Wallet({
-    required this.index,
-    required this.bip44,
-    required this.derivedBip44,
+  Wallet._({
+    required this.masterPrivateKey,
+    required this.wallet,
+    required this.accountNumber,
   });
 
-  Bip44 nextAccount() {
-    return bip44.purpose.coin.account(0).change(Bip44Changes.chainExt).addressIndex(index + 1);
-  }
-
-  @override
-  Uint8List get publicKey => Uint8List.fromList(derivedBip44.publicKey.compressed);
-
-  factory Wallet.fromMnemonic({
-    required Mnemonic mnemonic,
+  factory Wallet.fromMasterPrivateKey({
+    required Secp256k1PrivateKey masterPrivateKey,
+    required int addressIndex,
   }) {
-    List<int> seed = Bip39SeedGenerator(mnemonic).generate();
-    Bip44 bip44 = Bip44.fromSeed(seed, KiraBip44Coin());
-    return Wallet.deriveDefaultPath(bip44);
+    Secp256k1Derivator secp256k1Derivator = Secp256k1Derivator();
+
+    List<LegacyHDWallet> wallets = [];
+      Secp256k1PrivateKey privateKey = secp256k1Derivator.deriveChildKey(masterPrivateKey, LegacyDerivationPathElement.parse('$addressIndex'));
+
+      LegacyHDWallet wallet = LegacyHDWallet(
+        address: CosmosAddressEncoder(hrp: Slip173.kira).encodePublicKey(privateKey.publicKey),
+        walletConfig: Bip44WalletsConfig.kira,
+        privateKey: privateKey,
+        publicKey: privateKey.publicKey,
+        derivationPath: LegacyDerivationPath.parse("m/44'/118'/0'/0/$addressIndex"),
+      );
+      wallets.add(wallet);
+
+    return Wallet._(
+      masterPrivateKey: masterPrivateKey,
+      wallet: wallet,
+      accountNumber: addressIndex,
+    );
   }
 
-  ECPrivateKey get ecPrivateKey {
-    final BigInt privateKeyInt = BigInt.parse(hex.encode(derivedBip44.privateKey.raw), radix: 16);
-    return ECPrivateKey(privateKeyInt, ECCurve_secp256k1());
+  static Future<Wallet> fromMnemonic(Mnemonic mnemonic) async {
+    Secp256k1Derivator secp256k1derivator = Secp256k1Derivator();
+    LegacyDerivationPath legacyDerivationPath = LegacyDerivationPath.parse("m/44'/118'/0'/0");
+    Secp256k1PrivateKey secp256k1privateKey = await secp256k1derivator.deriveMasterKey(mnemonic);
+    for(LegacyDerivationPathElement element in legacyDerivationPath.pathElements) {
+      secp256k1privateKey = secp256k1derivator.deriveChildKey(secp256k1privateKey, element);
+    }
+    return Wallet.fromMasterPrivateKey(masterPrivateKey: secp256k1privateKey, addressIndex: 0);
   }
 
   @override
-  String get address => derivedBip44.publicKey.toAddress;
+  int get index => accountNumber;
+
+  @override
+  Uint8List get publicKey => Uint8List.fromList(wallet.publicKey.bytes);
+
+  @override
+  String get address => wallet.address;
 
   @override
   List<Object?> get props => [address];
 }
 
-class KeplrWallet extends IWallet {
+class KeplrWallet with EquatableMixin implements IWallet {
   @override
   final String address;
   final String algo;
