@@ -51,22 +51,25 @@ class _ValidatorInfoPageState extends State<ValidatorInfoPage> {
         Widget statsWidget = _StatsWidget(validator: widget.validator);
 
         if (MediaQuery.of(context).size.width < 900) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              stakingPoolWidget,
-              const SizedBox(height: 32),
-              statsWidget,
-            ],
+          return SliverToBoxAdapter(
+            child: Column(
+              children: [
+                stakingPoolWidget,
+                const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                statsWidget,
+              ],
+            ),
           );
         }
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(child: stakingPoolWidget),
-            const SizedBox(width: 32),
-            Expanded(child: statsWidget),
-          ],
+        return SliverToBoxAdapter(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: stakingPoolWidget),
+              const SizedBox(width: 32),
+              Expanded(child: statsWidget),
+            ],
+          ),
         );
       },
     );
@@ -84,74 +87,68 @@ class _StatsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return SliverCustomCard(
+    return CustomCard(
       title: 'Stats',
       titleSpacing: 8,
       titleStyle: textTheme.titleMedium!.copyWith(
         color: CustomColors.white,
       ),
-      sliver: MultiSliver(
+      child: Column(
         children: [
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const Divider(color: CustomColors.divider),
-                const SizedBox(height: 8),
-                _ListTile(
-                  title: 'First present block',
-                  value: OpenableText(
-                    text: validator.startHeight.toString(),
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: CustomColors.white,
-                    ),
-                    onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(
-                        height: validator.startHeight.toString())),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _ListTile(
-                  title: 'Last present block',
-                  value: OpenableText(
-                    text: validator.lastPresentBlock.toString(),
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: CustomColors.white,
-                    ),
-                    onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(
-                        height: validator.lastPresentBlock.toString())),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _ListTile(
-                  title: 'Status',
-                  value: validator.status.name,
-                ),
-                const SizedBox(height: 12),
-                _ListTile(
-                  title: 'Total produced blocks',
-                  value: validator.producedBlocksCounter.toString(),
-                ),
-                const SizedBox(height: 12),
-                _ListTile(
-                  title: 'Produced blocks streak',
-                  value: validator.streak.toString(),
-                ),
-                const SizedBox(height: 12),
-                _ListTile(
-                  title: 'Missed blocks',
-                  value: validator.mischanceConfidence.toString(),
-                ),
-                const SizedBox(height: 12),
-                _ListTile(
-                  title: 'Mischance',
-                  value: validator.mischance.toString(),
-                ),
-                const SizedBox(height: 12),
-                _ListTile(
-                  title: 'Mischance confidence',
-                  value: validator.mischanceConfidence.toString(),
-                ),
-              ],
+          const Divider(color: CustomColors.divider),
+          const SizedBox(height: 8),
+          _ListTile(
+            title: 'First present block',
+            value: OpenableText(
+              text: validator.startHeight.toString(),
+              style: textTheme.bodyMedium!.copyWith(
+                color: CustomColors.white,
+              ),
+              onTap: () => AutoRouter.of(context).push(
+                  BlockDetailsRoute(height: validator.startHeight.toString())),
             ),
+          ),
+          const SizedBox(height: 12),
+          _ListTile(
+            title: 'Last present block',
+            value: OpenableText(
+              text: validator.lastPresentBlock.toString(),
+              style: textTheme.bodyMedium!.copyWith(
+                color: CustomColors.white,
+              ),
+              onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(
+                  height: validator.lastPresentBlock.toString())),
+            ),
+          ),
+          const SizedBox(height: 12),
+          _ListTile(
+            title: 'Status',
+            value: validator.status.name,
+          ),
+          const SizedBox(height: 12),
+          _ListTile(
+            title: 'Total produced blocks',
+            value: validator.producedBlocksCounter.toString(),
+          ),
+          const SizedBox(height: 12),
+          _ListTile(
+            title: 'Produced blocks streak',
+            value: validator.streak.toString(),
+          ),
+          const SizedBox(height: 12),
+          _ListTile(
+            title: 'Missed blocks',
+            value: validator.mischanceConfidence.toString(),
+          ),
+          const SizedBox(height: 12),
+          _ListTile(
+            title: 'Mischance',
+            value: validator.mischance.toString(),
+          ),
+          const SizedBox(height: 12),
+          _ListTile(
+            title: 'Mischance confidence',
+            value: validator.mischanceConfidence.toString(),
           ),
         ],
       ),
