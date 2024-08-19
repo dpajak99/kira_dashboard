@@ -62,7 +62,7 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
                                     ),
                                   ),
                                 ] else if (state.file != null) ...<Widget>[
-                                  Icon(
+                                  const Icon(
                                     Icons.file_present,
                                     size: 40,
                                     color: CustomColors.secondary,
@@ -88,7 +88,7 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
                                     ),
                                   ),
                                 ] else ...<Widget>[
-                                  Icon(
+                                  const Icon(
                                     Icons.file_upload_outlined,
                                     size: 40,
                                     color: CustomColors.secondary,
@@ -133,9 +133,9 @@ class _SignInKeyfileDialog extends State<SignInKeyfileDialog> {
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: CustomColors.dialogContainer,
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
                 child: TextField(
                   controller: cubit.passwordController,

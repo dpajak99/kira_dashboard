@@ -83,7 +83,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
                 const SizedBox(width: 8),
                 InkWell(
                   onTap: widget.onClose,
-                  child: Icon(Icons.close, size: 14, color: CustomColors.secondary),
+                  child: const Icon(Icons.close, size: 14, color: CustomColors.secondary),
                 ),
               ]
             ],
@@ -107,7 +107,7 @@ class _TokenAmountTextFieldState extends State<TokenAmountTextField> {
                         style: textTheme.bodyLarge!.copyWith(color: CustomColors.white),
                       ),
                       const SizedBox(width: 8),
-                      Icon(
+                      const Icon(
                         Icons.expand_more_outlined,
                         color: CustomColors.secondary,
                         size: 17,

@@ -171,7 +171,7 @@ class ConnectedNetworkTile extends StatelessWidget {
               ),
             ),
           ),
-          Divider(color: CustomColors.divider),
+          const Divider(color: CustomColors.divider),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
@@ -264,7 +264,7 @@ class AvailableNetworkTile extends StatelessWidget {
                 getIt<NetworkCubit>().removeCustomNetwork(networkStatus.interxUrl);
               },
               visualDensity: VisualDensity.compact,
-              icon: Icon(
+              icon: const Icon(
                 AppIcons.cancel,
                 color: CustomColors.secondary,
                 size: 16,

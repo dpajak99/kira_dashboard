@@ -50,7 +50,7 @@ class _TransactionResultDialogState extends State<TransactionResultDialog> {
             width: 90,
             height: 90,
             child: switch (widget.status) {
-              TransactionProcessStatus.broadcast => CircularProgressIndicator(
+              TransactionProcessStatus.broadcast => const CircularProgressIndicator(
                   color: CustomColors.primary,
                   strokeWidth: 2,
                 ),

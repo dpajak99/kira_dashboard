@@ -86,11 +86,11 @@ class MenuSearchbarState extends State<MenuSearchbar> {
                         controller.clear();
                         popupController.hideTooltip();
                       },
-                      childBuilder: (Set<MaterialState> states) {
+                      childBuilder: (Set<WidgetState> states) {
                         return Icon(
                           Icons.close,
                           size: 16,
-                          color: states.contains(MaterialState.hovered) ? CustomColors.secondary : const Color(0xff47546d),
+                          color: states.contains(WidgetState.hovered) ? CustomColors.secondary : const Color(0xff47546d),
                         );
                       },
                     ),

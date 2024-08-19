@@ -98,7 +98,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: _DashboardTile(
                           title: 'Current block validator',
                           value: state.dashboard?.currentBlockValidator.moniker ?? '',
-                          icon: Icon(
+                          icon: const Icon(
                             AppIcons.block,
                             color: CustomColors.primary,
                           ),
@@ -111,7 +111,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         child: _DashboardTile(
                           title: 'Consensus',
                           value: state.dashboard?.consensusHealthPercentage ?? '',
-                          icon: Icon(
+                          icon: const Icon(
                             AppIcons.consensus,
                             color: CustomColors.primary,
                           ),
@@ -128,7 +128,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             ConsensusStateType.unhealthy => 'Unhealthy',
                             (_) => '',
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             AppIcons.health,
                             color: CustomColors.primary,
                           ),
@@ -146,7 +146,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: _DashboardTile(
                         title: 'Current block validator',
                         value: state.dashboard?.currentBlockValidator.moniker ?? '',
-                        icon: Icon(AppIcons.block, color: CustomColors.primary),
+                        icon: const Icon(AppIcons.block, color: CustomColors.primary),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -154,7 +154,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       child: _DashboardTile(
                         title: 'Consensus',
                         value: state.dashboard?.consensusHealthPercentage ?? '',
-                        icon: Icon(AppIcons.consensus, color: CustomColors.primary),
+                        icon: const Icon(AppIcons.consensus, color: CustomColors.primary),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -166,7 +166,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ConsensusStateType.unhealthy => 'Unhealthy',
                           (_) => '',
                         },
-                        icon: Icon(AppIcons.health, color: CustomColors.primary),
+                        icon: const Icon(AppIcons.health, color: CustomColors.primary),
                       ),
                     ),
                   ],

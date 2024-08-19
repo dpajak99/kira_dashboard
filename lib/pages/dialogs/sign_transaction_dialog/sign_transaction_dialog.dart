@@ -32,9 +32,9 @@ class _SignTransactionDialog extends State<SignTransactionDialog> {
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: CustomColors.dialogContainer,
-              borderRadius: const BorderRadius.all(Radius.circular(16)),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
             child: Column(
               children: [

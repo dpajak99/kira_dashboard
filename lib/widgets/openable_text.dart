@@ -19,7 +19,7 @@ class OpenableHash extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseStateListener(
       onTap: onTap,
-      childBuilder: (Set<MaterialState> states) {
+      childBuilder: (Set<WidgetState> states) {
         return Row(
           children: [
             Expanded(
@@ -35,7 +35,7 @@ class OpenableHash extends StatelessWidget {
               child: Icon(
                 Icons.open_in_new,
                 size: 16,
-                color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.primary,
+                color: states.contains(WidgetState.hovered) ? CustomColors.white : CustomColors.primary,
               ),
             ),
           ],
@@ -59,7 +59,7 @@ class CopyableHash extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseStateListener(
       onTap: () => Clipboard.setData(ClipboardData(text: hash)),
-      childBuilder: (Set<MaterialState> states) {
+      childBuilder: (Set<WidgetState> states) {
         return Row(
           children: [
             Expanded(
@@ -75,7 +75,7 @@ class CopyableHash extends StatelessWidget {
               child: Icon(
                 Icons.copy,
                 size: 16,
-                color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.primary,
+                color: states.contains(WidgetState.hovered) ? CustomColors.white : CustomColors.primary,
               ),
             ),
           ],
@@ -101,7 +101,7 @@ class OpenableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseStateListener(
       onTap: onTap,
-      childBuilder: (Set<MaterialState> states) {
+      childBuilder: (Set<WidgetState> states) {
         if (text == null) {
           return Text('---', style: style);
         }
@@ -111,7 +111,7 @@ class OpenableText extends StatelessWidget {
           text: TextSpan(
             text: text,
             style: style.copyWith(
-              color: states.contains(MaterialState.hovered) ? Colors.white54 : CustomColors.secondary,
+              color: states.contains(WidgetState.hovered) ? Colors.white54 : CustomColors.secondary,
             ),
             children: [
               WidgetSpan(
@@ -121,7 +121,7 @@ class OpenableText extends StatelessWidget {
                   child: Icon(
                     Icons.open_in_new,
                     size: 16,
-                    color: states.contains(MaterialState.hovered) ? Colors.white54 : CustomColors.secondary,
+                    color: states.contains(WidgetState.hovered) ? Colors.white54 : CustomColors.secondary,
                   ),
                 ),
               ),

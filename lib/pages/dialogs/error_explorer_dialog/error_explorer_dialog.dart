@@ -29,9 +29,9 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: CustomColors.dialogContainer,
-              borderRadius: const BorderRadius.all(Radius.circular(16)),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
             child: Row(
               children: [
@@ -47,7 +47,7 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                 InkWell(
                   onTap: () {},
                   radius: 30,
-                  child: Icon(
+                  child: const Icon(
                     Icons.copy,
                     color: CustomColors.secondary,
                     size: 16,
@@ -63,9 +63,9 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                 child: Container(
                   height: 400,
                   padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: CustomColors.dialogContainer,
-                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
                   child: Column(
                     children: [
@@ -88,9 +88,9 @@ class _ErrorExplorerDialogState extends State<ErrorExplorerDialog> {
                 child: Container(
                   height: 400,
                   padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: CustomColors.dialogContainer,
-                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
                   child: Column(
                     children: [

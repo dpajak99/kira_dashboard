@@ -2,7 +2,6 @@ import 'package:kira_dashboard/infra/entities/paginated_response_wrapper.dart';
 import 'package:kira_dashboard/infra/entities/validators/validator_entity.dart';
 import 'package:kira_dashboard/infra/repository/validators_repository.dart';
 import 'package:kira_dashboard/models/paginated_list_wrapper.dart';
-import 'package:kira_dashboard/models/proposal.dart';
 import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/utils/paginated_request.dart';
 

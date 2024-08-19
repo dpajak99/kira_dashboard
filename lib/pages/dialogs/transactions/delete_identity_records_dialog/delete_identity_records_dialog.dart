@@ -59,7 +59,7 @@ class _DeleteIdentityRecordsDialogState extends State<DeleteIdentityRecordsDialo
                   initialRecords: widget.records,
                 ),
                 const SizedBox(height: 8),
-                Divider(color: CustomColors.divider),
+                const Divider(color: CustomColors.divider),
                 const SizedBox(height: 8),
                 Row(
                   children: [

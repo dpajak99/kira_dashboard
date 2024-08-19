@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
@@ -236,7 +235,7 @@ class _DesktopTable<T> extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     splashFactory: InkRipple.splashFactory,
-                    overlayColor: onItemTap != null ? MaterialStateProperty.all(const Color(0x296c86ad)) : null,
+                    overlayColor: onItemTap != null ? WidgetStateProperty.all(const Color(0x296c86ad)) : null,
                     splashColor: onItemTap != null ? const Color(0x294888f0) : null,
                     onTap: onItemTap != null ? () => onItemTap?.call(items[y]) : null,
                     child: Padding(

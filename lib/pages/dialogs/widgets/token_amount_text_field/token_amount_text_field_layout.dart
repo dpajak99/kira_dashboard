@@ -21,9 +21,9 @@ class TokenAmountTextFieldLayout extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: CustomColors.dialogContainer,
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Column(
         children: [

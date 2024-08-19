@@ -116,7 +116,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
           TextButton.icon(
             onPressed: () => DialogRouter().navigate(const CreateWalletDialog()),
             style: lightTextButtonStyle,
-            icon: Icon(Icons.wallet, color: CustomColors.primary),
+            icon: const Icon(Icons.wallet, color: CustomColors.primary),
             label: const Text("Create Wallet"),
           ),
           const SizedBox(height: 24),
@@ -124,7 +124,7 @@ class _ConnectWalletDialogState extends State<ConnectWalletDialog> {
             text: TextSpan(
               text: 'By connecting your wallet, you agree to\nour ',
               style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
-              children: [
+              children: const [
                 TextSpan(
                   text: 'Terms of Service',
                   style: TextStyle(color: CustomColors.primary),

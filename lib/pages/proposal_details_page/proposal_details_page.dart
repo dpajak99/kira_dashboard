@@ -36,7 +36,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
       bloc: proposalDetailsPageCubit,
       builder: (BuildContext context, ProposalDetailsPageState state) {
         if (state.isLoading) {
-          return Center(
+          return const Center(
             child: SizedBox(
               width: 90,
               height: 90,
@@ -179,7 +179,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   shrinkWrap: true,
                   config: MarkdownConfig(
                     configs: [
-                      HrConfig(
+                      const HrConfig(
                         color: CustomColors.divider,
                         height: 1,
                       ),

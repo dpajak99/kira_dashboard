@@ -23,10 +23,8 @@ const ColorScheme appColors = ColorScheme.dark(
   secondary: Color(0xff6c86ad),
   secondaryContainer: Color(0xff0a0d15),
   surface: Color(0xff06070a),
-  background: Color(0xff06070a),
   onPrimary: Color(0xfffbfbfb),
   onSecondary: Color(0xfffbfbfb),
   onSurface: Color(0xfffbfbfb),
-  onBackground: Color(0xfffbfbfb),
   outline: Color(0xff222b3a),
 );

@@ -58,7 +58,7 @@ class _SelectTokenDialogState extends State<SelectTokenDialog> {
                     balance.toNetworkDenominationString(),
                     style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
                   ),
-                  trailing: Icon(
+                  trailing: const Icon(
                     AppIcons.chevron_right,
                     color: CustomColors.secondary,
                     size: 16,

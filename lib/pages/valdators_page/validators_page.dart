@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
-import 'package:kira_dashboard/models/validator.dart';
 import 'package:kira_dashboard/pages/valdators_page/validator_list.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_list_cubit.dart';
 import 'package:kira_dashboard/widgets/page_scaffold.dart';

@@ -92,7 +92,7 @@ class _DelegateTokensDialogState extends State<DelegateTokensDialog> {
                 const TokenAmountTextFieldLoading(),
               ],
               const SizedBox(height: 8),
-              Divider(color: CustomColors.divider),
+              const Divider(color: CustomColors.divider),
               const SizedBox(height: 8),
               Row(
                 children: [

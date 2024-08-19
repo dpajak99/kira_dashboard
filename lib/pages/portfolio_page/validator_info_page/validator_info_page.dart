@@ -90,7 +90,7 @@ class _StatsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color: CustomColors.divider),
+          const Divider(color: CustomColors.divider),
           const SizedBox(height: 8),
           _ListTile(
             title: 'First present block',
@@ -183,7 +183,7 @@ class _StakingPoolWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Divider(color: CustomColors.divider),
+          const Divider(color: CustomColors.divider),
           const SizedBox(height: 8),
           _ListTile(
             title: 'Staking pool',
@@ -200,7 +200,7 @@ class _StakingPoolWidget extends StatelessWidget {
             value: isLoading ? const SizedShimmer(width: 80, height: 16) : stakingPool!.slashedPercentage,
           ),
           const SizedBox(height: 8),
-          Divider(color: CustomColors.divider),
+          const Divider(color: CustomColors.divider),
           const SizedBox(height: 8),
           Text(
             'Staked voting powers',

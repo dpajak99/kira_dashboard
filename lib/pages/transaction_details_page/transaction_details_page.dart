@@ -107,7 +107,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                           : Text(state.transactionResult!.blockTimestamp.toString(), style: valueStyle),
                     ),
                     const SizedBox(height: 12),
-                    Divider(color: CustomColors.divider),
+                    const Divider(color: CustomColors.divider),
                     const SizedBox(height: 12),
                     if (state.transactionResult?.msgs.isNotEmpty ?? false)
                       _DetailRow(

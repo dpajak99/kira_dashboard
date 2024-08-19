@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 import 'package:kira_dashboard/models/wallet.dart';
+// ignore: depend_on_referenced_packages
 import 'package:pointycastle/export.dart';
 
 class SignatureUtils {

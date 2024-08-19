@@ -24,7 +24,7 @@ class _ConfirmTransactionDialog extends State<ConfirmTransactionDialog> {
       child: Column(
         children: [
           const SizedBox(height: 48),
-          SizedBox(
+          const SizedBox(
             width: 90,
             height: 90,
             child: CircularProgressIndicator(color: CustomColors.primary, strokeWidth: 2),

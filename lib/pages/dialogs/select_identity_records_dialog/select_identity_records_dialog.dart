@@ -52,7 +52,7 @@ class _SelectIdentityRecordsDialogState extends State<SelectIdentityRecordsDialo
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                       dense: true,
                       activeColor: CustomColors.primary,
-                      side: BorderSide(color: CustomColors.primary, width: 2),
+                      side: const BorderSide(color: CustomColors.primary, width: 2),
                       onChanged: (_) => _toggleRecord(record),
                       title: Text(
                         record.key,

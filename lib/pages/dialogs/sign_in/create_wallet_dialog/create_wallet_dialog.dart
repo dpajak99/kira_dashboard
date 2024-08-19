@@ -98,7 +98,7 @@ class _ConnectWalletDialogState extends State<CreateWalletDialog> {
                 value: termsAccepted,
                 onChanged: (bool? value) => setState(() => termsAccepted = value ?? false),
                 activeColor: CustomColors.primary,
-                side: BorderSide(color: CustomColors.primary, width: 2),
+                side: const BorderSide(color: CustomColors.primary, width: 2),
               ),
               const SizedBox(width: 8),
               Expanded(

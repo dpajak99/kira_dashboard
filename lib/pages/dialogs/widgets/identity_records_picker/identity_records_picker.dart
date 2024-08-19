@@ -43,9 +43,9 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
       builder: (BuildContext context, List<IdentityRecord> records, _) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: CustomColors.dialogContainer,
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           child: Column(
             children: [
@@ -72,7 +72,7 @@ class _IdentityRecordsPickerState extends State<IdentityRecordsPicker> {
                         }
                       },
                       radius: 30,
-                      child: Icon(
+                      child: const Icon(
                         AppIcons.pencil,
                         color: CustomColors.secondary,
                         size: 16,

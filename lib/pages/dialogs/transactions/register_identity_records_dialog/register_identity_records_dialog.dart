@@ -92,7 +92,7 @@ class _RegisterIdentityRecordsDialogState extends State<RegisterIdentityRecordsD
                 ),
               ),
               const SizedBox(height: 8),
-              Divider(color: CustomColors.divider),
+              const Divider(color: CustomColors.divider),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -192,9 +192,9 @@ class _RecordPreview extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: CustomColors.dialogContainer,
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           child: Row(
             children: [
@@ -234,11 +234,11 @@ class _RecordPreview extends StatelessWidget {
               ),
               IconButton(
                 onPressed: onEdit,
-                icon: Icon(AppIcons.pencil, color: CustomColors.secondary, size: 20),
+                icon: const Icon(AppIcons.pencil, color: CustomColors.secondary, size: 20),
               ),
               IconButton(
                 onPressed: onDelete,
-                icon: Icon(Icons.close, color: CustomColors.secondary, size: 20),
+                icon: const Icon(Icons.close, color: CustomColors.secondary, size: 20),
               ),
             ],
           ),

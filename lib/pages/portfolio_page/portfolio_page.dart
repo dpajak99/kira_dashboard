@@ -30,7 +30,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       bloc: cubit,
       builder: (BuildContext context, PortfolioPageState state) {
         if (state.isLoading) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(color: CustomColors.primary, strokeWidth: 2),
           );
         }

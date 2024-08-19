@@ -44,9 +44,9 @@ class _AccountDialog extends State<AccountDialog> {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: CustomColors.dialogContainer,
-                  borderRadius: const BorderRadius.all(Radius.circular(24)),
+                  borderRadius: BorderRadius.all(Radius.circular(24)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +61,7 @@ class _AccountDialog extends State<AccountDialog> {
                               Navigator.of(context).pop();
                               AutoRouter.of(context).push(PortfolioRoute(address: state.selectedWallet!.address));
                             },
-                            icon: Icon(Icons.open_in_new, color: CustomColors.secondary, size: 20),
+                            icon: const Icon(Icons.open_in_new, color: CustomColors.secondary, size: 20),
                             label: Text(
                               'Open portfolio',
                               style: textTheme.labelLarge!.copyWith(color: CustomColors.secondary),
@@ -71,7 +71,7 @@ class _AccountDialog extends State<AccountDialog> {
                             children: [
                               IconButton(
                                 onPressed: () {},
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.settings,
                                   color: CustomColors.secondary,
                                 ),
@@ -82,7 +82,7 @@ class _AccountDialog extends State<AccountDialog> {
                                   cubit.signOut();
                                   AutoRouter.of(context).navigate(const MenuWrapperRoute());
                                 },
-                                icon: Icon(Icons.logout_outlined, color: CustomColors.secondary),
+                                icon: const Icon(Icons.logout_outlined, color: CustomColors.secondary),
                               ),
                             ],
                           ),
@@ -121,8 +121,8 @@ class _AccountDialog extends State<AccountDialog> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Divider(color: CustomColors.divider),
                     ),
                     const SizedBox(height: 8),
@@ -155,7 +155,7 @@ class _AccountDialog extends State<AccountDialog> {
 
                         Widget item = ListTile(
                           dense: true,
-                          mouseCursor: MaterialStateMouseCursor.clickable,
+                          mouseCursor: WidgetStateMouseCursor.clickable,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),

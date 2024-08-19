@@ -8,6 +8,7 @@ import 'package:blockchain_utils/bip/mnemonic/mnemonic.dart';
 import 'package:blockchain_utils/bip/slip/slip44/slip44.dart';
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:equatable/equatable.dart';
+// ignore: depend_on_referenced_packages
 import 'package:pointycastle/export.dart';
 
 class KiraBip44Coin implements Bip44Coins {

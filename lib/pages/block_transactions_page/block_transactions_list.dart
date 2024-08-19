@@ -179,7 +179,7 @@ class BlockTransactionsList extends StatelessWidget {
           title: ' ',
           width: 50,
           cellBuilder: (BuildContext context, BlockTransaction item) {
-            return Icon(
+            return const Icon(
               Icons.arrow_forward,
               color: CustomColors.secondary,
             );

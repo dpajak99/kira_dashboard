@@ -14,16 +14,16 @@ ButtonStyle lightTextButtonStyle = TextButton.styleFrom(
 ButtonStyle signupButtonStyle = ButtonStyle(
   alignment: Alignment.centerLeft,
   animationDuration: Duration.zero,
-  overlayColor: MaterialStateProperty.all(Colors.transparent),
-  backgroundColor: MaterialStateProperty.all(CustomColors.dialogContainer),
-  foregroundColor: MaterialStateProperty.resolveWith(
-    (Set<MaterialState> states) => states.contains(MaterialState.hovered) ? CustomColors.primary : CustomColors.white,
+  overlayColor: WidgetStateProperty.all(Colors.transparent),
+  backgroundColor: WidgetStateProperty.all(CustomColors.dialogContainer),
+  foregroundColor: WidgetStateProperty.resolveWith(
+    (Set<WidgetState> states) => states.contains(WidgetState.hovered) ? CustomColors.primary : CustomColors.white,
   ),
-  shape: MaterialStateProperty.resolveWith(
-    (Set<MaterialState> states) => RoundedRectangleBorder(
+  shape: WidgetStateProperty.resolveWith(
+    (Set<WidgetState> states) => RoundedRectangleBorder(
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       side: BorderSide(
-        color: states.contains(MaterialState.hovered) ? const Color(0xff2f3b4d) : const Color(0xff06070a),
+        color: states.contains(WidgetState.hovered) ? const Color(0xff2f3b4d) : const Color(0xff06070a),
       ),
     ),
   ),

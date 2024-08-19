@@ -46,7 +46,7 @@ class _ConnectWalletButton extends StatelessWidget {
     if (small) {
       return IconButton(
         onPressed: () => DialogRouter().navigate(const ConnectWalletDialog()),
-        icon: Icon(Icons.wallet, color: CustomColors.primary),
+        icon: const Icon(Icons.wallet, color: CustomColors.primary),
       );
     }
     return InkWell(
@@ -60,7 +60,7 @@ class _ConnectWalletButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         child: Row(
           children: [
-            Icon(Icons.wallet, color: CustomColors.primary),
+            const Icon(Icons.wallet, color: CustomColors.primary),
             const SizedBox(width: 8),
             Text(
               "Connect Wallet",

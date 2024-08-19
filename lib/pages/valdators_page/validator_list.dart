@@ -1,10 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:kira_dashboard/config/theme/app_colors.dart';
-import 'package:kira_dashboard/models/block.dart';
 import 'package:kira_dashboard/models/validator.dart';
-import 'package:kira_dashboard/pages/blocks_page/blocks_list_cubit.dart';
 import 'package:kira_dashboard/pages/dialogs/dialog_route.dart';
 import 'package:kira_dashboard/pages/dialogs/transactions/delegate_tokens_dialog/delegate_tokens_dialog.dart';
 import 'package:kira_dashboard/pages/valdators_page/validators_list_cubit.dart';
@@ -14,7 +11,6 @@ import 'package:kira_dashboard/widgets/avatar/identity_avatar.dart';
 import 'package:kira_dashboard/widgets/custom_table.dart';
 import 'package:kira_dashboard/widgets/custom_table_paginated.dart';
 import 'package:kira_dashboard/widgets/mobile_row.dart';
-import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
 import 'package:kira_dashboard/widgets/user_tile.dart';
 

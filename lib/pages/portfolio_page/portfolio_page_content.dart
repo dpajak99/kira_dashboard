@@ -136,7 +136,7 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
                           const SizedBox(width: 8),
                           Tooltip(
                             message: 'Verified by your trusted addresses:\n- ${widget.identityRecords.username!.trustedVerifiers.join('\n- ')}',
-                            child: Icon(Icons.verified, color: CustomColors.primary),
+                            child: const Icon(Icons.verified, color: CustomColors.primary),
                           ),
                         ],
                       ],
@@ -145,13 +145,13 @@ class _PortfolioPageContentState extends State<PortfolioPageContent> with Single
                     const SizedBox(height: 16),
                     Wrap(
                       children: socials.map((SocialUrl e) {
-                        return MouseStateListener(childBuilder: (Set<MaterialState> states) {
+                        return MouseStateListener(childBuilder: (Set<WidgetState> states) {
                           return Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: Icon(
                               e.icon,
                               size: 24,
-                              color: states.contains(MaterialState.hovered) ? CustomColors.white : CustomColors.secondary,
+                              color: states.contains(WidgetState.hovered) ? CustomColors.white : CustomColors.secondary,
                             ),
                           );
                         });

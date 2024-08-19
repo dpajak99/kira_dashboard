@@ -144,12 +144,12 @@ class SimpleTextButton extends StatelessWidget {
     
     return MouseStateListener(
       onTap: onTap,
-      childBuilder: (Set<MaterialState> states) {
+      childBuilder: (Set<WidgetState> states) {
         Widget? iconWidget = icon != null
             ? Icon(
                 icon,
                 size: 16,
-                color: states.contains(MaterialState.hovered) ? highlightColor : style.color,
+                color: states.contains(WidgetState.hovered) ? highlightColor : style.color,
           
               )
             : null;
@@ -175,7 +175,7 @@ class SimpleTextButton extends StatelessWidget {
                 TextSpan(
                   text: text,
                   style: style.copyWith(
-                    color: states.contains(MaterialState.hovered) && onTap != null ? highlightColor : style.color,
+                    color: states.contains(WidgetState.hovered) && onTap != null ? highlightColor : style.color,
                   ),
                 ),
               ],
@@ -187,7 +187,7 @@ class SimpleTextButton extends StatelessWidget {
           text: TextSpan(
             text: text,
             style: style.copyWith(
-              color: states.contains(MaterialState.hovered) && onTap != null ? highlightColor : style.color,
+              color: states.contains(WidgetState.hovered) && onTap != null ? highlightColor : style.color,
             ),
             children: [
               if (iconWidget != null)
