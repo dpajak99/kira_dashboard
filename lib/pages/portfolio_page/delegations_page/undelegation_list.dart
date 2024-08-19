@@ -26,6 +26,7 @@ class UndelegationList extends StatelessWidget {
 
     return CustomTablePaginated<Undelegation>(
       cubit: undelegationsListCubit,
+      backgroundColor: CustomColors.container,
       mobileBuilder: (BuildContext context, Undelegation? item, bool loading) {
         if (item == null || loading) {
           return const Column(

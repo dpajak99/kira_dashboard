@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_list.dart';
 import 'package:kira_dashboard/pages/portfolio_page/transactions_page/transactions_list_cubit.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
+import 'package:kira_dashboard/widgets/sliver_custom_card.dart';
 
 class TransactionsPage extends StatefulWidget {
   final String address;
@@ -22,10 +23,10 @@ class _TransactionsPageState extends State<TransactionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomCard(
+    return SliverCustomCard(
       title: 'Transactions',
       enableMobile: true,
-      child: TransactionsList(cubit: cubit),
+      sliver: TransactionsList(cubit: cubit),
     );
   }
 }

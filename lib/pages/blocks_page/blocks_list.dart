@@ -27,6 +27,7 @@ class BlocksList extends StatelessWidget {
 
     return CustomTablePaginated<Block>(
       cubit: cubit,
+      backgroundColor: CustomColors.background,
       onItemTap: (Block item) => AutoRouter.of(context).push(BlockDetailsRoute(height: item.height)),
       mobileBuilder: (BuildContext context, Block? item, bool loading) {
         if (item == null || loading) {

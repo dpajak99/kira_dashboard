@@ -29,6 +29,7 @@ class BalancesList extends StatelessWidget {
 
     return CustomTablePaginated<Coin>(
       cubit: cubit,
+      backgroundColor: CustomColors.container,
       mobileBuilder: (BuildContext context, Coin? item, bool loading) {
         if (item == null || loading) {
           return const Column(

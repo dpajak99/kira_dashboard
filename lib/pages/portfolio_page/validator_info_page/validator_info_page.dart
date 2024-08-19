@@ -15,7 +15,9 @@ import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
 import 'package:kira_dashboard/widgets/openable_text.dart';
 import 'package:kira_dashboard/widgets/sized_shimmer.dart';
+import 'package:kira_dashboard/widgets/sliver_custom_card.dart';
 import 'package:kira_dashboard/widgets/token_icon.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../utils/router/router.gr.dart';
 
@@ -32,7 +34,8 @@ class ValidatorInfoPage extends StatefulWidget {
 }
 
 class _ValidatorInfoPageState extends State<ValidatorInfoPage> {
-  late final ValidatorInfoPageCubit cubit = ValidatorInfoPageCubit(validator: widget.validator);
+  late final ValidatorInfoPageCubit cubit =
+      ValidatorInfoPageCubit(validator: widget.validator);
 
   @override
   Widget build(BuildContext context) {
@@ -81,67 +84,74 @@ class _StatsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
 
-    return CustomCard(
+    return SliverCustomCard(
       title: 'Stats',
       titleSpacing: 8,
       titleStyle: textTheme.titleMedium!.copyWith(
         color: CustomColors.white,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      sliver: MultiSliver(
         children: [
-          const Divider(color: CustomColors.divider),
-          const SizedBox(height: 8),
-          _ListTile(
-            title: 'First present block',
-            value: OpenableText(
-              text: validator.startHeight.toString(),
-              style: textTheme.bodyMedium!.copyWith(
-                color: CustomColors.white,
-              ),
-              onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: validator.startHeight.toString())),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                const Divider(color: CustomColors.divider),
+                const SizedBox(height: 8),
+                _ListTile(
+                  title: 'First present block',
+                  value: OpenableText(
+                    text: validator.startHeight.toString(),
+                    style: textTheme.bodyMedium!.copyWith(
+                      color: CustomColors.white,
+                    ),
+                    onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(
+                        height: validator.startHeight.toString())),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _ListTile(
+                  title: 'Last present block',
+                  value: OpenableText(
+                    text: validator.lastPresentBlock.toString(),
+                    style: textTheme.bodyMedium!.copyWith(
+                      color: CustomColors.white,
+                    ),
+                    onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(
+                        height: validator.lastPresentBlock.toString())),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _ListTile(
+                  title: 'Status',
+                  value: validator.status.name,
+                ),
+                const SizedBox(height: 12),
+                _ListTile(
+                  title: 'Total produced blocks',
+                  value: validator.producedBlocksCounter.toString(),
+                ),
+                const SizedBox(height: 12),
+                _ListTile(
+                  title: 'Produced blocks streak',
+                  value: validator.streak.toString(),
+                ),
+                const SizedBox(height: 12),
+                _ListTile(
+                  title: 'Missed blocks',
+                  value: validator.mischanceConfidence.toString(),
+                ),
+                const SizedBox(height: 12),
+                _ListTile(
+                  title: 'Mischance',
+                  value: validator.mischance.toString(),
+                ),
+                const SizedBox(height: 12),
+                _ListTile(
+                  title: 'Mischance confidence',
+                  value: validator.mischanceConfidence.toString(),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 12),
-          _ListTile(
-            title: 'Last present block',
-            value: OpenableText(
-              text: validator.lastPresentBlock.toString(),
-              style: textTheme.bodyMedium!.copyWith(
-                color: CustomColors.white,
-              ),
-              onTap: () => AutoRouter.of(context).push(BlockDetailsRoute(height: validator.lastPresentBlock.toString())),
-            ),
-          ),
-          const SizedBox(height: 12),
-          _ListTile(
-            title: 'Status',
-            value: validator.status.name,
-          ),
-          const SizedBox(height: 12),
-          _ListTile(
-            title: 'Total produced blocks',
-            value: validator.producedBlocksCounter.toString(),
-          ),
-          const SizedBox(height: 12),
-          _ListTile(
-            title: 'Produced blocks streak',
-            value: validator.streak.toString(),
-          ),
-          const SizedBox(height: 12),
-          _ListTile(
-            title: 'Missed blocks',
-            value: validator.mischanceConfidence.toString(),
-          ),
-          const SizedBox(height: 12),
-          _ListTile(
-            title: 'Mischance',
-            value: validator.mischance.toString(),
-          ),
-          const SizedBox(height: 12),
-          _ListTile(
-            title: 'Mischance confidence',
-            value: validator.mischanceConfidence.toString(),
           ),
         ],
       ),
@@ -175,7 +185,8 @@ class _StakingPoolWidget extends StatelessWidget {
           if (getIt<WalletProvider>().isSignedIn) ...<Widget>[
             SimpleTextButton(
               text: 'Delegate',
-              onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: validator.valkey)),
+              onTap: () => DialogRouter().navigate(
+                  DelegateTokensDialog(valoperAddress: validator.valkey)),
             ),
           ],
         ],
@@ -187,17 +198,23 @@ class _StakingPoolWidget extends StatelessWidget {
           const SizedBox(height: 8),
           _ListTile(
             title: 'Staking pool',
-            value: isLoading ? const SizedShimmer(width: 80, height: 16) : validator.stakingPoolStatus.name,
+            value: isLoading
+                ? const SizedShimmer(width: 80, height: 16)
+                : validator.stakingPoolStatus.name,
           ),
           const SizedBox(height: 12),
           _ListTile(
             title: 'Commission',
-            value: isLoading ? const SizedShimmer(width: 80, height: 16) : stakingPool!.commissionPercentage,
+            value: isLoading
+                ? const SizedShimmer(width: 80, height: 16)
+                : stakingPool!.commissionPercentage,
           ),
           const SizedBox(height: 12),
           _ListTile(
             title: 'Slashed',
-            value: isLoading ? const SizedShimmer(width: 80, height: 16) : stakingPool!.slashedPercentage,
+            value: isLoading
+                ? const SizedShimmer(width: 80, height: 16)
+                : stakingPool!.slashedPercentage,
           ),
           const SizedBox(height: 8),
           const Divider(color: CustomColors.divider),
@@ -219,11 +236,13 @@ class _StakingPoolWidget extends StatelessWidget {
                 leading: TokenIcon(size: 24, iconUrl: coin.icon),
                 title: Text(
                   coin.name,
-                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.white),
+                  style:
+                      textTheme.bodyMedium!.copyWith(color: CustomColors.white),
                 ),
                 trailing: Text(
                   coin.toNetworkDenominationString(),
-                  style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
+                  style: textTheme.bodyMedium!
+                      .copyWith(color: CustomColors.secondary),
                 ),
               ),
         ],

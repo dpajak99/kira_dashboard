@@ -28,7 +28,9 @@ class ValidatorList extends StatelessWidget {
 
     return CustomTablePaginated<Validator>(
       cubit: cubit,
-      onItemTap: (Validator item) => AutoRouter.of(context).navigate(PortfolioRoute(address: item.address)),
+      backgroundColor: CustomColors.background,
+      onItemTap: (Validator item) => AutoRouter.of(context)
+          .navigate(PortfolioRoute(address: item.address)),
       mobileBuilder: (BuildContext context, Validator? item, bool loading) {
         if (item == null || loading) {
           return const Column(
@@ -67,7 +69,8 @@ class ValidatorList extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                IdentityAvatar(size: 62, address: item.address, avatarUrl: item.logo),
+                IdentityAvatar(
+                    size: 62, address: item.address, avatarUrl: item.logo),
                 const SizedBox(width: 24),
                 Expanded(
                   child: Column(
@@ -123,7 +126,8 @@ class ValidatorList extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: SimpleTextButton(
                 text: 'Delegate',
-                onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.valkey)),
+                onTap: () => DialogRouter().navigate(
+                    DelegateTokensDialog(valoperAddress: item.valkey)),
               ),
             );
           },
@@ -150,7 +154,8 @@ class _MobileListTile extends StatelessWidget {
         MobileRow(
           title: Text(
             'Uptime',
-            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
+            style:
+                textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Text(
             '${item.uptime}%',
@@ -166,14 +171,16 @@ class _MobileListTile extends StatelessWidget {
             item.streak,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
+            style:
+                textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
         ),
         const SizedBox(height: 8),
         MobileRow(
           title: Text(
             'Status',
-            style: textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
+            style:
+                textTheme.bodyMedium!.copyWith(color: CustomColors.secondary),
           ),
           value: Wrap(
             spacing: 5,
@@ -188,7 +195,8 @@ class _MobileListTile extends StatelessWidget {
           children: [
             SimpleTextButton(
               text: 'Delegate',
-              onTap: () => DialogRouter().navigate(DelegateTokensDialog(valoperAddress: item.valkey)),
+              onTap: () => DialogRouter()
+                  .navigate(DelegateTokensDialog(valoperAddress: item.valkey)),
             ),
           ],
         ),

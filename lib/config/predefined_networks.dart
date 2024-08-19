@@ -18,7 +18,7 @@ class PredefinedNetworks {
 
   static NetworkTemplate private = NetworkTemplate(
     name: 'Private',
-    interxUrl: Uri.parse('http://192.168.88.177:11000'),
+    interxUrl: Uri.parse('http://89.128.117.28:12000'),
   );
 
   static NetworkTemplate get defaultNetwork => private;

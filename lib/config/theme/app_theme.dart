@@ -28,7 +28,7 @@ class AppTheme {
         headlineMedium: baseTheme.textTheme.headlineMedium!.copyWith(fontSize: 24 * fontSizeCofactor),
         titleMedium: baseTheme.textTheme.titleMedium!.copyWith(fontSize: 20 * fontSizeCofactor),
         bodyMedium: baseTheme.textTheme.bodyMedium!.copyWith(fontSize: 15 * fontSizeCofactor),
-        labelMedium: baseTheme.textTheme.labelMedium!.copyWith(fontSize: 14 * fontSizeCofactor),
+        labelMedium: baseTheme.textTheme.labelMedium!.copyWith(fontSize: 12 * fontSizeCofactor),
         headlineSmall: baseTheme.textTheme.headlineSmall!.copyWith(fontSize: 20 * fontSizeCofactor),
         titleSmall: baseTheme.textTheme.titleSmall!.copyWith(fontSize: 16 * fontSizeCofactor),
         bodySmall: baseTheme.textTheme.bodySmall!.copyWith(fontSize: 13 * fontSizeCofactor),

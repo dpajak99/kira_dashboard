@@ -29,6 +29,7 @@ typedef ElementBuilder<T> = Widget Function(BuildContext context, T? item, bool 
 class CustomTable<T> extends StatelessWidget {
   final ValueChanged<T>? onItemTap;
   final int pageSize;
+  final Color backgroundColor;
   final bool loading;
   final List<T> items;
   final List<ColumnConfig<T>> columns;
@@ -38,6 +39,7 @@ class CustomTable<T> extends StatelessWidget {
     this.onItemTap,
     super.key,
     required this.items,
+    required this.backgroundColor,
     required this.columns,
     required this.mobileBuilder,
     this.pageSize = 10,
@@ -59,6 +61,7 @@ class CustomTable<T> extends StatelessWidget {
       return _DesktopTable<T>(
         onItemTap: onItemTap,
         items: items,
+        backgroundColor: backgroundColor,
         columns: columns,
         pageSize: pageSize,
         loading: loading,
@@ -139,6 +142,7 @@ class _DesktopTable<T> extends StatelessWidget {
   final ValueChanged<T>? onItemTap;
   final int pageSize;
   final bool loading;
+  final Color backgroundColor;
   final List<T> items;
   final List<ColumnConfig<T>> columns;
 
@@ -146,6 +150,7 @@ class _DesktopTable<T> extends StatelessWidget {
     this.onItemTap,
     super.key,
     required this.items,
+    required this.backgroundColor,
     required this.columns,
     this.pageSize = 10,
     this.loading = false,
@@ -187,9 +192,9 @@ class _DesktopTable<T> extends StatelessWidget {
             pinned: true,
             delegate: PersistentHeader(
               widget: Container(
-                decoration: const BoxDecoration(
-                  color: CustomColors.background,
-                  border: Border(
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  border: const Border(
                     bottom: BorderSide(
                       color: CustomColors.divider,
                       width: 1,

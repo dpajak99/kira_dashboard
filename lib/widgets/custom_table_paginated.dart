@@ -10,12 +10,14 @@ import 'package:sliver_tools/sliver_tools.dart';
 class CustomTablePaginated<T> extends StatelessWidget {
   final PaginatedListCubit<T> cubit;
   final ValueChanged<T>? onItemTap;
+  final Color backgroundColor;
   final List<ColumnConfig<T>> columns;
   final ElementBuilder<T>? mobileBuilder;
 
   const CustomTablePaginated({
     required this.cubit,
     this.onItemTap,
+    required this.backgroundColor,
     required this.columns,
     required this.mobileBuilder,
     super.key,
@@ -64,6 +66,7 @@ class CustomTablePaginated<T> extends StatelessWidget {
           children: [
             CustomTable(
               onItemTap: onItemTap,
+              backgroundColor: backgroundColor,
               pageSize: state.pageSize,
               loading: state.isLoading,
               items: state.items,

@@ -27,6 +27,7 @@ class BlockTransactionsList extends StatelessWidget {
 
     return CustomTablePaginated<BlockTransaction>(
       cubit: cubit,
+      backgroundColor: CustomColors.background,
       mobileBuilder: (BuildContext context, BlockTransaction? item, bool loading) {
         if (item == null || loading) {
           return const Column(

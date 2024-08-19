@@ -33,10 +33,6 @@
     <title>kira_dashboard</title>
     <link rel="manifest" href="manifest.json">
 
-    <script>
-        // The value below is injected by flutter build, do not touch.
-        const serviceWorkerVersion = {{flutter_service_worker_version}};
-    </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>
     <script src="./scripts/keplr.js"></script>
@@ -44,10 +40,13 @@
 <body>
 <script>
     window.addEventListener('load', function (ev) {
+        {{flutter_js}}
+        {{flutter_build_config}}
+
         // Download main.dart.js
         _flutter.loader.load({
             serviceWorker: {
-                serviceWorkerVersion: serviceWorkerVersion,
+                serviceWorkerVersion: '{{flutter_service_worker_version}}',
             },
             onEntrypointLoaded: function (engineInitializer) {
                 engineInitializer.initializeEngine().then(function (appRunner) {

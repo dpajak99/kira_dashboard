@@ -24,6 +24,7 @@ class TransactionsList extends StatelessWidget {
 
     return CustomTablePaginated<Transaction>(
       cubit: cubit,
+      backgroundColor: CustomColors.container,
       mobileBuilder: (BuildContext context, Transaction? item, bool loading) {
         if (item == null || loading) {
           return const Column(
@@ -54,14 +55,14 @@ class TransactionsList extends StatelessWidget {
         ),
         ColumnConfig(
           title: 'Method',
-          width: 110,
+          width: 140,
           cellBuilder: (BuildContext context, Transaction item) {
             return _MethodChip(item.method);
           },
         ),
         ColumnConfig(
           title: 'Date',
-          width: 160,
+          width: 200,
           cellBuilder: (BuildContext context, Transaction item) {
             return Text(
               DateFormat('d MMM y, HH:mm').format(item.time),
@@ -73,21 +74,21 @@ class TransactionsList extends StatelessWidget {
         ),
         ColumnConfig(
           title: 'From',
-          width: 160,
+          width: 200,
           cellBuilder: (BuildContext context, Transaction item) {
             return OpenableAddressText(address: item.from);
           },
         ),
         ColumnConfig(
           title: ' ',
-          width: 70,
+          width: 110,
           cellBuilder: (BuildContext context, Transaction item) {
             return _DirectionChip(item.direction);
           },
         ),
         ColumnConfig(
           title: 'To',
-          width: 160,
+          width: 200,
           cellBuilder: (BuildContext context, Transaction item) {
             return OpenableAddressText(address: item.to);
           },

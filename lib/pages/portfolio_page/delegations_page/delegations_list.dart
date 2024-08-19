@@ -30,6 +30,7 @@ class DelegationList extends StatelessWidget {
 
     return CustomTablePaginated<Delegation>(
       cubit: delegationsListCubit,
+      backgroundColor: CustomColors.container,
       mobileBuilder: (BuildContext context, Delegation? item, bool loading) {
         if (item == null || loading) {
           return const Column(

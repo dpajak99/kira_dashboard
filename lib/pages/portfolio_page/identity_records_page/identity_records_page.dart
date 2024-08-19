@@ -6,6 +6,8 @@ import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identi
 import 'package:kira_dashboard/pages/portfolio_page/identity_records_page/identity_records_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
+import 'package:kira_dashboard/widgets/sliver_custom_card.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 class IdentityRecordsPage extends StatefulWidget {
   final String address;
@@ -26,9 +28,9 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return MultiSliver(
       children: [
-        CustomCard(
+        SliverCustomCard(
           title: 'Identity records',
           enableMobile: true,
           leading: Row(
@@ -42,7 +44,7 @@ class _IdentityRecordsPageState extends State<IdentityRecordsPage> {
                 ),
             ],
           ),
-          child: IdentityRecordsList(
+          sliver: IdentityRecordsList(
             isMyWallet: widget.isMyWallet,
             cubit: cubit,
           ),

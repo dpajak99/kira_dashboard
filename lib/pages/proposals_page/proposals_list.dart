@@ -25,6 +25,7 @@ class ProposalsList extends StatelessWidget {
 
     return CustomTablePaginated<Proposal>(
       cubit: cubit,
+      backgroundColor: CustomColors.background,
       onItemTap: (Proposal e) => AutoRouter.of(context).navigate(ProposalDetailsRoute(proposalId: e.id)),
       mobileBuilder: (BuildContext context, Proposal? item, bool loading) {
         if (item == null || loading) {

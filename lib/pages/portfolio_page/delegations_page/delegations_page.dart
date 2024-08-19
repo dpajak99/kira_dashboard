@@ -5,6 +5,8 @@ import 'package:kira_dashboard/pages/portfolio_page/delegations_page/undelegatio
 import 'package:kira_dashboard/pages/portfolio_page/delegations_page/undelegations_list_cubit.dart';
 import 'package:kira_dashboard/widgets/address_text.dart';
 import 'package:kira_dashboard/widgets/custom_card.dart';
+import 'package:kira_dashboard/widgets/sliver_custom_card.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 class DelegationsPage extends StatefulWidget {
   final String address;
@@ -21,23 +23,26 @@ class DelegationsPage extends StatefulWidget {
 }
 
 class DelegationsPageState extends State<DelegationsPage> {
-  late final DelegationsListCubit delegationsListCubit = DelegationsListCubit(address: widget.address, isMyWallet: widget.isMyWallet);
-  late final UndelegationsListCubit undelegationsListCubit = UndelegationsListCubit(address: widget.address, isMyWallet: widget.isMyWallet);
+  late final DelegationsListCubit delegationsListCubit = DelegationsListCubit(
+      address: widget.address, isMyWallet: widget.isMyWallet);
+  late final UndelegationsListCubit undelegationsListCubit =
+      UndelegationsListCubit(
+          address: widget.address, isMyWallet: widget.isMyWallet);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return MultiSliver(
       children: [
-        CustomCard(
+        SliverCustomCard(
           title: 'Undelegations',
           enableMobile: true,
-          child: UndelegationList(
+          sliver: UndelegationList(
             isMyWallet: widget.isMyWallet,
             undelegationsListCubit: undelegationsListCubit,
           ),
         ),
-        const SizedBox(height: 32),
-        CustomCard(
+        const SliverToBoxAdapter(child: SizedBox(height: 32)),
+        SliverCustomCard(
           title: 'Delegations',
           enableMobile: true,
           leading: Row(
@@ -49,7 +54,7 @@ class DelegationsPageState extends State<DelegationsPage> {
                 ),
             ],
           ),
-          child: DelegationList(
+          sliver: DelegationList(
             isMyWallet: widget.isMyWallet,
             delegationsListCubit: delegationsListCubit,
           ),

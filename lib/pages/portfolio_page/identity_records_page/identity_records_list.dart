@@ -34,6 +34,7 @@ class IdentityRecordsList extends StatelessWidget {
         return CustomTable(
           items: state.records,
           loading: state.isLoading,
+          backgroundColor: CustomColors.container,
           mobileBuilder: (BuildContext context, IdentityRecord? item, bool loading) {
             if (item == null || loading) {
               return const Column(

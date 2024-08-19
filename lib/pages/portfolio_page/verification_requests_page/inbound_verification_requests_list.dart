@@ -26,6 +26,7 @@ class InboundVerificationRequestsList extends StatelessWidget {
 
     return CustomTablePaginated<VerificationRequest>(
       cubit: cubit,
+      backgroundColor: CustomColors.container,
       mobileBuilder: (BuildContext context, VerificationRequest? item, bool loading) {
         if (item == null || loading) {
           return const Column(
